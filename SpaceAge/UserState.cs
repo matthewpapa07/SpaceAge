@@ -25,6 +25,7 @@ namespace SpaceAge
         //
         private static int fuelLevel = USER_MAX_FUEL_AMOUNT;
         private static int playerFunds = USER_STARTING_FUNDS;
+
         public static SpaceShip PlayerShip = Preconstructs.ConstructedShips.StarterShip();
         public static int PlayerLevel;
 

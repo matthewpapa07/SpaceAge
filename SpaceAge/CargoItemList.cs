@@ -8,7 +8,7 @@ namespace SpaceAge
 {
     class CargoItemList : ItemList
     {
-        public SpaceShip ParentShip;
+        public SpaceShip ParentShip = null;
 
         public int MaxVolume = 0;
         public int ConsumedVolume = 0;
@@ -38,7 +38,7 @@ namespace SpaceAge
                 return false;
             }
 
-            inNewMaxVolume = MaxVolume;
+            MaxVolume = inNewMaxVolume;
 
             return true;
         }

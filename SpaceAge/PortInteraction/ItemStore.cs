@@ -51,11 +51,23 @@ namespace SpaceAge
 
         public int QueryCommodityUserBuyPrice(Commodity.CommodityEnum commodityType)
         {
-            return Commodity.getCommodityFromEnum(commodityType).BaseValue;
+            Commodity CM = Commodity.getCommodityFromEnum(commodityType);
+            int baseVal = CM.BaseValue;
+            int availableQuantity = this.commoditiesQuantitiy[(int)commodityType];
+            int maxQuantity = CM.MaxQuantity;
+            double result = NumberGenerator.getInstance().GetItemSupplyBasedStorePrice(baseVal, availableQuantity, maxQuantity);
+
+            return (int)result;
         }
         public int QueryCommodityUserSellPrice(Commodity.CommodityEnum commodityType)
         {
-            return Commodity.getCommodityFromEnum(commodityType).BaseValue;
+            Commodity CM = Commodity.getCommodityFromEnum(commodityType);
+            int baseVal = CM.BaseValue;
+            int availableQuantity = this.commoditiesQuantitiy[(int)commodityType];
+            int maxQuantity = CM.MaxQuantity;
+            double result = NumberGenerator.getInstance().GetItemSupplyBasedStorePrice(baseVal, availableQuantity, maxQuantity)*.8;
+
+            return (int)result;
         }
 
         public bool UserBuyItem(Item i)

@@ -12,12 +12,13 @@ namespace SpaceAge
         public const int MAX_DISTANCE_FROM_AXIS = 5000;      //Number must be significantly larger than UiSectorMap Height/Width
 
         public StarSystem [] StarSystemsList;
-        //public Point [] LocationPointsList;
+        public Point SectorGridLocation;
         //Universe parent;
 
-        public Sector(/*Universe u*/)
+        public Sector(int x, int y)
         {
             //setParent(u);
+            SectorGridLocation = new Point(x, y);
             generateSector();
             
         }

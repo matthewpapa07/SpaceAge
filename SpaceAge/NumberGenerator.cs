@@ -130,7 +130,13 @@ namespace SpaceAge
             return (int)ReturnVal;
         }
 
+        public double GetItemSupplyBasedStorePrice(int basePrice, int volume, int totalvolume)
+        {
+            double ratio = ((double)volume) / ((int)totalvolume);
+            double result =  -(ratio*2.0 - 3.0);
 
+            return (double)basePrice * result;
+        }
 
         //public int[] GenerateTable()
         //{

@@ -86,7 +86,7 @@ namespace SpaceAge
             commoditiesTempList.Add(tempCommodity);
             tempCommodity = new Commodity(Commodity.CommodityEnum.Minerals, "Minerals", 25, 5, 60, 200, false);
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.PreciousMetals, "Precious Metals", 1, 1, 16, 500, false);
+            tempCommodity = new Commodity(Commodity.CommodityEnum.PreciousMetals, "Precious Metals", 1, 1, 600, 500, false);
             commoditiesTempList.Add(tempCommodity);
             tempCommodity = new Commodity(Commodity.CommodityEnum.Hydrocarbons, "Hydrocarbons", 5, 50, 175, 250, true);
             commoditiesTempList.Add(tempCommodity);

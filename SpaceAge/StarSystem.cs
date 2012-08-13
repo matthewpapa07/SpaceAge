@@ -20,7 +20,7 @@ namespace SpaceAge
         public Star [] stars;
         public Planet [] planets;
 
-        public Point sectorLocation;
+        public Point StarSystemLocation;
         public Sector parent;
         public string SystemName;
 
@@ -30,7 +30,7 @@ namespace SpaceAge
             setParent(s);
             LocalStarSystemNumber = GlobalStarSystemNumber++;
             generateStarSystem();
-            sectorLocation = location;
+            StarSystemLocation = location;
         }
 
         public void generateStarSystem()
