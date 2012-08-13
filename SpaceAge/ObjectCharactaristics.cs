@@ -69,6 +69,7 @@ namespace SpaceAge
         public enum ItemSize { ExtraSmall, Small, Medium, Large, ExraLarge, NoSize };
         public static int [] ItemSizeStatMultiplier = { 1, 3, 10, 25, 50, 1 };
         public static int[] ItemSizeStatDivider = { 5, 4, 3, 2, 1, 1 };
+
     }
 
     public abstract class Resource

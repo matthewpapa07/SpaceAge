@@ -7,12 +7,16 @@ namespace SpaceAge
 {
     class GameDriver
     {
-        NumberGenerator numGenerator = NumberGenerator.getInstance();
+        static NumberGenerator numGenerator = NumberGenerator.getInstance();
 
-        public GameDriver()
+        public static void InitializeDriver()
         {
+            
+            // Generate a few identical merchant ships
+
         }
-        public void PassTurn()
+
+        public static void PassTurn(int days)
         {
             foreach (Sector currentSect in Universe.map)
             {

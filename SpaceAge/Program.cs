@@ -20,6 +20,8 @@ namespace SpaceAge
             Application.EnableVisualStyles();
 
             Universe.GenerateUniverse(Constants.UNIVERSE_ROWS, Constants.UNIVERSE_COLUMNS);
+            Universe.RunSupplementalGeneration();
+            GameDriver.InitializeDriver();
             Application.Run(new UserInterface());
         }
     }

@@ -65,6 +65,7 @@
     </Compile>
     <Compile Include="DriverLibrary\NavigationLib.cs" />
     <Compile Include="GameDriver.cs" />
+    <Compile Include="MerchantSpaceShip.cs" />
     <Compile Include="PortInteraction\InteractionCenter.cs" />
     <Compile Include="PortInteraction\InteractionCenterUi.cs">
       <SubType>Form</SubType>

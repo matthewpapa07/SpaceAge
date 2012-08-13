@@ -10,7 +10,7 @@ namespace SpaceAge.Preconstructs
         public static SpaceShip StarterShip()
         {
             SpaceShip prototype = new SpaceShip(2, 2, 1, 1);
-            prototype.IntializeStats(100, 100, 5, 200, 1, 1);
+            prototype.IntializeStats(100, 100, 5, 400, 1, 1);
 
             Item itemToAdd;
             Commodity.CommodityEnum commidityToAdd;
@@ -53,13 +53,13 @@ namespace SpaceAge.Preconstructs
             return prototype;
         }
 
-        public static SpaceShip MerchantShip1()
+        public static MerchantSpaceShip MerchantShip1()
         {
             // Weapons 1
             // Defense 3
             // Engines 2
             // Special 1
-            SpaceShip prototype = new SpaceShip(1, 3, 2, 1);
+            MerchantSpaceShip prototype = new MerchantSpaceShip(1, 3, 2, 1);
             // Armor 100
             // Structure 100
             // Cargo 2000

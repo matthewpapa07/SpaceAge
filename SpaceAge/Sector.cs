@@ -10,9 +10,12 @@ namespace SpaceAge
     {
         public const int MAX_SYSTEMS_PER_SECTOR = 5;
         public const int MAX_DISTANCE_FROM_AXIS = 5000;      //Number must be significantly larger than UiSectorMap Height/Width
+        public const int STARTING_SPACESHIP_SPACES = 12;     // This list initializer is demand based. Sectors with higher traffic will end up
+                                                             // being allocated more space while ones who dont will only need 25 slots max
 
         public StarSystem [] StarSystemsList;
         public Point SectorGridLocation;
+        public List<MerchantSpaceShip> PresentSpaceShips = new List<MerchantSpaceShip>(STARTING_SPACESHIP_SPACES);
         //Universe parent;
 
         public Sector(int x, int y)

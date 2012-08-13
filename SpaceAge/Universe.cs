@@ -32,6 +32,14 @@ namespace SpaceAge
             uniRows = rows;
         }
 
+        /// <summary>
+        /// Initialize factions, stations etc with relevant values
+        /// </summary>
+        public static void RunSupplementalGeneration()
+        {
+
+        }
+
         public static Sector getSector(int row, int column)
         {
             if ((row < Constants.UNIVERSE_ROWS) && (column < Constants.UNIVERSE_COLUMNS))

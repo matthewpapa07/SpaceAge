@@ -40,12 +40,12 @@ namespace SpaceAge.DriverLibrary
                 return Directions.Down;
 
             //Left
-            newDistance = GetTaxiDistance(origin.X, destination.X, origin.Y, destination.Y - 1);
+            newDistance = GetTaxiDistance(origin.X - 1, destination.X, origin.Y, destination.Y);
             if (newDistance < distanceToTravel)
                 return Directions.Left;
 
             //Right
-            newDistance = GetTaxiDistance(origin.X, destination.X, origin.Y, destination.Y + 1);
+            newDistance = GetTaxiDistance(origin.X + 1, destination.X, origin.Y, destination.Y);
             if (newDistance < distanceToTravel)
                 return Directions.Right;
 
