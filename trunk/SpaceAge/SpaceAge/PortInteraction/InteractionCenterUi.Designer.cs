@@ -30,14 +30,16 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tab_info = new System.Windows.Forms.TabPage();
+            this.InteractionCenter_InfoName = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.InteractionCenter_InfoName = new System.Windows.Forms.Label();
             this.tab_market = new System.Windows.Forms.TabPage();
+            this.market_cargo_space = new System.Windows.Forms.Label();
+            this.cargo_space_label = new System.Windows.Forms.Label();
             this.Market_ShipCommodities = new System.Windows.Forms.ListView();
             this.BuyPrice = new System.Windows.Forms.TextBox();
             this.SellPrice = new System.Windows.Forms.TextBox();
@@ -61,8 +63,7 @@
             this.tab_agents = new System.Windows.Forms.TabPage();
             this.tab_people = new System.Windows.Forms.TabPage();
             this.tab_politics = new System.Windows.Forms.TabPage();
-            this.cargo_space_label = new System.Windows.Forms.Label();
-            this.market_cargo_space = new System.Windows.Forms.Label();
+            this.Info_Population = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tab_info.SuspendLayout();
             this.tab_market.SuspendLayout();
@@ -85,13 +86,14 @@
             // 
             // tab_info
             // 
+            this.tab_info.Controls.Add(this.Info_Population);
+            this.tab_info.Controls.Add(this.InteractionCenter_InfoName);
             this.tab_info.Controls.Add(this.label8);
             this.tab_info.Controls.Add(this.label7);
             this.tab_info.Controls.Add(this.label6);
             this.tab_info.Controls.Add(this.label5);
             this.tab_info.Controls.Add(this.label4);
             this.tab_info.Controls.Add(this.label3);
-            this.tab_info.Controls.Add(this.InteractionCenter_InfoName);
             this.tab_info.Location = new System.Drawing.Point(4, 22);
             this.tab_info.Name = "tab_info";
             this.tab_info.Padding = new System.Windows.Forms.Padding(3);
@@ -99,6 +101,16 @@
             this.tab_info.TabIndex = 4;
             this.tab_info.Text = "Info";
             this.tab_info.UseVisualStyleBackColor = true;
+            // 
+            // InteractionCenter_InfoName
+            // 
+            this.InteractionCenter_InfoName.AutoSize = true;
+            this.InteractionCenter_InfoName.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.InteractionCenter_InfoName.Location = new System.Drawing.Point(3, 9);
+            this.InteractionCenter_InfoName.Name = "InteractionCenter_InfoName";
+            this.InteractionCenter_InfoName.Size = new System.Drawing.Size(276, 31);
+            this.InteractionCenter_InfoName.TabIndex = 7;
+            this.InteractionCenter_InfoName.Text = "Planet: Sample Name";
             // 
             // label8
             // 
@@ -156,19 +168,9 @@
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(8, 75);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(155, 20);
+            this.label3.Size = new System.Drawing.Size(88, 20);
             this.label3.TabIndex = 1;
-            this.label3.Text = "Population: 0000000";
-            // 
-            // InteractionCenter_InfoName
-            // 
-            this.InteractionCenter_InfoName.AutoSize = true;
-            this.InteractionCenter_InfoName.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.InteractionCenter_InfoName.Location = new System.Drawing.Point(7, 7);
-            this.InteractionCenter_InfoName.Name = "InteractionCenter_InfoName";
-            this.InteractionCenter_InfoName.Size = new System.Drawing.Size(281, 29);
-            this.InteractionCenter_InfoName.TabIndex = 0;
-            this.InteractionCenter_InfoName.Text = "Planet: Name Goes Here";
+            this.label3.Text = "Population:";
             // 
             // tab_market
             // 
@@ -195,6 +197,24 @@
             this.tab_market.TabIndex = 0;
             this.tab_market.Text = "Market";
             this.tab_market.UseVisualStyleBackColor = true;
+            // 
+            // market_cargo_space
+            // 
+            this.market_cargo_space.AutoSize = true;
+            this.market_cargo_space.Location = new System.Drawing.Point(302, 9);
+            this.market_cargo_space.Name = "market_cargo_space";
+            this.market_cargo_space.Size = new System.Drawing.Size(41, 13);
+            this.market_cargo_space.TabIndex = 18;
+            this.market_cargo_space.Text = "0/0 m3";
+            // 
+            // cargo_space_label
+            // 
+            this.cargo_space_label.AutoSize = true;
+            this.cargo_space_label.Location = new System.Drawing.Point(227, 9);
+            this.cargo_space_label.Name = "cargo_space_label";
+            this.cargo_space_label.Size = new System.Drawing.Size(72, 13);
+            this.cargo_space_label.TabIndex = 17;
+            this.cargo_space_label.Text = "Cargo Space:";
             // 
             // Market_ShipCommodities
             // 
@@ -416,23 +436,15 @@
             this.tab_politics.Text = "Politics";
             this.tab_politics.UseVisualStyleBackColor = true;
             // 
-            // cargo_space_label
+            // Info_Population
             // 
-            this.cargo_space_label.AutoSize = true;
-            this.cargo_space_label.Location = new System.Drawing.Point(227, 9);
-            this.cargo_space_label.Name = "cargo_space_label";
-            this.cargo_space_label.Size = new System.Drawing.Size(72, 13);
-            this.cargo_space_label.TabIndex = 17;
-            this.cargo_space_label.Text = "Cargo Space:";
-            // 
-            // market_cargo_space
-            // 
-            this.market_cargo_space.AutoSize = true;
-            this.market_cargo_space.Location = new System.Drawing.Point(302, 9);
-            this.market_cargo_space.Name = "market_cargo_space";
-            this.market_cargo_space.Size = new System.Drawing.Size(41, 13);
-            this.market_cargo_space.TabIndex = 18;
-            this.market_cargo_space.Text = "0/0 m3";
+            this.Info_Population.AutoSize = true;
+            this.Info_Population.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Info_Population.Location = new System.Drawing.Point(91, 75);
+            this.Info_Population.Name = "Info_Population";
+            this.Info_Population.Size = new System.Drawing.Size(72, 20);
+            this.Info_Population.TabIndex = 8;
+            this.Info_Population.Text = "0000000";
             // 
             // InteractionCenterUi
             // 
@@ -473,7 +485,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label InteractionCenter_InfoName;
         private System.Windows.Forms.TabPage tab_escrow;
         private System.Windows.Forms.Label InteractionCenter_Credits;
         private System.Windows.Forms.Label label9;
@@ -490,5 +501,7 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label market_cargo_space;
         private System.Windows.Forms.Label cargo_space_label;
+        private System.Windows.Forms.Label InteractionCenter_InfoName;
+        private System.Windows.Forms.Label Info_Population;
     }
 }

@@ -7,12 +7,17 @@ namespace SpaceAge
 {
     class Planet
     {
+        public static double CHANCE_OF_PLANET_INHABITED = 0.37;
+        public static double CHANCE_OF_PLANET_SUPERCENTER = 0.12;
+
         public static int GlobalPlanetNumber = 0;
         public int LocalPlanetNumber;
         public ObjectCharactaristics.PlanetSize planetSize;
         public ObjectCharactaristics.Position planetPosition;
         public StarSystem parent;
-        public InteractionCenter planetInteractionCenter;       // Allow for multiple of these later...
+        public InteractionCenter planetInteractionCenter = null;       // Allow for multiple of these later...
+        public bool IsInhabited = false;
+        public int Population = 0;
 
         public Planet(StarSystem s)
         {
@@ -25,7 +30,16 @@ namespace SpaceAge
         {
             planetSize = NumberGenerator.getInstance().RandomEnum<ObjectCharactaristics.PlanetSize>();
             planetPosition = NumberGenerator.getInstance().RandomEnum<ObjectCharactaristics.Position>();
-            planetInteractionCenter = new InteractionCenter("Planet" + this.ToString() + " Interaction Center", this);
+            if (NumberGenerator.getInstance().LinearPmfResult(CHANCE_OF_PLANET_INHABITED))
+            {
+                IsInhabited = true;
+                Population = NumberGenerator.getInstance().getNumber(); // TODO: Shape this number later
+                planetInteractionCenter = new InteractionCenter("Planet" + this.ToString() + " Interaction Center", this);
+            }
+            else
+            {
+                IsInhabited = false;
+            }
         }
 
         public void setParent(StarSystem s)

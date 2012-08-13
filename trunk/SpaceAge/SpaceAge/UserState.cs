@@ -178,6 +178,9 @@ namespace SpaceAge
 
         public static int onEachTravel()
         {
+            // Pass one day for now
+            GameDriver.PassTurn(1);
+            // And then reduce the fuel accordingly
             return reduceFuel(USER_FUEL_USED_PER_SECTOR);
 
         }
