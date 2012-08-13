@@ -24,7 +24,7 @@ namespace SpaceAge
             {
                 for (int j = 0; j < columns; j++)
                 {
-                    map[i, j] = new Sector();
+                    map[i, j] = new Sector(i, j);
                 }
             }
 

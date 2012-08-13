@@ -61,6 +61,8 @@
             this.tab_agents = new System.Windows.Forms.TabPage();
             this.tab_people = new System.Windows.Forms.TabPage();
             this.tab_politics = new System.Windows.Forms.TabPage();
+            this.cargo_space_label = new System.Windows.Forms.Label();
+            this.market_cargo_space = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tab_info.SuspendLayout();
             this.tab_market.SuspendLayout();
@@ -170,6 +172,8 @@
             // 
             // tab_market
             // 
+            this.tab_market.Controls.Add(this.market_cargo_space);
+            this.tab_market.Controls.Add(this.cargo_space_label);
             this.tab_market.Controls.Add(this.Market_ShipCommodities);
             this.tab_market.Controls.Add(this.BuyPrice);
             this.tab_market.Controls.Add(this.SellPrice);
@@ -412,6 +416,24 @@
             this.tab_politics.Text = "Politics";
             this.tab_politics.UseVisualStyleBackColor = true;
             // 
+            // cargo_space_label
+            // 
+            this.cargo_space_label.AutoSize = true;
+            this.cargo_space_label.Location = new System.Drawing.Point(227, 9);
+            this.cargo_space_label.Name = "cargo_space_label";
+            this.cargo_space_label.Size = new System.Drawing.Size(72, 13);
+            this.cargo_space_label.TabIndex = 17;
+            this.cargo_space_label.Text = "Cargo Space:";
+            // 
+            // market_cargo_space
+            // 
+            this.market_cargo_space.AutoSize = true;
+            this.market_cargo_space.Location = new System.Drawing.Point(302, 9);
+            this.market_cargo_space.Name = "market_cargo_space";
+            this.market_cargo_space.Size = new System.Drawing.Size(41, 13);
+            this.market_cargo_space.TabIndex = 18;
+            this.market_cargo_space.Text = "0/0 m3";
+            // 
             // InteractionCenterUi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -466,5 +488,7 @@
         private System.Windows.Forms.ListView Escrow_StoreList;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label market_cargo_space;
+        private System.Windows.Forms.Label cargo_space_label;
     }
 }

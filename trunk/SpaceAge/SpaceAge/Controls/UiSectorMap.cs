@@ -60,7 +60,7 @@ namespace SpaceAge.Controls
                 for (int i = 0; i < listLength; i++)
                 {
                     Star currentStar = currentSector.StarSystemsList[i].stars[0];
-                    Point currentPoint = currentSector.StarSystemsList[i].sectorLocation;
+                    Point currentPoint = currentSector.StarSystemsList[i].StarSystemLocation;
                     ObjectCharactaristics.StarSize ss = currentStar.starSize;
                     ObjectCharactaristics.StarType st = currentStar.starType;
                     //int ss = currentStar.starSize;

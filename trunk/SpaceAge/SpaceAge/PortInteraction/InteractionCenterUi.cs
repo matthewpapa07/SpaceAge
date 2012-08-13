@@ -81,6 +81,7 @@ namespace SpaceAge
         {
             NeedToRefresh = false;
             InteractionCenter_Credits.Text = UserState.getPlayerFunds().ToString();
+            market_cargo_space.Text = "Cargo bay: " + UserState.PlayerShip.SpaceShipCargo.ConsumedVolume + "/" + UserState.PlayerShip.SpaceShipCargo.MaxVolume + " m3";
 
             Market_MarketCommodities.Items.Clear();
             Market_MarketCommodities.Items.AddRange(thisInteractionCenter.thisStore.GetCommmodityListView());
@@ -128,7 +129,7 @@ namespace SpaceAge
             }
             catch (Exception e)
             {
-                // TODO: exception debug statements
+                Console.WriteLine(e.Message);
             }
             
         }

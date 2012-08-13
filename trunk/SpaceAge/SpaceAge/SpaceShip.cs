@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ namespace SpaceAge
 {
     class SpaceShip
     {
-        public CargoItemList SpaceShipCargo = new CargoItemList(100000); // Hard code large cargo list size for now...
+        public CargoItemList SpaceShipCargo;
 
         public bool ShipInitialized = false;
 
@@ -37,6 +38,8 @@ namespace SpaceAge
 
         public SpaceShip(int inWeaponMounts, int inDefensiveMounts, int inEngineMounts, int inSpecialMounts)
         {
+            SpaceShipCargo = new CargoItemList(100000, this); // Hard code large cargo list size for now...
+
             NumWeaponMounts = inWeaponMounts;
             NumDefensiveMounts = inDefensiveMounts;
             NumEngineMounts = inEngineMounts;

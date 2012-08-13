@@ -63,6 +63,7 @@
     <Compile Include="Controls\UiInventory.Designer.cs">
       <DependentUpon>UiInventory.cs</DependentUpon>
     </Compile>
+    <Compile Include="DriverLibrary\NavigationLib.cs" />
     <Compile Include="GameDriver.cs" />
     <Compile Include="PortInteraction\InteractionCenter.cs" />
     <Compile Include="PortInteraction\InteractionCenterUi.cs">
