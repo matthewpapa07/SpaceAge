@@ -52,19 +52,31 @@ namespace SpaceAge
 
         public void UpdateUi()
         {
+            UpdateStarSystemList();
+            UpdateSolarSystemList();
+
+        }
+
+        public void setParent(SectorDetails s)
+        {
+            parentForm = s;
+        }
+
+        private void ui_SurveyObject_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        public void UpdateStarSystemList()
+        {
             ui_SectorList.Items.Clear();
-            ui_SystemList.Items.Clear();
+            ui_SectorList.Columns.Clear();
             //
             // Add columns
             //
             ui_SectorList.Columns.Add("Name", 80);
             ui_SectorList.Columns.Add("Stars");
             ui_SectorList.Columns.Add("Planets");
-
-            ui_SystemList.Columns.Add("Object Type", 80);
-            ui_SystemList.Columns.Add("Size");
-            ui_SystemList.Columns.Add("Coordinates");
-            ui_SystemList.Columns.Add("Desc");
 
             Sector currentSector = UserState.getCurrentSector();
 
@@ -83,28 +95,19 @@ namespace SpaceAge
             }
 
             ui_SectorList.Items.AddRange(SectorContentsListview);
-
         }
 
-        public void setParent(SectorDetails s)
-        {
-            parentForm = s;
-        }
-
-        private void ui_SurveyObject_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        public void UpdateSystemList()
+        public void UpdateSolarSystemList()
         {
             if (ui_SectorList.SelectedIndices.Count >= 1)
             {
                 ui_SystemList.Items.Clear();
+                ui_SystemList.Columns.Clear();
 
                 ui_SystemList.Columns.Add("Object Type", 80);
                 ui_SystemList.Columns.Add("Size");
-                ui_SystemList.Columns.Add("Desc");
+                ui_SystemList.Columns.Add("Coordinates");
+                ui_SystemList.Columns.Add("Inhabited");
 
                 int indexSelected = ui_SectorList.SelectedIndices[0];
                 currentlySelectedSystem = SectorSystems[indexSelected];
@@ -124,6 +127,8 @@ namespace SpaceAge
                     SystemContentsListView[i] = new ListViewItem("Star " + s.ToString(), i);
                     SystemContentsListView[i].SubItems.Add(ObjectCharactaristics.StarSizeString[(int)s.starSize]);
                     SystemContentsListView[i].SubItems.Add(ObjectCharactaristics.StarTypeString[(int)s.starType] + " " + s.LocalStarNumber.ToString());
+                    SystemContentsListView[i].SubItems.Add("N/A");
+
                     allObjects[i] = currentlySelectedSystem.stars[i];
                 }
                 Planet p;
@@ -133,6 +138,7 @@ namespace SpaceAge
                     SystemContentsListView[i + numStars] = new ListViewItem("Planet " + p.ToString(), i + numStars);
                     SystemContentsListView[i + numStars].SubItems.Add(ObjectCharactaristics.PlanetSizeString[(int)p.planetSize]);
                     SystemContentsListView[i + numStars].SubItems.Add(ObjectCharactaristics.PositionString[(int)p.planetPosition]);
+                    SystemContentsListView[i + numStars].SubItems.Add(p.IsInhabited.ToString());
                     allObjects[i + numStars] = currentlySelectedSystem.planets[i];
                 }
 
@@ -142,7 +148,7 @@ namespace SpaceAge
 
         private void ui_SectorList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UpdateSystemList();
+            UpdateSolarSystemList();
         }
 
         private void ui_SystemList_SelectedIndexChanged(object sender, EventArgs e)
@@ -153,7 +159,12 @@ namespace SpaceAge
                 currentObject = allObjects[selectedIndex];
                 if (currentObject is Planet)
                 {
-                    ui_Interaction.Enabled = true;
+                    if ((currentObject as Planet).IsInhabited)
+                    {
+                        ui_Interaction.Enabled = true;
+                    }
+                    else
+                        ui_Interaction.Enabled = false;
                 }
                 else
                 {
