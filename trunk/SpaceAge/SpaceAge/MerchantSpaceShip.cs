@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 
 namespace SpaceAge
 {
@@ -10,8 +11,9 @@ namespace SpaceAge
         // Data for what will hopefully become the state machine dictating AI action
         public enum MerchantShipState { Moving, Holding, Arrived, Idle };
         public MerchantShipState ShipState = MerchantShipState.Holding;
-        public Sector DestinationSector = null;
-        public ItemStore DestinationItemStore = null;
+        public Sector DestinationSector = null; // Prepetuated by AI
+        public Sector CurrentSector = null; // Initialized when placed in sector, prepetuated by AI
+        public ItemStore DestinationItemStore = null;   // TODO: Implement this
         public bool IsAlive = true;
 
         public static int GlobalMerchantId = 0;
@@ -52,7 +54,20 @@ namespace SpaceAge
 
         private void ContinueOnJourney()
         {
-
+            DriverLibrary.NavigationLib.Directions Direction = DriverLibrary.NavigationLib.NextDirection(CurrentSector, DestinationSector);
+            Sector NewDestinationSector = DriverLibrary.NavigationLib.GetSectorInDirection(CurrentSector, Direction);
+            if (NewDestinationSector == null)
+            {
+                throw new Exception();
+            }
+            if (NewDestinationSector.Equals(DestinationSector))
+            {
+                ShipState = MerchantShipState.Arrived;
+                return;
+            }
+            CurrentSector.ShipMoveOut(this);
+            //Next
+            
         }
 
         private void ConductCommerce()

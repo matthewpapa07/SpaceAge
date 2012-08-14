@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace SpaceAge.DriverLibrary
 {
-    class NavigationLib
+    static class NavigationLib
     {
         public enum Directions { Up, Down, Left, Right, Hold };
         public static int GetSectorTaxiDistance(Sector s1, Sector s2)
@@ -19,8 +19,11 @@ namespace SpaceAge.DriverLibrary
             return (x1 - x2) + (y1 - y2);
         }
 
-        public Directions NextDirection(Point origin, Point destination)
+        public static Directions NextDirection(Sector CurrentSector, Sector DestinationSector)
         {
+            Point origin = CurrentSector.SectorGridLocation;
+            Point destination = DestinationSector.SectorGridLocation;
+
             int distanceToTravel = 0;
             int newDistance = 0;
 
@@ -119,5 +122,24 @@ namespace SpaceAge.DriverLibrary
             return SecList.ToArray();
         }
 
+        public static Sector GetSectorInDirection(Sector CurrentSector, Directions WhichDirection)
+        {
+            switch (WhichDirection)
+            {
+                case Directions.Down:
+                    return Universe.getSector(CurrentSector.SectorGridLocation.X, CurrentSector.SectorGridLocation.Y - 1);
+                case Directions.Up:
+                    return Universe.getSector(CurrentSector.SectorGridLocation.X, CurrentSector.SectorGridLocation.Y + 1);
+                case Directions.Right:
+                    return Universe.getSector(CurrentSector.SectorGridLocation.X + 1, CurrentSector.SectorGridLocation.Y);
+                case Directions.Left:
+                    return Universe.getSector(CurrentSector.SectorGridLocation.X - 1, CurrentSector.SectorGridLocation.Y);
+                case Directions.Hold:
+                    return CurrentSector;
+                default:
+                    return CurrentSector;
+            }
+
+        }
     }
 }
