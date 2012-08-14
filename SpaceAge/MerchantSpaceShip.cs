@@ -8,7 +8,7 @@ namespace SpaceAge
     class MerchantSpaceShip : SpaceShip
     {
         // Data for what will hopefully become the state machine dictating AI action
-        public enum MerchantShipState { Moving, Holding, Transition, Other };
+        public enum MerchantShipState { Moving, Holding, Arrived, Idle };
         public MerchantShipState ShipState = MerchantShipState.Holding;
         public Sector DestinationSector = null;
         public ItemStore DestinationItemStore = null;
@@ -28,16 +28,44 @@ namespace SpaceAge
             switch (ShipState)
             {
                 case MerchantShipState.Holding:
+                    VerifyHold();
                     break;
                 case MerchantShipState.Moving:
+                    ContinueOnJourney();
                     break;
-                case MerchantShipState.Other:
+                case MerchantShipState.Idle:
+                    StartNewTask();
                     break;
-                case MerchantShipState.Transition:
+                case MerchantShipState.Arrived:
+                    ConductCommerce();
                     break;
                 default:
+                    VerifyHold();
                     break;
             }
         }
+
+        private void StartNewTask()
+        {
+
+        }
+
+        private void ContinueOnJourney()
+        {
+
+        }
+
+        private void ConductCommerce()
+        {
+
+        }
+
+        private void VerifyHold()
+        {
+
+        }
+
+
+
     }
 }

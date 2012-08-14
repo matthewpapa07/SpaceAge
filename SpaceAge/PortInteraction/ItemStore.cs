@@ -12,6 +12,7 @@ namespace SpaceAge
         public const int MIN_STORAGE_FACTOR = 5000;
 
         private int ItemStoreCash = 1000000000;     // 10 M starting cash
+        public object Parent = null;
 
         //
         // Eventually make it to where the items are generated based on the 
@@ -23,11 +24,12 @@ namespace SpaceAge
         /// </summary>
         double storageSpaceFactor = 0;
 
-        public ItemStore() 
+        public ItemStore(object inParent) 
             : base()
         {
             Commodity[] allCommodities = Commodity.allCommodities;
             NumberGenerator n = NumberGenerator.getInstance();
+            Parent = inParent;
 
             storageSpaceFactor = n.getNumberRange(MIN_STORAGE_FACTOR, MAX_STORAGE_FACTOR);
             storageSpaceFactor /= MAX_STORAGE_FACTOR;
