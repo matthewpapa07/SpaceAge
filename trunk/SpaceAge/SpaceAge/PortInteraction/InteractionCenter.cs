@@ -19,7 +19,7 @@ namespace SpaceAge
 		{
             thisParent = parent;
             thisCenterName = centerName;
-            thisStore = new ItemStore();
+            thisStore = new ItemStore(parent);
             thisPost = new MissionPost();
             thisPeople = new PeopleSource();
             thisPolitics = new PoliticalCenter();
