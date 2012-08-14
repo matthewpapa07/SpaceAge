@@ -125,7 +125,7 @@ namespace SpaceAge
             ReturnVal = (double)difference * Percentage;
             ReturnVal += min;
 
-            Console.WriteLine("ReturnValue: " + ReturnVal + " \n");
+            //Console.WriteLine("ReturnValue: " + ReturnVal + " \n");
 
             return (int)ReturnVal;
         }
