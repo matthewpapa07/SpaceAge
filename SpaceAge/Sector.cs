@@ -65,6 +65,16 @@ namespace SpaceAge
             return "Planet : " + " Systems : " + "";
         }
 
+        public bool ShipMoveOut(MerchantSpaceShip mss)
+        {
+            return PresentSpaceShips.Remove(mss);
+        }
+
+        public bool ShipMoveIn(MerchantSpaceShip mss)
+        {
+            PresentSpaceShips.Add(mss);
+            return true;
+        }
         //public void setParent(Universe u)
         //{
         //    parent = u;
