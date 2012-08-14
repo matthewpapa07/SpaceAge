@@ -8,11 +8,30 @@ namespace SpaceAge
     class GameDriver
     {
         static NumberGenerator numGenerator = NumberGenerator.getInstance();
+        static List<MerchantSpaceShip> AllShips = new List<MerchantSpaceShip>(200);
 
         public static void InitializeDriver()
         {
-            
-            // Generate a few identical merchant ships
+            bool Switch = true;
+            MerchantSpaceShip mss;
+            // For now generate a ship in each sector of alternating types
+            foreach(Sector s in Universe.map)
+            {
+                if (Switch)
+                {
+                    mss = Preconstructs.ConstructedShips.MerchantShip1();
+                    s.ShipMoveIn(mss);
+                    AllShips.Add(mss);
+                    Switch = false;
+                }
+                else
+                {
+                    mss = Preconstructs.ConstructedShips.MerchantShip2();
+                    s.ShipMoveIn(mss);
+                    AllShips.Add(mss);
+                    Switch = true;
+                }
+            }
 
         }
 
