@@ -11,6 +11,8 @@ namespace SpaceAge
         public static int uniRows;
         public static int uniCols;
 
+        // ATTN: Row = x and Column = y
+
         //public Universe(int rows, int columns)
         //{
         //    GenerateUniverse(rows,columns);

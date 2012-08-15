@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,12 +12,12 @@ namespace SpaceAge.DriverLibrary
         public enum Directions { Up, Down, Left, Right, Hold };
         public static int GetSectorTaxiDistance(Sector s1, Sector s2)
         {
-            return (s1.SectorGridLocation.X - s2.SectorGridLocation.X) + (s1.SectorGridLocation.Y - s2.SectorGridLocation.Y);
+            return Math.Abs(s1.SectorGridLocation.X - s2.SectorGridLocation.X) + Math.Abs(s1.SectorGridLocation.Y - s2.SectorGridLocation.Y);
         }
 
         public static int GetTaxiDistance(int x1, int x2, int y1, int y2)
         {
-            return (x1 - x2) + (y1 - y2);
+            return Math.Abs(x1 - x2) + Math.Abs(y1 - y2);
         }
 
         public static Directions NextDirection(Sector CurrentSector, Sector DestinationSector)
@@ -33,27 +34,49 @@ namespace SpaceAge.DriverLibrary
                 return Directions.Hold;
 
             //Up
-            newDistance = GetTaxiDistance(origin.X, destination.X, origin.Y + 1, destination.Y);
+            newDistance = GetTaxiDistance(origin.X - 1, destination.X, origin.Y, destination.Y);
             if (newDistance < distanceToTravel)
                 return Directions.Up;
 
             //Down
-            newDistance = GetTaxiDistance(origin.X, destination.X, origin.Y - 1, destination.Y);
+            newDistance = GetTaxiDistance(origin.X + 1, destination.X, origin.Y, destination.Y);
             if (newDistance < distanceToTravel)
                 return Directions.Down;
 
             //Left
-            newDistance = GetTaxiDistance(origin.X - 1, destination.X, origin.Y, destination.Y);
+            newDistance = GetTaxiDistance(origin.X, destination.X, origin.Y - 1, destination.Y);
             if (newDistance < distanceToTravel)
                 return Directions.Left;
 
             //Right
-            newDistance = GetTaxiDistance(origin.X + 1, destination.X, origin.Y, destination.Y);
+            newDistance = GetTaxiDistance(origin.X, destination.X, origin.Y + 1, destination.Y);
             if (newDistance < distanceToTravel)
                 return Directions.Right;
 
             //default needed?
             return Directions.Hold;
+        }
+
+        public static StarSystem[] GetStarSystemsInDistance(Sector s, int radius)
+        {
+            if (s == null)
+                throw new Exception();
+
+            List<StarSystem> SSList = new List<StarSystem>(20);
+
+            for (int i = 1; i <= radius; i++)
+            {
+                Sector[] Square = GetRingAtRadius(s, i);
+                foreach (Sector sec in Square)
+                {
+                    foreach (StarSystem ss in sec.StarSystemsList)
+                    {
+                        SSList.Add(ss);
+                    }
+                }
+            }
+
+            return SSList.ToArray();
         }
 
         public static StarSystem[] GetStarSystemsAtDistance(Sector s, int radius)
@@ -127,13 +150,13 @@ namespace SpaceAge.DriverLibrary
             switch (WhichDirection)
             {
                 case Directions.Down:
-                    return Universe.getSector(CurrentSector.SectorGridLocation.X, CurrentSector.SectorGridLocation.Y - 1);
-                case Directions.Up:
-                    return Universe.getSector(CurrentSector.SectorGridLocation.X, CurrentSector.SectorGridLocation.Y + 1);
-                case Directions.Right:
                     return Universe.getSector(CurrentSector.SectorGridLocation.X + 1, CurrentSector.SectorGridLocation.Y);
-                case Directions.Left:
+                case Directions.Up:
                     return Universe.getSector(CurrentSector.SectorGridLocation.X - 1, CurrentSector.SectorGridLocation.Y);
+                case Directions.Right:
+                    return Universe.getSector(CurrentSector.SectorGridLocation.X, CurrentSector.SectorGridLocation.Y + 1);
+                case Directions.Left:
+                    return Universe.getSector(CurrentSector.SectorGridLocation.X, CurrentSector.SectorGridLocation.Y - 1);
                 case Directions.Hold:
                     return CurrentSector;
                 default:
