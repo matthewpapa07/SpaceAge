@@ -8,9 +8,10 @@ namespace SpaceAge
 {
     class MerchantSpaceShip : SpaceShip
     {
+        public static int START_SYSTEM_DISTANCE_AWAY = 5;
         // Data for what will hopefully become the state machine dictating AI action
         public enum MerchantShipState { Moving, Holding, Arrived, Idle };
-        public MerchantShipState ShipState = MerchantShipState.Holding;
+        public MerchantShipState ShipState = MerchantShipState.Idle;
         public Sector DestinationSector = null; // Prepetuated by AI
         public Sector CurrentSector = null; // Initialized when placed in sector, prepetuated by AI
         public ItemStore DestinationItemStore = null;   // TODO: Implement this
@@ -27,6 +28,10 @@ namespace SpaceAge
 
         public void Live()
         {
+            if (MerchantId == 120)
+            {
+                Console.WriteLine("Tracking ship 120");
+            }
             switch (ShipState)
             {
                 case MerchantShipState.Holding:
@@ -49,30 +54,42 @@ namespace SpaceAge
 
         private void StartNewTask()
         {
+            StarSystem[] SystemsToVisit;
+            StarSystem TargetSystem;
+            int i = START_SYSTEM_DISTANCE_AWAY + 1;
 
+            SystemsToVisit = DriverLibrary.NavigationLib.GetStarSystemsInDistance(CurrentSector, START_SYSTEM_DISTANCE_AWAY);
+            while (SystemsToVisit.Length == 0)
+            {
+                SystemsToVisit = DriverLibrary.NavigationLib.GetStarSystemsInDistance(CurrentSector, i++);
+            }
+
+            TargetSystem = SystemsToVisit[NumberGenerator.getInstance().getNumberRange(0, SystemsToVisit.Length - 1)];
+            DestinationSector = TargetSystem.parent;
+            ShipState = MerchantShipState.Moving;
+            ContinueOnJourney();
         }
 
         private void ContinueOnJourney()
         {
             DriverLibrary.NavigationLib.Directions Direction = DriverLibrary.NavigationLib.NextDirection(CurrentSector, DestinationSector);
-            Sector NewDestinationSector = DriverLibrary.NavigationLib.GetSectorInDirection(CurrentSector, Direction);
-            if (NewDestinationSector == null)
+            Sector NextSector = DriverLibrary.NavigationLib.GetSectorInDirection(CurrentSector, Direction);
+            if (NextSector == null)
             {
                 throw new Exception();
             }
-            if (NewDestinationSector.Equals(DestinationSector))
+            if (NextSector.Equals(DestinationSector))
             {
                 ShipState = MerchantShipState.Arrived;
-                return;
             }
             CurrentSector.ShipMoveOut(this);
-            //Next
-            
+            CurrentSector = NextSector;
+            CurrentSector.ShipMoveIn(this);
         }
 
         private void ConductCommerce()
         {
-
+            ShipState = MerchantShipState.Idle;
         }
 
         private void VerifyHold()

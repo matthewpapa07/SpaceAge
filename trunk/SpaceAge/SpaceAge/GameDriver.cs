@@ -43,6 +43,10 @@ namespace SpaceAge
                 // TODO: Stuff or each sector
                 //
             }
+            foreach (MerchantSpaceShip mss in AllShips)
+            {
+                mss.Live();
+            }
         }
     }
 }
