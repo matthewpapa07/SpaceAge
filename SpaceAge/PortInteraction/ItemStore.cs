@@ -12,7 +12,7 @@ namespace SpaceAge
         public const int MIN_STORAGE_FACTOR = 5000;
 
         private int ItemStoreCash = 1000000000;     // 10 M starting cash
-        public object Parent = null;
+        public InteractionCenter Parent = null;
 
         //
         // Eventually make it to where the items are generated based on the 
@@ -24,12 +24,14 @@ namespace SpaceAge
         /// </summary>
         double storageSpaceFactor = 0;
 
-        public ItemStore(object inParent) 
+        public ItemStore(InteractionCenter inParent) 
             : base()
         {
             Commodity[] allCommodities = Commodity.allCommodities;
             NumberGenerator n = NumberGenerator.getInstance();
             Parent = inParent;
+            // TODO: Change this when ItemStores can be on different objects besides planets
+            Parent.Parent.parent.parent.RegisteredItemStores.Add(this);
 
             storageSpaceFactor = n.getNumberRange(MIN_STORAGE_FACTOR, MAX_STORAGE_FACTOR);
             storageSpaceFactor /= MAX_STORAGE_FACTOR;

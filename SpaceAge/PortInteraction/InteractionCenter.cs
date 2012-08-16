@@ -8,18 +8,18 @@ namespace SpaceAge
     {
 		public enum InteractionCenterType { City, SpaceStation, OrbitalPlatform, Other };
 
-        public object thisParent;
+        public Planet Parent;
         public string thisCenterName;
         public ItemStore thisStore;
         public MissionPost thisPost;
         public PeopleSource thisPeople;
         public PoliticalCenter thisPolitics;
 
-		public InteractionCenter(string centerName, object parent)
+		public InteractionCenter(string centerName, Planet inParent)
 		{
-            thisParent = parent;
+            Parent = inParent;
             thisCenterName = centerName;
-            thisStore = new ItemStore(parent);
+            thisStore = new ItemStore(this);
             thisPost = new MissionPost();
             thisPeople = new PeopleSource();
             thisPolitics = new PoliticalCenter();

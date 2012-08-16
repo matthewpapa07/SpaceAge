@@ -82,8 +82,8 @@ namespace SpaceAge
             NeedToRefresh = false;
 
             // Change this cast to conditional later when more than just planets can have trade centers
-            InteractionCenter_InfoName.Text = "Planet: " + (thisInteractionCenter.thisParent as Planet).ToString();
-            Info_Population.Text = (thisInteractionCenter.thisParent as Planet).Population.ToString();
+            InteractionCenter_InfoName.Text = "Planet: " + (thisInteractionCenter.Parent as Planet).ToString();
+            Info_Population.Text = (thisInteractionCenter.Parent as Planet).Population.ToString();
 
             InteractionCenter_Credits.Text = UserState.getPlayerFunds().ToString();
             market_cargo_space.Text = "Cargo bay: " + UserState.PlayerShip.SpaceShipCargo.ConsumedVolume + "/" + UserState.PlayerShip.SpaceShipCargo.MaxVolume + " m3";

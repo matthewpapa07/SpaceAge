@@ -16,7 +16,7 @@ namespace SpaceAge
         public StarSystem [] StarSystemsList;
         public Point SectorGridLocation;
         public List<MerchantSpaceShip> PresentSpaceShips = new List<MerchantSpaceShip>(STARTING_SPACESHIP_SPACES);
-        //Universe parent;
+        public List<ItemStore> RegisteredItemStores = new List<ItemStore>(20); //Register ItemStores here to avoid tight nested loop in the AI
 
         public Sector(int x, int y)
         {

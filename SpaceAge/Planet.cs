@@ -21,8 +21,11 @@ namespace SpaceAge
 
         public Planet(StarSystem s)
         {
+            if (s == null)
+                throw new Exception();
+            parent = s;
             this.generatePlanet();
-            this.setParent(s);
+
             LocalPlanetNumber = GlobalPlanetNumber++;
         }
 
@@ -40,11 +43,6 @@ namespace SpaceAge
             {
                 IsInhabited = false;
             }
-        }
-
-        public void setParent(StarSystem s)
-        {
-            parent = s;
         }
 
         public override string ToString()
