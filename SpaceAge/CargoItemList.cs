@@ -109,6 +109,11 @@ namespace SpaceAge
             return true;
         }
 
+        public int GetFreeVolumeSpace()
+        {
+            return MaxVolume - ConsumedVolume;
+        }
+
         /// <summary>
         /// This method can make some other methods more efficient as long as its called only
         /// when the list is changed

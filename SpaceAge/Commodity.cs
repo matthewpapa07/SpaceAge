@@ -43,6 +43,11 @@ namespace SpaceAge
             return allCommodities[(int)inEnum];
         }
 
+        public static CommodityEnum GetRandomCommodity()
+        {
+            return (CommodityEnum)NumberGenerator.getInstance().getNumberRange(0, NumOfCommodities - 1);
+        }
+
         public override string ToString()
         {
             return CommodityDescription;
