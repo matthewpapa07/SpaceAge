@@ -7,17 +7,117 @@ namespace SpaceAge
 {
     class ResourceVector
     {
+        public static double BUY_BASE_PRICE_MAX_PERCENT = 1.75;
+        public static double SELL_BASE_PRICE_MAX_PERCENT = 2.15;
+        public enum VectorTypeEnum { BuyVector, SellVector };
+        public VectorTypeEnum VectorType;
         public Commodity.CommodityEnum TypeOfCommodity;
         public ItemStore WhichStore;
         public Planet WhichPlanet;      // Replace with interface later
+        public InteractionCenter WhichCenter;
         public int Quantity;
+        public int Price;
 
-        public ResourceVector(Commodity.CommodityEnum inTypeOfCommodity, ItemStore inWhichStore)
+        private ResourceVector(Commodity.CommodityEnum inTypeOfCommodity, ItemStore inWhichStore, VectorTypeEnum inVectorType)
         {
             TypeOfCommodity = inTypeOfCommodity;
             WhichStore = inWhichStore;
             Quantity = WhichStore.CommoditiesAvailable(TypeOfCommodity);
-            WhichPlanet = (WhichStore.Parent as Planet);
+            WhichCenter = inWhichStore.Parent;
+            WhichPlanet = WhichCenter.Parent;
+            VectorType = inVectorType;
+            if(VectorType == VectorTypeEnum.BuyVector)
+                Price = WhichStore.QueryCommodityUserBuyPrice(inTypeOfCommodity);
+            if(VectorType == VectorTypeEnum.SellVector)
+                Price = WhichStore.QueryCommodityUserSellPrice(inTypeOfCommodity);
+        }
+
+        public static ResourceVector GetBestBuyPriceForCommodity(Commodity.CommodityEnum CommodityType, Sector InSector)
+        {
+            ItemStore TargetStore = null;
+            int RunningPrice = 0;
+
+            if (InSector.RegisteredItemStores.Count == 0)
+            {
+                return null;
+            }
+
+            TargetStore = InSector.RegisteredItemStores[0];
+            RunningPrice = InSector.RegisteredItemStores[0].QueryCommodityUserBuyPrice(CommodityType);
+
+            for (int i = 1; i < InSector.RegisteredItemStores.Count; i++)
+            {
+                if (InSector.RegisteredItemStores[i].QueryCommodityUserBuyPrice(CommodityType) < RunningPrice)
+                {
+                    TargetStore = InSector.RegisteredItemStores[i];
+                    RunningPrice = InSector.RegisteredItemStores[i].QueryCommodityUserBuyPrice(CommodityType);
+                }
+            }
+
+            return new ResourceVector(CommodityType, TargetStore, VectorTypeEnum.BuyVector);
+        }
+
+        public static ResourceVector GetBestSellPriceForCommodity(Commodity.CommodityEnum CommodityType, Sector InSector)
+        {
+            ItemStore TargetStore = null;
+            int RunningPrice = 0;
+
+            if (InSector.RegisteredItemStores.Count == 0)
+            {
+                return null;
+            }
+
+            TargetStore = InSector.RegisteredItemStores[0];
+            RunningPrice = InSector.RegisteredItemStores[0].QueryCommodityUserSellPrice(CommodityType);
+
+            for (int i = 1; i < InSector.RegisteredItemStores.Count; i++)
+            {
+                if (InSector.RegisteredItemStores[i].QueryCommodityUserBuyPrice(CommodityType) > RunningPrice)
+                {
+                    TargetStore = InSector.RegisteredItemStores[i];
+                    RunningPrice = InSector.RegisteredItemStores[i].QueryCommodityUserSellPrice(CommodityType);
+                }
+            }
+
+            return new ResourceVector(CommodityType, TargetStore, VectorTypeEnum.SellVector);
+        }
+
+        public int HowManyCanBuy(Commodity.CommodityEnum CommodityType)
+        {
+            return WhichStore.CommoditiesAvailable(CommodityType);
+        }
+
+        public int HowManyCanSell(Commodity.CommodityEnum CommodityType)
+        {
+            return Commodity.getCommodityFromEnum(CommodityType).MaxQuantity - WhichStore.CommoditiesAvailable(CommodityType);
+        }
+
+        public bool DecideIfGoodSellPrice()
+        {
+            double TempPrice = Commodity.getCommodityFromEnum(TypeOfCommodity).BaseValue * SELL_BASE_PRICE_MAX_PERCENT;
+            if (VectorType == VectorTypeEnum.SellVector)
+                throw new Exception();
+
+            if (Price >= TempPrice)
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool DecideIfGoodBuyPrice()
+        {
+            double TempPrice = Commodity.getCommodityFromEnum(TypeOfCommodity).BaseValue * BUY_BASE_PRICE_MAX_PERCENT;
+            if (VectorType == VectorTypeEnum.BuyVector)
+                throw new Exception();
+
+            if (Price <= TempPrice)
+            {
+                return true;
+            }
+            else
+                return false;
         }
     }
 }

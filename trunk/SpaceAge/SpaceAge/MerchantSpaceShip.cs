@@ -29,9 +29,7 @@ namespace SpaceAge
         public void Live()
         {
             if (MerchantId == 120)
-            {
                 Console.WriteLine("Tracking ship 120");
-            }
             switch (ShipState)
             {
                 case MerchantShipState.Holding:
@@ -45,6 +43,8 @@ namespace SpaceAge
                     break;
                 case MerchantShipState.Arrived:
                     ConductCommerce();
+                    if (MerchantId == 120)
+                        Console.WriteLine("Ship 120 arrived at " + CurrentSector.SectorGridLocation.ToString());
                     break;
                 default:
                     VerifyHold();
@@ -89,15 +89,18 @@ namespace SpaceAge
 
         private void ConductCommerce()
         {
+            Commodity.CommodityEnum [] CommoditiesAvailable = this.SpaceShipCargo.getCommoditiesPresent();
+
             ShipState = MerchantShipState.Idle;
         }
 
         private void VerifyHold()
         {
-
+            if (NumberGenerator.getInstance().LinearPmfResult(0.25))
+            {
+                ShipState = MerchantShipState.Idle;
+            }
         }
-
-
 
     }
 }
