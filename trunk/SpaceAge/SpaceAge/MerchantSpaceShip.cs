@@ -19,6 +19,7 @@ namespace SpaceAge
 
         public static int GlobalMerchantId = 0;
         public int MerchantId = -1;
+        public int MerchantMoney = 50000; // For now start out merchants with 50k
 
         public MerchantSpaceShip(int inWeaponMounts, int inDefensiveMounts, int inEngineMounts, int inSpecialMounts):
             base(inWeaponMounts, inDefensiveMounts, inEngineMounts, inSpecialMounts)
@@ -89,8 +90,67 @@ namespace SpaceAge
 
         private void ConductCommerce()
         {
-            Commodity.CommodityEnum [] CommoditiesAvailable = this.SpaceShipCargo.getCommoditiesPresent();
+            // Make sure there are stores here, if not leave this state
+            if (CurrentSector.RegisteredItemStores.Count == 0)
+            {
+                ShipState = MerchantShipState.Idle;
+                return;
+            }
+            // Get commodities available to sell first to make cargo room. If a good price is offered go ahead and sell
+            Commodity.CommodityEnum [] onboardCommodities = this.SpaceShipCargo.getCommoditiesPresent();
+            if (onboardCommodities.Length >= 1)
+            {
+                List<ResourceVector> BestSellPrices = new List<ResourceVector>(3);
+                foreach (Commodity.CommodityEnum curCom in onboardCommodities)
+                {
+                    BestSellPrices.Add(ResourceVector.GetBestSellPriceForCommodity(curCom, CurrentSector));
+                }
+                foreach (ResourceVector rv in BestSellPrices)
+                {
+                    if (rv.DecideIfGoodSellPrice())
+                    {
+                        int HowManyCanISell = rv.HowManyCanSell();
+                        int HowManyDoIHave = SpaceShipCargo.CommoditiesAvailable(rv.TypeOfCommodity);
 
+                        if (HowManyCanISell >= HowManyDoIHave)
+                        {
+                            // Case 1 sell everything that the merchant can unload
+                            rv.WhichStore.UserSellCommodity(rv.TypeOfCommodity, HowManyDoIHave);
+                            SpaceShipCargo.RemoveCommodity(rv.TypeOfCommodity, HowManyDoIHave);
+                            MerchantMoney += HowManyDoIHave * rv.Price;
+                        }
+                        else
+                        {
+                            // Case 2 the itemstore has limited space for the merchants items
+                            rv.WhichStore.UserSellCommodity(rv.TypeOfCommodity, HowManyCanISell);
+                            SpaceShipCargo.RemoveCommodity(rv.TypeOfCommodity, HowManyCanISell);
+                            MerchantMoney += HowManyCanISell * rv.Price;
+                        }
+                    }
+                }
+            }
+
+            //For efficiency purposes check for just 3 random commodities to buy right now. Its fine if they are the same
+            List<Commodity.CommodityEnum> TryToBuyCommodities = new List<Commodity.CommodityEnum>(3);
+            TryToBuyCommodities.Add(Commodity.GetRandomCommodity());
+            TryToBuyCommodities.Add(Commodity.GetRandomCommodity());
+            TryToBuyCommodities.Add(Commodity.GetRandomCommodity());
+
+            List<ResourceVector> BestBuyPrices = new List<ResourceVector>(3);
+            foreach (Commodity.CommodityEnum curCom in TryToBuyCommodities)
+            {
+                BestBuyPrices.Add(ResourceVector.GetBestBuyPriceForCommodity(curCom, CurrentSector));
+            }
+            foreach (ResourceVector rv in BestBuyPrices)
+            {
+                if (rv.DecideIfGoodBuyPrice())
+                {
+                    int HowManyCanIBuy = rv.HowManyCanBuy();
+                    int HowManyCanIFit = SpaceShipCargo.GetFreeVolumeSpace() / Commodity.getCommodityFromEnum(rv.TypeOfCommodity).UnitVolume;
+                }
+            }
+
+            // Commerce Complete, set idle state so that a destination can be set next turn
             ShipState = MerchantShipState.Idle;
         }
 

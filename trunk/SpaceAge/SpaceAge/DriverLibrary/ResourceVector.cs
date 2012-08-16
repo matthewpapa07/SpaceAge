@@ -82,14 +82,20 @@ namespace SpaceAge
             return new ResourceVector(CommodityType, TargetStore, VectorTypeEnum.SellVector);
         }
 
-        public int HowManyCanBuy(Commodity.CommodityEnum CommodityType)
+        public int HowManyCanBuy()
         {
-            return WhichStore.CommoditiesAvailable(CommodityType);
+            if (VectorType == VectorTypeEnum.SellVector)
+                throw new Exception();
+
+            return WhichStore.CommoditiesAvailable(TypeOfCommodity);
         }
 
-        public int HowManyCanSell(Commodity.CommodityEnum CommodityType)
+        public int HowManyCanSell()
         {
-            return Commodity.getCommodityFromEnum(CommodityType).MaxQuantity - WhichStore.CommoditiesAvailable(CommodityType);
+            if (VectorType == VectorTypeEnum.BuyVector)
+                throw new Exception();
+
+            return Commodity.getCommodityFromEnum(TypeOfCommodity).MaxQuantity - WhichStore.CommoditiesAvailable(TypeOfCommodity);
         }
 
         public bool DecideIfGoodSellPrice()
