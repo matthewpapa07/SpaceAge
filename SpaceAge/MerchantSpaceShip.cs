@@ -130,6 +130,12 @@ namespace SpaceAge
                 }
             }
 
+            if (SpaceShipCargo.GetFreeVolumeSpace() == 0)
+            {
+                ShipState = MerchantShipState.Idle;
+                return;
+            }
+
             //For efficiency purposes check for just 3 random commodities to buy right now. Its fine if they are the same
             List<Commodity.CommodityEnum> TryToBuyCommodities = new List<Commodity.CommodityEnum>(3);
             TryToBuyCommodities.Add(Commodity.GetRandomCommodity());
@@ -147,6 +153,19 @@ namespace SpaceAge
                 {
                     int HowManyCanIBuy = rv.HowManyCanBuy();
                     int HowManyCanIFit = SpaceShipCargo.GetFreeVolumeSpace() / Commodity.getCommodityFromEnum(rv.TypeOfCommodity).UnitVolume;
+
+                    if (HowManyCanIBuy >= HowManyCanIFit)
+                    {
+                        rv.WhichStore.UserBuyCommodity(rv.TypeOfCommodity, HowManyCanIFit);
+                        SpaceShipCargo.AddCommodity(rv.TypeOfCommodity, HowManyCanIFit);
+                        MerchantMoney -= HowManyCanIFit * rv.Price;
+                    }
+                    else
+                    {
+                        rv.WhichStore.UserBuyCommodity(rv.TypeOfCommodity, HowManyCanIBuy);
+                        SpaceShipCargo.AddCommodity(rv.TypeOfCommodity, HowManyCanIBuy);
+                        MerchantMoney -= HowManyCanIBuy * rv.Price;
+                    }
                 }
             }
 

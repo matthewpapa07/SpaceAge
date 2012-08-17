@@ -101,7 +101,7 @@ namespace SpaceAge
         public bool DecideIfGoodSellPrice()
         {
             double TempPrice = Commodity.getCommodityFromEnum(TypeOfCommodity).BaseValue * SELL_BASE_PRICE_MAX_PERCENT;
-            if (VectorType == VectorTypeEnum.SellVector)
+            if (VectorType == VectorTypeEnum.BuyVector)
                 throw new Exception();
 
             if (Price >= TempPrice)
@@ -115,7 +115,7 @@ namespace SpaceAge
         public bool DecideIfGoodBuyPrice()
         {
             double TempPrice = Commodity.getCommodityFromEnum(TypeOfCommodity).BaseValue * BUY_BASE_PRICE_MAX_PERCENT;
-            if (VectorType == VectorTypeEnum.BuyVector)
+            if (VectorType == VectorTypeEnum.SellVector)
                 throw new Exception();
 
             if (Price <= TempPrice)
