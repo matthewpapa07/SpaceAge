@@ -14,22 +14,28 @@ namespace SpaceAge
         {
             bool Switch = true;
             MerchantSpaceShip mss;
-            // For now generate a ship in each sector of alternating types
-            foreach(Sector s in Universe.map)
+            int MerchantsPerSquare = 0;
+
+            foreach (Sector s in Universe.map)
             {
-                if (Switch)
+                // Every 5 squares create a ship
+                if (MerchantsPerSquare++ >= 5)
                 {
-                    mss = Preconstructs.ConstructedShips.MerchantShip1();
-                    s.ShipMoveIn(mss);
-                    AllShips.Add(mss);
-                    Switch = false;
-                }
-                else
-                {
-                    mss = Preconstructs.ConstructedShips.MerchantShip2();
-                    s.ShipMoveIn(mss);
-                    AllShips.Add(mss);
-                    Switch = true;
+                    if (Switch)
+                    {
+                        Switch = false;
+                        mss = Preconstructs.ConstructedShips.MerchantShip1();
+                        s.ShipMoveIn(mss);
+                        AllShips.Add(mss);
+                    }
+                    else
+                    {
+                        Switch = true;
+                        mss = Preconstructs.ConstructedShips.MerchantShip2();
+                        s.ShipMoveIn(mss);
+                        AllShips.Add(mss);
+                    }
+                    MerchantsPerSquare = 0;
                 }
             }
 
