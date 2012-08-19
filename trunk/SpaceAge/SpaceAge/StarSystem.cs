@@ -37,7 +37,7 @@ namespace SpaceAge
         {
             NumberGenerator numGen = NumberGenerator.getInstance();
             int numStars;
-            int numPlanets = numGen.getNumberRange(MAX_PLANETS_PER_SYSTEM, MAX_PLANETS_PER_SYSTEM);
+            int numPlanets = numGen.GetRandNumberInRange(MAX_PLANETS_PER_SYSTEM, MAX_PLANETS_PER_SYSTEM);
 
             if (numGen.LinearPmfResult(CHANCE_OF_MULTIPLE_STARS, 100))
                 numStars = 2;
@@ -67,9 +67,9 @@ namespace SpaceAge
             for (int i = 1; i <= STAR_SYSTEM_NAME_MAX; i++)
             {
                 if(i <= (STAR_SYSTEM_NAME_MAX/2))
-                    name[i-1] = (char)numGen.getNumberRange(65,80);
+                    name[i-1] = (char)numGen.GetRandNumberInRange(65,80);
                 else
-                    name[i - 1] = (char)numGen.getNumberRange(48, 57);
+                    name[i - 1] = (char)numGen.GetRandNumberInRange(48, 57);
             }
             SystemName = new string(name);
         }
