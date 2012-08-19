@@ -65,7 +65,7 @@ namespace SpaceAge
                 SystemsToVisit = DriverLibrary.NavigationLib.GetStarSystemsInDistance(CurrentSector, i++);
             }
 
-            TargetSystem = SystemsToVisit[NumberGenerator.getInstance().getNumberRange(0, SystemsToVisit.Length - 1)];
+            TargetSystem = SystemsToVisit[NumberGenerator.getInstance().GetRandNumberInRange(0, SystemsToVisit.Length - 1)];
             DestinationSector = TargetSystem.parent;
             ShipState = MerchantShipState.Moving;
             ContinueOnJourney();

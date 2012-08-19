@@ -33,13 +33,13 @@ namespace SpaceAge
             // TODO: Change this when ItemStores can be on different objects besides planets
             Parent.Parent.parent.parent.RegisteredItemStores.Add(this);
 
-            storageSpaceFactor = n.getNumberRange(MIN_STORAGE_FACTOR, MAX_STORAGE_FACTOR);
+            storageSpaceFactor = n.GetRandNumberInRange(MIN_STORAGE_FACTOR, MAX_STORAGE_FACTOR);
             storageSpaceFactor /= MAX_STORAGE_FACTOR;
 
             for (int i = 0; i < allCommodities.Length; i++)
             {
-                int j = n.getNumberRange(MIN_STORAGE_FACTOR, MAX_STORAGE_FACTOR);
-                this.AddCommodity(allCommodities[i].CommodityType, (int)((n.getNumberRange(0, allCommodities[i].MaxQuantity))*storageSpaceFactor));
+                int j = n.GetRandNumberInRange(MIN_STORAGE_FACTOR, MAX_STORAGE_FACTOR);
+                this.AddCommodity(allCommodities[i].CommodityType, (int)((n.GetRandNumberInRange(0, allCommodities[i].MaxQuantity))*storageSpaceFactor));
             }
 
         }

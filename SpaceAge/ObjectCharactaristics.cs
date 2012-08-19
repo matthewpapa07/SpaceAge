@@ -35,7 +35,7 @@ namespace SpaceAge
 //        public static int [] StarSizeValues = {1000,2000,23432};  //TODO: Size Values
 
         //
-        // Commonly Associated with Planets
+        // Charactaristics Associated with Planets
         //
         public static string[] PlanetSizeString = { "Asteroid", "VerySmall", "Small", "Medium", "Large", "Super" };
         public enum PlanetSize { Asteroid, VerySmall, Small, Medium, Large, Super };    // Size of the planet
@@ -45,21 +45,21 @@ namespace SpaceAge
         public enum Position { Inner, Middle, Outer, Rogue };                     // Position of planet from star
 
         //
-        // Common reosouces on planet
+        // Common resources on planet
         //
-        public static string[] CommonAtmosphereString = { "Oxygen", "Hydrogen", "Methane", "SulphuricAcid", "CarbonDioxide", "Nitrogen", "Chlorine"};
-        public enum CommonAtmosphere { Oxygen, Hydrogen, Methane, SulphuricAcid, CarbonDioxide, Nitrogen, Chlorine };
+        public static string[] CommonAtmosphereString = { "Oxygen", "Hydrogen", "Methane", "SulphuricAcid", "CarbonDioxide", "Nitrogen", "Chlorine", "Helium"};
+        public enum CommonAtmosphere { Oxygen, Hydrogen, Methane, SulphuricAcid, CarbonDioxide, Nitrogen, Chlorine, Helium };
 
         public static string[] RareAtmosphereString = { "Boron", "Neon", "Xenon", "Krypton" };
         public enum RareAtmosphere { Boron, Neon, Xenon, Krypton };
 
-        public static string[] CommonElementsString = { "Silicon", "Iron", "Carbon", "Copper", "Magnesium", "Sodium", "Sulfur", "Lead", "Nickel" };
-        public enum CommonElements { Silicon, Iron, Carbon, Copper, Magnesium, Sodium, Sulfur, Lead, Nickel };
+        public static string[] CommonElementsString = { "Silicon", "Iron", "Carbon", "Copper", "Magnesium", "Sodium", "Sulfur", "Lead", "Nickel", "Amuninum" };
+        public enum CommonElements { Silicon, Iron, Carbon, Copper, Magnesium, Sodium, Sulfur, Lead, Nickel, Amuninum };
 
-        public static string[] RareElementsString = { "Titanium", "Neodymium", "Germanium", "Strontium", "Gold", "Silver", "Platinum" };
-        public enum RareElements { Titanium, Neodymium, Germanium, Strontium, Gold, Silver, Platinum};
+        public static string[] RareElementsString = { "Titanium", "Neodymium", "Germanium", "Gallium", "Arsenic", "Strontium", "Gold", "Silver", "Platinum" };
+        public enum RareElements { Titanium, Neodymium, Germanium, Gallium, Arsenic, Strontium, Gold, Silver, Platinum};
 
-        public static string[] ResourcesStaticString = { "Hydrocarbons", "Cellulose", "Protein", "Acid", "Biomass" };
+        public static string[] ResourcesStaticString = { "Hydrocarbons", "Cellulose", "Acid", "Biomass" };
         public enum ResourcesStatic  { Hydrocarbons, Cellulose, Protein, Acid, Biomass };
 
         //

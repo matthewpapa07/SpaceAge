@@ -42,13 +42,13 @@ namespace SpaceAge
                 StarSystemsList = new StarSystem[0];
                 return;
             }
-            systemsToPopulate = n.getNumberRange(0, MAX_SYSTEMS_PER_SECTOR);
+            systemsToPopulate = n.GetRandNumberInRange(0, MAX_SYSTEMS_PER_SECTOR);
             StarSystemsList = new StarSystem[systemsToPopulate];
 
             for (int i = 0; i < systemsToPopulate; i++)
             {
-                coord1 = n.getNumberRange(0, MAX_DISTANCE_FROM_AXIS);
-                coord2 = n.getNumberRange(0, MAX_DISTANCE_FROM_AXIS);
+                coord1 = n.GetRandNumberInRange(0, MAX_DISTANCE_FROM_AXIS);
+                coord2 = n.GetRandNumberInRange(0, MAX_DISTANCE_FROM_AXIS);
 
                 StarSystemsList[i] = (new StarSystem(this, new Point(coord1, coord2)));
             }

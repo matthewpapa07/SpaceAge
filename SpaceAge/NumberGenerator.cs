@@ -28,7 +28,7 @@ namespace SpaceAge
         /// Gets a random number
         /// </summary>
         /// <returns>A random number</returns>
-        public int getNumber()
+        public int GetRandomNumber()
         {
             return rnd1.Next();
         }
@@ -39,9 +39,9 @@ namespace SpaceAge
         /// <param name="min">Minimum number to be genrated</param>
         /// <param name="max">Maximum number to be genrated</param>
         /// <returns></returns>
-        public int getNumberRange(int min, int max)
+        public int GetRandNumberInRange(int min, int max)
         {
-            return rnd1.Next(min, max);
+            return rnd1.Next(min, max + 1);
         }
 
         /// <summary>
@@ -53,6 +53,40 @@ namespace SpaceAge
         {
             T[] values = (T[])Enum.GetValues(typeof(T));
             return values[rnd1.Next(0, values.Length)];
+        }
+        public int MaxValesInEnum<T>()
+        {
+            T[] values = (T[])Enum.GetValues(typeof(T));
+            return values.Length;
+        }
+
+        public T[] GetEnumScaledList<T>(double percentage)
+        {
+            //T[] values = (T[])Enum.GetValues(typeof(T));
+            List<T> AllValues = new List<T>((T[])Enum.GetValues(typeof(T)));
+            List<T> ReturnValues = new List<T>(3);
+            T tempValue;
+
+            // One value for free?? I guess...
+            //T testVal = values[GetRandNumberInRange(0, values.Count - 1)];
+
+            // See if we can add another as many times as we can
+            for (int i = 0; i < AllValues.Count; i++)
+            {
+                if (LinearPmfResult(percentage))
+                {
+                    tempValue = AllValues[GetRandNumberInRange(0, AllValues.Count-1)];
+                    AllValues.Remove(tempValue);
+                    ReturnValues.Add(tempValue);
+                }
+                else
+                {
+                    return ReturnValues.ToArray();
+                }
+            }
+
+            // In the small chance we get to fill the list...
+            return ReturnValues.ToArray();
         }
 
         /// <summary>
@@ -71,7 +105,7 @@ namespace SpaceAge
                 return false;
             if (expected >= 1 && sample >= 1)
             {
-                temp = this.getNumberRange(1, sample);
+                temp = this.GetRandNumberInRange(1, sample);
                 if (temp <= expected)
                     return true;
                 else

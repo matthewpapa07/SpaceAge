@@ -105,6 +105,7 @@
       <DependentUpon>SpaceshipStatus.cs</DependentUpon>
     </Compile>
     <Compile Include="DriverLibrary\ResourceVector.cs" />
+    <Compile Include="RawMaterialExtractor.cs" />
     <Compile Include="SectorDetails.cs">
       <SubType>Form</SubType>
     </Compile>
