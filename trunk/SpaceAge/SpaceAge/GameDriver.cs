@@ -53,6 +53,7 @@ namespace SpaceAge
             {
                 mss.Live();
             }
+            Console.WriteLine("Global GDP is now " + MerchantSpaceShip.MoneyChangedHands.ToString());
         }
     }
 }

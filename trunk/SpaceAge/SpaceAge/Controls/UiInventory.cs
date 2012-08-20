@@ -20,9 +20,7 @@ namespace SpaceAge.Controls
             //
             // Properties for system listview
             //
-            ui_InventoryListview.View = View.Details;
-            ui_InventoryListview.FullRowSelect = true;
-            ui_InventoryListview.GridLines = true;
+            GraphicsLib.ApplyListviewProperties(ui_InventoryListview);
 
             associatedList = UserState.PlayerShip.SpaceShipCargo;
 

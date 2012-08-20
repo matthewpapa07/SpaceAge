@@ -45,7 +45,7 @@ namespace SpaceAge
         public enum Position { Inner, Middle, Outer, Rogue };                     // Position of planet from star
 
         //
-        // Common resources on planet
+        // Common resources on planet. Add these to commodity too when updating
         //
         public static string[] CommonAtmosphereString = { "Oxygen", "Hydrogen", "Methane", "SulphuricAcid", "CarbonDioxide", "Nitrogen", "Chlorine", "Helium"};
         public enum CommonAtmosphere { Oxygen, Hydrogen, Methane, SulphuricAcid, CarbonDioxide, Nitrogen, Chlorine, Helium };
@@ -59,8 +59,8 @@ namespace SpaceAge
         public static string[] RareElementsString = { "Titanium", "Neodymium", "Germanium", "Gallium", "Arsenic", "Strontium", "Gold", "Silver", "Platinum" };
         public enum RareElements { Titanium, Neodymium, Germanium, Gallium, Arsenic, Strontium, Gold, Silver, Platinum};
 
-        public static string[] ResourcesStaticString = { "Hydrocarbons", "Cellulose", "Acid", "Biomass" };
-        public enum ResourcesStatic  { Hydrocarbons, Cellulose, Protein, Acid, Biomass };
+        public static string[] ResourcesStaticString = { "Hydrocarbons", "Cellulose", "Acid", "Biomass", "Mud" };
+        public enum ResourcesStatic  { Hydrocarbons, Cellulose, Protein, Acid, Biomass, Mud };
 
         //
         // Charactaristics assocaited with items

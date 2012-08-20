@@ -55,7 +55,6 @@
             this.panel2.Controls.Add(this.ui_Approach);
             this.panel2.Controls.Add(this.label5);
             this.panel2.Controls.Add(this.ui_SectorList);
-            this.panel2.Controls.Add(this.ui_SurveyObject);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Location = new System.Drawing.Point(7, 5);
             this.panel2.Name = "panel2";
@@ -110,7 +109,7 @@
             // 
             // ui_SurveyObject
             // 
-            this.ui_SurveyObject.Location = new System.Drawing.Point(6, 239);
+            this.ui_SurveyObject.Location = new System.Drawing.Point(3, 239);
             this.ui_SurveyObject.Name = "ui_SurveyObject";
             this.ui_SurveyObject.Size = new System.Drawing.Size(321, 23);
             this.ui_SurveyObject.TabIndex = 5;
@@ -145,6 +144,7 @@
             this.panel1.Controls.Add(this.ui_checkBox_other);
             this.panel1.Controls.Add(this.ui_checkBox_planets);
             this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.ui_SurveyObject);
             this.panel1.Controls.Add(this.ui_SystemList);
             this.panel1.Controls.Add(this.ui_Interaction);
             this.panel1.Location = new System.Drawing.Point(343, 5);
