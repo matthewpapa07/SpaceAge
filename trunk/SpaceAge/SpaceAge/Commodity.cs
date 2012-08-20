@@ -138,6 +138,7 @@ namespace SpaceAge
             // Next are resources, which fall under the commodity umbrella for now
             //
 
+
             NumOfCommodities = commoditiesTempList.Count;
 
             return commoditiesTempList.ToArray();

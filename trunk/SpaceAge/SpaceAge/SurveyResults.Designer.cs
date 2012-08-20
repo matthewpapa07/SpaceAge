@@ -35,14 +35,14 @@
             // 
             this.planetViewer1.Location = new System.Drawing.Point(12, 4);
             this.planetViewer1.Name = "planetViewer1";
-            this.planetViewer1.Size = new System.Drawing.Size(505, 263);
+            this.planetViewer1.Size = new System.Drawing.Size(592, 377);
             this.planetViewer1.TabIndex = 0;
             // 
             // SurveyResults
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(518, 267);
+            this.ClientSize = new System.Drawing.Size(601, 378);
             this.Controls.Add(this.planetViewer1);
             this.Name = "SurveyResults";
             this.Text = "SurveyResults";
