@@ -8,6 +8,7 @@ namespace SpaceAge
 {
     class MerchantSpaceShip : SpaceShip
     {
+        public static int MoneyChangedHands = 0;
         public static int START_SYSTEM_DISTANCE_AWAY = 5;
         // Data for what will hopefully become the state machine dictating AI action
         public enum MerchantShipState { Moving, Holding, Arrived, Idle };
@@ -118,6 +119,7 @@ namespace SpaceAge
                             rv.WhichStore.UserSellCommodity(rv.TypeOfCommodity, HowManyDoIHave);
                             SpaceShipCargo.RemoveCommodity(rv.TypeOfCommodity, HowManyDoIHave);
                             MerchantMoney += HowManyDoIHave * rv.Price;
+                            MoneyChangedHands += HowManyDoIHave * rv.Price;     // Diagnostic field
                         }
                         else
                         {
@@ -125,6 +127,7 @@ namespace SpaceAge
                             rv.WhichStore.UserSellCommodity(rv.TypeOfCommodity, HowManyCanISell);
                             SpaceShipCargo.RemoveCommodity(rv.TypeOfCommodity, HowManyCanISell);
                             MerchantMoney += HowManyCanISell * rv.Price;
+                            MoneyChangedHands += HowManyCanISell * rv.Price;    // Diagnostic field
                         }
                     }
                 }
@@ -159,12 +162,14 @@ namespace SpaceAge
                         rv.WhichStore.UserBuyCommodity(rv.TypeOfCommodity, HowManyCanIFit);
                         SpaceShipCargo.AddCommodity(rv.TypeOfCommodity, HowManyCanIFit);
                         MerchantMoney -= HowManyCanIFit * rv.Price;
+                        MoneyChangedHands += HowManyCanIFit * rv.Price;         // Diagnostic Field
                     }
                     else
                     {
                         rv.WhichStore.UserBuyCommodity(rv.TypeOfCommodity, HowManyCanIBuy);
                         SpaceShipCargo.AddCommodity(rv.TypeOfCommodity, HowManyCanIBuy);
                         MerchantMoney -= HowManyCanIBuy * rv.Price;
+                        MoneyChangedHands += HowManyCanIBuy * rv.Price;       // Diagnostic field
                     }
                 }
             }

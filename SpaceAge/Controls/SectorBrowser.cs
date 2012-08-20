@@ -64,7 +64,15 @@ namespace SpaceAge
 
         private void ui_SurveyObject_Click(object sender, EventArgs e)
         {
+            if (currentObject == null)
+                return;
+            if (!(currentObject is Planet))
+                return;
 
+            Planet p = (Planet)currentObject;
+            SurveyResults surveyResults = new SurveyResults();
+            surveyResults.SetSurveyObject(p);
+            surveyResults.Show();
         }
 
         public void UpdateStarSystemList()
@@ -165,10 +173,13 @@ namespace SpaceAge
                     }
                     else
                         ui_Interaction.Enabled = false;
+
+                    ui_SurveyObject.Enabled = true;
                 }
                 else
                 {
                     ui_Interaction.Enabled = false;
+                    ui_SurveyObject.Enabled = false;
                 }
                 //
                 // Add checks for other types to enable other buttons later
