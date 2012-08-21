@@ -116,7 +116,7 @@ namespace SpaceAge.Controls
             NeedToRefresh = false;
         }
 
-        -private void DrawPlanet()
+        private void DrawPlanet()
         {
         }
     }

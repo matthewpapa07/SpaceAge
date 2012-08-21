@@ -7,7 +7,7 @@ using System.Drawing;
 namespace SpaceAge
 {
 
-    public static class ObjectCharactaristics
+    static class ObjectCharactaristics
     {
         /// <summary>
         /// Stuff to have happen on first class usage
@@ -49,19 +49,39 @@ namespace SpaceAge
         //  ALSO UPDATE THE COMMODITY ENTRY WHEN UPDATING
         //
         public static string[] CommonAtmosphereString = { "Oxygen", "Hydrogen", "Methane", "SulphuricAcid", "CarbonDioxide", "Nitrogen", "Chlorine", "Helium"};
-        public enum CommonAtmosphere { Oxygen, Hydrogen, Methane, SulphuricAcid, CarbonDioxide, Nitrogen, Chlorine, Helium };
+        public enum CommonAtmosphere { Oxygen = 0, Hydrogen, Methane, SulphuricAcid, CarbonDioxide, Nitrogen, Chlorine, Helium };
+        public static Commodity.CommodityEnum CommonAtmosphereToC(CommonAtmosphere ca)
+        {
+            return Commodity.CommodityEnum.Oxygen + (int)ca;
+        }
 
         public static string[] RareAtmosphereString = { "Boron", "Neon", "Xenon", "Krypton" };
-        public enum RareAtmosphere { Boron, Neon, Xenon, Krypton };
+        public enum RareAtmosphere { Boron = 0, Neon, Xenon, Krypton };
+        public static Commodity.CommodityEnum RareAtmosphereToC(RareAtmosphere ra)
+        {
+            return Commodity.CommodityEnum.Boron + (int)ra;
+        }
 
         public static string[] CommonElementsString = { "Silicon", "Iron", "Carbon", "Copper", "Magnesium", "Sodium", "Sulfur", "Lead", "Nickel", "Amuninum" };
-        public enum CommonElements { Silicon, Iron, Carbon, Copper, Magnesium, Sodium, Sulfur, Lead, Nickel, Amuninum };
+        public enum CommonElements { Silicon = 0, Iron, Carbon, Copper, Magnesium, Sodium, Sulfur, Lead, Nickel, Amuninum };
+        public static Commodity.CommodityEnum CommonElementsToC(CommonElements ce)
+        {
+            return Commodity.CommodityEnum.Silicon + (int)ce;
+        }
 
         public static string[] RareElementsString = { "Titanium", "Neodymium", "Germanium", "Gallium", "Arsenic", "Strontium", "Gold", "Silver", "Platinum" };
-        public enum RareElements { Titanium, Neodymium, Germanium, Gallium, Arsenic, Strontium, Gold, Silver, Platinum };
+        public enum RareElements { Titanium = 0, Neodymium, Germanium, Gallium, Arsenic, Strontium, Gold, Silver, Platinum };
+        public static Commodity.CommodityEnum RareElementsToC(RareElements re)
+        {
+            return Commodity.CommodityEnum.Titanium + (int)re;
+        }
 
-        public static string[] ResourcesStaticString = { "Hydrocarbons", "Cellulose", "Acid", "Biomass", "Mud" };
-        public enum ResourcesStatic  { Hydrocarbons, Cellulose, Acid, Biomass, Mud };
+        public static string[] ResourcesStaticString = { "Hydrocarbons", "Cellulose", "Acid", "Biomass", "Mud", "Water", "Minerals" };
+        public enum ResourcesStatic  { Hydrocarbons = 0, Cellulose, Acid, Biomass, Mud, Water, Minerals };
+        public static Commodity.CommodityEnum ResourcesStaticToC(ResourcesStatic rs)
+        {
+            return Commodity.CommodityEnum.Hydrocarbons + (int)rs;
+        }
 
         //
         // Charactaristics assocaited with items
