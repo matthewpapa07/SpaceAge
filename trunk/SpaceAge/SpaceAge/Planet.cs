@@ -83,11 +83,11 @@ namespace SpaceAge
 
             // The following code generates somewhat of productivity factors for any commerce and mining
             // Start off with gasses. That will be hard
-            double wholefraction = 1.0;
-            double partialfraction = 0.0;
+            //double wholefraction = 1.0;
+            //double partialfraction = 0.0;
             for (int i = (CommonAtmosphere.Length - 1); i >= 0 ; i--)
             {
-                wholefraction = 8.0;
+            //    wholefraction = 8.0;
                 CommonAtmosphereQuantity[i] = 0;
             }
             for (int i = (RareAtmosphere.Length - 1); i >= 0 ; i--)

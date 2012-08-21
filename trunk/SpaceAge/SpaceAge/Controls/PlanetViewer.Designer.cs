@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.sdgsdgasgasfg = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.ui_planetViewerPanel = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.listview_elementResources = new System.Windows.Forms.ListView();
             this.asfgfsagafsg = new System.Windows.Forms.Label();
@@ -38,7 +38,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.panel1.SuspendLayout();
+            this.ui_planetPosition = new System.Windows.Forms.Label();
+            this.ui_planetSize = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.ui_lightSpectrum = new System.Windows.Forms.Label();
+            this.ui_planetViewerPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // sdgsdgasgasfg
@@ -50,13 +54,14 @@
             this.sdgsdgasgasfg.TabIndex = 0;
             this.sdgsdgasgasfg.Text = "Abundant Elements";
             // 
-            // panel1
+            // ui_planetViewerPanel
             // 
-            this.panel1.Controls.Add(this.label2);
-            this.panel1.Location = new System.Drawing.Point(13, 13);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(226, 231);
-            this.panel1.TabIndex = 1;
+            this.ui_planetViewerPanel.BackColor = System.Drawing.Color.Black;
+            this.ui_planetViewerPanel.Controls.Add(this.label2);
+            this.ui_planetViewerPanel.Location = new System.Drawing.Point(13, 13);
+            this.ui_planetViewerPanel.Name = "ui_planetViewerPanel";
+            this.ui_planetViewerPanel.Size = new System.Drawing.Size(226, 231);
+            this.ui_planetViewerPanel.TabIndex = 1;
             // 
             // label2
             // 
@@ -121,16 +126,56 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(10, 297);
+            this.label4.Location = new System.Drawing.Point(10, 285);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(63, 13);
             this.label4.TabIndex = 8;
             this.label4.Text = "Planet Size:";
             // 
+            // ui_planetPosition
+            // 
+            this.ui_planetPosition.AutoSize = true;
+            this.ui_planetPosition.Location = new System.Drawing.Point(96, 263);
+            this.ui_planetPosition.Name = "ui_planetPosition";
+            this.ui_planetPosition.Size = new System.Drawing.Size(44, 13);
+            this.ui_planetPosition.TabIndex = 9;
+            this.ui_planetPosition.Text = "Medium";
+            // 
+            // ui_planetSize
+            // 
+            this.ui_planetSize.AutoSize = true;
+            this.ui_planetSize.Location = new System.Drawing.Point(79, 285);
+            this.ui_planetSize.Name = "ui_planetSize";
+            this.ui_planetSize.Size = new System.Drawing.Size(33, 13);
+            this.ui_planetSize.TabIndex = 10;
+            this.ui_planetSize.Text = "Micro";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(10, 306);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(81, 13);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "Light Spectrum:";
+            // 
+            // ui_lightSpectrum
+            // 
+            this.ui_lightSpectrum.AutoSize = true;
+            this.ui_lightSpectrum.Location = new System.Drawing.Point(96, 306);
+            this.ui_lightSpectrum.Name = "ui_lightSpectrum";
+            this.ui_lightSpectrum.Size = new System.Drawing.Size(28, 13);
+            this.ui_lightSpectrum.TabIndex = 12;
+            this.ui_lightSpectrum.Text = "Blue";
+            // 
             // PlanetViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.ui_lightSpectrum);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.ui_planetSize);
+            this.Controls.Add(this.ui_planetPosition);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
@@ -138,12 +183,12 @@
             this.Controls.Add(this.listview_atmosphericGas);
             this.Controls.Add(this.asfgfsagafsg);
             this.Controls.Add(this.listview_elementResources);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.ui_planetViewerPanel);
             this.Controls.Add(this.sdgsdgasgasfg);
             this.Name = "PlanetViewer";
             this.Size = new System.Drawing.Size(591, 375);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.ui_planetViewerPanel.ResumeLayout(false);
+            this.ui_planetViewerPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -152,7 +197,7 @@
         #endregion
 
         private System.Windows.Forms.Label sdgsdgasgasfg;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel ui_planetViewerPanel;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ListView listview_elementResources;
         private System.Windows.Forms.Label asfgfsagafsg;
@@ -161,5 +206,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label ui_planetPosition;
+        private System.Windows.Forms.Label ui_planetSize;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label ui_lightSpectrum;
     }
 }

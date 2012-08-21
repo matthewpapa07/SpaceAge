@@ -41,6 +41,21 @@ namespace SpaceAge.Controls
             if (thisPlanet == null)
                 return;
 
+            ui_planetPosition.Text = ObjectCharactaristics.PositionString[(int)thisPlanet.planetPosition];
+            ui_planetSize.Text = ObjectCharactaristics.PlanetSizeString[(int)thisPlanet.planetSize];
+            String starColorText = "";
+            if (thisPlanet.parent.stars.Length == 1)
+            {
+                starColorText += ObjectCharactaristics.StarColorString[(int)thisPlanet.parent.stars[0].StarColor];
+            }
+            else
+            {
+                // Only two stars for now...
+                starColorText = ObjectCharactaristics.StarColorString[(int)thisPlanet.parent.stars[0].StarColor] +
+                    " and " + ObjectCharactaristics.StarColorString[(int)thisPlanet.parent.stars[1].StarColor];
+            }
+            ui_lightSpectrum.Text = starColorText;
+
             listview_elementResources.Columns.Clear();
             listview_elementResources.Columns.Add("Name", 120);
             listview_elementResources.Columns.Add("Volume");
@@ -96,7 +111,13 @@ namespace SpaceAge.Controls
             }
             listview_naturalResources.Items.AddRange(resourcesList.ToArray());
 
+            DrawPlanet();
+
             NeedToRefresh = false;
+        }
+
+        -private void DrawPlanet()
+        {
         }
     }
 }

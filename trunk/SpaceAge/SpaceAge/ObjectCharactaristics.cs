@@ -25,7 +25,7 @@ namespace SpaceAge
         //
         // Commonly Associated with Stars
         //
-        public static string[] StarTypeString = { "White", "Brown", "Orange", "Yellow", "Blue", "Red" };
+        public static string[] StarColorString = { "White", "Brown", "Orange", "Yellow", "Blue", "Red" };
         public enum StarType { White, Brown, Orange, Yellow, Blue, Red };
         public static SolidBrush[] StarTypeBrushes;     // Populate on construction
 
@@ -45,7 +45,8 @@ namespace SpaceAge
         public enum Position { Inner, Middle, Outer, Rogue };                     // Position of planet from star
 
         //
-        // Common resources on planet. Add these to commodity too when updating
+        // Common resources on planet.
+        //  ALSO UPDATE THE COMMODITY ENTRY WHEN UPDATING
         //
         public static string[] CommonAtmosphereString = { "Oxygen", "Hydrogen", "Methane", "SulphuricAcid", "CarbonDioxide", "Nitrogen", "Chlorine", "Helium"};
         public enum CommonAtmosphere { Oxygen, Hydrogen, Methane, SulphuricAcid, CarbonDioxide, Nitrogen, Chlorine, Helium };
@@ -57,10 +58,10 @@ namespace SpaceAge
         public enum CommonElements { Silicon, Iron, Carbon, Copper, Magnesium, Sodium, Sulfur, Lead, Nickel, Amuninum };
 
         public static string[] RareElementsString = { "Titanium", "Neodymium", "Germanium", "Gallium", "Arsenic", "Strontium", "Gold", "Silver", "Platinum" };
-        public enum RareElements { Titanium, Neodymium, Germanium, Gallium, Arsenic, Strontium, Gold, Silver, Platinum};
+        public enum RareElements { Titanium, Neodymium, Germanium, Gallium, Arsenic, Strontium, Gold, Silver, Platinum };
 
         public static string[] ResourcesStaticString = { "Hydrocarbons", "Cellulose", "Acid", "Biomass", "Mud" };
-        public enum ResourcesStatic  { Hydrocarbons, Cellulose, Protein, Acid, Biomass, Mud };
+        public enum ResourcesStatic  { Hydrocarbons, Cellulose, Acid, Biomass, Mud };
 
         //
         // Charactaristics assocaited with items

@@ -9,8 +9,8 @@ namespace SpaceAge
     {
         public static int GlobalStarNumber = 0;
         public int LocalStarNumber;
-        public ObjectCharactaristics.StarSize starSize;
-        public ObjectCharactaristics.StarType starType;
+        public ObjectCharactaristics.StarSize StarSize;
+        public ObjectCharactaristics.StarType StarColor;
 
         public StarSystem parent;
 
@@ -25,8 +25,8 @@ namespace SpaceAge
 
         public void generateStar()
         {
-            starSize = NumberGenerator.getInstance().RandomEnum<ObjectCharactaristics.StarSize>();
-            starType = NumberGenerator.getInstance().RandomEnum<ObjectCharactaristics.StarType>();
+            StarSize = NumberGenerator.getInstance().RandomEnum<ObjectCharactaristics.StarSize>();
+            StarColor = NumberGenerator.getInstance().RandomEnum<ObjectCharactaristics.StarType>();
         }
 
         public void setParent(StarSystem s)
