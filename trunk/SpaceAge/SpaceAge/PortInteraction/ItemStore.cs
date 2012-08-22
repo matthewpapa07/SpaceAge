@@ -14,6 +14,10 @@ namespace SpaceAge
         private int ItemStoreCash = 1000000000;     // 10 M starting cash
         public InteractionCenter Parent = null;
 
+        // *In parent: internal int[] commoditiesQuantitiy = new int[Commodity.allCommodities.Length];
+        private bool[] WillBuy = new bool[Commodity.allCommodities.Length];
+        private bool[] WillSell = new bool[Commodity.allCommodities.Length];
+
         //
         // Eventually make it to where the items are generated based on the 
         // charactaristics the store is present in
@@ -40,8 +44,10 @@ namespace SpaceAge
             {
                 int j = n.GetRandNumberInRange(MIN_STORAGE_FACTOR, MAX_STORAGE_FACTOR);
                 this.AddCommodity(allCommodities[i].CommodityType, (int)((n.GetRandNumberInRange(0, allCommodities[i].MaxQuantity))*storageSpaceFactor));
+                // This constructor by default should make everything available
+                WillSell[i] = true;
+                WillBuy[i] = true;
             }
-
         }
 
         public int QueryItemUserBuyPrice(Item i)
@@ -102,6 +108,11 @@ namespace SpaceAge
                 return true;
             }
             return false;
+        }
+
+        public bool CanUserSellCommodity(Commodity.CommodityEnum commodityType)
+        {
+            return WillBuy[(int)commodityType];
         }
 
         public bool UserSellCommodity(Commodity.CommodityEnum commodityType, int quantity)
