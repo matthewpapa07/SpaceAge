@@ -12,11 +12,11 @@ namespace SpaceAge
         public const int MIN_STORAGE_FACTOR = 5000;
 
         private int ItemStoreCash = 1000000000;     // 10 M starting cash
-        public InteractionCenter Parent = null;
+        public Object Parent = null;
 
         // *In parent: internal int[] commoditiesQuantitiy = new int[Commodity.allCommodities.Length];
         private bool[] WillBuy = new bool[Commodity.allCommodities.Length];
-        private bool[] WillSell = new bool[Commodity.allCommodities.Length];
+        //private bool[] WillSell = new bool[Commodity.allCommodities.Length];
 
         //
         // Eventually make it to where the items are generated based on the 
@@ -28,15 +28,28 @@ namespace SpaceAge
         /// </summary>
         double storageSpaceFactor = 0;
 
-        public ItemStore(InteractionCenter inParent) 
+        public ItemStore(Object inParent) 
             : base()
         {
             Commodity[] allCommodities = Commodity.allCommodities;
             NumberGenerator n = NumberGenerator.getInstance();
-            Parent = inParent;
-            // TODO: Change this when ItemStores can be on different objects besides planets
-            Parent.Parent.parent.parent.RegisteredItemStores.Add(this);
 
+            // Test type of parent
+            Parent = inParent;
+            bool foundType = false;
+            if (Parent is InteractionCenter)
+            {
+                (Parent as InteractionCenter).Parent.parent.parent.RegisteredItemStores.Add(this);
+                foundType = true;
+            }
+            if (Parent is RawMaterialExtractor)
+            {
+                (Parent as Planet).parent.parent.RegisteredItemStores.Add(this);
+                foundType = true;
+            }
+            if (!foundType)
+                throw new Exception();
+            
             storageSpaceFactor = n.GetRandNumberInRange(MIN_STORAGE_FACTOR, MAX_STORAGE_FACTOR);
             storageSpaceFactor /= MAX_STORAGE_FACTOR;
 
@@ -45,7 +58,7 @@ namespace SpaceAge
                 int j = n.GetRandNumberInRange(MIN_STORAGE_FACTOR, MAX_STORAGE_FACTOR);
                 this.AddCommodity(allCommodities[i].CommodityType, (int)((n.GetRandNumberInRange(0, allCommodities[i].MaxQuantity))*storageSpaceFactor));
                 // This constructor by default should make everything available
-                WillSell[i] = true;
+                //WillSell[i] = true;
                 WillBuy[i] = true;
             }
         }
@@ -71,6 +84,11 @@ namespace SpaceAge
         }
         public int QueryCommodityUserSellPrice(Commodity.CommodityEnum commodityType)
         {
+            if (!CanUserSellCommodity(commodityType))
+            {
+                Console.WriteLine("Warning, entity is querying sell price for item it cannot sell");
+                return 0;
+            }
             Commodity CM = Commodity.getCommodityFromEnum(commodityType);
             int baseVal = CM.BaseValue;
             int availableQuantity = this.commoditiesQuantitiy[(int)commodityType];
@@ -117,6 +135,9 @@ namespace SpaceAge
 
         public bool UserSellCommodity(Commodity.CommodityEnum commodityType, int quantity)
         {
+            if (!CanUserSellCommodity(commodityType))
+                return false;
+
             if(this.AddCommodity(commodityType,quantity))
             {
                 ItemStoreCash -= QueryCommodityUserSellPrice(commodityType);
@@ -125,6 +146,10 @@ namespace SpaceAge
             return false;
         }
 
+        /// <summary>
+        /// Set columns for a listview that shows commodities 
+        /// </summary>
+        /// <param name="targetListView"></param>
         public override void SetCommodityListViewColumns(ListView targetListView)
         {
             targetListView.Columns.Clear();

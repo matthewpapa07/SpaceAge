@@ -13,8 +13,7 @@ namespace SpaceAge
         public VectorTypeEnum VectorType;
         public Commodity.CommodityEnum TypeOfCommodity;
         public ItemStore WhichStore;
-        public Planet WhichPlanet;      // Replace with interface later
-        public InteractionCenter WhichCenter;
+
         public int Quantity;
         public int Price;
 
@@ -23,8 +22,6 @@ namespace SpaceAge
             TypeOfCommodity = inTypeOfCommodity;
             WhichStore = inWhichStore;
             Quantity = WhichStore.CommoditiesAvailable(TypeOfCommodity);
-            WhichCenter = inWhichStore.Parent;
-            WhichPlanet = WhichCenter.Parent;
             VectorType = inVectorType;
             if(VectorType == VectorTypeEnum.BuyVector)
                 Price = WhichStore.QueryCommodityUserBuyPrice(inTypeOfCommodity);
@@ -67,12 +64,12 @@ namespace SpaceAge
                 return null;
             }
 
-            TargetStore = InSector.RegisteredItemStores[0];
-            RunningPrice = InSector.RegisteredItemStores[0].QueryCommodityUserSellPrice(CommodityType);
+            RunningPrice = 0;
+            TargetStore = InSector.RegisteredItemStores[0]; // Return the only one for now....
 
-            for (int i = 1; i < InSector.RegisteredItemStores.Count; i++)
+            for (int i = 0; i < InSector.RegisteredItemStores.Count; i++)
             {
-                if (InSector.RegisteredItemStores[i].QueryCommodityUserBuyPrice(CommodityType) > RunningPrice)
+                if ((InSector.RegisteredItemStores[i].CanUserSellCommodity(CommodityType)) && (InSector.RegisteredItemStores[i].QueryCommodityUserBuyPrice(CommodityType) > RunningPrice))
                 {
                     TargetStore = InSector.RegisteredItemStores[i];
                     RunningPrice = InSector.RegisteredItemStores[i].QueryCommodityUserSellPrice(CommodityType);

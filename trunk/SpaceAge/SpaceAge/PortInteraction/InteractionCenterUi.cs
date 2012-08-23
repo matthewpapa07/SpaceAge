@@ -126,7 +126,15 @@ namespace SpaceAge
                     CE = SC.GetCommodityAtListViewIndex(Market_ShipCommodities.SelectedItems[0].ImageIndex);
                     Market_ShipCommodity_Index = Market_ShipCommodities.SelectedItems[0].ImageIndex;
                     Market_ShipCommodity_Selected = CE;
-                    TotalSellPrice = NumToSell * IS.QueryCommodityUserSellPrice(CE);
+                    // Make sure the current store buys these before querying for price
+                    if (thisInteractionCenter.thisStore.CanUserSellCommodity(CE))
+                    {
+                        TotalSellPrice = NumToSell * IS.QueryCommodityUserSellPrice(CE);
+                    }
+                    else
+                    {
+                        TotalSellPrice = 0;
+                    }
                 }
 
                 BuyPrice.Text = TotalBuyPrice.ToString();
@@ -171,6 +179,10 @@ namespace SpaceAge
 
         private void InteractionCenter_SellButton_Click(object sender, EventArgs e)
         {
+            // Make sure the store is actually buying these commodities
+            if(!thisInteractionCenter.thisStore.CanUserSellCommodity(Market_ShipCommodity_Selected))
+                return; // TODO: error message
+
             ItemStore IS = thisInteractionCenter.thisStore;
             CargoItemList SC = UserState.PlayerShip.SpaceShipCargo;
 
@@ -179,7 +191,7 @@ namespace SpaceAge
 
             if ((IS.GetItemStoreCash() - MoneyToUser) < 0)
             {
-                // Fail Message Here
+                // TODO: Fail Message Here
                 return;
             }
 
