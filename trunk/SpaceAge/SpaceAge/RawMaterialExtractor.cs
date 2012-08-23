@@ -21,14 +21,18 @@ namespace SpaceAge
         //Hydrocarbons, Cellulose, Acid, Biomass, Mud                                             // ResourcesStatic
         //
         Planet Parent;
-        Commodity.CommodityEnum ProducedCommodities;
+        Commodity ProducedResourceCommodity;
         ItemStore ExtractorStore;
 
-        // This is the constructor that will be automatically applied
-        public RawMaterialExtractor(Planet inParent)
+        // This is the constructor that will be automatically applied. Cast enum to get inResourceCommodityIndex
+        public RawMaterialExtractor(Planet inParent, ObjectCharactaristics.ResourceCommodityType r, int inResourceCommodityIndex)
         {
             // For now do not allow inhabited planets to be exploited
             if (Parent.IsInhabited)
+                throw new Exception();
+
+            ProducedResourceCommodity = Commodity.GetCommodityFromResource(r, inResourceCommodityIndex);
+            if (ProducedResourceCommodity == null || !ProducedResourceCommodity.IsResource)
                 throw new Exception();
 
             Parent = inParent;

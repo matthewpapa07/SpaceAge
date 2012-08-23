@@ -236,5 +236,30 @@ namespace SpaceAge
 
             return commoditiesTempList.ToArray();
         }
+
+        public static Commodity GetCommodityFromResource(ObjectCharactaristics.ResourceCommodityType RcType, int value)
+        {
+            switch (RcType)
+            {
+                case ObjectCharactaristics.ResourceCommodityType.CommonAtmosphere:
+                    getCommodityFromEnum(ObjectCharactaristics.CommonAtmosphereToC((ObjectCharactaristics.CommonAtmosphere)value));
+                    break;
+                case ObjectCharactaristics.ResourceCommodityType.RareAtmosphere:
+                     getCommodityFromEnum(ObjectCharactaristics.RareAtmosphereToC((ObjectCharactaristics.RareAtmosphere)value));
+                    break;
+                case ObjectCharactaristics.ResourceCommodityType.CommonElement:
+                     getCommodityFromEnum(ObjectCharactaristics.CommonElementToC((ObjectCharactaristics.CommonElements)value));
+                    break;
+                case ObjectCharactaristics.ResourceCommodityType.RareElement:
+                     getCommodityFromEnum(ObjectCharactaristics.RareElementToC((ObjectCharactaristics.RareElements)value));
+                    break;
+                case ObjectCharactaristics.ResourceCommodityType.ResourceStatic:
+                     getCommodityFromEnum(ObjectCharactaristics.ResourcesStaticToC((ObjectCharactaristics.ResourcesStatic)value));
+                    break;
+                case default:
+                    throw new Exception();
+                    break;
+            }
+        }
     }
 }

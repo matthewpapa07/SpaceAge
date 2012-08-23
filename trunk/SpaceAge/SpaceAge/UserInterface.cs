@@ -96,34 +96,24 @@ namespace SpaceAge
 
             if (key > 0)
             {
-                Console.WriteLine("Key pressed: " + key);
+                //Console.WriteLine("Key pressed: " + key);
                 switch (key)
                 {
                     case 'w':       // Up
-                        if (UserState.moveUp() == Constants.FAILURE)
-                            return;
-                        uiMap1.drawMap();
-                        UpdateUi();
+                        UserState.moveUp();
                         break;
                     case 's':       // Down
-                        if (UserState.moveDown() == Constants.FAILURE)
-                            return;
-                        uiMap1.drawMap();
-                        UpdateUi();
+                        UserState.moveDown();
                         break;
                     case 'a':       // Left
-                        if (UserState.moveLeft() == Constants.FAILURE)
-                            return;
-                        uiMap1.drawMap();
-                        UpdateUi();
+                        UserState.moveLeft();
                         break;
                     case 'd':       // Right
-                        if (UserState.moveRight() == Constants.FAILURE)
-                            return;
-                        uiMap1.drawMap();
-                        UpdateUi();
+                        UserState.moveRight();
                         break;
                 }
+                uiMap1.drawMap();
+                UpdateUi();
             }
         }
 
