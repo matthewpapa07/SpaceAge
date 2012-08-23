@@ -38,12 +38,14 @@
             this.userFuelMeter1 = new SpaceAge.UserFuelMeter();
             this.uiMap1 = new SpaceAge.UiMap();
             this.uiShipInventory1 = new SpaceAge.Controls.UiInventory();
+            this.label2 = new System.Windows.Forms.Label();
+            this.ui_Time = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(589, 9);
+            this.label1.Location = new System.Drawing.Point(590, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(61, 13);
             this.label1.TabIndex = 1;
@@ -70,7 +72,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(589, 26);
+            this.label4.Location = new System.Drawing.Point(590, 26);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(42, 13);
             this.label4.TabIndex = 8;
@@ -87,7 +89,7 @@
             // 
             // visitSectorButton
             // 
-            this.visitSectorButton.Location = new System.Drawing.Point(590, 51);
+            this.visitSectorButton.Location = new System.Drawing.Point(592, 81);
             this.visitSectorButton.Name = "visitSectorButton";
             this.visitSectorButton.Size = new System.Drawing.Size(281, 26);
             this.visitSectorButton.TabIndex = 13;
@@ -97,7 +99,7 @@
             // 
             // spaceshipStatus1
             // 
-            this.spaceshipStatus1.Location = new System.Drawing.Point(592, 83);
+            this.spaceshipStatus1.Location = new System.Drawing.Point(592, 123);
             this.spaceshipStatus1.Name = "spaceshipStatus1";
             this.spaceshipStatus1.Size = new System.Drawing.Size(368, 312);
             this.spaceshipStatus1.TabIndex = 12;
@@ -123,11 +125,31 @@
             this.uiShipInventory1.Size = new System.Drawing.Size(334, 235);
             this.uiShipInventory1.TabIndex = 14;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(590, 43);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(33, 13);
+            this.label2.TabIndex = 14;
+            this.label2.Text = "Time:";
+            // 
+            // ui_Time
+            // 
+            this.ui_Time.AutoSize = true;
+            this.ui_Time.Location = new System.Drawing.Point(656, 43);
+            this.ui_Time.Name = "ui_Time";
+            this.ui_Time.Size = new System.Drawing.Size(44, 13);
+            this.ui_Time.TabIndex = 15;
+            this.ui_Time.Text = "ui_Time";
+            // 
             // UserInterface
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(972, 646);
+            this.Controls.Add(this.ui_Time);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.visitSectorButton);
             this.Controls.Add(this.spaceshipStatus1);
             this.Controls.Add(this.ui_Credits);
@@ -158,6 +180,8 @@
         private SpaceshipStatus spaceshipStatus1;
         private System.Windows.Forms.Button visitSectorButton;
         private Controls.UiInventory uiShipInventory1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label ui_Time;
 
 
 

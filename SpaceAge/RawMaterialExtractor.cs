@@ -5,6 +5,7 @@ using System.Text;
 
 namespace SpaceAge
 {
+    // Will go on planets and moons (todo) for now
     class RawMaterialExtractor
     {
         //
@@ -19,16 +20,19 @@ namespace SpaceAge
         //Titanium, Neodymium, Germanium, Gallium, Arsenic, Strontium, Gold, Silver, Platinum,    // RareElements
         //Hydrocarbons, Cellulose, Acid, Biomass, Mud                                             // ResourcesStatic
         //
-
+        Planet Parent;
         Commodity.CommodityEnum ProducedCommodities;
+        ItemStore ExtractorStore;
 
-        public RawMaterialExtractor(Planet p)
+        // This is the constructor that will be automatically applied
+        public RawMaterialExtractor(Planet inParent)
         {
             // For now do not allow inhabited planets to be exploited
-            if (p.IsInhabited)
+            if (Parent.IsInhabited)
                 throw new Exception();
 
-
+            Parent = inParent;
+            ExtractorStore = new ItemStore(this);
         }
 
         
