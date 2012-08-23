@@ -64,14 +64,14 @@ namespace SpaceAge
 
         public static string[] CommonElementsString = { "Silicon", "Iron", "Carbon", "Copper", "Magnesium", "Sodium", "Sulfur", "Lead", "Nickel", "Amuninum" };
         public enum CommonElements { Silicon = 0, Iron, Carbon, Copper, Magnesium, Sodium, Sulfur, Lead, Nickel, Amuninum };
-        public static Commodity.CommodityEnum CommonElementsToC(CommonElements ce)
+        public static Commodity.CommodityEnum CommonElementToC(CommonElements ce)
         {
             return Commodity.CommodityEnum.Silicon + (int)ce;
         }
 
         public static string[] RareElementsString = { "Titanium", "Neodymium", "Germanium", "Gallium", "Arsenic", "Strontium", "Gold", "Silver", "Platinum" };
         public enum RareElements { Titanium = 0, Neodymium, Germanium, Gallium, Arsenic, Strontium, Gold, Silver, Platinum };
-        public static Commodity.CommodityEnum RareElementsToC(RareElements re)
+        public static Commodity.CommodityEnum RareElementToC(RareElements re)
         {
             return Commodity.CommodityEnum.Titanium + (int)re;
         }
@@ -82,6 +82,9 @@ namespace SpaceAge
         {
             return Commodity.CommodityEnum.Hydrocarbons + (int)rs;
         }
+
+        // Finally an enum to give the right offset for each enum
+        public enum ResourceCommodityType { CommonAtmosphere = 0, RareAtmosphere, CommonElement, RareElement, ResourceStatic };
 
         //
         // Charactaristics assocaited with items

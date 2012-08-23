@@ -118,7 +118,6 @@ namespace SpaceAge
                                 }
                                 if ((thisSector.getNumOfSystems() >= 1) && (thisSector.getNumOfSystems() <= 3))
                                 {
-                                    g.FillRectangle(hatchBrush, theGrid[CurrentRow, CurrentCol]);
                                     g.DrawImage(staticGraphics.fewSystems, theGrid[CurrentRow, CurrentCol]);
                                 }
                                 if (thisSector.getNumOfSystems() > 3)
