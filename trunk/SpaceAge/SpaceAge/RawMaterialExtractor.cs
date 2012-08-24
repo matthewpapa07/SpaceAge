@@ -45,7 +45,7 @@ namespace SpaceAge
                 throw new Exception();
 
             Parent = inParent;
-            //ExtractorStore = new ItemStore(this); // Do this in driver
+            ExtractorStore = new ItemStore(this);
         }
 
         public void Live()

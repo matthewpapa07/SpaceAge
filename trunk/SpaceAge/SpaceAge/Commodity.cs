@@ -256,10 +256,10 @@ namespace SpaceAge
                 case ObjectCharactaristics.ResourceCommodityType.ResourceStatic:
                      getCommodityFromEnum(ObjectCharactaristics.ResourcesStaticToC((ObjectCharactaristics.ResourcesStatic)value));
                     break;
-                case default:
+                default:
                     throw new Exception();
-                    break;
             }
+            return null;
         }
     }
 }

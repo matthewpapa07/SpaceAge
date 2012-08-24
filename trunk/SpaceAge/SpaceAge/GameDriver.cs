@@ -58,6 +58,10 @@ namespace SpaceAge
                     // TODO: Stuff or each sector
                     //
                 }
+                foreach (RawMaterialExtractor r in AllExtractors)
+                {
+                    r.Live();
+                }
                 foreach (MerchantSpaceShip mss in AllShips)
                 {
                     mss.Live();

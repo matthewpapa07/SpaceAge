@@ -30,8 +30,8 @@ namespace SpaceAge
 
         public void Live()
         {
-            if (MerchantId == 120)
-                Console.WriteLine("Tracking ship 120");
+            //if (MerchantId == 120)
+            //    Console.WriteLine("Tracking ship 120");
             switch (ShipState)
             {
                 case MerchantShipState.Holding:
@@ -45,8 +45,8 @@ namespace SpaceAge
                     break;
                 case MerchantShipState.Arrived:
                     ConductCommerce();
-                    if (MerchantId == 120)
-                        Console.WriteLine("Ship 120 arrived at " + CurrentSector.SectorGridLocation.ToString());
+                    //if (MerchantId == 120)
+                    //    Console.WriteLine("Ship 120 arrived at " + CurrentSector.SectorGridLocation.ToString());
                     break;
                 default:
                     VerifyHold();
@@ -91,6 +91,7 @@ namespace SpaceAge
 
         private void ConductCommerce()
         {
+            bool Status = false;
             // Make sure there are stores here, if not leave this state
             if (CurrentSector.RegisteredItemStores.Count == 0)
             {
@@ -116,7 +117,11 @@ namespace SpaceAge
                         if (HowManyCanISell >= HowManyDoIHave)
                         {
                             // Case 1 sell everything that the merchant can unload
-                            rv.WhichStore.UserSellCommodity(rv.TypeOfCommodity, HowManyDoIHave);
+                            Status = rv.WhichStore.UserSellCommodity(rv.TypeOfCommodity, HowManyDoIHave);
+                            if (!Status)
+                            {
+                                Console.WriteLine("Debug: There was a problem selling");
+                            }
                             SpaceShipCargo.RemoveCommodity(rv.TypeOfCommodity, HowManyDoIHave);
                             MerchantMoney += HowManyDoIHave * rv.Price;
                             MoneyChangedHands += HowManyDoIHave * rv.Price;     // Diagnostic field
@@ -159,7 +164,11 @@ namespace SpaceAge
 
                     if (HowManyCanIBuy >= HowManyCanIFit)
                     {
-                        rv.WhichStore.UserBuyCommodity(rv.TypeOfCommodity, HowManyCanIFit);
+                        Status = rv.WhichStore.UserBuyCommodity(rv.TypeOfCommodity, HowManyCanIFit);
+                        if (!Status)
+                        {
+                            Console.WriteLine("Debug: There was a problem buying");
+                        }
                         SpaceShipCargo.AddCommodity(rv.TypeOfCommodity, HowManyCanIFit);
                         MerchantMoney -= HowManyCanIFit * rv.Price;
                         MoneyChangedHands += HowManyCanIFit * rv.Price;         // Diagnostic Field
