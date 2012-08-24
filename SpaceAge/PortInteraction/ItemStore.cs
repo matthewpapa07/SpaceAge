@@ -15,8 +15,8 @@ namespace SpaceAge
         public Object Parent = null;
 
         // *In parent: internal int[] commoditiesQuantitiy = new int[Commodity.allCommodities.Length];
-        private bool[] WillBuy = new bool[Commodity.allCommodities.Length];
-        //private bool[] WillSell = new bool[Commodity.allCommodities.Length];
+        public bool[] WillBuy = new bool[Commodity.allCommodities.Length];
+        public bool[] WillSell = new bool[Commodity.allCommodities.Length];
 
         //
         // Eventually make it to where the items are generated based on the 
@@ -60,6 +60,7 @@ namespace SpaceAge
                 // This constructor by default should make everything available
                 //WillSell[i] = true;
                 WillBuy[i] = true;
+                WillSell[i] = true;
             }
         }
 
@@ -118,8 +119,16 @@ namespace SpaceAge
             return false;
         }
 
+        public bool CanUserBuyCommodity(Commodity.CommodityEnum commodityType)
+        {
+            return WillSell[(int)commodityType];
+        }
+
         public bool UserBuyCommodity(Commodity.CommodityEnum commodityType, int quantity)
         {
+            if (!CanUserBuyCommodity(commodityType))
+                return false;
+
             if (this.RemoveCommodity(commodityType, quantity))
             {
                 ItemStoreCash += QueryCommodityUserBuyPrice(commodityType);

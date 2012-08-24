@@ -39,12 +39,12 @@ namespace SpaceAge
                 return null;
             }
 
+            RunningPrice = int.MaxValue;        //Hard limit. Hopefully this is good for now....
             TargetStore = InSector.RegisteredItemStores[0];
-            RunningPrice = InSector.RegisteredItemStores[0].QueryCommodityUserBuyPrice(CommodityType);
 
             for (int i = 1; i < InSector.RegisteredItemStores.Count; i++)
             {
-                if (InSector.RegisteredItemStores[i].QueryCommodityUserBuyPrice(CommodityType) < RunningPrice)
+                if ((InSector.RegisteredItemStores[i].CanUserBuyCommodity(CommodityType)) && (InSector.RegisteredItemStores[i].QueryCommodityUserBuyPrice(CommodityType) < RunningPrice))
                 {
                     TargetStore = InSector.RegisteredItemStores[i];
                     RunningPrice = InSector.RegisteredItemStores[i].QueryCommodityUserBuyPrice(CommodityType);
@@ -121,6 +121,45 @@ namespace SpaceAge
             }
             else
                 return false;
+        }
+
+        // Fairly inefficient function, be sure and call sparingly
+        public static Planet[] GetPlanetsWithResources(Sector s)
+        {
+            List<Planet> planetsWithRec = new List<Planet>(5);
+            foreach (StarSystem ss in s.StarSystemsList)
+            {
+                foreach (Planet p in ss.planets)
+                {
+                    if (p.CommonAtmosphere.Length > 0)
+                    {
+                        planetsWithRec.Add(p);
+                        continue;
+                    }
+                    if (p.RareAtmosphere.Length > 0)
+                    {
+                        planetsWithRec.Add(p);
+                        continue;
+                    }
+                    if (p.CommonElements.Length > 0)
+                    {
+                        planetsWithRec.Add(p);
+                        continue;
+                    }
+                    if (p.RareElements.Length > 0)
+                    {
+                        planetsWithRec.Add(p);
+                        continue;
+                    }
+                    if (p.ResourcesStatic.Length > 0)
+                    {
+                        planetsWithRec.Add(p);
+                        continue;
+                    }
+                }
+            }
+
+            return planetsWithRec.ToArray();
         }
     }
 }
