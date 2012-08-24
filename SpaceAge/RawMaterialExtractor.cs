@@ -24,6 +24,15 @@ namespace SpaceAge
         Commodity ProducedResourceCommodity;
         ItemStore ExtractorStore;
 
+        public int ExtractorCash = 10000000;
+
+        // These numbers will be stored in the commodity, but for now they are constants
+        int FuelUsedPerProductionCycle = 5;
+        int NumberProducedPerCycle = 1;
+        int ProductionCycleLength = 1;
+
+        int CycleCount = 0;
+
         // This is the constructor that will be automatically applied. Cast enum to get inResourceCommodityIndex
         public RawMaterialExtractor(Planet inParent, ObjectCharactaristics.ResourceCommodityType r, int inResourceCommodityIndex)
         {
@@ -36,9 +45,23 @@ namespace SpaceAge
                 throw new Exception();
 
             Parent = inParent;
-            ExtractorStore = new ItemStore(this);
+            //ExtractorStore = new ItemStore(this); // Do this in driver
         }
 
-        
+        public void Live()
+        {
+            CycleCount++;
+            if (CycleCount % ProductionCycleLength != 0)
+            {
+                return;
+            }
+
+            int FuelAvailable = ExtractorStore.CommoditiesAvailable(Commodity.CommodityEnum.Fuel);
+            if (FuelAvailable / FuelUsedPerProductionCycle > 1)
+            {
+                ExtractorStore.RemoveCommodity(Commodity.CommodityEnum.Fuel, FuelUsedPerProductionCycle);
+                ExtractorStore.AddCommodity(ProducedResourceCommodity.CommodityType, NumberProducedPerCycle);
+            }
+        }
     }
 }

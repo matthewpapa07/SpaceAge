@@ -9,7 +9,8 @@ namespace SpaceAge
     {
         public static int DAYS_PER_TICK = 1;
         static NumberGenerator numGenerator = NumberGenerator.getInstance();
-        static List<MerchantSpaceShip> AllShips = new List<MerchantSpaceShip>(200);
+        public static List<MerchantSpaceShip> AllShips = new List<MerchantSpaceShip>(200);
+        public static List<RawMaterialExtractor> AllExtractors = new List<RawMaterialExtractor>(200);
         public static long Time = 0; // Keep track of game time. Could go in userstate too
 
         public static TimeSpan TimePeriod = TimeSpan.FromDays(1);
