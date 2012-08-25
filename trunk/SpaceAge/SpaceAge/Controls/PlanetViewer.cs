@@ -41,18 +41,18 @@ namespace SpaceAge.Controls
             if (thisPlanet == null)
                 return;
 
-            ui_planetPosition.Text = ObjectCharactaristics.PositionString[(int)thisPlanet.planetPosition];
-            ui_planetSize.Text = ObjectCharactaristics.PlanetSizeString[(int)thisPlanet.planetSize];
+            ui_planetPosition.Text = ObjectCharactaristics.PositionString[(int)thisPlanet.PlanetPosition];
+            ui_planetSize.Text = ObjectCharactaristics.PlanetSizeString[(int)thisPlanet.PlanetSize];
             String starColorText = "";
-            if (thisPlanet.parent.stars.Length == 1)
+            if (thisPlanet.Parent.stars.Length == 1)
             {
-                starColorText += ObjectCharactaristics.StarColorString[(int)thisPlanet.parent.stars[0].StarColor];
+                starColorText += ObjectCharactaristics.StarColorString[(int)thisPlanet.Parent.stars[0].StarColor];
             }
             else
             {
                 // Only two stars for now...
-                starColorText = ObjectCharactaristics.StarColorString[(int)thisPlanet.parent.stars[0].StarColor] +
-                    " and " + ObjectCharactaristics.StarColorString[(int)thisPlanet.parent.stars[1].StarColor];
+                starColorText = ObjectCharactaristics.StarColorString[(int)thisPlanet.Parent.stars[0].StarColor] +
+                    " and " + ObjectCharactaristics.StarColorString[(int)thisPlanet.Parent.stars[1].StarColor];
             }
             ui_lightSpectrum.Text = starColorText;
 

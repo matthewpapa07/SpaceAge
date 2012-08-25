@@ -12,8 +12,11 @@ namespace SpaceAge
 
         public static int GlobalPlanetNumber = 0;
         public int LocalPlanetNumber;
-        public ObjectCharactaristics.PlanetSize planetSize;
-        public ObjectCharactaristics.Position planetPosition;
+
+        // Planet resource data
+        // TODO: Refactor out and up a ResourceBearing object so other things besides planets can be harvested
+        public ObjectCharactaristics.PlanetSize PlanetSize;
+        public ObjectCharactaristics.Position PlanetPosition;
         public ObjectCharactaristics.CommonAtmosphere[] CommonAtmosphere;
         public ObjectCharactaristics.RareAtmosphere[] RareAtmosphere;
         public ObjectCharactaristics.CommonElements[] CommonElements;
@@ -24,8 +27,10 @@ namespace SpaceAge
         public int[] CommonElementsQuantity;
         public int[] RareElementsQuantity;
         public int[] ResourcesStaticQuantity;
-        public StarSystem parent;
-        public InteractionCenter planetInteractionCenter = null;       // Allow for multiple of these later...
+
+        public StarSystem Parent;
+        public InteractionCenter PlanetInteractionCenter = null;       // Allow for multiple of these later...
+        public List<RawMaterialExtractor> PlanetExtractors = new List<RawMaterialExtractor>(2);
         public bool IsInhabited = false;
         public int Population = 0;
 
@@ -33,7 +38,7 @@ namespace SpaceAge
         {
             if (s == null)
                 throw new Exception();
-            parent = s;
+            Parent = s;
             LocalPlanetNumber = GlobalPlanetNumber++;
             this.generatePlanet();
         }
@@ -42,8 +47,8 @@ namespace SpaceAge
         {
             NumberGenerator n = NumberGenerator.getInstance();
 
-            planetSize = n.RandomEnum<ObjectCharactaristics.PlanetSize>();
-            planetPosition = n.RandomEnum<ObjectCharactaristics.Position>();
+            PlanetSize = n.RandomEnum<ObjectCharactaristics.PlanetSize>();
+            PlanetPosition = n.RandomEnum<ObjectCharactaristics.Position>();
 
             generateResources();
 
@@ -60,7 +65,7 @@ namespace SpaceAge
                     {
                         Population = n.GetRandNumberInRange(0, 5000000);
                     }
-                    planetInteractionCenter = new InteractionCenter("Planet" + this.ToString() + " Interaction Center", this);
+                    PlanetInteractionCenter = new InteractionCenter("Planet" + this.ToString() + " Interaction Center", this);
                 }
             }
         }
@@ -109,6 +114,59 @@ namespace SpaceAge
                 ResourcesStaticQuantity[i] = n.GetRandNumberInRange(1, 25);
             }
 
+        }
+        
+
+        // Helper method to find the productivity value of a certain harvestable resource commodity
+        public int FindProductivityOfInternalResource(ObjectCharactaristics.ResourceCommodityType rct, int rct_index)
+        {
+            switch (rct)
+            {
+                case ObjectCharactaristics.ResourceCommodityType.CommonAtmosphere:
+                    ObjectCharactaristics.CommonAtmosphere tempCA = (ObjectCharactaristics.CommonAtmosphere)rct_index;
+                    for (int i = 0; i < CommonAtmosphere.Length; i++)
+                    {
+                        if (CommonAtmosphere[i] == tempCA)
+                            return CommonAtmosphereQuantity[i];
+                    }
+                    break;
+                case ObjectCharactaristics.ResourceCommodityType.RareAtmosphere:
+                    ObjectCharactaristics.RareAtmosphere tempRA = (ObjectCharactaristics.RareAtmosphere)rct_index;
+                    for (int i = 0; i < RareAtmosphere.Length; i++)
+                    {
+                        if (RareAtmosphere[i] == tempRA)
+                            return RareAtmosphereQuantity[i];
+                    }
+                    break;
+                case ObjectCharactaristics.ResourceCommodityType.CommonElement:
+                    ObjectCharactaristics.CommonElements tempCE = (ObjectCharactaristics.CommonElements)rct_index;
+                    for (int i = 0; i < CommonElements.Length; i++)
+                    {
+                        if (CommonElements[i] == tempCE)
+                            return CommonElementsQuantity[i];
+                    }
+                    break;
+                case ObjectCharactaristics.ResourceCommodityType.RareElement:
+                    ObjectCharactaristics.RareElements tempRE = (ObjectCharactaristics.RareElements)rct_index;
+                    for (int i = 0; i < RareElements.Length; i++)
+                    {
+                        if (RareElements[i] == tempRE)
+                            return RareElementsQuantity[i];
+                    }
+                    break;
+                case ObjectCharactaristics.ResourceCommodityType.ResourceStatic:
+                    ObjectCharactaristics.ResourcesStatic tempRS = (ObjectCharactaristics.ResourcesStatic)rct_index;
+                    for (int i = 0; i < ResourcesStatic.Length; i++)
+                    {
+                        if (ResourcesStatic[i] == tempRS)
+                            return ResourcesStaticQuantity[i];
+                    }
+                    break;
+                default:
+                    throw new Exception();
+            }
+            // we should not get here....
+            throw new Exception();
         }
 
         public override string ToString()

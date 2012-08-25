@@ -8,7 +8,7 @@ namespace SpaceAge
 {
     class MerchantSpaceShip : SpaceShip
     {
-        public static int MoneyChangedHands = 0;
+        public static long MoneyChangedHands = 0;
         public static int START_SYSTEM_DISTANCE_AWAY = 5;
         // Data for what will hopefully become the state machine dictating AI action
         public enum MerchantShipState { Moving, Holding, Arrived, Idle };
@@ -21,6 +21,8 @@ namespace SpaceAge
         public static int GlobalMerchantId = 0;
         public int MerchantId = -1;
         public int MerchantMoney = 50000; // For now start out merchants with 50k
+
+        ResourceVector currVect; // Temporary variable used in price acquisition
 
         public MerchantSpaceShip(int inWeaponMounts, int inDefensiveMounts, int inEngineMounts, int inSpecialMounts):
             base(inWeaponMounts, inDefensiveMounts, inEngineMounts, inSpecialMounts)
@@ -105,7 +107,9 @@ namespace SpaceAge
                 List<ResourceVector> BestSellPrices = new List<ResourceVector>(3);
                 foreach (Commodity.CommodityEnum curCom in onboardCommodities)
                 {
-                    BestSellPrices.Add(ResourceVector.GetBestSellPriceForCommodity(curCom, CurrentSector));
+                    currVect = ResourceVector.GetBestSellPriceForCommodity(curCom, CurrentSector);
+                    if(currVect != null)
+                        BestSellPrices.Add(currVect);
                 }
                 foreach (ResourceVector rv in BestSellPrices)
                 {
@@ -138,6 +142,7 @@ namespace SpaceAge
                 }
             }
 
+            // Shortcut this if no cargo space, try and go sell elsewhere
             if (SpaceShipCargo.GetFreeVolumeSpace() == 0)
             {
                 ShipState = MerchantShipState.Idle;
@@ -153,7 +158,9 @@ namespace SpaceAge
             List<ResourceVector> BestBuyPrices = new List<ResourceVector>(3);
             foreach (Commodity.CommodityEnum curCom in TryToBuyCommodities)
             {
-                BestBuyPrices.Add(ResourceVector.GetBestBuyPriceForCommodity(curCom, CurrentSector));
+                currVect = ResourceVector.GetBestBuyPriceForCommodity(curCom, CurrentSector);
+                if(currVect != null)
+                    BestBuyPrices.Add(currVect);
             }
             foreach (ResourceVector rv in BestBuyPrices)
             {

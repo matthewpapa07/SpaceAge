@@ -40,16 +40,23 @@ namespace SpaceAge
             }
 
             RunningPrice = int.MaxValue;        //Hard limit. Hopefully this is good for now....
-            TargetStore = InSector.RegisteredItemStores[0];
+            TargetStore = null;
 
-            for (int i = 1; i < InSector.RegisteredItemStores.Count; i++)
+            for (int i = 0; i < InSector.RegisteredItemStores.Count; i++)
             {
-                if ((InSector.RegisteredItemStores[i].CanUserBuyCommodity(CommodityType)) && (InSector.RegisteredItemStores[i].QueryCommodityUserBuyPrice(CommodityType) < RunningPrice))
+                if ((InSector.RegisteredItemStores[i].CanUserBuyCommodity(CommodityType)))
                 {
-                    TargetStore = InSector.RegisteredItemStores[i];
-                    RunningPrice = InSector.RegisteredItemStores[i].QueryCommodityUserBuyPrice(CommodityType);
+                    if (InSector.RegisteredItemStores[i].QueryCommodityUserBuyPrice(CommodityType) < RunningPrice)
+                    {
+                        TargetStore = InSector.RegisteredItemStores[i];
+                        RunningPrice = InSector.RegisteredItemStores[i].QueryCommodityUserBuyPrice(CommodityType);
+                    }
                 }
             }
+
+            // Could not find a good buy price
+            if (TargetStore == null)
+                return null;
 
             return new ResourceVector(CommodityType, TargetStore, VectorTypeEnum.BuyVector);
         }
@@ -65,16 +72,21 @@ namespace SpaceAge
             }
 
             RunningPrice = 0;
-            TargetStore = InSector.RegisteredItemStores[0]; // Return the only one for now....
+            TargetStore = null; // Return the only one for now....
 
             for (int i = 0; i < InSector.RegisteredItemStores.Count; i++)
             {
-                if ((InSector.RegisteredItemStores[i].CanUserSellCommodity(CommodityType)) && (InSector.RegisteredItemStores[i].QueryCommodityUserBuyPrice(CommodityType) > RunningPrice))
-                {
-                    TargetStore = InSector.RegisteredItemStores[i];
-                    RunningPrice = InSector.RegisteredItemStores[i].QueryCommodityUserSellPrice(CommodityType);
-                }
+                if ((InSector.RegisteredItemStores[i].CanUserSellCommodity(CommodityType)))
+                    if(InSector.RegisteredItemStores[i].QueryCommodityUserSellPrice(CommodityType) > RunningPrice)
+                    {
+                        TargetStore = InSector.RegisteredItemStores[i];
+                        RunningPrice = InSector.RegisteredItemStores[i].QueryCommodityUserSellPrice(CommodityType);
+                    }
             }
+
+            // Could not find a good sell price
+            if (TargetStore == null)
+                return null;
 
             return new ResourceVector(CommodityType, TargetStore, VectorTypeEnum.SellVector);
         }

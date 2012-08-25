@@ -15,6 +15,8 @@ namespace SpaceAge
         public Object Parent = null;
 
         // *In parent: internal int[] commoditiesQuantitiy = new int[Commodity.allCommodities.Length];
+
+        // These need to maintain a one to one correspondence with the commodities list
         public bool[] WillBuy = new bool[Commodity.allCommodities.Length];
         public bool[] WillSell = new bool[Commodity.allCommodities.Length];
 
@@ -39,12 +41,12 @@ namespace SpaceAge
             bool foundType = false;
             if (Parent is InteractionCenter)
             {
-                (Parent as InteractionCenter).Parent.parent.parent.RegisteredItemStores.Add(this);
+                (Parent as InteractionCenter).Parent.Parent.parent.RegisteredItemStores.Add(this);
                 foundType = true;
             }
             if (Parent is RawMaterialExtractor)
             {
-                (Parent as Planet).parent.parent.RegisteredItemStores.Add(this);
+                (Parent as RawMaterialExtractor).Parent.Parent.parent.RegisteredItemStores.Add(this);
                 foundType = true;
             }
             if (!foundType)
@@ -75,6 +77,11 @@ namespace SpaceAge
 
         public int QueryCommodityUserBuyPrice(Commodity.CommodityEnum commodityType)
         {
+            if (!CanUserBuyCommodity(commodityType))
+            {
+                Console.WriteLine("Warning, entity is querying price for item it cannot sell");
+                return int.MaxValue;
+            }
             Commodity CM = Commodity.getCommodityFromEnum(commodityType);
             int baseVal = CM.BaseValue;
             int availableQuantity = this.commoditiesQuantitiy[(int)commodityType];
@@ -87,7 +94,7 @@ namespace SpaceAge
         {
             if (!CanUserSellCommodity(commodityType))
             {
-                Console.WriteLine("Warning, entity is querying sell price for item it cannot sell");
+                Console.WriteLine("Warning, entity is querying price for item it cannot buy");
                 return 0;
             }
             Commodity CM = Commodity.getCommodityFromEnum(commodityType);

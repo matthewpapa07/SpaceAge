@@ -24,7 +24,7 @@ namespace SpaceAge
 
             foreach (Sector s in Universe.map)
             {
-                // Every 5 squares create a ship
+                // Every 5 squares create a merchant ship
                 if (MerchantsPerSquare++ >= 5)
                 {
                     if (Switch)
@@ -43,6 +43,10 @@ namespace SpaceAge
                     }
                     MerchantsPerSquare = 0;
                 }
+
+                foreach(RawMaterialExtractor rme in RawMaterialExtractor.PopulateSectorWithExtractors(s))
+                    AllExtractors.Add(rme);
+
             }
 
         }

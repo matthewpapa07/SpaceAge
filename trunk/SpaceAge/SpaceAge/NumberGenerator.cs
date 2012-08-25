@@ -41,6 +41,9 @@ namespace SpaceAge
         /// <returns></returns>
         public int GetRandNumberInRange(int min, int max)
         {
+            if (min == max)
+                return max;
+
             return rnd1.Next(min, max + 1);
         }
 
