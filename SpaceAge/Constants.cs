@@ -19,14 +19,14 @@ namespace SpaceAge
         /// <summary>
         /// Universe rows and columns
         /// </summary>
-        public const int UNIVERSE_ROWS = 100;
-        public const int UNIVERSE_COLUMNS = 100;
+        public const int UNIVERSE_ROWS = 25;
+        public const int UNIVERSE_COLUMNS = 25;
 
         /// <summary>
         /// These numbers MUST be odd for now
         /// </summary>
-        public const int MAP_SECTORS_ROWS = 7;
-        public const int MAP_SECTORS_COLUMNS = 7;
+        public const int MAP_SECTORS_ROWS = 5;
+        public const int MAP_SECTORS_COLUMNS = 5;
 
         public const int MAP_PADDING_PERCENT = 3;
 

@@ -242,24 +242,18 @@ namespace SpaceAge
             switch (RcType)
             {
                 case ObjectCharactaristics.ResourceCommodityType.CommonAtmosphere:
-                    getCommodityFromEnum(ObjectCharactaristics.CommonAtmosphereToC((ObjectCharactaristics.CommonAtmosphere)value));
-                    break;
+                     return getCommodityFromEnum(ObjectCharactaristics.CommonAtmosphereToC((ObjectCharactaristics.CommonAtmosphere)value));
                 case ObjectCharactaristics.ResourceCommodityType.RareAtmosphere:
-                     getCommodityFromEnum(ObjectCharactaristics.RareAtmosphereToC((ObjectCharactaristics.RareAtmosphere)value));
-                    break;
+                     return getCommodityFromEnum(ObjectCharactaristics.RareAtmosphereToC((ObjectCharactaristics.RareAtmosphere)value));
                 case ObjectCharactaristics.ResourceCommodityType.CommonElement:
-                     getCommodityFromEnum(ObjectCharactaristics.CommonElementToC((ObjectCharactaristics.CommonElements)value));
-                    break;
+                     return getCommodityFromEnum(ObjectCharactaristics.CommonElementToC((ObjectCharactaristics.CommonElements)value));
                 case ObjectCharactaristics.ResourceCommodityType.RareElement:
-                     getCommodityFromEnum(ObjectCharactaristics.RareElementToC((ObjectCharactaristics.RareElements)value));
-                    break;
+                     return getCommodityFromEnum(ObjectCharactaristics.RareElementToC((ObjectCharactaristics.RareElements)value));
                 case ObjectCharactaristics.ResourceCommodityType.ResourceStatic:
-                     getCommodityFromEnum(ObjectCharactaristics.ResourcesStaticToC((ObjectCharactaristics.ResourcesStatic)value));
-                    break;
+                     return getCommodityFromEnum(ObjectCharactaristics.ResourcesStaticToC((ObjectCharactaristics.ResourcesStatic)value));
                 default:
                     throw new Exception();
             }
-            return null;
         }
     }
 }
