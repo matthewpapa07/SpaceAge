@@ -47,7 +47,7 @@ namespace SpaceAge
             if (ProducedResourceCommodity == null || !ProducedResourceCommodity.IsResource)
                 throw new Exception();
 
-            ExtractorStore = new ItemStore(this);
+            ExtractorStore = ItemStore.GetExtractorStore(this);
 
             // Now set which items this store will accept to buy and sell
             for (int i = 0; i < Commodity.NumOfCommodities; i++)

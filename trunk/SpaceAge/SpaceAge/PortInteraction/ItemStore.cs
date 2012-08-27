@@ -8,9 +8,6 @@ namespace SpaceAge
 {
     class ItemStore : ItemList
     {
-        public const int MAX_STORAGE_FACTOR = 20000;
-        public const int MIN_STORAGE_FACTOR = 5000;
-
         private int ItemStoreCash = 1000000000;     // 10 M starting cash
         public Object Parent = null;
 
@@ -25,45 +22,78 @@ namespace SpaceAge
         // charactaristics the store is present in
         //
 
-        /// <summary>
-        /// Used to quantify how much storage space an item store should have
-        /// </summary>
-        double storageSpaceFactor = 0;
-
-        public ItemStore(Object inParent) 
+        private ItemStore() 
             : base()
         {
+
+        }
+
+        public static ItemStore GetGeneralStore(Object inParent)
+        {
+            ItemStore thisStore = new ItemStore();
             Commodity[] allCommodities = Commodity.allCommodities;
             NumberGenerator n = NumberGenerator.getInstance();
 
             // Test type of parent
-            Parent = inParent;
+            thisStore.Parent = inParent;
             bool foundType = false;
-            if (Parent is InteractionCenter)
+            if (thisStore.Parent is InteractionCenter)
             {
-                (Parent as InteractionCenter).Parent.Parent.parent.RegisteredItemStores.Add(this);
+                (thisStore.Parent as InteractionCenter).Parent.Parent.parent.RegisteredItemStores.Add(thisStore);
                 foundType = true;
             }
-            if (Parent is RawMaterialExtractor)
+            if (thisStore.Parent is RawMaterialExtractor)
             {
-                (Parent as RawMaterialExtractor).Parent.Parent.parent.RegisteredItemStores.Add(this);
+                (thisStore.Parent as RawMaterialExtractor).Parent.Parent.parent.RegisteredItemStores.Add(thisStore);
                 foundType = true;
             }
             if (!foundType)
                 throw new Exception();
-            
-            storageSpaceFactor = n.GetRandNumberInRange(MIN_STORAGE_FACTOR, MAX_STORAGE_FACTOR);
-            storageSpaceFactor /= MAX_STORAGE_FACTOR;
 
             for (int i = 0; i < allCommodities.Length; i++)
             {
-                int j = n.GetRandNumberInRange(MIN_STORAGE_FACTOR, MAX_STORAGE_FACTOR);
-                this.AddCommodity(allCommodities[i].CommodityType, (int)((n.GetRandNumberInRange(0, allCommodities[i].MaxQuantity))*storageSpaceFactor));
+                // Only prepopulate commodities for now
+                if(!allCommodities[i].IsResource)
+                    thisStore.AddCommodity(allCommodities[i].CommodityType, (int)((n.GetRandNumberInRange(0, allCommodities[i].MaxQuantity))));
+
                 // This constructor by default should make everything available
                 //WillSell[i] = true;
-                WillBuy[i] = true;
-                WillSell[i] = true;
+                thisStore.WillBuy[i] = true;
+                thisStore.WillSell[i] = true;
             }
+
+            return thisStore;
+        }
+
+        public static ItemStore GetExtractorStore(object inParent)
+        {
+            ItemStore thisStore = new ItemStore();
+            Commodity[] allCommodities = Commodity.allCommodities;
+            NumberGenerator n = NumberGenerator.getInstance();
+
+            // Test type of parent
+            thisStore.Parent = inParent;
+            bool foundType = false;
+            if (thisStore.Parent is InteractionCenter)
+            {
+                (thisStore.Parent as InteractionCenter).Parent.Parent.parent.RegisteredItemStores.Add(thisStore);
+                foundType = true;
+            }
+            if (thisStore.Parent is RawMaterialExtractor)
+            {
+                (thisStore.Parent as RawMaterialExtractor).Parent.Parent.parent.RegisteredItemStores.Add(thisStore);
+                foundType = true;
+            }
+            if (!foundType)
+                throw new Exception();
+
+            for (int i = 0; i < allCommodities.Length; i++)
+            {
+                thisStore.WillBuy[i] = false;
+                thisStore.WillSell[i] = false;
+            }
+
+            return thisStore;
         }
 
         public int QueryItemUserBuyPrice(Item i)

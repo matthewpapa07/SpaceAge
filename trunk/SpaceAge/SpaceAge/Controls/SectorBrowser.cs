@@ -13,7 +13,6 @@ namespace SpaceAge
     {
         ListViewItem[] SectorContentsListview;
         ListViewItem[] SystemContentsListView;
-        SectorDetails  parentForm;
         StarSystem[] SectorSystems;
 
         //
@@ -33,15 +32,9 @@ namespace SpaceAge
             //
             // Properties for system listview
             //
-            ui_SectorList.View = View.Details;
-            ui_SectorList.FullRowSelect = true;
-            ui_SectorList.GridLines = true;
-            ui_SectorList.MultiSelect = false;
+            GraphicsLib.ApplyListviewProperties(ui_SectorList);
 
-            ui_SystemList.View = View.Details;
-            ui_SystemList.FullRowSelect = true;
-            ui_SystemList.GridLines = true;
-            ui_SystemList.MultiSelect = false;
+            GraphicsLib.ApplyListviewProperties(ui_SystemList);
 
         }
 
@@ -55,11 +48,6 @@ namespace SpaceAge
             UpdateStarSystemList();
             UpdateSolarSystemList();
 
-        }
-
-        public void setParent(SectorDetails s)
-        {
-            parentForm = s;
         }
 
         private void ui_SurveyObject_Click(object sender, EventArgs e)
@@ -174,12 +162,19 @@ namespace SpaceAge
                     else
                         ui_Interaction.Enabled = false;
 
-                    ui_SurveyObject.Enabled = true;
+                    if ((currentObject as Planet).PlanetExtractors.Count >= 1)
+                    {
+                        ui_BuyResources.Enabled = true;
+                    }
+                    else ui_BuyResources.Enabled = false;
+
+                    ui_SurveyObject.Enabled = true; // Always allow planet survey
                 }
                 else
                 {
                     ui_Interaction.Enabled = false;
                     ui_SurveyObject.Enabled = false;
+                    ui_BuyResources.Enabled = false;
                 }
                 //
                 // Add checks for other types to enable other buttons later
@@ -196,8 +191,7 @@ namespace SpaceAge
             
             Planet p = (Planet)currentObject;
 
-            InteractionCenterUi interactUi = new InteractionCenterUi();
-            interactUi.SetInteractionCenter(p.PlanetInteractionCenter);
+            InteractionCenterUi interactUi = InteractionCenterUi.InteractionCenterGeneralStore(p.PlanetInteractionCenter);
             interactUi.Show();
         }
 

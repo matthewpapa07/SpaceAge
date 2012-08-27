@@ -25,6 +25,7 @@ namespace SpaceAge
         public SolidBrush blueBrush = new SolidBrush(System.Drawing.Color.Blue);
         public SolidBrush redBrush = new SolidBrush(System.Drawing.Color.Red);
         public SolidBrush blackBrush = new SolidBrush(System.Drawing.Color.Black);
+        public SolidBrush grayBrush = new SolidBrush(System.Drawing.Color.Gray);
         public SolidBrush greenBrush = new SolidBrush(System.Drawing.Color.Green);
 
         private StaticGraphics()

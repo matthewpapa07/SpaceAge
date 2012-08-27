@@ -6,7 +6,8 @@ namespace SpaceAge
 {
     class InteractionCenter
     {
-		public enum InteractionCenterType { City, SpaceStation, OrbitalPlatform, Other };
+		public enum InteractionCenterType { PlanetCity = 0, /*SpaceStation, OrbitalPlatform,*/ RawMaterialExtractor, Factory };
+        InteractionCenterType CenterType;
 
         public Planet Parent;
         public string thisCenterName;
@@ -15,14 +16,38 @@ namespace SpaceAge
         public PeopleSource thisPeople;
         public PoliticalCenter thisPolitics;
 
-		public InteractionCenter(string centerName, Planet inParent)
+		private InteractionCenter()
 		{
-            Parent = inParent;
-            thisCenterName = centerName;
-            thisStore = new ItemStore(this);
-            thisPost = new MissionPost();
-            thisPeople = new PeopleSource();
-            thisPolitics = new PoliticalCenter();
+
 		}
+
+        public static InteractionCenter CityCenterOnPlanet(Planet inParent)
+        {
+            InteractionCenter thisCenter = new InteractionCenter();
+            thisCenter.CenterType = InteractionCenterType.PlanetCity;
+            thisCenter.Parent = inParent;
+            thisCenter.thisCenterName = "Planet " + inParent.ToString() + " Trade Center";
+            thisCenter.thisStore = ItemStore.GetGeneralStore(thisCenter);
+            thisCenter.thisPost = new MissionPost();
+            thisCenter.thisPeople = new PeopleSource();
+            thisCenter.thisPolitics = new PoliticalCenter();
+
+            return thisCenter;
+        }
+
+        public static InteractionCenter RawMaterialExtractorOnPlanet(Planet inParent)
+        {
+            InteractionCenter thisCenter = new InteractionCenter();
+            thisCenter.CenterType = InteractionCenterType.RawMaterialExtractor;
+            thisCenter.Parent = inParent;
+            thisCenter.thisCenterName = "Planet " + inParent.ToString() + " Extract";
+            thisCenter.thisStore = null;
+            thisCenter.thisPost = null;
+            thisCenter.thisPeople = null;
+            thisCenter.thisPolitics = null;
+            // TODO: Eventually add extractor management tab
+            return thisCenter;
+        }
+
     }
 }

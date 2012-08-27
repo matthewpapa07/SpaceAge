@@ -57,6 +57,12 @@
     <Compile Include="Controls\PlanetViewer.Designer.cs">
       <DependentUpon>PlanetViewer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SectorBrowserWhole.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\SectorBrowserWhole.Designer.cs">
+      <DependentUpon>SectorBrowserWhole.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\UiSectorMap.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -113,12 +119,6 @@
     </Compile>
     <Compile Include="DriverLibrary\ResourceVector.cs" />
     <Compile Include="RawMaterialExtractor.cs" />
-    <Compile Include="SectorDetails.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SectorDetails.Designer.cs">
-      <DependentUpon>SectorDetails.cs</DependentUpon>
-    </Compile>
     <Compile Include="ShipComponents\ShipArmor.cs" />
     <Compile Include="ShipComponents\ShipDefense.cs" />
     <Compile Include="ShipComponents\ShipEngines.cs" />
@@ -130,7 +130,7 @@
     <Compile Include="ShipComponents\ShipWeapon.cs" />
     <Compile Include="SpacePort.cs" />
     <Compile Include="SpaceShip.cs" />
-    <Compile Include="StaticGraphics.cs" />
+    <Compile Include="Graphics\StaticGraphics.cs" />
     <Compile Include="Controls\UiMap.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -169,6 +169,9 @@
     <EmbeddedResource Include="Controls\PlanetViewer.resx">
       <DependentUpon>PlanetViewer.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\SectorBrowserWhole.resx">
+      <DependentUpon>SectorBrowserWhole.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\UiSectorMap.resx">
       <DependentUpon>UiSectorMap.cs</DependentUpon>
     </EmbeddedResource>
@@ -194,9 +197,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\UserFuelMeter.resx">
       <DependentUpon>UserFuelMeter.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SectorDetails.resx">
-      <DependentUpon>SectorDetails.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SurveyResults.resx">
       <DependentUpon>SurveyResults.cs</DependentUpon>
@@ -225,6 +225,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Graphics\SpaceShip1.bmp" />
+    <None Include="Resources\star-space-tile.jpg" />
+    <None Include="Resources\space_bg.gif" />
+    <None Include="Resources\678124main_hubble_sparkles_1600_1600-1200.jpg" />
     <EmbeddedResource Include="Graphics\SpaceShip1.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>

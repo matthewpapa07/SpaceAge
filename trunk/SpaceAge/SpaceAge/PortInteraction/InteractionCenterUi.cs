@@ -19,37 +19,65 @@ namespace SpaceAge
         private Commodity.CommodityEnum Market_StationCommodity_Selected = Commodity.CommodityEnum.Coolant;
         private int MarketStationCommodity_Index = 0;
 
-        public InteractionCenterUi()
+        // Keep record of references to the tab pages
+        TabPage Info;
+        TabPage Market;
+        TabPage Escrow;
+        TabPage Agents;
+        TabPage People;
+        TabPage Politics;
+
+        private InteractionCenterUi()
         {
             InitializeComponent();
 
             //
             // Properties for system listview
             //
-            Market_MarketCommodities.View = View.Details;
-            Market_MarketCommodities.FullRowSelect = true;
-            Market_MarketCommodities.GridLines = true;
-            Market_MarketCommodities.HideSelection = false;
+            GraphicsLib.ApplyListviewProperties(Market_MarketCommodities);
+            GraphicsLib.ApplyListviewProperties(Market_ShipCommodities);
+            GraphicsLib.ApplyListviewProperties(Escrow_PlayerList);
+            GraphicsLib.ApplyListviewProperties(Escrow_StoreList);
 
-            Market_ShipCommodities.View = View.Details;
-            Market_ShipCommodities.FullRowSelect = true;
-            Market_ShipCommodities.GridLines = true;
-            Market_ShipCommodities.HideSelection = false;
+            // Set tab references for easy access. modify these indices if they ever change in the collection
+            Info = tabControl1.TabPages[0];
+            Market = tabControl1.TabPages[1];
+            Escrow = tabControl1.TabPages[2];
+            Agents = tabControl1.TabPages[3];
+            People = tabControl1.TabPages[4];
+            Politics = tabControl1.TabPages[5];
 
-            Escrow_PlayerList.View = View.Details;
-            Escrow_PlayerList.FullRowSelect = true;
-            Escrow_PlayerList.GridLines = true;
-
-            Escrow_StoreList.View = View.Details;
-            Escrow_StoreList.FullRowSelect = true;
-            Escrow_StoreList.GridLines = true;
             ////Activate double buffering
+
             //this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
 
             ////Enable the OnNotifyMessage event so we get a chance to filter out 
             //// Windows messages before they get to the form's WndProc
             //this.SetStyle(ControlStyles.EnableNotifyMessage, true);
 
+        }
+
+        public static InteractionCenterUi InteractionCenterGeneralStore(InteractionCenter i)
+        {
+            InteractionCenterUi icUI = new InteractionCenterUi();
+            icUI.SetInteractionCenter(i);
+
+            return icUI;
+        }
+
+        public static InteractionCenterUi InteractionCenterRawMaterialExtractor(InteractionCenter i)
+        {
+            InteractionCenterUi icUI = new InteractionCenterUi();
+            icUI.SetInteractionCenter(i);
+
+            (icUI.Info as Control).Enabled = true;
+            (icUI.Market as Control).Enabled = true;
+            (icUI.Escrow as Control).Enabled = false;
+            (icUI.Agents as Control).Enabled = false;
+            (icUI.People as Control).Enabled = false;
+            (icUI.Politics as Control).Enabled = false;
+
+            return icUI;
         }
 
         public void SetInteractionCenter(InteractionCenter i)
