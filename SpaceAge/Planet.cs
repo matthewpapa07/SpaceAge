@@ -65,7 +65,7 @@ namespace SpaceAge
                     {
                         Population = n.GetRandNumberInRange(0, 5000000);
                     }
-                    PlanetInteractionCenter = new InteractionCenter("Planet" + this.ToString() + " Interaction Center", this);
+                    PlanetInteractionCenter = InteractionCenter.CityCenterOnPlanet(this);
                 }
             }
         }

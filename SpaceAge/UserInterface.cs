@@ -11,11 +11,15 @@ using System.Drawing.Drawing2D;
 namespace SpaceAge
 {
     public partial class UserInterface : Form
-    { 
+    {
+        Controls.SectorBrowserWhole TheMainSectorBrowserWhole;
+        public static UserInterface thisOneInterface;
+        private Control currentControl;
 
         public UserInterface()
         {
             InitializeComponent();
+            thisOneInterface = this;
 
             //
             // Properties for main form
@@ -24,6 +28,9 @@ namespace SpaceAge
             ResizeRedraw = true;
             KeyPreview = true;
 
+            TheMainSectorBrowserWhole = new SpaceAge.Controls.SectorBrowserWhole();
+            currentControl = TheMainSectorBrowserWhole;
+            ui_MAINPANEL.Controls.Add(TheMainSectorBrowserWhole);
             UpdateUi();
             //BackColor = Color.White;
         }
@@ -80,7 +87,6 @@ namespace SpaceAge
             ui_Credits.Text = UserState.getPlayerFunds().ToString();
             ui_Time.Text = GameDriver.TimeToStringLong();
 
-            
             userFuelMeter1.UpdateUi();
             //sectorBrowser1.UpdateUi();
             
@@ -112,16 +118,39 @@ namespace SpaceAge
                         UserState.moveRight();
                         break;
                 }
-                uiMap1.drawMap();
+                //uiMap1.drawMap();
+                TheMainSectorBrowserWhole.UpdateUi();
                 UpdateUi();
             }
         }
 
-        private void visitSectorButton_Click(object sender, EventArgs e)
+        private void label3_Click(object sender, EventArgs e)
         {
-            //Application.Run(new SectorDetails());
-            SectorDetails s = new SectorDetails();
-            s.Show();
+
+        }
+
+        private void userFuelMeter1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        public void SetMainPanel(Control ToShow)
+        {
+            currentControl = ToShow;
+            //ToShow.Dock = DockStyle.Fill;
+            ui_MAINPANEL.Controls.Clear();
+            ui_MAINPANEL.Controls.Add(ToShow);
+            //ToShow.Show();
+        }
+
+        private void button_sectorBrowser_Click(object sender, EventArgs e)
+        {
+            SetMainPanel(TheMainSectorBrowserWhole);
+        }
+
+        private void ui_buttonBack_Click(object sender, EventArgs e)
+        {
+
         }
 
     }

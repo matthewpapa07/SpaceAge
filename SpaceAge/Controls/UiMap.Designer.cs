@@ -34,9 +34,15 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.BackColor = System.Drawing.Color.Gray;
+            this.MinimumSize = new System.Drawing.Size(620, 620);
             this.Name = "UiMap";
-            this.Size = new System.Drawing.Size(580, 580);
+            this.Size = new System.Drawing.Size(620, 620);
+            this.AutoSizeChanged += new System.EventHandler(this.UiMap_SizeChanged);
             this.Load += new System.EventHandler(this.UiMap_Load);
+            this.SizeChanged += new System.EventHandler(this.UiMap_SizeChanged);
             this.ResumeLayout(false);
 
         }

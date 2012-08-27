@@ -29,56 +29,36 @@
         private void InitializeComponent()
         {
             this.panel2 = new System.Windows.Forms.Panel();
-            this.label8 = new System.Windows.Forms.Label();
-            this.ui_Inhabited = new System.Windows.Forms.CheckBox();
             this.ui_Approach = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
             this.ui_SectorList = new System.Windows.Forms.ListView();
-            this.ui_SurveyObject = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
+            this.ui_SurveyObject = new System.Windows.Forms.Button();
             this.ui_Interaction = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.ui_extractorFactoryList = new System.Windows.Forms.ListView();
+            this.ui_BuyResources = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.ui_checkBox_stars = new System.Windows.Forms.CheckBox();
             this.ui_checkBox_other = new System.Windows.Forms.CheckBox();
             this.ui_checkBox_planets = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.ui_SystemList = new System.Windows.Forms.ListView();
+            this.uiSectorMap1 = new SpaceAge.Controls.UiSectorMap();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.label8);
-            this.panel2.Controls.Add(this.ui_Inhabited);
+            this.panel2.Controls.Add(this.uiSectorMap1);
             this.panel2.Controls.Add(this.ui_Approach);
-            this.panel2.Controls.Add(this.label5);
             this.panel2.Controls.Add(this.ui_SectorList);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Location = new System.Drawing.Point(7, 5);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(330, 478);
             this.panel2.TabIndex = 6;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(8, 318);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(35, 13);
-            this.label8.TabIndex = 10;
-            this.label8.Text = "label8";
-            // 
-            // ui_Inhabited
-            // 
-            this.ui_Inhabited.AutoSize = true;
-            this.ui_Inhabited.Location = new System.Drawing.Point(5, 343);
-            this.ui_Inhabited.Name = "ui_Inhabited";
-            this.ui_Inhabited.Size = new System.Drawing.Size(80, 17);
-            this.ui_Inhabited.TabIndex = 9;
-            this.ui_Inhabited.Text = "checkBox1";
-            this.ui_Inhabited.UseVisualStyleBackColor = true;
             // 
             // ui_Approach
             // 
@@ -89,15 +69,6 @@
             this.ui_Approach.Text = "Approach";
             this.ui_Approach.UseVisualStyleBackColor = true;
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(8, 295);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(78, 13);
-            this.label5.TabIndex = 7;
-            this.label5.Text = "Survey Results";
-            // 
             // ui_SectorList
             // 
             this.ui_SectorList.Location = new System.Drawing.Point(5, 24);
@@ -106,6 +77,15 @@
             this.ui_SectorList.TabIndex = 6;
             this.ui_SectorList.UseCompatibleStateImageBehavior = false;
             this.ui_SectorList.SelectedIndexChanged += new System.EventHandler(this.ui_SectorList_SelectedIndexChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(3, 8);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(74, 13);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Sector Survey";
             // 
             // ui_SurveyObject
             // 
@@ -116,15 +96,6 @@
             this.ui_SurveyObject.Text = "Survey Object";
             this.ui_SurveyObject.UseVisualStyleBackColor = true;
             this.ui_SurveyObject.Click += new System.EventHandler(this.ui_SurveyObject_Click);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 8);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(74, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Sector Survey";
             // 
             // ui_Interaction
             // 
@@ -139,6 +110,9 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.label4);
+            this.panel1.Controls.Add(this.ui_extractorFactoryList);
+            this.panel1.Controls.Add(this.ui_BuyResources);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.ui_checkBox_stars);
             this.panel1.Controls.Add(this.ui_checkBox_other);
@@ -153,10 +127,36 @@
             this.panel1.TabIndex = 7;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 302);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(110, 13);
+            this.label4.TabIndex = 20;
+            this.label4.Text = "System Object Details";
+            // 
+            // ui_extractorFactoryList
+            // 
+            this.ui_extractorFactoryList.Location = new System.Drawing.Point(5, 318);
+            this.ui_extractorFactoryList.Name = "ui_extractorFactoryList";
+            this.ui_extractorFactoryList.Size = new System.Drawing.Size(319, 103);
+            this.ui_extractorFactoryList.TabIndex = 19;
+            this.ui_extractorFactoryList.UseCompatibleStateImageBehavior = false;
+            // 
+            // ui_BuyResources
+            // 
+            this.ui_BuyResources.Location = new System.Drawing.Point(3, 268);
+            this.ui_BuyResources.Name = "ui_BuyResources";
+            this.ui_BuyResources.Size = new System.Drawing.Size(321, 23);
+            this.ui_BuyResources.TabIndex = 18;
+            this.ui_BuyResources.Text = "Buy Resources";
+            this.ui_BuyResources.UseVisualStyleBackColor = true;
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 422);
+            this.label3.Location = new System.Drawing.Point(6, 432);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(92, 13);
             this.label3.TabIndex = 17;
@@ -216,10 +216,18 @@
             this.ui_SystemList.UseCompatibleStateImageBehavior = false;
             this.ui_SystemList.SelectedIndexChanged += new System.EventHandler(this.ui_SystemList_SelectedIndexChanged);
             // 
+            // uiSectorMap1
+            // 
+            this.uiSectorMap1.Location = new System.Drawing.Point(49, 239);
+            this.uiSectorMap1.Name = "uiSectorMap1";
+            this.uiSectorMap1.Size = new System.Drawing.Size(226, 226);
+            this.uiSectorMap1.TabIndex = 9;
+            // 
             // SectorBrowser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
             this.Name = "SectorBrowser";
@@ -236,12 +244,8 @@
 
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button ui_Approach;
-        private System.Windows.Forms.ListView ui_SectorList;
         private System.Windows.Forms.Button ui_SurveyObject;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.CheckBox ui_Inhabited;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button ui_Interaction;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
@@ -250,5 +254,10 @@
         private System.Windows.Forms.CheckBox ui_checkBox_other;
         private System.Windows.Forms.CheckBox ui_checkBox_planets;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button ui_BuyResources;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ListView ui_extractorFactoryList;
+        private System.Windows.Forms.ListView ui_SectorList;
+        private Controls.UiSectorMap uiSectorMap1;
     }
 }

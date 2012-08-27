@@ -14,6 +14,7 @@ namespace SpaceAge
             lv.View = View.Details;
             lv.FullRowSelect = true;
             lv.GridLines = true;
+            lv.MultiSelect = false;
         }
 
         public static Color ColorMix(Color c1, Color c2)

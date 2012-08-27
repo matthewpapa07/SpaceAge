@@ -11,7 +11,6 @@ namespace SpaceAge.Controls
 {
     public partial class UiSectorMap : UserControl
     {
-        SectorDetails   parentForm;
         Sector          currentSector;
         StaticGraphics  staticGraphics = StaticGraphics.getStaticGraphics();
         int             stepsPerCoordinate = 0;
@@ -81,11 +80,6 @@ namespace SpaceAge.Controls
                 //}
                
             }
-        }
-
-        public void setParent(SectorDetails s)
-        {
-            parentForm = s;
         }
     }
 }

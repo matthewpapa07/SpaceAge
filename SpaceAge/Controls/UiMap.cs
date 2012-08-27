@@ -61,8 +61,10 @@ namespace SpaceAge
             //}
 
             //base.OnPaint(e);
-            height = ClientRectangle.Height;
-            width = ClientRectangle.Width;
+            //height = ClientRectangle.Height;
+            //width = ClientRectangle.Width;
+            height = this.Height;
+            width = this.Width;
 
             sectorHeight= height / Constants.MAP_SECTORS_COLUMNS;
             sectorWidth = width / Constants.MAP_SECTORS_ROWS;
@@ -133,6 +135,15 @@ namespace SpaceAge
                     }
                 }
             }
+        }
+
+        private void UiMap_SizeChanged(object sender, EventArgs e)
+        {
+            using (Graphics g = this.CreateGraphics())
+            {
+                g.FillRectangle(staticGraphics.grayBrush, this.DisplayRectangle);
+            }
+            drawMap();
         }
     }
 }
