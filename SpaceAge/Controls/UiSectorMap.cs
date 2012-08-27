@@ -9,15 +9,15 @@ using System.Windows.Forms;
 
 namespace SpaceAge.Controls
 {
-    public partial class UiSectorMap : UserControl
+    partial class UiSectorMap : UserControl
     {
         Sector          currentSector;
         StaticGraphics  staticGraphics = StaticGraphics.getStaticGraphics();
         int             stepsPerCoordinate = 0;
 
-        public UiSectorMap()
+        public UiSectorMap(Sector s)
         {
-            currentSector = UserState.getCurrentSector();
+            currentSector = s;
             //
             // Assume height == width when determining points per pixel
             //

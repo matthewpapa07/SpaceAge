@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.panel2 = new System.Windows.Forms.Panel();
+            this.back_systemPanel = new System.Windows.Forms.Panel();
+            this.ui_SectorMapPanel = new System.Windows.Forms.Panel();
             this.ui_Approach = new System.Windows.Forms.Button();
             this.ui_SectorList = new System.Windows.Forms.ListView();
             this.label2 = new System.Windows.Forms.Label();
@@ -44,36 +46,53 @@
             this.ui_checkBox_planets = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.ui_SystemList = new System.Windows.Forms.ListView();
-            this.uiSectorMap1 = new SpaceAge.Controls.UiSectorMap();
             this.panel2.SuspendLayout();
+            this.back_systemPanel.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.uiSectorMap1);
+            this.panel2.Controls.Add(this.back_systemPanel);
             this.panel2.Controls.Add(this.ui_Approach);
             this.panel2.Controls.Add(this.ui_SectorList);
             this.panel2.Controls.Add(this.label2);
-            this.panel2.Location = new System.Drawing.Point(7, 5);
+            this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(330, 478);
+            this.panel2.Size = new System.Drawing.Size(384, 617);
             this.panel2.TabIndex = 6;
+            // 
+            // back_systemPanel
+            // 
+            this.back_systemPanel.BackColor = System.Drawing.Color.Red;
+            this.back_systemPanel.Controls.Add(this.ui_SectorMapPanel);
+            this.back_systemPanel.Location = new System.Drawing.Point(3, 6);
+            this.back_systemPanel.Name = "back_systemPanel";
+            this.back_systemPanel.Size = new System.Drawing.Size(374, 374);
+            this.back_systemPanel.TabIndex = 10;
+            // 
+            // ui_SectorMapPanel
+            // 
+            this.ui_SectorMapPanel.Location = new System.Drawing.Point(1, 1);
+            this.ui_SectorMapPanel.Name = "ui_SectorMapPanel";
+            this.ui_SectorMapPanel.Size = new System.Drawing.Size(372, 372);
+            this.ui_SectorMapPanel.TabIndex = 9;
             // 
             // ui_Approach
             // 
-            this.ui_Approach.Location = new System.Drawing.Point(6, 210);
+            this.ui_Approach.ForeColor = System.Drawing.Color.Black;
+            this.ui_Approach.Location = new System.Drawing.Point(6, 591);
             this.ui_Approach.Name = "ui_Approach";
-            this.ui_Approach.Size = new System.Drawing.Size(321, 23);
+            this.ui_Approach.Size = new System.Drawing.Size(373, 23);
             this.ui_Approach.TabIndex = 8;
             this.ui_Approach.Text = "Approach";
             this.ui_Approach.UseVisualStyleBackColor = true;
             // 
             // ui_SectorList
             // 
-            this.ui_SectorList.Location = new System.Drawing.Point(5, 24);
+            this.ui_SectorList.Location = new System.Drawing.Point(6, 405);
             this.ui_SectorList.Name = "ui_SectorList";
-            this.ui_SectorList.Size = new System.Drawing.Size(322, 180);
+            this.ui_SectorList.Size = new System.Drawing.Size(373, 180);
             this.ui_SectorList.TabIndex = 6;
             this.ui_SectorList.UseCompatibleStateImageBehavior = false;
             this.ui_SectorList.SelectedIndexChanged += new System.EventHandler(this.ui_SectorList_SelectedIndexChanged);
@@ -81,7 +100,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 8);
+            this.label2.Location = new System.Drawing.Point(3, 389);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(74, 13);
             this.label2.TabIndex = 3;
@@ -89,9 +108,10 @@
             // 
             // ui_SurveyObject
             // 
-            this.ui_SurveyObject.Location = new System.Drawing.Point(3, 239);
+            this.ui_SurveyObject.ForeColor = System.Drawing.Color.Black;
+            this.ui_SurveyObject.Location = new System.Drawing.Point(203, 243);
             this.ui_SurveyObject.Name = "ui_SurveyObject";
-            this.ui_SurveyObject.Size = new System.Drawing.Size(321, 23);
+            this.ui_SurveyObject.Size = new System.Drawing.Size(196, 23);
             this.ui_SurveyObject.TabIndex = 5;
             this.ui_SurveyObject.Text = "Survey Object";
             this.ui_SurveyObject.UseVisualStyleBackColor = true;
@@ -100,9 +120,10 @@
             // ui_Interaction
             // 
             this.ui_Interaction.Enabled = false;
-            this.ui_Interaction.Location = new System.Drawing.Point(3, 210);
+            this.ui_Interaction.ForeColor = System.Drawing.Color.Black;
+            this.ui_Interaction.Location = new System.Drawing.Point(0, 243);
             this.ui_Interaction.Name = "ui_Interaction";
-            this.ui_Interaction.Size = new System.Drawing.Size(320, 23);
+            this.ui_Interaction.Size = new System.Drawing.Size(196, 23);
             this.ui_Interaction.TabIndex = 11;
             this.ui_Interaction.Text = "Interaction";
             this.ui_Interaction.UseVisualStyleBackColor = true;
@@ -121,9 +142,9 @@
             this.panel1.Controls.Add(this.ui_SurveyObject);
             this.panel1.Controls.Add(this.ui_SystemList);
             this.panel1.Controls.Add(this.ui_Interaction);
-            this.panel1.Location = new System.Drawing.Point(343, 5);
+            this.panel1.Location = new System.Drawing.Point(390, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(330, 478);
+            this.panel1.Size = new System.Drawing.Size(414, 617);
             this.panel1.TabIndex = 7;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
@@ -146,9 +167,10 @@
             // 
             // ui_BuyResources
             // 
-            this.ui_BuyResources.Location = new System.Drawing.Point(3, 268);
+            this.ui_BuyResources.ForeColor = System.Drawing.Color.Black;
+            this.ui_BuyResources.Location = new System.Drawing.Point(0, 272);
             this.ui_BuyResources.Name = "ui_BuyResources";
-            this.ui_BuyResources.Size = new System.Drawing.Size(321, 23);
+            this.ui_BuyResources.Size = new System.Drawing.Size(196, 23);
             this.ui_BuyResources.TabIndex = 18;
             this.ui_BuyResources.Text = "Buy Resources";
             this.ui_BuyResources.UseVisualStyleBackColor = true;
@@ -156,7 +178,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 432);
+            this.label3.Location = new System.Drawing.Point(6, 214);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(92, 13);
             this.label3.TabIndex = 17;
@@ -167,7 +189,7 @@
             this.ui_checkBox_stars.AutoSize = true;
             this.ui_checkBox_stars.Checked = true;
             this.ui_checkBox_stars.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ui_checkBox_stars.Location = new System.Drawing.Point(76, 448);
+            this.ui_checkBox_stars.Location = new System.Drawing.Point(171, 213);
             this.ui_checkBox_stars.Name = "ui_checkBox_stars";
             this.ui_checkBox_stars.Size = new System.Drawing.Size(50, 17);
             this.ui_checkBox_stars.TabIndex = 16;
@@ -179,7 +201,7 @@
             this.ui_checkBox_other.AutoSize = true;
             this.ui_checkBox_other.Checked = true;
             this.ui_checkBox_other.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ui_checkBox_other.Location = new System.Drawing.Point(132, 448);
+            this.ui_checkBox_other.Location = new System.Drawing.Point(227, 213);
             this.ui_checkBox_other.Name = "ui_checkBox_other";
             this.ui_checkBox_other.Size = new System.Drawing.Size(52, 17);
             this.ui_checkBox_other.TabIndex = 15;
@@ -191,7 +213,7 @@
             this.ui_checkBox_planets.AutoSize = true;
             this.ui_checkBox_planets.Checked = true;
             this.ui_checkBox_planets.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ui_checkBox_planets.Location = new System.Drawing.Point(9, 448);
+            this.ui_checkBox_planets.Location = new System.Drawing.Point(104, 213);
             this.ui_checkBox_planets.Name = "ui_checkBox_planets";
             this.ui_checkBox_planets.Size = new System.Drawing.Size(61, 17);
             this.ui_checkBox_planets.TabIndex = 14;
@@ -211,29 +233,25 @@
             // 
             this.ui_SystemList.Location = new System.Drawing.Point(3, 24);
             this.ui_SystemList.Name = "ui_SystemList";
-            this.ui_SystemList.Size = new System.Drawing.Size(320, 180);
+            this.ui_SystemList.Size = new System.Drawing.Size(399, 180);
             this.ui_SystemList.TabIndex = 12;
             this.ui_SystemList.UseCompatibleStateImageBehavior = false;
             this.ui_SystemList.SelectedIndexChanged += new System.EventHandler(this.ui_SystemList_SelectedIndexChanged);
-            // 
-            // uiSectorMap1
-            // 
-            this.uiSectorMap1.Location = new System.Drawing.Point(49, 239);
-            this.uiSectorMap1.Name = "uiSectorMap1";
-            this.uiSectorMap1.Size = new System.Drawing.Size(226, 226);
-            this.uiSectorMap1.TabIndex = 9;
             // 
             // SectorBrowser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
+            this.BackColor = System.Drawing.Color.Black;
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
+            this.ForeColor = System.Drawing.Color.White;
             this.Name = "SectorBrowser";
-            this.Size = new System.Drawing.Size(681, 488);
+            this.Size = new System.Drawing.Size(808, 620);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.back_systemPanel.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
@@ -258,6 +276,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ListView ui_extractorFactoryList;
         private System.Windows.Forms.ListView ui_SectorList;
-        private Controls.UiSectorMap uiSectorMap1;
+        private System.Windows.Forms.Panel ui_SectorMapPanel;
+        private System.Windows.Forms.Panel back_systemPanel;
     }
 }

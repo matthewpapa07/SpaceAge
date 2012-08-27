@@ -33,8 +33,11 @@ namespace SpaceAge
             // Properties for system listview
             //
             GraphicsLib.ApplyListviewProperties(ui_SectorList);
-
             GraphicsLib.ApplyListviewProperties(ui_SystemList);
+
+            SpaceAge.Controls.UiSectorMap uiM = new SpaceAge.Controls.UiSectorMap(UserState.getCurrentSector());
+            uiM.Dock = DockStyle.Fill;
+            ui_SectorMapPanel.Controls.Add(uiM);
 
         }
 

@@ -37,7 +37,7 @@ namespace SpaceAge
         {
             NumberGenerator numGen = NumberGenerator.getInstance();
             int numStars;
-            int numPlanets = numGen.GetRandNumberInRange(MAX_PLANETS_PER_SYSTEM, MAX_PLANETS_PER_SYSTEM);
+            int numPlanets = numGen.GetRandNumberInRange(MIN_PLANETS_PER_SYSTEM, MAX_PLANETS_PER_SYSTEM);
 
             if (numGen.LinearPmfResult(CHANCE_OF_MULTIPLE_STARS, 100))
                 numStars = 2;
