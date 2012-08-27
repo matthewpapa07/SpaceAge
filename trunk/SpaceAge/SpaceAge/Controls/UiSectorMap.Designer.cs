@@ -34,8 +34,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
+            this.BackColor = System.Drawing.Color.Black;
+            this.MinimumSize = new System.Drawing.Size(20, 20);
             this.Name = "UiSectorMap";
-            this.Size = new System.Drawing.Size(486, 422);
+            this.Size = new System.Drawing.Size(250, 250);
             this.Load += new System.EventHandler(this.UiSectorMap_Load);
             this.ResumeLayout(false);
 

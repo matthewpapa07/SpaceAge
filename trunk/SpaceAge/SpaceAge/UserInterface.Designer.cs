@@ -36,6 +36,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.ui_Time = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.button_sectorBrowser = new System.Windows.Forms.Button();
             this.ui_buttonBack = new System.Windows.Forms.Button();
             this.panel6 = new System.Windows.Forms.Panel();
             this.label11 = new System.Windows.Forms.Label();
@@ -49,11 +50,10 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.userFuelMeter1 = new SpaceAge.UserFuelMeter();
             this.panel2 = new System.Windows.Forms.Panel();
             this.ui_MAINPANEL = new System.Windows.Forms.Panel();
+            this.userFuelMeter1 = new SpaceAge.UserFuelMeter();
             this.uiShipInventory1 = new SpaceAge.Controls.UiInventory();
-            this.button_sectorBrowser = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel5.SuspendLayout();
@@ -128,6 +128,7 @@
             // 
             // panel1
             // 
+            this.panel1.BackColor = System.Drawing.Color.Black;
             this.panel1.Controls.Add(this.button_sectorBrowser);
             this.panel1.Controls.Add(this.ui_buttonBack);
             this.panel1.Controls.Add(this.panel6);
@@ -136,13 +137,26 @@
             this.panel1.Controls.Add(this.panel3);
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel1.ForeColor = System.Drawing.Color.White;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(200, 620);
             this.panel1.TabIndex = 17;
             // 
+            // button_sectorBrowser
+            // 
+            this.button_sectorBrowser.ForeColor = System.Drawing.Color.Black;
+            this.button_sectorBrowser.Location = new System.Drawing.Point(3, 512);
+            this.button_sectorBrowser.Name = "button_sectorBrowser";
+            this.button_sectorBrowser.Size = new System.Drawing.Size(194, 39);
+            this.button_sectorBrowser.TabIndex = 22;
+            this.button_sectorBrowser.Text = "Sector Browser";
+            this.button_sectorBrowser.UseVisualStyleBackColor = true;
+            this.button_sectorBrowser.Click += new System.EventHandler(this.button_sectorBrowser_Click);
+            // 
             // ui_buttonBack
             // 
+            this.ui_buttonBack.ForeColor = System.Drawing.Color.Black;
             this.ui_buttonBack.Location = new System.Drawing.Point(3, 557);
             this.ui_buttonBack.Name = "ui_buttonBack";
             this.ui_buttonBack.Size = new System.Drawing.Size(194, 39);
@@ -262,14 +276,6 @@
             this.panel3.Size = new System.Drawing.Size(194, 58);
             this.panel3.TabIndex = 18;
             // 
-            // userFuelMeter1
-            // 
-            this.userFuelMeter1.Location = new System.Drawing.Point(6, 26);
-            this.userFuelMeter1.Name = "userFuelMeter1";
-            this.userFuelMeter1.Size = new System.Drawing.Size(185, 23);
-            this.userFuelMeter1.TabIndex = 6;
-            this.userFuelMeter1.Load += new System.EventHandler(this.userFuelMeter1_Load);
-            // 
             // panel2
             // 
             this.panel2.Controls.Add(this.ui_Credits);
@@ -285,11 +291,20 @@
             // 
             // ui_MAINPANEL
             // 
+            this.ui_MAINPANEL.BackColor = System.Drawing.Color.Black;
             this.ui_MAINPANEL.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ui_MAINPANEL.Location = new System.Drawing.Point(200, 0);
             this.ui_MAINPANEL.Name = "ui_MAINPANEL";
             this.ui_MAINPANEL.Size = new System.Drawing.Size(800, 620);
             this.ui_MAINPANEL.TabIndex = 18;
+            // 
+            // userFuelMeter1
+            // 
+            this.userFuelMeter1.Location = new System.Drawing.Point(6, 26);
+            this.userFuelMeter1.Name = "userFuelMeter1";
+            this.userFuelMeter1.Size = new System.Drawing.Size(185, 23);
+            this.userFuelMeter1.TabIndex = 6;
+            this.userFuelMeter1.Load += new System.EventHandler(this.userFuelMeter1_Load);
             // 
             // uiShipInventory1
             // 
@@ -297,16 +312,6 @@
             this.uiShipInventory1.Name = "uiShipInventory1";
             this.uiShipInventory1.Size = new System.Drawing.Size(334, 235);
             this.uiShipInventory1.TabIndex = 14;
-            // 
-            // button_sectorBrowser
-            // 
-            this.button_sectorBrowser.Location = new System.Drawing.Point(3, 512);
-            this.button_sectorBrowser.Name = "button_sectorBrowser";
-            this.button_sectorBrowser.Size = new System.Drawing.Size(194, 39);
-            this.button_sectorBrowser.TabIndex = 22;
-            this.button_sectorBrowser.Text = "Sector Browser";
-            this.button_sectorBrowser.UseVisualStyleBackColor = true;
-            this.button_sectorBrowser.Click += new System.EventHandler(this.button_sectorBrowser_Click);
             // 
             // UserInterface
             // 

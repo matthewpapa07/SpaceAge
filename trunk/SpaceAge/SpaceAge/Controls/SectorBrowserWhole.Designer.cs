@@ -36,18 +36,20 @@
             // 
             // panel1
             // 
+            this.panel1.AutoSize = true;
+            this.panel1.BackColor = System.Drawing.Color.Black;
             this.panel1.Controls.Add(this.ui_buttonVisitSector);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(629, 0);
+            this.panel1.Location = new System.Drawing.Point(620, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(171, 620);
+            this.panel1.Size = new System.Drawing.Size(186, 620);
             this.panel1.TabIndex = 0;
             // 
             // ui_buttonVisitSector
             // 
-            this.ui_buttonVisitSector.Location = new System.Drawing.Point(3, 3);
+            this.ui_buttonVisitSector.Location = new System.Drawing.Point(3, 245);
             this.ui_buttonVisitSector.Name = "ui_buttonVisitSector";
-            this.ui_buttonVisitSector.Size = new System.Drawing.Size(165, 119);
+            this.ui_buttonVisitSector.Size = new System.Drawing.Size(180, 119);
             this.ui_buttonVisitSector.TabIndex = 1;
             this.ui_buttonVisitSector.Text = "Visit Sector";
             this.ui_buttonVisitSector.UseVisualStyleBackColor = true;
@@ -57,8 +59,9 @@
             // 
             this.uiMap1.AutoSize = true;
             this.uiMap1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.uiMap1.BackColor = System.Drawing.Color.Gray;
+            this.uiMap1.BackColor = System.Drawing.Color.Black;
             this.uiMap1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.uiMap1.ForeColor = System.Drawing.Color.White;
             this.uiMap1.Location = new System.Drawing.Point(0, 0);
             this.uiMap1.MinimumSize = new System.Drawing.Size(620, 620);
             this.uiMap1.Name = "uiMap1";
