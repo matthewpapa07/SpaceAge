@@ -51,6 +51,12 @@
     <Compile Include="CargoItemList.cs" />
     <Compile Include="Commodity.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Controls\InteractionCenterUi.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\InteractionCenterUi.Designer.cs">
+      <DependentUpon>InteractionCenterUi.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PlanetViewer.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -80,12 +86,6 @@
     <Compile Include="Graphics\GraphicsLib.cs" />
     <Compile Include="MerchantSpaceShip.cs" />
     <Compile Include="PortInteraction\InteractionCenter.cs" />
-    <Compile Include="PortInteraction\InteractionCenterUi.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="PortInteraction\InteractionCenterUi.Designer.cs">
-      <DependentUpon>InteractionCenterUi.cs</DependentUpon>
-    </Compile>
     <Compile Include="Item.cs" />
     <Compile Include="ItemList.cs" />
     <Compile Include="PortInteraction\ItemStore.cs" />
@@ -143,12 +143,6 @@
     <Compile Include="Controls\UserFuelMeter.Designer.cs">
       <DependentUpon>UserFuelMeter.cs</DependentUpon>
     </Compile>
-    <Compile Include="SurveyResults.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SurveyResults.Designer.cs">
-      <DependentUpon>SurveyResults.cs</DependentUpon>
-    </Compile>
     <Compile Include="UserInterface.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -166,6 +160,9 @@
     <Compile Include="UserState.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controls\InteractionCenterUi.resx">
+      <DependentUpon>InteractionCenterUi.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\PlanetViewer.resx">
       <DependentUpon>PlanetViewer.cs</DependentUpon>
     </EmbeddedResource>
@@ -177,9 +174,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\UiInventory.resx">
       <DependentUpon>UiInventory.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PortInteraction\InteractionCenterUi.resx">
-      <DependentUpon>InteractionCenterUi.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -197,9 +191,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\UserFuelMeter.resx">
       <DependentUpon>UserFuelMeter.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SurveyResults.resx">
-      <DependentUpon>SurveyResults.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface.resx">
       <DependentUpon>UserInterface.cs</DependentUpon>

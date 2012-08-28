@@ -1,13 +1,13 @@
-﻿namespace SpaceAge
+﻿namespace SpaceAge.Controls
 {
     partial class InteractionCenterUi
     {
-        /// <summary>
+        /// <summary> 
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
+        /// <summary> 
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -20,16 +20,17 @@
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+        #region Component Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tab_info = new System.Windows.Forms.TabPage();
+            this.Info_Population = new System.Windows.Forms.Label();
             this.InteractionCenter_InfoName = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -43,15 +44,15 @@
             this.Market_ShipCommodities = new System.Windows.Forms.ListView();
             this.BuyPrice = new System.Windows.Forms.TextBox();
             this.SellPrice = new System.Windows.Forms.TextBox();
+            this.SellQuantity = new System.Windows.Forms.TextBox();
+            this.BuyQuantity = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.Market_MarketCommodities = new System.Windows.Forms.ListView();
             this.InteractionCenter_Credits = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.SellQuantity = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.InteractionCenter_SellButton = new System.Windows.Forms.Button();
-            this.BuyQuantity = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.InteractionCenter_BuyButton = new System.Windows.Forms.Button();
             this.tab_escrow = new System.Windows.Forms.TabPage();
@@ -63,7 +64,6 @@
             this.tab_agents = new System.Windows.Forms.TabPage();
             this.tab_people = new System.Windows.Forms.TabPage();
             this.tab_politics = new System.Windows.Forms.TabPage();
-            this.Info_Population = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tab_info.SuspendLayout();
             this.tab_market.SuspendLayout();
@@ -78,14 +78,16 @@
             this.tabControl1.Controls.Add(this.tab_agents);
             this.tabControl1.Controls.Add(this.tab_people);
             this.tabControl1.Controls.Add(this.tab_politics);
-            this.tabControl1.Location = new System.Drawing.Point(4, 5);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(701, 367);
-            this.tabControl1.TabIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(800, 620);
+            this.tabControl1.TabIndex = 1;
             // 
             // tab_info
             // 
+            this.tab_info.BackColor = System.Drawing.Color.Black;
             this.tab_info.Controls.Add(this.Info_Population);
             this.tab_info.Controls.Add(this.InteractionCenter_InfoName);
             this.tab_info.Controls.Add(this.label8);
@@ -97,10 +99,19 @@
             this.tab_info.Location = new System.Drawing.Point(4, 22);
             this.tab_info.Name = "tab_info";
             this.tab_info.Padding = new System.Windows.Forms.Padding(3);
-            this.tab_info.Size = new System.Drawing.Size(693, 341);
+            this.tab_info.Size = new System.Drawing.Size(792, 594);
             this.tab_info.TabIndex = 4;
             this.tab_info.Text = "Info";
-            this.tab_info.UseVisualStyleBackColor = true;
+            // 
+            // Info_Population
+            // 
+            this.Info_Population.AutoSize = true;
+            this.Info_Population.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Info_Population.Location = new System.Drawing.Point(91, 75);
+            this.Info_Population.Name = "Info_Population";
+            this.Info_Population.Size = new System.Drawing.Size(72, 20);
+            this.Info_Population.TabIndex = 8;
+            this.Info_Population.Text = "0000000";
             // 
             // InteractionCenter_InfoName
             // 
@@ -174,29 +185,29 @@
             // 
             // tab_market
             // 
+            this.tab_market.BackColor = System.Drawing.Color.Black;
             this.tab_market.Controls.Add(this.market_cargo_space);
             this.tab_market.Controls.Add(this.cargo_space_label);
             this.tab_market.Controls.Add(this.Market_ShipCommodities);
             this.tab_market.Controls.Add(this.BuyPrice);
             this.tab_market.Controls.Add(this.SellPrice);
+            this.tab_market.Controls.Add(this.SellQuantity);
+            this.tab_market.Controls.Add(this.BuyQuantity);
             this.tab_market.Controls.Add(this.label11);
             this.tab_market.Controls.Add(this.label10);
             this.tab_market.Controls.Add(this.Market_MarketCommodities);
             this.tab_market.Controls.Add(this.InteractionCenter_Credits);
             this.tab_market.Controls.Add(this.label9);
-            this.tab_market.Controls.Add(this.SellQuantity);
             this.tab_market.Controls.Add(this.label2);
             this.tab_market.Controls.Add(this.InteractionCenter_SellButton);
-            this.tab_market.Controls.Add(this.BuyQuantity);
             this.tab_market.Controls.Add(this.label1);
             this.tab_market.Controls.Add(this.InteractionCenter_BuyButton);
             this.tab_market.Location = new System.Drawing.Point(4, 22);
             this.tab_market.Name = "tab_market";
             this.tab_market.Padding = new System.Windows.Forms.Padding(3);
-            this.tab_market.Size = new System.Drawing.Size(693, 341);
+            this.tab_market.Size = new System.Drawing.Size(792, 594);
             this.tab_market.TabIndex = 0;
             this.tab_market.Text = "Market";
-            this.tab_market.UseVisualStyleBackColor = true;
             // 
             // market_cargo_space
             // 
@@ -224,7 +235,6 @@
             this.Market_ShipCommodities.Size = new System.Drawing.Size(336, 234);
             this.Market_ShipCommodities.TabIndex = 16;
             this.Market_ShipCommodities.UseCompatibleStateImageBehavior = false;
-            this.Market_ShipCommodities.SelectedIndexChanged += new System.EventHandler(this.Market_ShipCommodities_SelectedIndexChanged);
             // 
             // BuyPrice
             // 
@@ -241,6 +251,22 @@
             this.SellPrice.Size = new System.Drawing.Size(100, 20);
             this.SellPrice.TabIndex = 14;
             this.SellPrice.Text = "0";
+            // 
+            // SellQuantity
+            // 
+            this.SellQuantity.Location = new System.Drawing.Point(148, 273);
+            this.SellQuantity.Name = "SellQuantity";
+            this.SellQuantity.Size = new System.Drawing.Size(39, 20);
+            this.SellQuantity.TabIndex = 8;
+            this.SellQuantity.Text = "0";
+            // 
+            // BuyQuantity
+            // 
+            this.BuyQuantity.Location = new System.Drawing.Point(491, 272);
+            this.BuyQuantity.Name = "BuyQuantity";
+            this.BuyQuantity.Size = new System.Drawing.Size(39, 20);
+            this.BuyQuantity.TabIndex = 5;
+            this.BuyQuantity.Text = "0";
             // 
             // label11
             // 
@@ -268,7 +294,6 @@
             this.Market_MarketCommodities.Size = new System.Drawing.Size(336, 234);
             this.Market_MarketCommodities.TabIndex = 11;
             this.Market_MarketCommodities.UseCompatibleStateImageBehavior = false;
-            this.Market_MarketCommodities.SelectedIndexChanged += new System.EventHandler(this.Market_MarketCommodities_SelectedIndexChanged);
             // 
             // InteractionCenter_Credits
             // 
@@ -292,15 +317,6 @@
             this.label9.TabIndex = 9;
             this.label9.Text = "Available Credits:";
             // 
-            // SellQuantity
-            // 
-            this.SellQuantity.Location = new System.Drawing.Point(148, 273);
-            this.SellQuantity.Name = "SellQuantity";
-            this.SellQuantity.Size = new System.Drawing.Size(39, 20);
-            this.SellQuantity.TabIndex = 8;
-            this.SellQuantity.Text = "0";
-            this.SellQuantity.TextChanged += new System.EventHandler(this.SellQuantity_TextChanged);
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -312,22 +328,13 @@
             // 
             // InteractionCenter_SellButton
             // 
+            this.InteractionCenter_SellButton.ForeColor = System.Drawing.Color.Black;
             this.InteractionCenter_SellButton.Location = new System.Drawing.Point(15, 271);
             this.InteractionCenter_SellButton.Name = "InteractionCenter_SellButton";
             this.InteractionCenter_SellButton.Size = new System.Drawing.Size(75, 23);
             this.InteractionCenter_SellButton.TabIndex = 6;
             this.InteractionCenter_SellButton.Text = "Sell";
             this.InteractionCenter_SellButton.UseVisualStyleBackColor = true;
-            this.InteractionCenter_SellButton.Click += new System.EventHandler(this.InteractionCenter_SellButton_Click);
-            // 
-            // BuyQuantity
-            // 
-            this.BuyQuantity.Location = new System.Drawing.Point(491, 272);
-            this.BuyQuantity.Name = "BuyQuantity";
-            this.BuyQuantity.Size = new System.Drawing.Size(39, 20);
-            this.BuyQuantity.TabIndex = 5;
-            this.BuyQuantity.Text = "0";
-            this.BuyQuantity.TextChanged += new System.EventHandler(this.BuyQuantity_TextChanged);
             // 
             // label1
             // 
@@ -340,16 +347,17 @@
             // 
             // InteractionCenter_BuyButton
             // 
+            this.InteractionCenter_BuyButton.ForeColor = System.Drawing.Color.Black;
             this.InteractionCenter_BuyButton.Location = new System.Drawing.Point(358, 270);
             this.InteractionCenter_BuyButton.Name = "InteractionCenter_BuyButton";
             this.InteractionCenter_BuyButton.Size = new System.Drawing.Size(75, 23);
             this.InteractionCenter_BuyButton.TabIndex = 3;
             this.InteractionCenter_BuyButton.Text = "Buy";
             this.InteractionCenter_BuyButton.UseVisualStyleBackColor = true;
-            this.InteractionCenter_BuyButton.Click += new System.EventHandler(this.InteractionCenter_BuyButton_Click);
             // 
             // tab_escrow
             // 
+            this.tab_escrow.BackColor = System.Drawing.Color.Black;
             this.tab_escrow.Controls.Add(this.button3);
             this.tab_escrow.Controls.Add(this.button2);
             this.tab_escrow.Controls.Add(this.button1);
@@ -357,14 +365,13 @@
             this.tab_escrow.Controls.Add(this.Escrow_PlayerList);
             this.tab_escrow.Location = new System.Drawing.Point(4, 22);
             this.tab_escrow.Name = "tab_escrow";
-            this.tab_escrow.Size = new System.Drawing.Size(693, 341);
+            this.tab_escrow.Size = new System.Drawing.Size(792, 594);
             this.tab_escrow.TabIndex = 5;
             this.tab_escrow.Text = "Escrow";
-            this.tab_escrow.UseVisualStyleBackColor = true;
-            this.tab_escrow.Click += new System.EventHandler(this.tab_escrow_Click);
             // 
             // button3
             // 
+            this.button3.ForeColor = System.Drawing.Color.Black;
             this.button3.Location = new System.Drawing.Point(95, 243);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 38);
@@ -374,6 +381,7 @@
             // 
             // button2
             // 
+            this.button2.ForeColor = System.Drawing.Color.Black;
             this.button2.Location = new System.Drawing.Point(14, 243);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 38);
@@ -383,6 +391,7 @@
             // 
             // button1
             // 
+            this.button1.ForeColor = System.Drawing.Color.Black;
             this.button1.Location = new System.Drawing.Point(363, 243);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(76, 38);
@@ -411,7 +420,7 @@
             this.tab_agents.Location = new System.Drawing.Point(4, 22);
             this.tab_agents.Name = "tab_agents";
             this.tab_agents.Padding = new System.Windows.Forms.Padding(3);
-            this.tab_agents.Size = new System.Drawing.Size(693, 341);
+            this.tab_agents.Size = new System.Drawing.Size(792, 594);
             this.tab_agents.TabIndex = 1;
             this.tab_agents.Text = "Agents";
             this.tab_agents.UseVisualStyleBackColor = true;
@@ -436,25 +445,16 @@
             this.tab_politics.Text = "Politics";
             this.tab_politics.UseVisualStyleBackColor = true;
             // 
-            // Info_Population
-            // 
-            this.Info_Population.AutoSize = true;
-            this.Info_Population.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Info_Population.Location = new System.Drawing.Point(91, 75);
-            this.Info_Population.Name = "Info_Population";
-            this.Info_Population.Size = new System.Drawing.Size(72, 20);
-            this.Info_Population.TabIndex = 8;
-            this.Info_Population.Text = "0000000";
-            // 
-            // InteractionCenterUi
+            // InteractionCenter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(704, 375);
+            this.BackColor = System.Drawing.Color.Black;
             this.Controls.Add(this.tabControl1);
-            this.Name = "InteractionCenterUi";
-            this.Text = "InteractionCenterUi";
-            this.Load += new System.EventHandler(this.InteractionCenterUi_Load);
+            this.ForeColor = System.Drawing.Color.White;
+            this.MinimumSize = new System.Drawing.Size(800, 620);
+            this.Name = "InteractionCenter";
+            this.Size = new System.Drawing.Size(800, 620);
             this.tabControl1.ResumeLayout(false);
             this.tab_info.ResumeLayout(false);
             this.tab_info.PerformLayout();
@@ -468,40 +468,40 @@
         #endregion
 
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tab_market;
-        private System.Windows.Forms.TabPage tab_agents;
-        private System.Windows.Forms.TabPage tab_people;
-        private System.Windows.Forms.TabPage tab_politics;
-        private System.Windows.Forms.TextBox SellQuantity;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button InteractionCenter_SellButton;
-        private System.Windows.Forms.TextBox BuyQuantity;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button InteractionCenter_BuyButton;
         private System.Windows.Forms.TabPage tab_info;
+        private System.Windows.Forms.Label Info_Population;
+        private System.Windows.Forms.Label InteractionCenter_InfoName;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TabPage tab_escrow;
-        private System.Windows.Forms.Label InteractionCenter_Credits;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.ListView Escrow_PlayerList;
-        private System.Windows.Forms.ListView Market_MarketCommodities;
-        private System.Windows.Forms.TextBox BuyPrice;
-        private System.Windows.Forms.TextBox SellPrice;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.ListView Market_ShipCommodities;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ListView Escrow_StoreList;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.TabPage tab_market;
         private System.Windows.Forms.Label market_cargo_space;
         private System.Windows.Forms.Label cargo_space_label;
-        private System.Windows.Forms.Label InteractionCenter_InfoName;
-        private System.Windows.Forms.Label Info_Population;
+        private System.Windows.Forms.ListView Market_ShipCommodities;
+        private System.Windows.Forms.TextBox BuyPrice;
+        private System.Windows.Forms.TextBox SellPrice;
+        private System.Windows.Forms.TextBox SellQuantity;
+        private System.Windows.Forms.TextBox BuyQuantity;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.ListView Market_MarketCommodities;
+        private System.Windows.Forms.Label InteractionCenter_Credits;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button InteractionCenter_SellButton;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button InteractionCenter_BuyButton;
+        private System.Windows.Forms.TabPage tab_escrow;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ListView Escrow_StoreList;
+        private System.Windows.Forms.ListView Escrow_PlayerList;
+        private System.Windows.Forms.TabPage tab_agents;
+        private System.Windows.Forms.TabPage tab_people;
+        private System.Windows.Forms.TabPage tab_politics;
     }
 }

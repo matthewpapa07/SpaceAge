@@ -30,13 +30,14 @@
         {
             this.panel1 = new System.Windows.Forms.Panel();
             this.ui_buttonVisitSector = new System.Windows.Forms.Button();
+            this.sectorViewerPanel = new System.Windows.Forms.Panel();
             this.uiMap1 = new SpaceAge.UiMap();
             this.panel1.SuspendLayout();
+            this.sectorViewerPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
-            this.panel1.AutoSize = true;
             this.panel1.BackColor = System.Drawing.Color.Black;
             this.panel1.Controls.Add(this.ui_buttonVisitSector);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
@@ -55,12 +56,22 @@
             this.ui_buttonVisitSector.UseVisualStyleBackColor = true;
             this.ui_buttonVisitSector.Click += new System.EventHandler(this.ui_buttonVisitSector_Click);
             // 
+            // sectorViewerPanel
+            // 
+            this.sectorViewerPanel.BackColor = System.Drawing.Color.Black;
+            this.sectorViewerPanel.Controls.Add(this.uiMap1);
+            this.sectorViewerPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.sectorViewerPanel.Location = new System.Drawing.Point(0, 0);
+            this.sectorViewerPanel.Name = "sectorViewerPanel";
+            this.sectorViewerPanel.Size = new System.Drawing.Size(620, 620);
+            this.sectorViewerPanel.TabIndex = 1;
+            // 
             // uiMap1
             // 
             this.uiMap1.AutoSize = true;
             this.uiMap1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.uiMap1.BackColor = System.Drawing.Color.Black;
-            this.uiMap1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.uiMap1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.uiMap1.ForeColor = System.Drawing.Color.White;
             this.uiMap1.Location = new System.Drawing.Point(0, 0);
             this.uiMap1.MinimumSize = new System.Drawing.Size(620, 620);
@@ -73,14 +84,15 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
+            this.Controls.Add(this.sectorViewerPanel);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.uiMap1);
             this.MinimumSize = new System.Drawing.Size(800, 620);
             this.Name = "SectorBrowserWhole";
-            this.Size = new System.Drawing.Size(800, 620);
+            this.Size = new System.Drawing.Size(806, 620);
             this.panel1.ResumeLayout(false);
+            this.sectorViewerPanel.ResumeLayout(false);
+            this.sectorViewerPanel.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -89,5 +101,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button ui_buttonVisitSector;
         private UiMap uiMap1;
+        private System.Windows.Forms.Panel sectorViewerPanel;
     }
 }

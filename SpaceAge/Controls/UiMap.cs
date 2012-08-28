@@ -141,7 +141,7 @@ namespace SpaceAge
         {
             using (Graphics g = this.CreateGraphics())
             {
-                g.FillRectangle(staticGraphics.grayBrush, this.DisplayRectangle);
+                g.FillRectangle(staticGraphics.blackBrush, this.DisplayRectangle);
             }
             drawMap();
         }

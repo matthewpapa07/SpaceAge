@@ -15,6 +15,7 @@ namespace SpaceAge
         Controls.SectorBrowserWhole TheMainSectorBrowserWhole;
         public static UserInterface thisOneInterface;
         private Control currentControl;
+        private Control previousControl;
 
         public UserInterface()
         {
@@ -32,53 +33,7 @@ namespace SpaceAge
             currentControl = TheMainSectorBrowserWhole;
             ui_MAINPANEL.Controls.Add(TheMainSectorBrowserWhole);
             UpdateUi();
-            //BackColor = Color.White;
         }
-
-        //protected override void OnPaint(PaintEventArgs e)
-        //{
-        //    int height = ClientRectangle.Height / 3;
-        //    int width = ClientRectangle.Width;
-        //    int y = 0;
-
-        //    Rectangle hatchArea = new Rectangle(0, y, width, height);
-        //    y += height;
-        //    Rectangle gradientArea = new Rectangle(0, y, width, height);
-        //    y += height;
-        //    Rectangle pathArea = new Rectangle(0, y, width, height);
-
-        //    using (HatchBrush hatchBrush = new HatchBrush(
-        //    HatchStyle.Cross, Color.Red, Color.Blue))
-        //    {
-        //        e.Graphics.FillRectangle(hatchBrush, hatchArea);
-        //    }
-
-        //    using (LinearGradientBrush gradientBrush = new LinearGradientBrush(
-        //    gradientArea, Color.Green, Color.White,
-        //    LinearGradientMode.ForwardDiagonal))
-        //    {
-        //        e.Graphics.FillRectangle(gradientBrush, gradientArea);
-        //    }
-
-        //    using (GraphicsPath path = new GraphicsPath())
-        //    {
-        //        path.AddBezier(0, y, width, y, width, y + height, 0, y + height);
-
-        //        using (PathGradientBrush pathBrush = new PathGradientBrush(path))
-        //        {
-        //            pathBrush.CenterColor = Color.HotPink;
-        //            pathBrush.CenterPoint = new PointF(width / 4, y + height / 2);
-        //            pathBrush.SurroundColors = new Color[] {
-        //                                                    Color.Yellow,
-        //                                                    Color.Lavender,
-        //                                                    Color.Ivory,
-        //                                                    Color.Indigo
-        //                                                    };
-
-        //            e.Graphics.FillRectangle(pathBrush, pathArea);
-        //        }
-        //    }
-        //}
 
         public void UpdateUi()
         {
@@ -94,7 +49,7 @@ namespace SpaceAge
 
         private void UserInterface_Load(object sender, EventArgs e)
         {
-
+            ui_buttonBack.Enabled = false;
         }
         private void UserInterface_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -122,6 +77,7 @@ namespace SpaceAge
                 TheMainSectorBrowserWhole.UpdateUi();
                 UpdateUi();
             }
+
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -136,10 +92,17 @@ namespace SpaceAge
 
         public void SetMainPanel(Control ToShow)
         {
+            previousControl = currentControl;
             currentControl = ToShow;
-            //ToShow.Dock = DockStyle.Fill;
+            ToShow.Dock = DockStyle.Fill;
+            ToShow.BackColor = Color.Black;
             ui_MAINPANEL.Controls.Clear();
             ui_MAINPANEL.Controls.Add(ToShow);
+
+            if (previousControl != null)
+                ui_buttonBack.Enabled = true;
+            else
+                ui_buttonBack.Enabled = false;
             //ToShow.Show();
         }
 
@@ -150,7 +113,8 @@ namespace SpaceAge
 
         private void ui_buttonBack_Click(object sender, EventArgs e)
         {
-
+            currentControl = null;
+            SetMainPanel(previousControl);
         }
 
     }

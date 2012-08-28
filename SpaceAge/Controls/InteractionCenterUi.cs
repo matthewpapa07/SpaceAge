@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace SpaceAge
+namespace SpaceAge.Controls
 {
-    partial class InteractionCenterUi : Form
+    partial class InteractionCenterUi : UserControl
     {
-        InteractionCenter thisInteractionCenter = null;
+        public InteractionCenter thisInteractionCenter = null;
         public bool NeedToRefresh = true;
 
         private Commodity.CommodityEnum Market_ShipCommodity_Selected = Commodity.CommodityEnum.Coolant;
@@ -267,6 +267,5 @@ namespace SpaceAge
             
             UpdateLists();
         }
-
     }
 }
