@@ -69,6 +69,12 @@
     <Compile Include="Controls\SectorBrowserWhole.Designer.cs">
       <DependentUpon>SectorBrowserWhole.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SolarSystemViewer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\SolarSystemViewer.Designer.cs">
+      <DependentUpon>SolarSystemViewer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\UiSectorMap.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -168,6 +174,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\SectorBrowserWhole.resx">
       <DependentUpon>SectorBrowserWhole.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\SolarSystemViewer.resx">
+      <DependentUpon>SolarSystemViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\UiSectorMap.resx">
       <DependentUpon>UiSectorMap.cs</DependentUpon>
