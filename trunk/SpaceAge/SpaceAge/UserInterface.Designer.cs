@@ -291,9 +291,11 @@
             // 
             // ui_MAINPANEL
             // 
+            this.ui_MAINPANEL.AutoSize = true;
             this.ui_MAINPANEL.BackColor = System.Drawing.Color.Black;
             this.ui_MAINPANEL.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ui_MAINPANEL.Location = new System.Drawing.Point(200, 0);
+            this.ui_MAINPANEL.MinimumSize = new System.Drawing.Size(800, 620);
             this.ui_MAINPANEL.Name = "ui_MAINPANEL";
             this.ui_MAINPANEL.Size = new System.Drawing.Size(800, 620);
             this.ui_MAINPANEL.TabIndex = 18;
@@ -317,6 +319,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1000, 620);
             this.Controls.Add(this.ui_MAINPANEL);
             this.Controls.Add(this.panel1);
@@ -336,6 +339,7 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

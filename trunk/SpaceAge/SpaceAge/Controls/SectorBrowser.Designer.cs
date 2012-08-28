@@ -248,7 +248,7 @@
             this.Controls.Add(this.panel2);
             this.ForeColor = System.Drawing.Color.White;
             this.Name = "SectorBrowser";
-            this.Size = new System.Drawing.Size(808, 620);
+            this.Size = new System.Drawing.Size(807, 620);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.back_systemPanel.ResumeLayout(false);

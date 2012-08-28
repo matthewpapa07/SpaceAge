@@ -12,7 +12,7 @@ namespace SpaceAge
     public partial class UserFuelMeter : UserControl
     {
         SolidBrush aquaBrush = new SolidBrush(System.Drawing.Color.Aquamarine);
-        SolidBrush blackBrush = new SolidBrush(System.Drawing.Color.Black);
+        SolidBrush blackBrush = new SolidBrush(System.Drawing.Color.Gray);
         Rectangle backRect;
         Rectangle meterRect;
         public int origWidth = 0;

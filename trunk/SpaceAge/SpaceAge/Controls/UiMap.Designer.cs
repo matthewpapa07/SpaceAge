@@ -36,7 +36,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.BackColor = System.Drawing.Color.Gray;
+            this.BackColor = System.Drawing.Color.Black;
             this.MinimumSize = new System.Drawing.Size(620, 620);
             this.Name = "UiMap";
             this.Size = new System.Drawing.Size(620, 620);

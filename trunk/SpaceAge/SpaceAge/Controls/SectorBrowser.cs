@@ -39,6 +39,21 @@ namespace SpaceAge
             uiM.Dock = DockStyle.Fill;
             ui_SectorMapPanel.Controls.Add(uiM);
 
+            ui_SystemList.Columns.Clear();
+
+            ui_SystemList.Columns.Add("Object Type", 80);
+            ui_SystemList.Columns.Add("Size");
+            ui_SystemList.Columns.Add("Coordinates");
+            ui_SystemList.Columns.Add("Inhabited");
+
+            ui_SectorList.Columns.Clear();
+            //
+            // Add columns
+            //
+            ui_SectorList.Columns.Add("Name", 80);
+            ui_SectorList.Columns.Add("Stars");
+            ui_SectorList.Columns.Add("Planets");
+
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -60,22 +75,16 @@ namespace SpaceAge
             if (!(currentObject is Planet))
                 return;
 
-            Planet p = (Planet)currentObject;
-            SurveyResults surveyResults = new SurveyResults();
-            surveyResults.SetSurveyObject(p);
-            surveyResults.Show();
+            Planet p = currentObject as Planet;
+
+            SpaceAge.Controls.PlanetViewer Pview = new SpaceAge.Controls.PlanetViewer();
+            Pview.SetPlanet(p);
+            UserInterface.thisOneInterface.SetMainPanel(Pview);
         }
 
         public void UpdateStarSystemList()
         {
             ui_SectorList.Items.Clear();
-            ui_SectorList.Columns.Clear();
-            //
-            // Add columns
-            //
-            ui_SectorList.Columns.Add("Name", 80);
-            ui_SectorList.Columns.Add("Stars");
-            ui_SectorList.Columns.Add("Planets");
 
             Sector currentSector = UserState.getCurrentSector();
 
@@ -101,12 +110,6 @@ namespace SpaceAge
             if (ui_SectorList.SelectedIndices.Count >= 1)
             {
                 ui_SystemList.Items.Clear();
-                ui_SystemList.Columns.Clear();
-
-                ui_SystemList.Columns.Add("Object Type", 80);
-                ui_SystemList.Columns.Add("Size");
-                ui_SystemList.Columns.Add("Coordinates");
-                ui_SystemList.Columns.Add("Inhabited");
 
                 int indexSelected = ui_SectorList.SelectedIndices[0];
                 currentlySelectedSystem = SectorSystems[indexSelected];
@@ -194,8 +197,8 @@ namespace SpaceAge
             
             Planet p = (Planet)currentObject;
 
-            InteractionCenterUi interactUi = InteractionCenterUi.InteractionCenterGeneralStore(p.PlanetInteractionCenter);
-            interactUi.Show();
+            SpaceAge.Controls.InteractionCenterUi interactUi = SpaceAge.Controls.InteractionCenterUi.InteractionCenterGeneralStore(p.PlanetInteractionCenter);
+            UserInterface.thisOneInterface.SetMainPanel(interactUi);
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
