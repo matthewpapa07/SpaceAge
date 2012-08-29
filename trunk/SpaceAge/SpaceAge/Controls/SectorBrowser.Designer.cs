@@ -29,12 +29,11 @@
         private void InitializeComponent()
         {
             this.panel2 = new System.Windows.Forms.Panel();
+            this.button_Approach = new System.Windows.Forms.Button();
             this.back_systemPanel = new System.Windows.Forms.Panel();
             this.ui_SectorMapPanel = new System.Windows.Forms.Panel();
-            this.ui_Approach = new System.Windows.Forms.Button();
             this.ui_SectorList = new System.Windows.Forms.ListView();
             this.label2 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             this.ui_Interaction = new System.Windows.Forms.Button();
             this.ui_SystemList = new System.Windows.Forms.ListView();
             this.ui_SurveyObject = new System.Windows.Forms.Button();
@@ -43,7 +42,6 @@
             this.ui_checkBox_other = new System.Windows.Forms.CheckBox();
             this.ui_checkBox_stars = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.ui_BuyResources = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2.SuspendLayout();
             this.back_systemPanel.SuspendLayout();
@@ -52,15 +50,25 @@
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.button1);
+            this.panel2.Controls.Add(this.button_Approach);
             this.panel2.Controls.Add(this.back_systemPanel);
-            this.panel2.Controls.Add(this.ui_Approach);
             this.panel2.Controls.Add(this.ui_SectorList);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(384, 617);
             this.panel2.TabIndex = 6;
+            // 
+            // button_Approach
+            // 
+            this.button_Approach.ForeColor = System.Drawing.Color.Black;
+            this.button_Approach.Location = new System.Drawing.Point(4, 563);
+            this.button_Approach.Name = "button_Approach";
+            this.button_Approach.Size = new System.Drawing.Size(372, 23);
+            this.button_Approach.TabIndex = 11;
+            this.button_Approach.Text = "Approach";
+            this.button_Approach.UseVisualStyleBackColor = true;
+            this.button_Approach.Click += new System.EventHandler(this.button_Approach_Click);
             // 
             // back_systemPanel
             // 
@@ -73,26 +81,16 @@
             // 
             // ui_SectorMapPanel
             // 
-            this.ui_SectorMapPanel.Location = new System.Drawing.Point(4, 1);
+            this.ui_SectorMapPanel.Location = new System.Drawing.Point(1, 1);
             this.ui_SectorMapPanel.Name = "ui_SectorMapPanel";
             this.ui_SectorMapPanel.Size = new System.Drawing.Size(372, 372);
             this.ui_SectorMapPanel.TabIndex = 9;
-            // 
-            // ui_Approach
-            // 
-            this.ui_Approach.ForeColor = System.Drawing.Color.Black;
-            this.ui_Approach.Location = new System.Drawing.Point(6, 591);
-            this.ui_Approach.Name = "ui_Approach";
-            this.ui_Approach.Size = new System.Drawing.Size(373, 23);
-            this.ui_Approach.TabIndex = 8;
-            this.ui_Approach.Text = "Approach";
-            this.ui_Approach.UseVisualStyleBackColor = true;
             // 
             // ui_SectorList
             // 
             this.ui_SectorList.Location = new System.Drawing.Point(6, 405);
             this.ui_SectorList.Name = "ui_SectorList";
-            this.ui_SectorList.Size = new System.Drawing.Size(373, 151);
+            this.ui_SectorList.Size = new System.Drawing.Size(371, 151);
             this.ui_SectorList.TabIndex = 6;
             this.ui_SectorList.UseCompatibleStateImageBehavior = false;
             this.ui_SectorList.SelectedIndexChanged += new System.EventHandler(this.ui_SectorList_SelectedIndexChanged);
@@ -106,21 +104,11 @@
             this.label2.TabIndex = 3;
             this.label2.Text = "Sector Survey";
             // 
-            // button1
-            // 
-            this.button1.ForeColor = System.Drawing.Color.Black;
-            this.button1.Location = new System.Drawing.Point(6, 562);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(373, 23);
-            this.button1.TabIndex = 11;
-            this.button1.Text = "Approach";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
             // ui_Interaction
             // 
             this.ui_Interaction.Enabled = false;
             this.ui_Interaction.ForeColor = System.Drawing.Color.Black;
-            this.ui_Interaction.Location = new System.Drawing.Point(0, 243);
+            this.ui_Interaction.Location = new System.Drawing.Point(0, 268);
             this.ui_Interaction.Name = "ui_Interaction";
             this.ui_Interaction.Size = new System.Drawing.Size(196, 23);
             this.ui_Interaction.TabIndex = 11;
@@ -140,7 +128,7 @@
             // ui_SurveyObject
             // 
             this.ui_SurveyObject.ForeColor = System.Drawing.Color.Black;
-            this.ui_SurveyObject.Location = new System.Drawing.Point(203, 243);
+            this.ui_SurveyObject.Location = new System.Drawing.Point(202, 268);
             this.ui_SurveyObject.Name = "ui_SurveyObject";
             this.ui_SurveyObject.Size = new System.Drawing.Size(196, 23);
             this.ui_SurveyObject.TabIndex = 5;
@@ -202,19 +190,8 @@
             this.label3.TabIndex = 17;
             this.label3.Text = "Enabled Elements";
             // 
-            // ui_BuyResources
-            // 
-            this.ui_BuyResources.ForeColor = System.Drawing.Color.Black;
-            this.ui_BuyResources.Location = new System.Drawing.Point(0, 272);
-            this.ui_BuyResources.Name = "ui_BuyResources";
-            this.ui_BuyResources.Size = new System.Drawing.Size(196, 23);
-            this.ui_BuyResources.TabIndex = 18;
-            this.ui_BuyResources.Text = "Buy Resources";
-            this.ui_BuyResources.UseVisualStyleBackColor = true;
-            // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.ui_BuyResources);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.ui_checkBox_stars);
             this.panel1.Controls.Add(this.ui_checkBox_other);
@@ -252,12 +229,10 @@
         #endregion
 
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button ui_Approach;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ListView ui_SectorList;
         private System.Windows.Forms.Panel ui_SectorMapPanel;
         private System.Windows.Forms.Panel back_systemPanel;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button ui_Interaction;
         private System.Windows.Forms.ListView ui_SystemList;
         private System.Windows.Forms.Button ui_SurveyObject;
@@ -266,7 +241,7 @@
         private System.Windows.Forms.CheckBox ui_checkBox_other;
         private System.Windows.Forms.CheckBox ui_checkBox_stars;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button ui_BuyResources;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button button_Approach;
     }
 }

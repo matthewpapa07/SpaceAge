@@ -53,6 +53,7 @@ namespace SpaceAge
             ui_SectorList.Columns.Add("Name", 80);
             ui_SectorList.Columns.Add("Stars");
             ui_SectorList.Columns.Add("Planets");
+            ui_SectorList.Columns.Add("Soverignty");
 
         }
 
@@ -146,11 +147,17 @@ namespace SpaceAge
 
                 ui_SystemList.Items.AddRange(SystemContentsListView);
             }
+            else
+                currentlySelectedSystem = null;
         }
 
         private void ui_SectorList_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateSolarSystemList();
+            if(currentlySelectedSystem != null)
+                button_Approach.Enabled = true;
+            else
+                button_Approach.Enabled = false;
         }
 
         private void ui_SystemList_SelectedIndexChanged(object sender, EventArgs e)
@@ -168,19 +175,12 @@ namespace SpaceAge
                     else
                         ui_Interaction.Enabled = false;
 
-                    if ((currentObject as Planet).PlanetExtractors.Count >= 1)
-                    {
-                        ui_BuyResources.Enabled = true;
-                    }
-                    else ui_BuyResources.Enabled = false;
-
                     ui_SurveyObject.Enabled = true; // Always allow planet survey
                 }
                 else
                 {
                     ui_Interaction.Enabled = false;
                     ui_SurveyObject.Enabled = false;
-                    ui_BuyResources.Enabled = false;
                 }
                 //
                 // Add checks for other types to enable other buttons later
@@ -206,5 +206,14 @@ namespace SpaceAge
 
         }
 
+        private void button_Approach_Click(object sender, EventArgs e)
+        {
+            if (currentlySelectedSystem != null)
+            {
+                SpaceAge.Controls.SolarSystemViewer ssv = new SpaceAge.Controls.SolarSystemViewer();
+                ssv.SetSolarSystem(currentlySelectedSystem);
+                UserInterface.thisOneInterface.SetMainPanel(ssv);
+            }
+        }
     }
 }

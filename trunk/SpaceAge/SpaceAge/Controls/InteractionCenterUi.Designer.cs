@@ -235,6 +235,7 @@
             this.Market_ShipCommodities.Size = new System.Drawing.Size(336, 234);
             this.Market_ShipCommodities.TabIndex = 16;
             this.Market_ShipCommodities.UseCompatibleStateImageBehavior = false;
+            this.Market_ShipCommodities.SelectedIndexChanged += new System.EventHandler(this.Market_ShipCommodities_SelectedIndexChanged);
             // 
             // BuyPrice
             // 
@@ -259,6 +260,7 @@
             this.SellQuantity.Size = new System.Drawing.Size(39, 20);
             this.SellQuantity.TabIndex = 8;
             this.SellQuantity.Text = "0";
+            this.SellQuantity.TextChanged += new System.EventHandler(this.SellQuantity_TextChanged);
             // 
             // BuyQuantity
             // 
@@ -267,6 +269,7 @@
             this.BuyQuantity.Size = new System.Drawing.Size(39, 20);
             this.BuyQuantity.TabIndex = 5;
             this.BuyQuantity.Text = "0";
+            this.BuyQuantity.TextChanged += new System.EventHandler(this.BuyQuantity_TextChanged);
             // 
             // label11
             // 
@@ -294,6 +297,7 @@
             this.Market_MarketCommodities.Size = new System.Drawing.Size(336, 234);
             this.Market_MarketCommodities.TabIndex = 11;
             this.Market_MarketCommodities.UseCompatibleStateImageBehavior = false;
+            this.Market_MarketCommodities.SelectedIndexChanged += new System.EventHandler(this.Market_MarketCommodities_SelectedIndexChanged);
             // 
             // InteractionCenter_Credits
             // 
@@ -335,6 +339,7 @@
             this.InteractionCenter_SellButton.TabIndex = 6;
             this.InteractionCenter_SellButton.Text = "Sell";
             this.InteractionCenter_SellButton.UseVisualStyleBackColor = true;
+            this.InteractionCenter_SellButton.Click += new System.EventHandler(this.InteractionCenter_SellButton_Click);
             // 
             // label1
             // 
@@ -354,6 +359,7 @@
             this.InteractionCenter_BuyButton.TabIndex = 3;
             this.InteractionCenter_BuyButton.Text = "Buy";
             this.InteractionCenter_BuyButton.UseVisualStyleBackColor = true;
+            this.InteractionCenter_BuyButton.Click += new System.EventHandler(this.InteractionCenter_BuyButton_Click);
             // 
             // tab_escrow
             // 
@@ -430,7 +436,7 @@
             this.tab_people.Location = new System.Drawing.Point(4, 22);
             this.tab_people.Name = "tab_people";
             this.tab_people.Padding = new System.Windows.Forms.Padding(3);
-            this.tab_people.Size = new System.Drawing.Size(693, 341);
+            this.tab_people.Size = new System.Drawing.Size(792, 594);
             this.tab_people.TabIndex = 2;
             this.tab_people.Text = "People";
             this.tab_people.UseVisualStyleBackColor = true;
@@ -440,12 +446,12 @@
             this.tab_politics.Location = new System.Drawing.Point(4, 22);
             this.tab_politics.Name = "tab_politics";
             this.tab_politics.Padding = new System.Windows.Forms.Padding(3);
-            this.tab_politics.Size = new System.Drawing.Size(693, 341);
+            this.tab_politics.Size = new System.Drawing.Size(792, 594);
             this.tab_politics.TabIndex = 3;
             this.tab_politics.Text = "Politics";
             this.tab_politics.UseVisualStyleBackColor = true;
             // 
-            // InteractionCenter
+            // InteractionCenterUi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -453,7 +459,7 @@
             this.Controls.Add(this.tabControl1);
             this.ForeColor = System.Drawing.Color.White;
             this.MinimumSize = new System.Drawing.Size(800, 620);
-            this.Name = "InteractionCenter";
+            this.Name = "InteractionCenterUi";
             this.Size = new System.Drawing.Size(800, 620);
             this.tabControl1.ResumeLayout(false);
             this.tab_info.ResumeLayout(false);
