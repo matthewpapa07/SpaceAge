@@ -18,8 +18,8 @@ namespace SpaceAge
             StarTypeBrushes = new SolidBrush[] 
                 {staticGraphics.whiteBrush, staticGraphics.brownBrush, staticGraphics.orangeBrush, staticGraphics.yellowBrush,
                 staticGraphics.blueBrush, staticGraphics.redBrush};
-            StarSizeRectangles = new Rectangle[] { new Rectangle(0, 0, 4, 4), new Rectangle(0, 0, 5, 5), new Rectangle(0, 0, 6, 6) ,
-            new Rectangle(0,0,7,7), new Rectangle(0,0,8,8), new Rectangle(0,0,9,9)};
+            StarSizeRectangles = new Rectangle[] { new Rectangle(0, 0, 5, 5), new Rectangle(0, 0, 6, 6), new Rectangle(0, 0, 7, 7) ,
+            new Rectangle(0,0,8,8), new Rectangle(0,0,9,9), new Rectangle(0,0,10,10)};
         }
 
         //
