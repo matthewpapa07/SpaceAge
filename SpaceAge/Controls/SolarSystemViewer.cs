@@ -11,7 +11,14 @@ namespace SpaceAge.Controls
 {
     partial class SolarSystemViewer : UserControl
     {
-        private StarSystem ThisStarSystem;
+        private StarSystem ThisStarSystem = null;
+        private Planet CurrentPlanet = null;
+        private Star CurrentStar = null;
+        private Moon Currentmoon = null;
+
+        public bool PlanetsNeedRefresh = true;
+        public bool MoonsNeedRefresh = true;
+        public bool StarsNeedRefresh = true;
 
         public SolarSystemViewer()
         {
@@ -25,6 +32,7 @@ namespace SpaceAge.Controls
             GraphicsLib.ApplyListviewProperties(listView_Extractors);
 
             // Stars
+            listView_SystemStars.Columns.Add("Name");
             listView_SystemStars.Columns.Add("Size");
             listView_SystemStars.Columns.Add("Color");
             listView_SystemStars.Columns.Add("Age");
@@ -50,21 +58,88 @@ namespace SpaceAge.Controls
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            if (ThisStarSystem == null)
+                throw new Exception();
+
             updateUi();   
         }
 
         public void updateUi()
         {
+            if (PlanetsNeedRefresh)
+                UpdatePlanets();
+            if (MoonsNeedRefresh)
+                UpdateMoons();
+            if (StarsNeedRefresh)
+                UpdateStars();
+        }
 
+        public void UpdateStars()
+        {
+            ListViewItem[] Liststars = new ListViewItem[ThisStarSystem.stars.Length];
+            Star s;
+            for (int i = 0; i < ThisStarSystem.stars.Length; i++)
+            {
+                s = ThisStarSystem.stars[i];
+                Liststars[i] = new ListViewItem(s.ToString(), i);
+                Liststars[i].SubItems.Add(ObjectCharactaristics.StarSizeString[(int)s.StarSize]);
+                Liststars[i].SubItems.Add(ObjectCharactaristics.StarColorString[(int)s.StarColor]);
+                Liststars[i].SubItems.Add("TODO");
+                Liststars[i].SubItems.Add("TODO");
+            }
+            listView_SystemStars.Items.Clear();
+            listView_SystemStars.Items.AddRange(Liststars);
+            StarsNeedRefresh = false;
+        }
+
+        public void UpdatePlanets()
+        {
+            ListViewItem[] ListPlanets = new ListViewItem[ThisStarSystem.planets.Length];
+            Planet p;
+            for (int i = 0; i < ThisStarSystem.planets.Length; i++)
+            {
+                p = ThisStarSystem.planets[i];
+                ListPlanets[i] = new ListViewItem(p.ToString(), i);
+                ListPlanets[i].SubItems.Add(ObjectCharactaristics.PlanetSizeString[(int)p.PlanetSize]);
+                ListPlanets[i].SubItems.Add(ObjectCharactaristics.PositionString[(int)p.PlanetPosition]);
+                if (p.IsInhabited)
+                    ListPlanets[i].SubItems.Add("Yes");
+                else
+                    ListPlanets[i].SubItems.Add("No");
+                ListPlanets[i].SubItems.Add("TODO");
+            }
+            listView_SystemPlanets.Items.Clear();
+            listView_SystemPlanets.Items.AddRange(ListPlanets);
+            PlanetsNeedRefresh = false;
+        }
+
+        public void UpdateMoons()
+        {
+            MoonsNeedRefresh = false;
         }
 
         private void listView_SystemStars_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            if (listView_SystemStars.SelectedIndices.Count >= 1)
+            {
+                CurrentStar = ThisStarSystem.stars[listView_SystemStars.SelectedItems[0].ImageIndex];
+            }
+            else
+            {
+                CurrentStar = null;
+            }
         }
 
         private void listView_SystemPlanets_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (listView_SystemPlanets.SelectedIndices.Count >= 1)
+            {
+                CurrentPlanet = ThisStarSystem.planets[listView_SystemPlanets.SelectedItems[0].ImageIndex];
+            }
+            else
+            {
+                CurrentPlanet = null;
+            }
 
         }
 

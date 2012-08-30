@@ -77,6 +77,7 @@
             // listView_PlanetMoons
             // 
             this.listView_PlanetMoons.Location = new System.Drawing.Point(6, 312);
+            this.listView_PlanetMoons.MultiSelect = false;
             this.listView_PlanetMoons.Name = "listView_PlanetMoons";
             this.listView_PlanetMoons.Size = new System.Drawing.Size(350, 105);
             this.listView_PlanetMoons.TabIndex = 26;
@@ -96,6 +97,7 @@
             // listView_SystemPlanets
             // 
             this.listView_SystemPlanets.Location = new System.Drawing.Point(6, 171);
+            this.listView_SystemPlanets.MultiSelect = false;
             this.listView_SystemPlanets.Name = "listView_SystemPlanets";
             this.listView_SystemPlanets.Size = new System.Drawing.Size(350, 105);
             this.listView_SystemPlanets.TabIndex = 24;
@@ -115,6 +117,7 @@
             // listView_SystemStars
             // 
             this.listView_SystemStars.Location = new System.Drawing.Point(6, 31);
+            this.listView_SystemStars.MultiSelect = false;
             this.listView_SystemStars.Name = "listView_SystemStars";
             this.listView_SystemStars.Size = new System.Drawing.Size(350, 105);
             this.listView_SystemStars.TabIndex = 21;
@@ -173,6 +176,7 @@
             // listView_Ports
             // 
             this.listView_Ports.Location = new System.Drawing.Point(11, 140);
+            this.listView_Ports.MultiSelect = false;
             this.listView_Ports.Name = "listView_Ports";
             this.listView_Ports.Size = new System.Drawing.Size(350, 105);
             this.listView_Ports.TabIndex = 34;
@@ -203,6 +207,7 @@
             // listView_Extractors
             // 
             this.listView_Extractors.Location = new System.Drawing.Point(11, 469);
+            this.listView_Extractors.MultiSelect = false;
             this.listView_Extractors.Name = "listView_Extractors";
             this.listView_Extractors.Size = new System.Drawing.Size(350, 105);
             this.listView_Extractors.TabIndex = 31;
@@ -233,6 +238,7 @@
             // listView_Factories
             // 
             this.listView_Factories.Location = new System.Drawing.Point(11, 305);
+            this.listView_Factories.MultiSelect = false;
             this.listView_Factories.Name = "listView_Factories";
             this.listView_Factories.Size = new System.Drawing.Size(350, 105);
             this.listView_Factories.TabIndex = 28;
