@@ -19,7 +19,7 @@ namespace SpaceAge
                 {staticGraphics.whiteBrush, staticGraphics.brownBrush, staticGraphics.orangeBrush, staticGraphics.yellowBrush,
                 staticGraphics.blueBrush, staticGraphics.redBrush};
             StarSizeRectangles = new Rectangle[] { new Rectangle(0, 0, 5, 5), new Rectangle(0, 0, 6, 6), new Rectangle(0, 0, 7, 7) ,
-            new Rectangle(0,0,8,8), new Rectangle(0,0,9,9), new Rectangle(0,0,10,10)};
+            new Rectangle(0,0,10,10), new Rectangle(0,0,12,12), new Rectangle(0,0,15,15)};
         }
 
         //
@@ -29,7 +29,7 @@ namespace SpaceAge
         public enum StarType { White, Brown, Orange, Yellow, Blue, Red };
         public static SolidBrush[] StarTypeBrushes;     // Populate on construction
 
-        public static string[] StarSizeString = { "Dwarf", "Micro", "Normal", "Medium", "Giant", "UltraGiant" };
+        public static string[] StarSizeString = { "Dwarf", "Micro", "Normal", "Medium", "Giant", "Ultra Giant" };
         public enum StarSize { Dwarf, Micro, Normal, Medium, Giant, UltraGiant};
         public static Rectangle[] StarSizeRectangles;
 //        public static int [] StarSizeValues = {1000,2000,23432};  //TODO: Size Values
@@ -37,7 +37,7 @@ namespace SpaceAge
         //
         // Charactaristics Associated with Planets
         //
-        public static string[] PlanetSizeString = { "Asteroid", "VerySmall", "Small", "Medium", "Large", "Super" };
+        public static string[] PlanetSizeString = { "Asteroid", "Very Small", "Small", "Medium", "Large", "Super" };
         public enum PlanetSize { Asteroid, VerySmall, Small, Medium, Large, Super };    // Size of the planet
 //        public static int[] SizeValues = { 1000, 2000, 23432 };  //TODO: Size Values
 

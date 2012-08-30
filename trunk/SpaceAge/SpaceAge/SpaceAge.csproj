@@ -91,6 +91,7 @@
     <Compile Include="GameDriver.cs" />
     <Compile Include="Graphics\GraphicsLib.cs" />
     <Compile Include="MerchantSpaceShip.cs" />
+    <Compile Include="Moon.cs" />
     <Compile Include="PortInteraction\InteractionCenter.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="ItemList.cs" />

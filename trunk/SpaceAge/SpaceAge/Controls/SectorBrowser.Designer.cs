@@ -64,7 +64,7 @@
             this.button_Approach.ForeColor = System.Drawing.Color.Black;
             this.button_Approach.Location = new System.Drawing.Point(4, 563);
             this.button_Approach.Name = "button_Approach";
-            this.button_Approach.Size = new System.Drawing.Size(372, 23);
+            this.button_Approach.Size = new System.Drawing.Size(372, 51);
             this.button_Approach.TabIndex = 11;
             this.button_Approach.Text = "Approach";
             this.button_Approach.UseVisualStyleBackColor = true;
