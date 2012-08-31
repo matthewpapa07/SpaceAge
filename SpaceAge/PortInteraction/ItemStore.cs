@@ -9,7 +9,7 @@ namespace SpaceAge
     class ItemStore : ItemList
     {
         private int ItemStoreCash = 1000000000;     // 10 M starting cash
-        public Object Parent = null;
+        public IInteractableBody Parent = null;
 
         // *In parent: internal int[] commoditiesQuantitiy = new int[Commodity.allCommodities.Length];
 
@@ -28,27 +28,14 @@ namespace SpaceAge
 
         }
 
-        public static ItemStore GetGeneralStore(Object inParent)
+        public static ItemStore GetGeneralStore(IInteractableBody inParent)
         {
             ItemStore thisStore = new ItemStore();
             Commodity[] allCommodities = Commodity.allCommodities;
             NumberGenerator n = NumberGenerator.getInstance();
 
-            // Test type of parent
             thisStore.Parent = inParent;
-            bool foundType = false;
-            if (thisStore.Parent is InteractionCenter)
-            {
-                (thisStore.Parent as InteractionCenter).Parent.Parent.parent.RegisteredItemStores.Add(thisStore);
-                foundType = true;
-            }
-            if (thisStore.Parent is RawMaterialExtractor)
-            {
-                (thisStore.Parent as RawMaterialExtractor).Parent.Parent.parent.RegisteredItemStores.Add(thisStore);
-                foundType = true;
-            }
-            if (!foundType)
-                throw new Exception();
+            thisStore.Parent.MemberSector.RegisteredItemStores.Add(thisStore);
 
             for (int i = 0; i < allCommodities.Length; i++)
             {
@@ -65,27 +52,14 @@ namespace SpaceAge
             return thisStore;
         }
 
-        public static ItemStore GetExtractorStore(object inParent)
+        public static ItemStore GetExtractorStore(IInteractableBody inParent)
         {
             ItemStore thisStore = new ItemStore();
             Commodity[] allCommodities = Commodity.allCommodities;
             NumberGenerator n = NumberGenerator.getInstance();
 
-            // Test type of parent
             thisStore.Parent = inParent;
-            bool foundType = false;
-            if (thisStore.Parent is InteractionCenter)
-            {
-                (thisStore.Parent as InteractionCenter).Parent.Parent.parent.RegisteredItemStores.Add(thisStore);
-                foundType = true;
-            }
-            if (thisStore.Parent is RawMaterialExtractor)
-            {
-                (thisStore.Parent as RawMaterialExtractor).Parent.Parent.parent.RegisteredItemStores.Add(thisStore);
-                foundType = true;
-            }
-            if (!foundType)
-                throw new Exception();
+            thisStore.Parent.MemberSector.RegisteredItemStores.Add(thisStore);
 
             for (int i = 0; i < allCommodities.Length; i++)
             {

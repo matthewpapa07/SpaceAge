@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace SpaceAge
 {
-    class StarSystem
+    class StarSystem : ISectorMember
     {
         const int MIN_PLANETS_PER_SYSTEM = 0;
         const int MAX_PLANETS_PER_SYSTEM = 15;
@@ -85,6 +85,14 @@ namespace SpaceAge
             // Add hex name generated here??
             //
             return SystemName;
+        }
+
+        public Sector MemberSector
+        {
+            get
+            {
+                return parent;
+            }
         }
     }
 }

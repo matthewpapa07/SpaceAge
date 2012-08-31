@@ -21,7 +21,7 @@ namespace SpaceAge
         //Titanium, Neodymium, Germanium, Gallium, Arsenic, Strontium, Gold, Silver, Platinum,    // RareElements
         //Hydrocarbons, Cellulose, Acid, Biomass, Mud                                             // ResourcesStatic
         //
-        public Planet Parent;
+        public IInteractableBody Parent;
         public Commodity ProducedResourceCommodity;
         public ItemStore ExtractorStore;
 
@@ -36,18 +36,22 @@ namespace SpaceAge
         public int Productivity = 0;
 
         // This is the constructor that will be automatically applied. Cast enum to get inResourceCommodityIndex
-        public RawMaterialExtractor(Planet inParent, ObjectCharactaristics.ResourceCommodityType r, int inResourceCommodityIndex)
+        public RawMaterialExtractor(IInteractableBody inParent, ObjectCharactaristics.ResourceCommodityType r, int inResourceCommodityIndex)
         {
             Parent = inParent;
-            // For now do not allow inhabited planets to be exploited
-            if (Parent.IsInhabited)
-                throw new Exception();
+            if (Parent is IHarvestableBody)
+                Console.WriteLine("Parent is IHARVESTABLE");
+            else
+                Console.WriteLine("Parent is NOT IHARVESTABLE");
+            // TODO: do not allow inhabited planets to be exploited
+            //if (Parent.IsInhabited)
+            //    throw new Exception();
 
             ProducedResourceCommodity = Commodity.GetCommodityFromResource(r, inResourceCommodityIndex);
             if (ProducedResourceCommodity == null || !ProducedResourceCommodity.IsResource)
                 throw new Exception();
 
-            ExtractorStore = ItemStore.GetExtractorStore(this);
+            ExtractorStore = ItemStore.GetExtractorStore(Parent);
 
             // Now set which items this store will accept to buy and sell
             for (int i = 0; i < Commodity.NumOfCommodities; i++)
@@ -62,14 +66,17 @@ namespace SpaceAge
                     ExtractorStore.WillSell[i] = false;
             }
 
+            // TODO: IHARVESTABLE
             // Finally set the productivity
-            Productivity = Parent.FindProductivityOfInternalResource(r, inResourceCommodityIndex);
+            //Productivity = Parent.FindProductivityOfInternalResource(r, inResourceCommodityIndex);
+            Productivity = 50;
         }
 
         public static RawMaterialExtractor[] PopulateSectorWithExtractors(Sector s)
         {
             NumberGenerator numGen = NumberGenerator.getInstance();
-            List<RawMaterialExtractor> tempExtList = new List<RawMaterialExtractor>(3);
+            List<RawMaterialExtractor> tempGlobalExtList = new List<RawMaterialExtractor>(3);
+            List<RawMaterialExtractor> tempLocalExtList = new List<RawMaterialExtractor>(3);
             RawMaterialExtractor tempExtractor;
             Planet[] ResourceLadenPlanets;
             int pickIndex = 0;
@@ -89,8 +96,8 @@ namespace SpaceAge
                         pickIndex = numGen.GetRandNumberInRange(0, p.CommonAtmosphere.Length - 1);
                         tempExtractor = new RawMaterialExtractor(p, ObjectCharactaristics.ResourceCommodityType.CommonAtmosphere,
                                                                                 (int)p.CommonAtmosphere[pickIndex]);
-                        p.PlanetExtractors.Add(tempExtractor);
-                        tempExtList.Add(tempExtractor); // So all extractors can be registered
+                        tempLocalExtList.Add(tempExtractor);
+                        tempGlobalExtList.Add(tempExtractor); // So all extractors can be registered
                     }
                 }
                 if (p.RareAtmosphere.Length >= 1)
@@ -100,8 +107,8 @@ namespace SpaceAge
                         pickIndex = numGen.GetRandNumberInRange(0, p.RareAtmosphere.Length - 1);
                         tempExtractor = new RawMaterialExtractor(p, ObjectCharactaristics.ResourceCommodityType.RareAtmosphere,
                                                                                 (int)p.RareAtmosphere[pickIndex]);
-                        p.PlanetExtractors.Add(tempExtractor);
-                        tempExtList.Add(tempExtractor); // So all extractors can be registered
+                        tempLocalExtList.Add(tempExtractor);
+                        tempGlobalExtList.Add(tempExtractor); // So all extractors can be registered
                     }
                 }
                 if (p.CommonElements.Length >= 1)
@@ -111,8 +118,8 @@ namespace SpaceAge
                         pickIndex = numGen.GetRandNumberInRange(0, p.CommonElements.Length - 1);
                         tempExtractor = new RawMaterialExtractor(p, ObjectCharactaristics.ResourceCommodityType.CommonElement,
                                                                                 (int)p.CommonElements[pickIndex]);
-                        p.PlanetExtractors.Add(tempExtractor);
-                        tempExtList.Add(tempExtractor); // So all extractors can be registered
+                        tempLocalExtList.Add(tempExtractor);
+                        tempGlobalExtList.Add(tempExtractor); // So all extractors can be registered
                     }
                 }
                 if (p.RareElements.Length >= 1)
@@ -122,8 +129,8 @@ namespace SpaceAge
                         pickIndex = numGen.GetRandNumberInRange(0, p.RareElements.Length - 1);
                         tempExtractor = new RawMaterialExtractor(p, ObjectCharactaristics.ResourceCommodityType.RareElement,
                                                                                 (int)p.RareElements[pickIndex]);
-                        p.PlanetExtractors.Add(tempExtractor);
-                        tempExtList.Add(tempExtractor); // So all extractors can be registered
+                        tempLocalExtList.Add(tempExtractor);
+                        tempGlobalExtList.Add(tempExtractor); // So all extractors can be registered
                     }
                 }
                 if (p.ResourcesStatic.Length >= 1)
@@ -133,12 +140,14 @@ namespace SpaceAge
                         pickIndex = numGen.GetRandNumberInRange(0, p.ResourcesStatic.Length - 1);
                         tempExtractor = new RawMaterialExtractor(p, ObjectCharactaristics.ResourceCommodityType.ResourceStatic,
                                                                                 (int)p.ResourcesStatic[pickIndex]);
-                        p.PlanetExtractors.Add(tempExtractor);
-                        tempExtList.Add(tempExtractor); // So all extractors can be registered
+                        tempLocalExtList.Add(tempExtractor);
+                        tempGlobalExtList.Add(tempExtractor); // So all extractors can be registered
                     }
                 }
+
+                p.AddExtractors(tempLocalExtList.ToArray());
             }
-            return tempExtList.ToArray();
+            return tempGlobalExtList.ToArray();
         }
 
         public void Live()

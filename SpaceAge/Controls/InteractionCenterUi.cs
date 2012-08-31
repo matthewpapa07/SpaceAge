@@ -11,7 +11,7 @@ namespace SpaceAge.Controls
 {
     partial class InteractionCenterUi : UserControl
     {
-        public InteractionCenter thisInteractionCenter = null;
+        public IInteractableBody thisInteractionCenter = null;
         public bool NeedToRefresh = true;
 
         private Commodity.CommodityEnum Market_ShipCommodity_Selected = Commodity.CommodityEnum.Coolant;
@@ -57,35 +57,68 @@ namespace SpaceAge.Controls
 
         }
 
-        public static InteractionCenterUi InteractionCenterGeneralStore(InteractionCenter i)
+        public static InteractionCenterUi GetInteractionCenterUi(IInteractableBody thisCenter)
         {
             InteractionCenterUi icUI = new InteractionCenterUi();
-            icUI.SetInteractionCenter(i);
 
-            return icUI;
-        }
+            icUI.thisInteractionCenter = thisCenter;
 
-        public static InteractionCenterUi InteractionCenterRawMaterialExtractor(InteractionCenter i)
-        {
-            InteractionCenterUi icUI = new InteractionCenterUi();
-            icUI.SetInteractionCenter(i);
+            //
+            // Check to see which tabs should be enabled
+            //
 
+            // General Info
             (icUI.Info as Control).Enabled = true;
-            (icUI.Market as Control).Enabled = true;
-            (icUI.Escrow as Control).Enabled = false;
-            (icUI.Agents as Control).Enabled = false;
-            (icUI.People as Control).Enabled = false;
-            (icUI.Politics as Control).Enabled = false;
+            // ItemStore stuff
+            if (icUI.thisInteractionCenter.Store != null)
+            {
+                (icUI.Market as Control).Enabled = true;
+                (icUI.Escrow as Control).Enabled = true;
+                icUI.SetItemStore(thisCenter.Store);
+            }
+            else
+            {
+                (icUI.Market as Control).Enabled = false;
+                (icUI.Escrow as Control).Enabled = true;
+            }
 
+            // Mission post (agent stuff)
+            if (icUI.thisInteractionCenter.MissionPost != null)
+            {
+                (icUI.Agents as Control).Enabled = true;
+            }
+            else
+            {
+                (icUI.Agents as Control).Enabled = false;
+            }
+
+            if (icUI.thisInteractionCenter.PeopleSource != null)
+            {
+                (icUI.People as Control).Enabled = true;
+            }
+            else
+            {
+                (icUI.People as Control).Enabled = false;
+            }
+
+            if (icUI.thisInteractionCenter.PoliticalCenter != null)
+            {
+                (icUI.Politics as Control).Enabled = true;
+            }
+            else
+            {
+                (icUI.Politics as Control).Enabled = false;
+            }
+            
             return icUI;
         }
 
-        public void SetInteractionCenter(InteractionCenter i)
+
+        private void SetItemStore(ItemStore i)
         {
-            thisInteractionCenter = i;
-            thisInteractionCenter.thisStore.SetCommodityListViewColumns(Market_MarketCommodities);
+            i.SetCommodityListViewColumns(Market_MarketCommodities);
             UserState.PlayerShip.SpaceShipCargo.SetCommodityListViewAtStoreColumns(Market_ShipCommodities);
-            thisInteractionCenter.thisStore.SetItemListViewColumns(Escrow_StoreList);
+            i.SetItemListViewColumns(Escrow_StoreList);
             UserState.PlayerShip.SpaceShipCargo.SetItemListViewColumns(Escrow_PlayerList);
         }
 
@@ -110,20 +143,22 @@ namespace SpaceAge.Controls
             NeedToRefresh = false;
 
             // Change this cast to conditional later when more than just planets can have trade centers
-            InteractionCenter_InfoName.Text = "Planet: " + (thisInteractionCenter.Parent as Planet).ToString();
-            Info_Population.Text = (thisInteractionCenter.Parent as Planet).Population.ToString();
+            //InteractionCenter_InfoName.Text = "Planet: " + (thisInteractionCenter.Parent as Planet).ToString();
+            //Info_Population.Text = (thisInteractionCenter.Parent as Planet).Population.ToString();
+            InteractionCenter_InfoName.Text = thisInteractionCenter.ToString();
+            Info_Population.Text = "TODO: IInhabitable";
 
             InteractionCenter_Credits.Text = UserState.getPlayerFunds().ToString();
             market_cargo_space.Text = "Cargo bay: " + UserState.PlayerShip.SpaceShipCargo.ConsumedVolume + "/" + UserState.PlayerShip.SpaceShipCargo.MaxVolume + " m3";
 
             Market_MarketCommodities.Items.Clear();
-            Market_MarketCommodities.Items.AddRange(thisInteractionCenter.thisStore.GetCommmodityListView());
+            Market_MarketCommodities.Items.AddRange(thisInteractionCenter.Store.GetCommmodityListView());
 
             Market_ShipCommodities.Items.Clear();
-            Market_ShipCommodities.Items.AddRange(UserState.PlayerShip.SpaceShipCargo.GetCommmodityListViewAtStore(thisInteractionCenter.thisStore));
+            Market_ShipCommodities.Items.AddRange(UserState.PlayerShip.SpaceShipCargo.GetCommmodityListViewAtStore(thisInteractionCenter.Store));
 
             Escrow_StoreList.Items.Clear();
-            Escrow_StoreList.Items.AddRange(thisInteractionCenter.thisStore.GetItemListView());
+            Escrow_StoreList.Items.AddRange(thisInteractionCenter.Store.GetItemListView());
 
             Escrow_PlayerList.Items.Clear();
             Escrow_PlayerList.Items.AddRange(UserState.PlayerShip.SpaceShipCargo.GetItemListView());
@@ -133,7 +168,7 @@ namespace SpaceAge.Controls
         {
             try
             {
-                ItemStore IS = thisInteractionCenter.thisStore;
+                ItemStore IS = thisInteractionCenter.Store;
                 CargoItemList SC = UserState.PlayerShip.SpaceShipCargo;
                 Commodity.CommodityEnum CE;
 
@@ -155,7 +190,7 @@ namespace SpaceAge.Controls
                     Market_ShipCommodity_Index = Market_ShipCommodities.SelectedItems[0].ImageIndex;
                     Market_ShipCommodity_Selected = CE;
                     // Make sure the current store buys these before querying for price
-                    if (thisInteractionCenter.thisStore.CanUserSellCommodity(CE))
+                    if (thisInteractionCenter.Store.CanUserSellCommodity(CE))
                     {
                         TotalSellPrice = NumToSell * IS.QueryCommodityUserSellPrice(CE);
                     }
@@ -208,10 +243,10 @@ namespace SpaceAge.Controls
         private void InteractionCenter_SellButton_Click(object sender, EventArgs e)
         {
             // Make sure the store is actually buying these commodities
-            if(!thisInteractionCenter.thisStore.CanUserSellCommodity(Market_ShipCommodity_Selected))
+            if(!thisInteractionCenter.Store.CanUserSellCommodity(Market_ShipCommodity_Selected))
                 return; // TODO: error message
 
-            ItemStore IS = thisInteractionCenter.thisStore;
+            ItemStore IS = thisInteractionCenter.Store;
             CargoItemList SC = UserState.PlayerShip.SpaceShipCargo;
 
             int NumToSell = Int32.Parse(SellQuantity.Text.ToString());
@@ -241,7 +276,7 @@ namespace SpaceAge.Controls
 
         private void InteractionCenter_BuyButton_Click(object sender, EventArgs e)
         {
-            ItemStore IS = thisInteractionCenter.thisStore;
+            ItemStore IS = thisInteractionCenter.Store;
             CargoItemList SC = UserState.PlayerShip.SpaceShipCargo;
 
             int NumToBuy = Int32.Parse(BuyQuantity.Text.ToString());

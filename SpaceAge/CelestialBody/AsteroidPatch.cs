@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SpaceAge
+namespace SpaceAge.CelestialBody
 {
-    class SpacePort
+    class AsteroidPatch //: IHarvestableBody
     {
     }
 }

@@ -14,7 +14,7 @@ namespace SpaceAge.Controls
         private StarSystem ThisStarSystem = null;
         private Planet CurrentPlanet = null;
         private Star CurrentStar = null;
-        private Moon Currentmoon = null;
+        private Moon CurrentMoon = null;
 
         public bool PlanetsNeedRefresh = true;
         public bool MoonsNeedRefresh = true;

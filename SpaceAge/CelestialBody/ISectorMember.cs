@@ -5,14 +5,11 @@ using System.Text;
 
 namespace SpaceAge
 {
-    class Moon
+    interface ISectorMember
     {
-        Planet Parent;
-
-        public Moon(Planet inParent)
+        Sector MemberSector
         {
-            Parent = inParent;
+            get;
         }
-        
     }
 }
