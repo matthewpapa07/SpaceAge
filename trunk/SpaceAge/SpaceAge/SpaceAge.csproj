@@ -49,6 +49,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CargoItemList.cs" />
+    <Compile Include="CelestialBody\AsteroidPatch.cs" />
+    <Compile Include="CelestialBody\ISectorMember.cs" />
     <Compile Include="Commodity.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Controls\InteractionCenterUi.cs">
@@ -90,9 +92,11 @@
     <Compile Include="DriverLibrary\NavigationLib.cs" />
     <Compile Include="GameDriver.cs" />
     <Compile Include="Graphics\GraphicsLib.cs" />
+    <Compile Include="CelestialBody\IHarvestableBody.cs" />
+    <Compile Include="CelestialBody\IInteractableBody.cs" />
     <Compile Include="MerchantSpaceShip.cs" />
-    <Compile Include="Moon.cs" />
-    <Compile Include="PortInteraction\InteractionCenter.cs" />
+    <Compile Include="CelestialBody\Moon.cs" />
+    <Compile Include="PortInteraction\Factory.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="ItemList.cs" />
     <Compile Include="PortInteraction\ItemStore.cs" />
@@ -125,7 +129,7 @@
       <DependentUpon>SpaceshipStatus.cs</DependentUpon>
     </Compile>
     <Compile Include="DriverLibrary\ResourceVector.cs" />
-    <Compile Include="RawMaterialExtractor.cs" />
+    <Compile Include="PortInteraction\RawMaterialExtractor.cs" />
     <Compile Include="ShipComponents\ShipArmor.cs" />
     <Compile Include="ShipComponents\ShipDefense.cs" />
     <Compile Include="ShipComponents\ShipEngines.cs" />
@@ -135,7 +139,6 @@
     <Compile Include="ShipComponents\ShipScanner.cs" />
     <Compile Include="ShipComponents\ShipShield.cs" />
     <Compile Include="ShipComponents\ShipWeapon.cs" />
-    <Compile Include="SpacePort.cs" />
     <Compile Include="SpaceShip.cs" />
     <Compile Include="Graphics\StaticGraphics.cs" />
     <Compile Include="Controls\UiMap.cs">
@@ -157,12 +160,12 @@
       <DependentUpon>UserInterface.cs</DependentUpon>
     </Compile>
     <Compile Include="NumberGenerator.cs" />
-    <Compile Include="Planet.cs" />
+    <Compile Include="CelestialBody\Planet.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sector.cs" />
-    <Compile Include="Star.cs" />
-    <Compile Include="StarSystem.cs" />
+    <Compile Include="CelestialBody\Star.cs" />
+    <Compile Include="CelestialBody\StarSystem.cs" />
     <Compile Include="Universe.cs" />
     <Compile Include="UserState.cs" />
   </ItemGroup>
@@ -233,9 +236,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Commodity\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

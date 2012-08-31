@@ -197,7 +197,7 @@ namespace SpaceAge
             
             Planet p = (Planet)currentObject;
 
-            SpaceAge.Controls.InteractionCenterUi interactUi = SpaceAge.Controls.InteractionCenterUi.InteractionCenterGeneralStore(p.PlanetInteractionCenter);
+            SpaceAge.Controls.InteractionCenterUi interactUi = SpaceAge.Controls.InteractionCenterUi.GetInteractionCenterUi(p);
             UserInterface.thisOneInterface.SetMainPanel(interactUi);
         }
 
