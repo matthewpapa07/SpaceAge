@@ -128,7 +128,7 @@ namespace SpaceAge
                             }
                             SpaceShipCargo.RemoveCommodity(rv.TypeOfCommodity, HowManyDoIHave);
                             MerchantMoney += HowManyDoIHave * rv.Price;
-                            MoneyChangedHands += HowManyDoIHave * rv.Price;     // Diagnostic field
+                            //MoneyChangedHands += HowManyDoIHave * rv.Price;     // Diagnostic field
                         }
                         else
                         {
@@ -136,7 +136,7 @@ namespace SpaceAge
                             rv.WhichStore.UserSellCommodity(rv.TypeOfCommodity, HowManyCanISell);
                             SpaceShipCargo.RemoveCommodity(rv.TypeOfCommodity, HowManyCanISell);
                             MerchantMoney += HowManyCanISell * rv.Price;
-                            MoneyChangedHands += HowManyCanISell * rv.Price;    // Diagnostic field
+                            //MoneyChangedHands += HowManyCanISell * rv.Price;    // Diagnostic field
                         }
                     }
                 }

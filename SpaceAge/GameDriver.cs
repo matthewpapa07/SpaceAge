@@ -25,7 +25,7 @@ namespace SpaceAge
             foreach (Sector s in Universe.map)
             {
                 // Every 5 squares create a merchant ship
-                if (MerchantsPerSquare++ >= 5)
+                if (MerchantsPerSquare++ >= 1)
                 {
                     if (Switch)
                     {

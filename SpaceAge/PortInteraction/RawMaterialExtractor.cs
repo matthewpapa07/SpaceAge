@@ -6,7 +6,7 @@ using System.Text;
 namespace SpaceAge
 {
     // Will go on planets and moons (todo) for now
-    class RawMaterialExtractor
+    class RawMaterialExtractor : IInteractableBody
     {
         public static double CHANCE_OF_EXTRACTOR_PRESENT = 0.18;    //For early game generation
         //
@@ -23,7 +23,12 @@ namespace SpaceAge
         //
         public IInteractableBody Parent;
         public Commodity ProducedResourceCommodity;
-        public ItemStore ExtractorStore;
+
+        private RawMaterialExtractor[] dummyExtractors = null;
+        private ItemStore extractorStore;
+        private MissionPost dummyPost = null;
+        private PeopleSource dummyPeople = null;
+        private PoliticalCenter dummyPolitics = null;
 
         public int ExtractorCash = 10000000;
 
@@ -39,10 +44,11 @@ namespace SpaceAge
         public RawMaterialExtractor(IInteractableBody inParent, ObjectCharactaristics.ResourceCommodityType r, int inResourceCommodityIndex)
         {
             Parent = inParent;
-            if (Parent is IHarvestableBody)
-                Console.WriteLine("Parent is IHARVESTABLE");
-            else
-                Console.WriteLine("Parent is NOT IHARVESTABLE");
+
+            // Check to make sure the input object is harvestable
+            if (!(Parent is IHarvestableBody))
+                throw new Exception();
+
             // TODO: do not allow inhabited planets to be exploited
             //if (Parent.IsInhabited)
             //    throw new Exception();
@@ -51,19 +57,19 @@ namespace SpaceAge
             if (ProducedResourceCommodity == null || !ProducedResourceCommodity.IsResource)
                 throw new Exception();
 
-            ExtractorStore = ItemStore.GetExtractorStore(Parent);
+            extractorStore = ItemStore.GetExtractorStore(Parent);
 
             // Now set which items this store will accept to buy and sell
             for (int i = 0; i < Commodity.NumOfCommodities; i++)
             {
                 if (Commodity.allCommodities[i].CommodityType == Commodity.CommodityEnum.Fuel)
-                    ExtractorStore.WillBuy[i] = true;
+                    extractorStore.WillBuy[i] = true;
                 else
-                    ExtractorStore.WillBuy[i] = false;
+                    extractorStore.WillBuy[i] = false;
                 if (Commodity.allCommodities[i].CommodityType == ProducedResourceCommodity.CommodityType)
-                    ExtractorStore.WillSell[i] = true;
+                    extractorStore.WillSell[i] = true;
                 else
-                    ExtractorStore.WillSell[i] = false;
+                    extractorStore.WillSell[i] = false;
             }
 
             // TODO: IHARVESTABLE
@@ -146,6 +152,7 @@ namespace SpaceAge
                 }
 
                 p.AddExtractors(tempLocalExtList.ToArray());
+                tempLocalExtList.Clear();
             }
             return tempGlobalExtList.ToArray();
         }
@@ -158,12 +165,82 @@ namespace SpaceAge
                 return;
             }
 
-            int FuelAvailable = ExtractorStore.CommoditiesAvailable(Commodity.CommodityEnum.Fuel);
+            int FuelAvailable = extractorStore.CommoditiesAvailable(Commodity.CommodityEnum.Fuel);
             if (FuelAvailable / FuelUsedPerProductionCycle > 1)
             {
-                ExtractorStore.RemoveCommodity(Commodity.CommodityEnum.Fuel, FuelUsedPerProductionCycle);
-                ExtractorStore.AddCommodity(ProducedResourceCommodity.CommodityType, NumberProducedPerCycle);
+                extractorStore.RemoveCommodity(Commodity.CommodityEnum.Fuel, FuelUsedPerProductionCycle);
+                extractorStore.AddCommodity(ProducedResourceCommodity.CommodityType, NumberProducedPerCycle);
             }
+        }
+
+        //
+        // Member functions in order to implement IInteractableBody
+        //
+        public object DirectParent
+        {
+            get
+            {
+                return Parent;
+            }
+        }
+        public RawMaterialExtractor[] Extractors
+        {
+            get
+            {
+                return dummyExtractors;
+            }
+        }
+        public Factory[] Factories
+        {
+            get
+            {
+                throw new NotImplementedException();
+                //return null; // not implemented
+            }
+        }
+        public ItemStore Store
+        {
+            get
+            {
+                return extractorStore;
+            }
+        }
+        public MissionPost MissionPost
+        {
+            get
+            {
+                return dummyPost;
+            }
+        }
+        public PeopleSource PeopleSource
+        {
+            get
+            {
+                return dummyPeople;
+            }
+        }
+        public PoliticalCenter PoliticalCenter
+        {
+            get
+            {
+                return dummyPolitics;
+            }
+        }
+
+        /// <summary>
+        /// As per ISectorMember
+        /// </summary>
+        public Sector MemberSector
+        {
+            get
+            {
+                return Parent.MemberSector;
+            }
+        }
+
+        public override string ToString()
+        {
+            return ProducedResourceCommodity.ToString() + " Extractor";
         }
     }
 }
