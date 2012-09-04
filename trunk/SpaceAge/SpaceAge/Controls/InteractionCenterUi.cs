@@ -11,7 +11,7 @@ namespace SpaceAge.Controls
 {
     partial class InteractionCenterUi : UserControl
     {
-        public IInteractableBody thisInteractionCenter = null;
+        public IInteractableBody thisInteractableBody = null;
         public bool NeedToRefresh = true;
 
         private Commodity.CommodityEnum Market_ShipCommodity_Selected = Commodity.CommodityEnum.Coolant;
@@ -61,7 +61,7 @@ namespace SpaceAge.Controls
         {
             InteractionCenterUi icUI = new InteractionCenterUi();
 
-            icUI.thisInteractionCenter = thisCenter;
+            icUI.thisInteractableBody = thisCenter;
 
             //
             // Check to see which tabs should be enabled
@@ -70,7 +70,7 @@ namespace SpaceAge.Controls
             // General Info
             (icUI.Info as Control).Enabled = true;
             // ItemStore stuff
-            if (icUI.thisInteractionCenter.Store != null)
+            if (icUI.thisInteractableBody.Store != null)
             {
                 (icUI.Market as Control).Enabled = true;
                 (icUI.Escrow as Control).Enabled = true;
@@ -83,7 +83,7 @@ namespace SpaceAge.Controls
             }
 
             // Mission post (agent stuff)
-            if (icUI.thisInteractionCenter.MissionPost != null)
+            if (icUI.thisInteractableBody.MissionPost != null)
             {
                 (icUI.Agents as Control).Enabled = true;
             }
@@ -92,7 +92,7 @@ namespace SpaceAge.Controls
                 (icUI.Agents as Control).Enabled = false;
             }
 
-            if (icUI.thisInteractionCenter.PeopleSource != null)
+            if (icUI.thisInteractableBody.PeopleSource != null)
             {
                 (icUI.People as Control).Enabled = true;
             }
@@ -101,7 +101,7 @@ namespace SpaceAge.Controls
                 (icUI.People as Control).Enabled = false;
             }
 
-            if (icUI.thisInteractionCenter.PoliticalCenter != null)
+            if (icUI.thisInteractableBody.PoliticalCenter != null)
             {
                 (icUI.Politics as Control).Enabled = true;
             }
@@ -129,7 +129,7 @@ namespace SpaceAge.Controls
 
         public void UpdateUi()
         {
-            if (thisInteractionCenter == null)
+            if (thisInteractableBody == null)
                 return;
             if (NeedToRefresh)
             {
@@ -145,20 +145,20 @@ namespace SpaceAge.Controls
             // Change this cast to conditional later when more than just planets can have trade centers
             //InteractionCenter_InfoName.Text = "Planet: " + (thisInteractionCenter.Parent as Planet).ToString();
             //Info_Population.Text = (thisInteractionCenter.Parent as Planet).Population.ToString();
-            InteractionCenter_InfoName.Text = thisInteractionCenter.ToString();
+            InteractionCenter_InfoName.Text = thisInteractableBody.ToString();
             Info_Population.Text = "TODO: IInhabitable";
 
             InteractionCenter_Credits.Text = UserState.getPlayerFunds().ToString();
             market_cargo_space.Text = "Cargo bay: " + UserState.PlayerShip.SpaceShipCargo.ConsumedVolume + "/" + UserState.PlayerShip.SpaceShipCargo.MaxVolume + " m3";
 
             Market_MarketCommodities.Items.Clear();
-            Market_MarketCommodities.Items.AddRange(thisInteractionCenter.Store.GetCommmodityListView());
+            Market_MarketCommodities.Items.AddRange(thisInteractableBody.Store.GetCommmodityListView());
 
             Market_ShipCommodities.Items.Clear();
-            Market_ShipCommodities.Items.AddRange(UserState.PlayerShip.SpaceShipCargo.GetCommmodityListViewAtStore(thisInteractionCenter.Store));
+            Market_ShipCommodities.Items.AddRange(UserState.PlayerShip.SpaceShipCargo.GetCommmodityListViewAtStore(thisInteractableBody.Store));
 
             Escrow_StoreList.Items.Clear();
-            Escrow_StoreList.Items.AddRange(thisInteractionCenter.Store.GetItemListView());
+            Escrow_StoreList.Items.AddRange(thisInteractableBody.Store.GetItemListView());
 
             Escrow_PlayerList.Items.Clear();
             Escrow_PlayerList.Items.AddRange(UserState.PlayerShip.SpaceShipCargo.GetItemListView());
@@ -168,7 +168,7 @@ namespace SpaceAge.Controls
         {
             try
             {
-                ItemStore IS = thisInteractionCenter.Store;
+                ItemStore IS = thisInteractableBody.Store;
                 CargoItemList SC = UserState.PlayerShip.SpaceShipCargo;
                 Commodity.CommodityEnum CE;
 
@@ -190,7 +190,7 @@ namespace SpaceAge.Controls
                     Market_ShipCommodity_Index = Market_ShipCommodities.SelectedItems[0].ImageIndex;
                     Market_ShipCommodity_Selected = CE;
                     // Make sure the current store buys these before querying for price
-                    if (thisInteractionCenter.Store.CanUserSellCommodity(CE))
+                    if (thisInteractableBody.Store.CanUserSellCommodity(CE))
                     {
                         TotalSellPrice = NumToSell * IS.QueryCommodityUserSellPrice(CE);
                     }
@@ -243,10 +243,10 @@ namespace SpaceAge.Controls
         private void InteractionCenter_SellButton_Click(object sender, EventArgs e)
         {
             // Make sure the store is actually buying these commodities
-            if(!thisInteractionCenter.Store.CanUserSellCommodity(Market_ShipCommodity_Selected))
+            if(!thisInteractableBody.Store.CanUserSellCommodity(Market_ShipCommodity_Selected))
                 return; // TODO: error message
 
-            ItemStore IS = thisInteractionCenter.Store;
+            ItemStore IS = thisInteractableBody.Store;
             CargoItemList SC = UserState.PlayerShip.SpaceShipCargo;
 
             int NumToSell = Int32.Parse(SellQuantity.Text.ToString());
@@ -276,7 +276,7 @@ namespace SpaceAge.Controls
 
         private void InteractionCenter_BuyButton_Click(object sender, EventArgs e)
         {
-            ItemStore IS = thisInteractionCenter.Store;
+            ItemStore IS = thisInteractableBody.Store;
             CargoItemList SC = UserState.PlayerShip.SpaceShipCargo;
 
             int NumToBuy = Int32.Parse(BuyQuantity.Text.ToString());

@@ -49,6 +49,9 @@ namespace SpaceAge.Controls
             listView_PlanetMoons.Columns.Add("Name");
             listView_PlanetMoons.Columns.Add("Settled");
             listView_PlanetMoons.Columns.Add("Size");
+
+            // Exdtractors
+            listView_Extractors.Columns.Add("Extractor Type", 400);
         }
 
         public void SetSolarSystem(StarSystem ss)
@@ -113,6 +116,31 @@ namespace SpaceAge.Controls
             PlanetsNeedRefresh = false;
         }
 
+        public void RefreshResourceExtractors()
+        {
+            if (CurrentPlanet == null)
+            {
+                listView_Extractors.Items.Clear();
+                return;
+            }
+            IInteractableBody target = CurrentPlanet;
+            // TODO: Add moon checks when they are implemented
+
+            RawMaterialExtractor[] extractors = target.Extractors;
+            if (extractors.Length == 0)
+            {
+                listView_Extractors.Items.Clear();
+                return;
+            }
+            ListViewItem[] listExtractors = new ListViewItem[extractors.Length];
+            for (int i = 0; i < extractors.Length; i++)
+            {
+                listExtractors[i] = new ListViewItem(extractors[i].ToString());
+            }
+            listView_Extractors.Items.Clear();
+            listView_Extractors.Items.AddRange(listExtractors);
+        }
+
         public void UpdateMoons()
         {
             MoonsNeedRefresh = false;
@@ -140,7 +168,7 @@ namespace SpaceAge.Controls
             {
                 CurrentPlanet = null;
             }
-
+            RefreshResourceExtractors();
         }
 
         private void listView_PlanetMoons_SelectedIndexChanged(object sender, EventArgs e)
@@ -177,8 +205,5 @@ namespace SpaceAge.Controls
         {
 
         }
-
-
-
     }
 }

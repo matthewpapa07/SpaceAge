@@ -77,6 +77,7 @@ namespace SpaceAge
                     {
                         Population = n.GetRandNumberInRange(0, 5000000);
                     }
+                    planetStore = ItemStore.GetGeneralStore(this);
                 }
             }
         }
