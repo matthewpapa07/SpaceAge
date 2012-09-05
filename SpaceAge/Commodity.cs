@@ -8,7 +8,14 @@ namespace SpaceAge
     class Commodity
     {
 
-        public static Commodity[] allCommodities = generateCommodities();
+        public static Commodity[] AllCommoditiesArray = GenerateAllCommodities();
+        public static Commodity[] AllResourceCommoditiesArray = LinkResourceCommodities();
+        public static Commodity[] CommonAtmosphere = LinkCommonAtmosphere();
+        public static Commodity[] RareAtmosphere = LinkRareAtmosphere();
+        public static Commodity[] CommonElements = LinkCommonElement();
+        public static Commodity[] RareElements = LinkRareAtmosphere();
+        public static Commodity[] resourcesStatic = LinkStaticCommodity();
+
         public static int NumOfCommodities; // Length of commodities list
 
         public enum CommodityEnum
@@ -20,7 +27,7 @@ namespace SpaceAge
             // RESOURCES BEGIN HERE
             Oxygen, Hydrogen, Methane, SulphuricAcid, CarbonDioxide, Nitrogen, Chlorine, Helium,    // CommonAtmosphere
             Boron, Neon, Xenon, Krypton,                                                            // RareAtmosphere
-            Silicon, Iron, Carbon, Copper, Magnesium, Sodium, Sulfur, Lead, Nickel, Amuninum,       // CommonElements
+            Silicon, Iron, Carbon, Copper, Magnesium, Sodium, Sulfur, Lead, Nickel, Aluminum,       // CommonElements
             Titanium, Neodymium, Germanium, Gallium, Arsenic, Strontium, Gold, Silver, Platinum,    // RareElements
             Hydrocarbons, Cellulose, Acid, Biomass, Mud, Water, Minerals                            // ResourcesStatic
         };
@@ -35,6 +42,7 @@ namespace SpaceAge
         public int MaxQuantity;
         public bool IsVolatile;
         public bool IsResource;
+        ObjectCharactaristics.ResourceCommodityType ResType = 0;
 
         // Constructor for regular commodities
         private Commodity(CommodityEnum c, String inDescription, int inWeight, int inVol, int inVal, int inMaxQuantity, bool inIsVolatile) 
@@ -52,7 +60,7 @@ namespace SpaceAge
         }
 
         // Constructor for resource commodities
-        private Commodity(CommodityEnum c, String inDescription, int inVal) 
+        private Commodity(CommodityEnum c, ObjectCharactaristics.ResourceCommodityType inResType,  String inDescription, int inVal) 
             : base()
         {
             CommodityType = c;
@@ -63,6 +71,7 @@ namespace SpaceAge
             IsVolatile = false;
             MaxQuantity = 100;  // This value should never be used
             IsResource = true;
+            ResType = inResType;
         }
 
         // To determine what "resource" commodities are needed to build the non resource ones
@@ -77,7 +86,7 @@ namespace SpaceAge
 
         public static Commodity getCommodityFromEnum(CommodityEnum inEnum)
         {
-            return allCommodities[(int)inEnum];
+            return AllCommoditiesArray[(int)inEnum];
         }
 
         public static CommodityEnum GetRandomCommodity()
@@ -95,15 +104,20 @@ namespace SpaceAge
         // Make SSS, SS, S, M, L, XL, XXL, XXXL sizes too....
         // Each item will eventually perform actions on the players ship or other items
         //
-        static Commodity[] generateCommodities()
+        static Commodity[] GenerateAllCommodities()
         {
             // int numOfCommodities = sizeof(CommodityEnum);
             List<Commodity> commoditiesTempList = new List<Commodity>();
             Commodity tempCommodity;
 
-            //
-            //Fuel = 0, Water, Foodstuffs, RepairPatch, ScrapMetal, Coolant, CopperCabling,
-            //Slaves, Minerals, SpaceSteel, Ceramics, Spices,
+            List<Commodity> CommonAtmo = new List<Commodity>(10);
+            List<Commodity> RareAtmp = new List<Commodity>(10);
+            List<Commodity> CommonEle = new List<Commodity>(10);
+            List<Commodity> RareEle = new List<Commodity>(10);
+            List<Commodity> StaticRes = new List<Commodity>(10);
+
+            //Fuel = 0, Foodstuffs, RepairPatch, ScrapMetal, Coolant, CopperCabling,
+            //Slaves, SpaceSteel, Ceramics, Spices,
             //ComputerComponents, Missile1, Missile2, LaserCrystal1, LaserCrystal2, 
             //MassDriverAmmo1, MassDriverAmmo2,
             //// RESOURCES BEGIN HERE
@@ -111,8 +125,7 @@ namespace SpaceAge
             //Boron, Neon, Xenon, Krypton,                                                            // RareAtmosphere
             //Silicon, Iron, Carbon, Copper, Magnesium, Sodium, Sulfur, Lead, Nickel, Amuninum,       // CommonElements
             //Titanium, Neodymium, Germanium, Gallium, Arsenic, Strontium, Gold, Silver, Platinum,    // RareElements
-            //Hydrocarbons, Cellulose, Acid, Biomass, Mud                                             // ResourcesStatic
-            //
+            //Hydrocarbons, Cellulose, Acid, Biomass, Mud, Water, Minerals                            // ResourcesStatic
 
             //String inDescription, int inWeight, int inVol, int inVal, int inMaxQuantity, bool inIsVolatile
             // Start regular Commodities. Each needs to have resource dependency
@@ -154,80 +167,84 @@ namespace SpaceAge
             // Next are resources, which fall under the commodity umbrella for now. Call them "resource commodities"
             //
             // Start Resources
-            tempCommodity = new Commodity(Commodity.CommodityEnum.Oxygen, "Oxygen", 20);                    // Gases
+            // Gases
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Oxygen, ObjectCharactaristics.ResourceCommodityType.CommonAtmosphere, "Oxygen", 20);                    
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.Hydrogen, "Hydrogen", 10);
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Hydrogen, ObjectCharactaristics.ResourceCommodityType.CommonAtmosphere, "Hydrogen", 10);
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.Methane, "Methane", 45);
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Methane, ObjectCharactaristics.ResourceCommodityType.CommonAtmosphere, "Methane", 45);
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.SulphuricAcid, "Sulphuric Acid", 25);
+            tempCommodity = new Commodity(Commodity.CommodityEnum.SulphuricAcid, ObjectCharactaristics.ResourceCommodityType.CommonAtmosphere, "Sulphuric Acid", 25);
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.CarbonDioxide, "Carbon Dioxide", 20);
+            tempCommodity = new Commodity(Commodity.CommodityEnum.CarbonDioxide, ObjectCharactaristics.ResourceCommodityType.CommonAtmosphere, "Carbon Dioxide", 20);
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.Nitrogen, "Nitrogen", 10);
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Nitrogen, ObjectCharactaristics.ResourceCommodityType.CommonAtmosphere, "Nitrogen", 10);
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.Chlorine, "Chlorine", 35);
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Chlorine, ObjectCharactaristics.ResourceCommodityType.CommonAtmosphere, "Chlorine", 35);
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.Helium, "Helium", 10);
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Helium, ObjectCharactaristics.ResourceCommodityType.CommonAtmosphere, "Helium", 10);
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.Boron, "Boron", 75);
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Boron, ObjectCharactaristics.ResourceCommodityType.RareAtmosphere, "Boron", 75); // START Rare
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.Neon, "Neon", 55);
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Neon, ObjectCharactaristics.ResourceCommodityType.RareAtmosphere, "Neon", 55);
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.Xenon, "Xenon", 60);
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Xenon, ObjectCharactaristics.ResourceCommodityType.RareAtmosphere, "Xenon", 60);
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.Krypton, "Krypton", 50);
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Krypton, ObjectCharactaristics.ResourceCommodityType.RareAtmosphere, "Krypton", 50);
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.Silicon, "Silicon", 10);                            // Elements
+            // Elements
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Silicon, ObjectCharactaristics.ResourceCommodityType.CommonElement, "Silicon", 10);                            
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.Iron, "Iron", 10);
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Iron, ObjectCharactaristics.ResourceCommodityType.CommonElement, "Iron", 10);
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.Carbon, "Carbon", 20);
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Carbon, ObjectCharactaristics.ResourceCommodityType.CommonElement, "Carbon", 20);
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.Copper, "Copper", 40);
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Copper, ObjectCharactaristics.ResourceCommodityType.CommonElement, "Copper", 40);
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.Magnesium, "Magnesium", 55);
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Magnesium, ObjectCharactaristics.ResourceCommodityType.CommonElement, "Magnesium", 55);
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.Sodium, "Sodium", 45);
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Sodium, ObjectCharactaristics.ResourceCommodityType.CommonElement, "Sodium", 45);
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.Sulfur, "Sulfur", 45);
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Sulfur, ObjectCharactaristics.ResourceCommodityType.CommonElement, "Sulfur", 45);
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.Lead, "Lead", 10);
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Lead, ObjectCharactaristics.ResourceCommodityType.CommonElement, "Lead", 10);
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.Nickel, "Nickel", 20);
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Nickel, ObjectCharactaristics.ResourceCommodityType.CommonElement, "Nickel", 20);
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.Amuninum, "Amuninum", 35);
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Aluminum, ObjectCharactaristics.ResourceCommodityType.CommonElement, "Aluminum", 35);
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.Titanium, "Titanium", 120);                                    
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Titanium, ObjectCharactaristics.ResourceCommodityType.RareElement, "Titanium", 120); // START Rare                                    
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.Neodymium, "Neodymium", 180);
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Neodymium, ObjectCharactaristics.ResourceCommodityType.RareElement, "Neodymium", 180);
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.Germanium, "Germanium", 195);
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Germanium, ObjectCharactaristics.ResourceCommodityType.RareElement, "Germanium", 195);
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.Gallium, "Gallium", 210);
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Gallium, ObjectCharactaristics.ResourceCommodityType.RareElement, "Gallium", 210);
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.Arsenic, "Arsenic", 140);
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Arsenic, ObjectCharactaristics.ResourceCommodityType.RareElement, "Arsenic", 140);
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.Strontium, "Strontium", 280);
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Strontium, ObjectCharactaristics.ResourceCommodityType.RareElement, "Strontium", 280);
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.Gold, "Gold", 300);
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Gold, ObjectCharactaristics.ResourceCommodityType.RareElement, "Gold", 300);
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.Silver, "Silver", 250);
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Silver, ObjectCharactaristics.ResourceCommodityType.RareElement, "Silver", 250);
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.Platinum, "Platinum", 330);
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Platinum, ObjectCharactaristics.ResourceCommodityType.RareElement, "Platinum", 330);
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.Hydrocarbons, "Hydrocarbons", 140);                                   // Resources
+            // Resources
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Hydrocarbons, ObjectCharactaristics.ResourceCommodityType.ResourceStatic, "Hydrocarbons", 140);                                   
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.Cellulose, "Cellulose", 120);
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Cellulose, ObjectCharactaristics.ResourceCommodityType.ResourceStatic, "Cellulose", 120);
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.Acid, "Acid", 220);
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Acid, ObjectCharactaristics.ResourceCommodityType.ResourceStatic, "Acid", 220);
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.Biomass, "Biomass", 150);
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Biomass, ObjectCharactaristics.ResourceCommodityType.ResourceStatic, "Biomass", 150);
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.Mud, "Mud", 175);
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Mud, ObjectCharactaristics.ResourceCommodityType.ResourceStatic, "Mud", 175);
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.Water, "Water", 20);
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Water, ObjectCharactaristics.ResourceCommodityType.ResourceStatic, "Water", 20);
             commoditiesTempList.Add(tempCommodity);
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Water, ObjectCharactaristics.ResourceCommodityType.ResourceStatic, "Minerals", 20);
             commoditiesTempList.Add(tempCommodity);
             // End Resources
             // End Commodities
@@ -235,6 +252,78 @@ namespace SpaceAge
             NumOfCommodities = commoditiesTempList.Count;
 
             return commoditiesTempList.ToArray();
+        }
+
+        public static Commodity[] LinkResourceCommodities()
+        {
+            List<Commodity> TempList = new List<Commodity>(25);
+            foreach(Commodity c in AllCommoditiesArray)
+            {
+                if (c.IsResource)
+                    TempList.Add(c);
+            }
+
+            return TempList.ToArray();
+        }
+
+        public static Commodity[] LinkCommonAtmosphere()
+        {
+            List<Commodity> TempList = new List<Commodity>(10);
+            foreach (Commodity c in AllResourceCommoditiesArray)
+            {
+                if (c.ResType == ObjectCharactaristics.ResourceCommodityType.CommonAtmosphere)
+                    TempList.Add(c);
+            }
+
+            return TempList.ToArray();
+        }
+
+        public static Commodity[] LinkRareAtmosphere()
+        {
+            List<Commodity> TempList = new List<Commodity>(10);
+            foreach (Commodity c in AllResourceCommoditiesArray)
+            {
+                if (c.ResType == ObjectCharactaristics.ResourceCommodityType.RareAtmosphere)
+                    TempList.Add(c);
+            }
+
+            return TempList.ToArray();
+        }
+
+        public static Commodity[] LinkCommonElement()
+        {
+            List<Commodity> TempList = new List<Commodity>(10);
+            foreach (Commodity c in AllResourceCommoditiesArray)
+            {
+                if (c.ResType == ObjectCharactaristics.ResourceCommodityType.CommonElement)
+                    TempList.Add(c);
+            }
+
+            return TempList.ToArray();
+        }
+
+        public static Commodity[] LinkRareElement()
+        {
+            List<Commodity> TempList = new List<Commodity>(10);
+            foreach (Commodity c in AllResourceCommoditiesArray)
+            {
+                if (c.ResType == ObjectCharactaristics.ResourceCommodityType.RareElement)
+                    TempList.Add(c);
+            }
+
+            return TempList.ToArray();
+        }
+
+        public static Commodity[] LinkStaticCommodity()
+        {
+            List<Commodity> TempList = new List<Commodity>(10);
+            foreach (Commodity c in AllResourceCommoditiesArray)
+            {
+                if (c.ResType == ObjectCharactaristics.ResourceCommodityType.ResourceStatic)
+                    TempList.Add(c);
+            }
+
+            return TempList.ToArray();
         }
 
         public static Commodity GetCommodityFromResource(ObjectCharactaristics.ResourceCommodityType RcType, int value)

@@ -62,11 +62,11 @@ namespace SpaceAge
             // Now set which items this store will accept to buy and sell
             for (int i = 0; i < Commodity.NumOfCommodities; i++)
             {
-                if (Commodity.allCommodities[i].CommodityType == Commodity.CommodityEnum.Fuel)
+                if (Commodity.AllCommoditiesArray[i].CommodityType == Commodity.CommodityEnum.Fuel)
                     extractorStore.WillBuy[i] = true;
                 else
                     extractorStore.WillBuy[i] = false;
-                if (Commodity.allCommodities[i].CommodityType == ProducedResourceCommodity.CommodityType)
+                if (Commodity.AllCommoditiesArray[i].CommodityType == ProducedResourceCommodity.CommodityType)
                     extractorStore.WillSell[i] = true;
                 else
                     extractorStore.WillSell[i] = false;
