@@ -9,7 +9,7 @@ namespace SpaceAge
     class ItemList
     {
         internal List<Item> allItems = new List<Item>();
-        internal int[] commoditiesQuantitiy = new int[Commodity.allCommodities.Length];
+        internal int[] commoditiesQuantitiy = new int[Commodity.AllCommoditiesArray.Length];
 
         public ItemList()
         {
@@ -48,7 +48,7 @@ namespace SpaceAge
             for(int i = 0; i < Commodity.NumOfCommodities; i++)
             {
                 if(commoditiesQuantitiy[i] > 0)
-                    protoList.Add(Commodity.allCommodities[i].CommodityType);
+                    protoList.Add(Commodity.AllCommoditiesArray[i].CommodityType);
             }
             return protoList.ToArray();
         }
@@ -81,7 +81,7 @@ namespace SpaceAge
 
             for (int i = 0; i < Commodity.NumOfCommodities; i++)
             {
-                runningTotal += Commodity.allCommodities[i].UnitWeight * commoditiesQuantitiy[i];
+                runningTotal += Commodity.AllCommoditiesArray[i].UnitWeight * commoditiesQuantitiy[i];
             }
 
             foreach (Item i in allItems)
@@ -98,7 +98,7 @@ namespace SpaceAge
 
             for (int i = 0; i < Commodity.NumOfCommodities; i++)
             {
-                runningTotal += Commodity.allCommodities[i].UnitVolume * commoditiesQuantitiy[i];
+                runningTotal += Commodity.AllCommoditiesArray[i].UnitVolume * commoditiesQuantitiy[i];
             }
 
             foreach (Item i in allItems)

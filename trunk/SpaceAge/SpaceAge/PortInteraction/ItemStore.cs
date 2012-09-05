@@ -14,8 +14,8 @@ namespace SpaceAge
         // *In parent: internal int[] commoditiesQuantitiy = new int[Commodity.allCommodities.Length];
 
         // These need to maintain a one to one correspondence with the commodities list
-        public bool[] WillBuy = new bool[Commodity.allCommodities.Length];
-        public bool[] WillSell = new bool[Commodity.allCommodities.Length];
+        public bool[] WillBuy = new bool[Commodity.AllCommoditiesArray.Length];
+        public bool[] WillSell = new bool[Commodity.AllCommoditiesArray.Length];
 
         //
         // Eventually make it to where the items are generated based on the 
@@ -31,7 +31,7 @@ namespace SpaceAge
         public static ItemStore GetGeneralStore(IInteractableBody inParent)
         {
             ItemStore thisStore = new ItemStore();
-            Commodity[] allCommodities = Commodity.allCommodities;
+            Commodity[] allCommodities = Commodity.AllCommoditiesArray;
             NumberGenerator n = NumberGenerator.getInstance();
 
             thisStore.Parent = inParent;
@@ -55,7 +55,7 @@ namespace SpaceAge
         public static ItemStore GetExtractorStore(IInteractableBody inParent)
         {
             ItemStore thisStore = new ItemStore();
-            Commodity[] allCommodities = Commodity.allCommodities;
+            Commodity[] allCommodities = Commodity.AllCommoditiesArray;
             NumberGenerator n = NumberGenerator.getInstance();
 
             thisStore.Parent = inParent;

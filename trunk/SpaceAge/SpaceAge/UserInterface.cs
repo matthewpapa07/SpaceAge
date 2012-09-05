@@ -72,6 +72,8 @@ namespace SpaceAge
                     case 'd':       // Right
                         UserState.moveRight();
                         break;
+                    default:
+                        break;
                 }
                 //uiMap1.drawMap();
                 TheMainSectorBrowserWhole.UpdateUi();
