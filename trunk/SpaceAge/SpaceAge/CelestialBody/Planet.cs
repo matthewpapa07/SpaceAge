@@ -21,16 +21,8 @@ namespace SpaceAge
         //
         // Resources, as per IHarvestableBody
         //
-        private ObjectCharactaristics.CommonAtmosphere[] commonAtmosphere;
-        private ObjectCharactaristics.RareAtmosphere[] rareAtmosphere;
-        private ObjectCharactaristics.CommonElements[] commonElements;
-        private ObjectCharactaristics.RareElements[] rareElements;
-        private ObjectCharactaristics.ResourcesStatic[] resourcesStatic;
-        private int[] commonAtmosphereQuantity;
-        private int[] rareAtmosphereQuantity;
-        private int[] commonElementsQuantity;
-        private int[] rareElementsQuantity;
-        private int[] resourcesStaticQuantity;
+        private Commodity[] resources;
+        private int[] resourcesProductivity;
 
         public StarSystem Parent;
 
@@ -64,7 +56,8 @@ namespace SpaceAge
 
             generateResources();
 
-            if (commonAtmosphere.Contains(ObjectCharactaristics.CommonAtmosphere.Oxygen) || commonAtmosphere.Contains(ObjectCharactaristics.CommonAtmosphere.CarbonDioxide))
+            if (resources.Contains(Commodity.getCommodityFromEnum(Commodity.CommodityEnum.Oxygen)) ||
+                resources.Contains(Commodity.getCommodityFromEnum(Commodity.CommodityEnum.CarbonDioxide)))
             {
                 if (n.LinearPmfResult(CHANCE_OF_PLANET_INHABITED))
                 {
@@ -84,107 +77,75 @@ namespace SpaceAge
 
         private void generateResources()
         {
+            List<Commodity> returnList = new List<Commodity>(10);
+            int[] returnProductivity;
             NumberGenerator n = NumberGenerator.getInstance();
 
-            commonAtmosphere = n.GetEnumScaledList<ObjectCharactaristics.CommonAtmosphere>(0.8);
-            rareAtmosphere = n.GetEnumScaledList<ObjectCharactaristics.RareAtmosphere>(0.45);
-            commonElements = n.GetEnumScaledList<ObjectCharactaristics.CommonElements>(0.70);
-            rareElements = n.GetEnumScaledList<ObjectCharactaristics.RareElements>(0.40);
-            resourcesStatic = n.GetEnumScaledList<ObjectCharactaristics.ResourcesStatic>(0.60);
+            Commodity[] commonAtmosphere = n.GetArrayScaledList<Commodity>(Commodity.CommonAtmosphere, 0.8);
+            Commodity[] rareAtmosphere = n.GetArrayScaledList<Commodity>(Commodity.RareAtmosphere, 0.45);
+            Commodity[] commonElements = n.GetArrayScaledList<Commodity>(Commodity.CommonElements, 0.70);
+            Commodity[] rareElements = n.GetArrayScaledList<Commodity>(Commodity.RareElements, 0.40);
+            Commodity[] resourcesStatic = n.GetArrayScaledList<Commodity>(Commodity.ResourcesStatic, 0.60);
 
-            commonAtmosphereQuantity = new int[commonAtmosphere.Length];
-            rareAtmosphereQuantity = new int[rareAtmosphere.Length];
-            commonElementsQuantity = new int[commonElements.Length];
-            rareElementsQuantity = new int[rareElements.Length];
-            resourcesStaticQuantity = new int[resourcesStatic.Length];
-
-            // The following code generates somewhat of productivity factors for any commerce and mining
-            // Start off with gasses. That will be hard
-            //double wholefraction = 1.0;
-            //double partialfraction = 0.0;
-            for (int i = (commonAtmosphere.Length - 1); i >= 0 ; i--)
+            foreach (Commodity c in commonAtmosphere)
             {
-            //    wholefraction = 8.0;
-                commonAtmosphereQuantity[i] = 0;
+                returnList.Add(c);
             }
-            for (int i = (rareAtmosphere.Length - 1); i >= 0 ; i--)
+            foreach (Commodity c in rareAtmosphere)
             {
-                rareAtmosphereQuantity[i] = 0;
+                returnList.Add(c);
             }
-
-            // Elements should be easier
-            for (int i = 0; i < commonElements.Length; i++)
+            foreach (Commodity c in commonElements)
             {
-                commonElementsQuantity[i] = n.GetRandNumberInRange(1, 50);
+                returnList.Add(c);
             }
-            for (int i = 0; i < rareElements.Length; i++)
+            foreach (Commodity c in rareElements)
             {
-                rareElementsQuantity[i] = n.GetRandNumberInRange(1, 15);
+                returnList.Add(c);
             }
-            for (int i = 0; i < resourcesStatic.Length; i++)
+            foreach (Commodity c in resourcesStatic)
             {
-                resourcesStaticQuantity[i] = n.GetRandNumberInRange(1, 25);
+                returnList.Add(c);
             }
 
+            returnProductivity = new int[returnList.Count];
+            for (int i = 0; i < returnList.Count; i++)
+            {
+                //TODO: Produce this number randomly again based on the resource commodity class
+                returnProductivity[i] = n.GetRandNumberInRange(1, 50);
+            }
+
+            resources = returnList.ToArray();
+            resourcesProductivity = returnProductivity;
         }
-        
+
 
         // Helper method to find the productivity value of a certain harvestable resource commodity
-        public int FindProductivityOfInternalResource(ObjectCharactaristics.ResourceCommodityType rct, int rct_index)
+        // TODO: put this in interface
+        public int FindProductivityOfInternalResource(Commodity c)
         {
-            switch (rct)
+            for (int i = 0; i < resources.Length; i++)
             {
-                case ObjectCharactaristics.ResourceCommodityType.CommonAtmosphere:
-                    ObjectCharactaristics.CommonAtmosphere tempCA = (ObjectCharactaristics.CommonAtmosphere)rct_index;
-                    for (int i = 0; i < commonAtmosphere.Length; i++)
-                    {
-                        if (commonAtmosphere[i] == tempCA)
-                            return commonAtmosphereQuantity[i];
-                    }
-                    break;
-                case ObjectCharactaristics.ResourceCommodityType.RareAtmosphere:
-                    ObjectCharactaristics.RareAtmosphere tempRA = (ObjectCharactaristics.RareAtmosphere)rct_index;
-                    for (int i = 0; i < rareAtmosphere.Length; i++)
-                    {
-                        if (rareAtmosphere[i] == tempRA)
-                            return rareAtmosphereQuantity[i];
-                    }
-                    break;
-                case ObjectCharactaristics.ResourceCommodityType.CommonElement:
-                    ObjectCharactaristics.CommonElements tempCE = (ObjectCharactaristics.CommonElements)rct_index;
-                    for (int i = 0; i < commonElements.Length; i++)
-                    {
-                        if (commonElements[i] == tempCE)
-                            return commonElementsQuantity[i];
-                    }
-                    break;
-                case ObjectCharactaristics.ResourceCommodityType.RareElement:
-                    ObjectCharactaristics.RareElements tempRE = (ObjectCharactaristics.RareElements)rct_index;
-                    for (int i = 0; i < rareElements.Length; i++)
-                    {
-                        if (rareElements[i] == tempRE)
-                            return rareElementsQuantity[i];
-                    }
-                    break;
-                case ObjectCharactaristics.ResourceCommodityType.ResourceStatic:
-                    ObjectCharactaristics.ResourcesStatic tempRS = (ObjectCharactaristics.ResourcesStatic)rct_index;
-                    for (int i = 0; i < resourcesStatic.Length; i++)
-                    {
-                        if (resourcesStatic[i] == tempRS)
-                            return resourcesStaticQuantity[i];
-                    }
-                    break;
-                default:
-                    throw new Exception();
+                if (resources[i].Equals(c))
+                {
+                    return resourcesProductivity[i];
+                }
+                else
+                    continue;
             }
-            // we should not get here....
+
+            //Should not get here
             throw new Exception();
         }
 
-        public void AddExtractors(RawMaterialExtractor [] tempExtractor)
+        public void AddExtractors(RawMaterialExtractor[] tempExtractor)
         {
             foreach(RawMaterialExtractor e in tempExtractor)
                 planetExtractors.Add(e);
+        }
+        public void AddExtractor(RawMaterialExtractor tempExtractor)
+        {
+            planetExtractors.Add(tempExtractor);
         }
 
         public override string ToString()
@@ -203,74 +164,18 @@ namespace SpaceAge
                 return Parent;
             }
         }
-        public ObjectCharactaristics.CommonAtmosphere[] CommonAtmosphere
+        public Commodity[] Resources
         {
             get
             {
-                return commonAtmosphere;
+                return resources;
             }
         }
-        public ObjectCharactaristics.RareAtmosphere[] RareAtmosphere
+        public int[] ResourcesProductivity
         {
             get
             {
-                return rareAtmosphere;
-            }
-        }
-        public ObjectCharactaristics.CommonElements[] CommonElements
-        {
-            get
-            {
-                return commonElements;
-            }
-        }
-        public ObjectCharactaristics.RareElements[] RareElements
-        {
-            get
-            {
-                return rareElements;
-            }
-        }
-        public ObjectCharactaristics.ResourcesStatic[] ResourcesStatic
-        {
-            get
-            {
-                return resourcesStatic;
-            }
-        }
-        public int[] CommonAtmosphereQuantity
-        {
-            get
-            {
-                return commonAtmosphereQuantity;
-            }
-        }
-        public int[] RareAtmosphereQuantity
-        {
-            get
-            {
-                return rareAtmosphereQuantity;
-            }
-        }
-        public int[] CommonElementsQuantity
-        {
-            get
-            {
-                return commonElementsQuantity;
-            }
-        }
-        public int[] RareElementsQuantity
-        {
-            get
-            {
-                return rareElementsQuantity;
-            }
-        }
-        public int[] ResourcesStaticQuantity
-        {
-            get
-            {
-                return resourcesStaticQuantity;
+                return resourcesProductivity;
             }
         }
 

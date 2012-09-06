@@ -92,6 +92,62 @@ namespace SpaceAge
             return ReturnValues.ToArray();
         }
 
+        public T[] GetArrayScaledList<T>(T[] inValues, double percentage)
+        {
+            //T[] values = (T[])Enum.GetValues(typeof(T));
+            List<T> AllValues = new List<T>(inValues);
+            List<T> ReturnValues = new List<T>(10);
+            T tempValue;
+
+            // One value for free?? I guess...
+            //T testVal = values[GetRandNumberInRange(0, values.Count - 1)];
+
+            // See if we can add another as many times as we can
+            for (int i = 0; i < AllValues.Count; i++)
+            {
+                if (LinearPmfResult(percentage))
+                {
+                    tempValue = AllValues[GetRandNumberInRange(0, AllValues.Count - 1)];
+                    AllValues.Remove(tempValue);
+                    ReturnValues.Add(tempValue);
+                }
+                else
+                {
+                    return ReturnValues.ToArray();
+                }
+            }
+
+            // In the small chance we get to fill the list...
+            return ReturnValues.ToArray();
+        }
+
+        //public object[] GetArrayScaledList(object [] Values, double percentage)
+        //{
+        //    List<object> AllValues = new List<object>(Values.Length);
+        //    List<object> ReturnValues = new List<object>();
+        //    object tempValue;
+        //    // One value for free?? I guess...
+        //    //T testVal = values[GetRandNumberInRange(0, values.Count - 1)];
+
+        //    // See if we can add another as many times as we can
+        //    for (int i = 0; i < AllValues.Count; i++)
+        //    {
+        //        if (LinearPmfResult(percentage))
+        //        {
+        //            tempValue = AllValues[GetRandNumberInRange(0, AllValues.Count - 1)];
+        //            AllValues.Remove(tempValue);
+        //            ReturnValues.Add(tempValue);
+        //        }
+        //        else
+        //        {
+        //            return ReturnValues.ToArray();
+        //        }
+        //    }
+
+        //    // In the small chance we get to fill the list...
+        //    return ReturnValues.ToArray();
+        //}
+
         /// <summary>
         /// Returns the result of a linear PMF.
         /// </summary>

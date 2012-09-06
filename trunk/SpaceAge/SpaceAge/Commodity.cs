@@ -14,7 +14,7 @@ namespace SpaceAge
         public static Commodity[] RareAtmosphere = LinkRareAtmosphere();
         public static Commodity[] CommonElements = LinkCommonElement();
         public static Commodity[] RareElements = LinkRareAtmosphere();
-        public static Commodity[] resourcesStatic = LinkStaticCommodity();
+        public static Commodity[] ResourcesStatic = LinkStaticCommodity();
 
         public static int NumOfCommodities; // Length of commodities list
 
@@ -41,8 +41,11 @@ namespace SpaceAge
         public int BaseValue;
         public int MaxQuantity;
         public bool IsVolatile;
+
+        //Resource fields. For now this will not be a subclass
         public bool IsResource;
-        ObjectCharactaristics.ResourceCommodityType ResType = 0;
+        //public int Productivity;
+        public ObjectCharactaristics.ResourceCommodityType ResourceCommodityType = 0;
 
         // Constructor for regular commodities
         private Commodity(CommodityEnum c, String inDescription, int inWeight, int inVol, int inVal, int inMaxQuantity, bool inIsVolatile) 
@@ -71,7 +74,27 @@ namespace SpaceAge
             IsVolatile = false;
             MaxQuantity = 100;  // This value should never be used
             IsResource = true;
-            ResType = inResType;
+            ResourceCommodityType = inResType;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Commodity)
+            {
+                if ((obj as Commodity).CommodityType == CommodityType)
+                    return true;
+                else
+                    return false;
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return (int)CommodityType;
         }
 
         // To determine what "resource" commodities are needed to build the non resource ones
@@ -104,7 +127,7 @@ namespace SpaceAge
         // Make SSS, SS, S, M, L, XL, XXL, XXXL sizes too....
         // Each item will eventually perform actions on the players ship or other items
         //
-        static Commodity[] GenerateAllCommodities()
+        private static Commodity[] GenerateAllCommodities()
         {
             // int numOfCommodities = sizeof(CommodityEnum);
             List<Commodity> commoditiesTempList = new List<Commodity>();
@@ -254,7 +277,7 @@ namespace SpaceAge
             return commoditiesTempList.ToArray();
         }
 
-        public static Commodity[] LinkResourceCommodities()
+        private static Commodity[] LinkResourceCommodities()
         {
             List<Commodity> TempList = new List<Commodity>(25);
             foreach(Commodity c in AllCommoditiesArray)
@@ -266,83 +289,83 @@ namespace SpaceAge
             return TempList.ToArray();
         }
 
-        public static Commodity[] LinkCommonAtmosphere()
+        private static Commodity[] LinkCommonAtmosphere()
         {
             List<Commodity> TempList = new List<Commodity>(10);
             foreach (Commodity c in AllResourceCommoditiesArray)
             {
-                if (c.ResType == ObjectCharactaristics.ResourceCommodityType.CommonAtmosphere)
+                if (c.ResourceCommodityType == ObjectCharactaristics.ResourceCommodityType.CommonAtmosphere)
                     TempList.Add(c);
             }
 
             return TempList.ToArray();
         }
 
-        public static Commodity[] LinkRareAtmosphere()
+        private static Commodity[] LinkRareAtmosphere()
         {
             List<Commodity> TempList = new List<Commodity>(10);
             foreach (Commodity c in AllResourceCommoditiesArray)
             {
-                if (c.ResType == ObjectCharactaristics.ResourceCommodityType.RareAtmosphere)
+                if (c.ResourceCommodityType == ObjectCharactaristics.ResourceCommodityType.RareAtmosphere)
                     TempList.Add(c);
             }
 
             return TempList.ToArray();
         }
 
-        public static Commodity[] LinkCommonElement()
+        private static Commodity[] LinkCommonElement()
         {
             List<Commodity> TempList = new List<Commodity>(10);
             foreach (Commodity c in AllResourceCommoditiesArray)
             {
-                if (c.ResType == ObjectCharactaristics.ResourceCommodityType.CommonElement)
+                if (c.ResourceCommodityType == ObjectCharactaristics.ResourceCommodityType.CommonElement)
                     TempList.Add(c);
             }
 
             return TempList.ToArray();
         }
 
-        public static Commodity[] LinkRareElement()
+        private static Commodity[] LinkRareElement()
         {
             List<Commodity> TempList = new List<Commodity>(10);
             foreach (Commodity c in AllResourceCommoditiesArray)
             {
-                if (c.ResType == ObjectCharactaristics.ResourceCommodityType.RareElement)
+                if (c.ResourceCommodityType == ObjectCharactaristics.ResourceCommodityType.RareElement)
                     TempList.Add(c);
             }
 
             return TempList.ToArray();
         }
 
-        public static Commodity[] LinkStaticCommodity()
+        private static Commodity[] LinkStaticCommodity()
         {
             List<Commodity> TempList = new List<Commodity>(10);
             foreach (Commodity c in AllResourceCommoditiesArray)
             {
-                if (c.ResType == ObjectCharactaristics.ResourceCommodityType.ResourceStatic)
+                if (c.ResourceCommodityType == ObjectCharactaristics.ResourceCommodityType.ResourceStatic)
                     TempList.Add(c);
             }
 
             return TempList.ToArray();
         }
 
-        public static Commodity GetCommodityFromResource(ObjectCharactaristics.ResourceCommodityType RcType, int value)
-        {
-            switch (RcType)
-            {
-                case ObjectCharactaristics.ResourceCommodityType.CommonAtmosphere:
-                     return getCommodityFromEnum(ObjectCharactaristics.CommonAtmosphereToC((ObjectCharactaristics.CommonAtmosphere)value));
-                case ObjectCharactaristics.ResourceCommodityType.RareAtmosphere:
-                     return getCommodityFromEnum(ObjectCharactaristics.RareAtmosphereToC((ObjectCharactaristics.RareAtmosphere)value));
-                case ObjectCharactaristics.ResourceCommodityType.CommonElement:
-                     return getCommodityFromEnum(ObjectCharactaristics.CommonElementToC((ObjectCharactaristics.CommonElements)value));
-                case ObjectCharactaristics.ResourceCommodityType.RareElement:
-                     return getCommodityFromEnum(ObjectCharactaristics.RareElementToC((ObjectCharactaristics.RareElements)value));
-                case ObjectCharactaristics.ResourceCommodityType.ResourceStatic:
-                     return getCommodityFromEnum(ObjectCharactaristics.ResourcesStaticToC((ObjectCharactaristics.ResourcesStatic)value));
-                default:
-                    throw new Exception();
-            }
-        }
+        //public static Commodity GetCommodityFromResource(ObjectCharactaristics.ResourceCommodityType RcType, int value)
+        //{
+        //    switch (RcType)
+        //    {
+        //        case ObjectCharactaristics.ResourceCommodityType.CommonAtmosphere:
+        //             return getCommodityFromEnum(CommodityToC((Commodity)value));
+        //        case ObjectCharactaristics.ResourceCommodityType.RareAtmosphere:
+        //             return getCommodityFromEnum(CommodityToC((Commodity)value));
+        //        case ObjectCharactaristics.ResourceCommodityType.CommonElement:
+        //             return getCommodityFromEnum(ObjectCharactaristics.CommonElementToC((Commodity)value));
+        //        case ObjectCharactaristics.ResourceCommodityType.RareElement:
+        //             return getCommodityFromEnum(ObjectCharactaristics.RareElementToC((Commodity)value));
+        //        case ObjectCharactaristics.ResourceCommodityType.ResourceStatic:
+        //             return getCommodityFromEnum(CommodityToC((Commodity)value));
+        //        default:
+        //            throw new Exception();
+        //    }
+        //}
     }
 }

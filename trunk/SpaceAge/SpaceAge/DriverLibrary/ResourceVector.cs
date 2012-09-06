@@ -143,30 +143,9 @@ namespace SpaceAge
             {
                 foreach (Planet p in ss.planets)
                 {
-                    if (p.CommonAtmosphere.Length > 0)
+                    if (p.Resources.Length > 0)
                     {
                         planetsWithRec.Add(p);
-                        continue;
-                    }
-                    if (p.RareAtmosphere.Length > 0)
-                    {
-                        planetsWithRec.Add(p);
-                        continue;
-                    }
-                    if (p.CommonElements.Length > 0)
-                    {
-                        planetsWithRec.Add(p);
-                        continue;
-                    }
-                    if (p.RareElements.Length > 0)
-                    {
-                        planetsWithRec.Add(p);
-                        continue;
-                    }
-                    if (p.ResourcesStatic.Length > 0)
-                    {
-                        planetsWithRec.Add(p);
-                        continue;
                     }
                 }
             }
