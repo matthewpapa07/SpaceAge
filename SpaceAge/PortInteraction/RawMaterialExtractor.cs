@@ -41,8 +41,11 @@ namespace SpaceAge
         public int Productivity = 0;
 
         // This is the constructor that will be automatically applied. Cast enum to get inResourceCommodityIndex
-        public RawMaterialExtractor(IInteractableBody inParent, ObjectCharactaristics.ResourceCommodityType r, int inResourceCommodityIndex)
+        public RawMaterialExtractor(IInteractableBody inParent, Commodity c)
         {
+            if (!c.IsResource)
+                throw new Exception();
+
             Parent = inParent;
 
             // Check to make sure the input object is harvestable
@@ -53,7 +56,7 @@ namespace SpaceAge
             //if (Parent.IsInhabited)
             //    throw new Exception();
 
-            ProducedResourceCommodity = Commodity.GetCommodityFromResource(r, inResourceCommodityIndex);
+        ProducedResourceCommodity = c;
             if (ProducedResourceCommodity == null || !ProducedResourceCommodity.IsResource)
                 throw new Exception();
 
@@ -82,77 +85,31 @@ namespace SpaceAge
         {
             NumberGenerator numGen = NumberGenerator.getInstance();
             List<RawMaterialExtractor> tempGlobalExtList = new List<RawMaterialExtractor>(3);
-            List<RawMaterialExtractor> tempLocalExtList = new List<RawMaterialExtractor>(3);
             RawMaterialExtractor tempExtractor;
             Planet[] ResourceLadenPlanets;
-            int pickIndex = 0;
+            Commodity[] chosenCommodities;
 
             // Populate some planets with raw material extractors
             ResourceLadenPlanets = ResourceVector.GetPlanetsWithResources(s);
-            pickIndex = 0;
             // Check planet for resources, then use a simple probability to decide whether to put an extractor there
             foreach (Planet p in ResourceLadenPlanets)
             {
                 if (p.IsInhabited)
                     continue;
-                if (p.CommonAtmosphere.Length >= 1)
-                {
-                    if (numGen.LinearPmfResult(CHANCE_OF_EXTRACTOR_PRESENT))
-                    {
-                        pickIndex = numGen.GetRandNumberInRange(0, p.CommonAtmosphere.Length - 1);
-                        tempExtractor = new RawMaterialExtractor(p, ObjectCharactaristics.ResourceCommodityType.CommonAtmosphere,
-                                                                                (int)p.CommonAtmosphere[pickIndex]);
-                        tempLocalExtList.Add(tempExtractor);
-                        tempGlobalExtList.Add(tempExtractor); // So all extractors can be registered
-                    }
-                }
-                if (p.RareAtmosphere.Length >= 1)
-                {
-                    if (numGen.LinearPmfResult(CHANCE_OF_EXTRACTOR_PRESENT))
-                    {
-                        pickIndex = numGen.GetRandNumberInRange(0, p.RareAtmosphere.Length - 1);
-                        tempExtractor = new RawMaterialExtractor(p, ObjectCharactaristics.ResourceCommodityType.RareAtmosphere,
-                                                                                (int)p.RareAtmosphere[pickIndex]);
-                        tempLocalExtList.Add(tempExtractor);
-                        tempGlobalExtList.Add(tempExtractor); // So all extractors can be registered
-                    }
-                }
-                if (p.CommonElements.Length >= 1)
-                {
-                    if (numGen.LinearPmfResult(CHANCE_OF_EXTRACTOR_PRESENT))
-                    {
-                        pickIndex = numGen.GetRandNumberInRange(0, p.CommonElements.Length - 1);
-                        tempExtractor = new RawMaterialExtractor(p, ObjectCharactaristics.ResourceCommodityType.CommonElement,
-                                                                                (int)p.CommonElements[pickIndex]);
-                        tempLocalExtList.Add(tempExtractor);
-                        tempGlobalExtList.Add(tempExtractor); // So all extractors can be registered
-                    }
-                }
-                if (p.RareElements.Length >= 1)
-                {
-                    if (numGen.LinearPmfResult(CHANCE_OF_EXTRACTOR_PRESENT))
-                    {
-                        pickIndex = numGen.GetRandNumberInRange(0, p.RareElements.Length - 1);
-                        tempExtractor = new RawMaterialExtractor(p, ObjectCharactaristics.ResourceCommodityType.RareElement,
-                                                                                (int)p.RareElements[pickIndex]);
-                        tempLocalExtList.Add(tempExtractor);
-                        tempGlobalExtList.Add(tempExtractor); // So all extractors can be registered
-                    }
-                }
-                if (p.ResourcesStatic.Length >= 1)
-                {
-                    if (numGen.LinearPmfResult(CHANCE_OF_EXTRACTOR_PRESENT))
-                    {
-                        pickIndex = numGen.GetRandNumberInRange(0, p.ResourcesStatic.Length - 1);
-                        tempExtractor = new RawMaterialExtractor(p, ObjectCharactaristics.ResourceCommodityType.ResourceStatic,
-                                                                                (int)p.ResourcesStatic[pickIndex]);
-                        tempLocalExtList.Add(tempExtractor);
-                        tempGlobalExtList.Add(tempExtractor); // So all extractors can be registered
-                    }
-                }
+                // *Pat myself on the back for the more elegant solution after refactoring resource commodities
 
-                p.AddExtractors(tempLocalExtList.ToArray());
-                tempLocalExtList.Clear();
+                // Get a random list of commodities we want there to be an extractor for
+                chosenCommodities = numGen.GetArrayScaledList<Commodity>(p.Resources, CHANCE_OF_EXTRACTOR_PRESENT);
+
+                //then create extractors for them
+                foreach (Commodity c in chosenCommodities)
+                {
+                    tempExtractor = new RawMaterialExtractor(p, c);
+                    // Register it for the planet
+                    p.AddExtractor(tempExtractor);
+                    // Register it for the driver
+                    tempGlobalExtList.Add(tempExtractor);
+                }
             }
             return tempGlobalExtList.ToArray();
         }

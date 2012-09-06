@@ -11,43 +11,11 @@ namespace SpaceAge
         {
             get;
         }
-        ObjectCharactaristics.CommonAtmosphere[] CommonAtmosphere
+        Commodity[] Resources
         {
             get;
         }
-        ObjectCharactaristics.RareAtmosphere[] RareAtmosphere
-        {
-            get;
-        }
-        ObjectCharactaristics.CommonElements[] CommonElements
-        {
-            get;
-        }
-        ObjectCharactaristics.RareElements[] RareElements
-        {
-            get;
-        }
-        ObjectCharactaristics.ResourcesStatic[] ResourcesStatic
-        {
-            get;
-        }
-        int[] CommonAtmosphereQuantity
-        {
-            get;
-        }
-        int[] RareAtmosphereQuantity
-        {
-            get;
-        }
-        int[] CommonElementsQuantity
-        {
-            get;
-        }
-        int[] RareElementsQuantity
-        {
-            get;
-        }
-        int[] ResourcesStaticQuantity
+        int[] ResourcesProductivity
         {
             get;
         }

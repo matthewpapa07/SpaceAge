@@ -39,6 +39,11 @@ namespace SpaceAge
             return false;
         }
 
+        public override int GetHashCode()
+        {
+            return UniqueIdentifier;
+        }
+
         public abstract string SpecialStat();
         public abstract override string ToString();
         
