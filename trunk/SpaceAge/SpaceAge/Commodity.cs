@@ -267,7 +267,7 @@ namespace SpaceAge
             commoditiesTempList.Add(tempCommodity);
             tempCommodity = new Commodity(Commodity.CommodityEnum.Water, ObjectCharactaristics.ResourceCommodityType.ResourceStatic, "Water", 20);
             commoditiesTempList.Add(tempCommodity);
-            tempCommodity = new Commodity(Commodity.CommodityEnum.Water, ObjectCharactaristics.ResourceCommodityType.ResourceStatic, "Minerals", 20);
+            tempCommodity = new Commodity(Commodity.CommodityEnum.Minerals, ObjectCharactaristics.ResourceCommodityType.ResourceStatic, "Minerals", 20);
             commoditiesTempList.Add(tempCommodity);
             // End Resources
             // End Commodities

@@ -50,7 +50,7 @@ namespace SpaceAge.Controls
             listView_PlanetMoons.Columns.Add("Settled");
             listView_PlanetMoons.Columns.Add("Size");
 
-            // Exdtractors
+            // Extractors
             listView_Extractors.Columns.Add("Extractor Type", 400);
         }
 
@@ -143,7 +143,7 @@ namespace SpaceAge.Controls
 
         public void UpdateMoons()
         {
-            MoonsNeedRefresh = false;
+            MoonsNeedRefresh = false; 
         }
 
         private void listView_SystemStars_SelectedIndexChanged(object sender, EventArgs e)
