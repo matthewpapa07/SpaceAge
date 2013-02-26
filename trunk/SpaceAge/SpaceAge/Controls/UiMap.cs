@@ -111,21 +111,23 @@ namespace SpaceAge
                             }
                             else
                             {
-                                ///
-                                ///TODO: Make these numbers constants so they can be easily adjusted
-                                ///
-                                if (thisSector.getNumOfSystems() == 0)
-                                {
-                                    g.DrawImage(staticGraphics.emptySpace, theGrid[CurrentRow, CurrentCol]);
-                                }
-                                if ((thisSector.getNumOfSystems() >= 1) && (thisSector.getNumOfSystems() <= 3))
-                                {
-                                    g.DrawImage(staticGraphics.fewSystems, theGrid[CurrentRow, CurrentCol]);
-                                }
-                                if (thisSector.getNumOfSystems() > 3)
-                                {
-                                    g.DrawImage(staticGraphics.manySystems, theGrid[CurrentRow, CurrentCol]);
-                                }
+                                /////
+                                /////TODO: Make these numbers constants so they can be easily adjusted
+                                /////
+                                //if (thisSector.getNumOfSystems() == 0)
+                                //{
+                                //    g.DrawImage(staticGraphics.emptySpace, theGrid[CurrentRow, CurrentCol]);
+                                //}
+                                //if ((thisSector.getNumOfSystems() >= 1) && (thisSector.getNumOfSystems() <= 3))
+                                //{
+                                //    g.DrawImage(staticGraphics.fewSystems, theGrid[CurrentRow, CurrentCol]);
+                                //}
+                                //if (thisSector.getNumOfSystems() > 3)
+                                //{
+                                //    g.DrawImage(staticGraphics.manySystems, theGrid[CurrentRow, CurrentCol]);
+                                //}
+                                thisSector.DrawSectorGraphics(g, theGrid[CurrentRow, CurrentCol]);
+
                                 if(CurrentRow == (Constants.MAP_SECTORS_ROWS / 2))
                                     if(CurrentCol == (Constants.MAP_SECTORS_COLUMNS / 2))
                                         g.DrawImage(StaticGraphics.getSpaceShip(), theGrid[CurrentRow, CurrentCol]);
