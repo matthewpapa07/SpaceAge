@@ -18,6 +18,8 @@ namespace SpaceAge
         public List<MerchantSpaceShip> PresentSpaceShips = new List<MerchantSpaceShip>(STARTING_SPACESHIP_SPACES);
         public List<ItemStore> RegisteredItemStores = new List<ItemStore>(20); //Register ItemStores here to avoid tight nested loop in the AI
 
+        public static StaticGraphics staticGraphics = StaticGraphics.getStaticGraphics();
+
         public Sector(int x, int y)
         {
             //setParent(u);
@@ -76,6 +78,44 @@ namespace SpaceAge
             mss.CurrentSector = this;
             return true;
         }
+
+        public void DrawSectorGraphics(Graphics GraphicsToUse, Rectangle RectToUse)
+        {
+            int dimension = RectToUse.Width;
+            GraphicsToUse.DrawImage(staticGraphics.emptySpace, RectToUse);
+            int DrawX;
+            int DrawY;
+
+            foreach (StarSystem StarSys in StarSystemsList)
+            {
+                //
+                // For now assume one star per system, and at least one star per system
+                //
+                DrawX = ScaleCoordinate(MAX_DISTANCE_FROM_AXIS, StarSys.StarSystemLocation.X, RectToUse.Width);
+                DrawX += RectToUse.X;
+                DrawY = ScaleCoordinate(MAX_DISTANCE_FROM_AXIS, StarSys.StarSystemLocation.Y, RectToUse.Height);
+                DrawY += RectToUse.Y;
+                StarSys.stars[0].DrawStarGraphics(GraphicsToUse, DrawX, DrawY);
+            }
+        }
+
+        //
+        // TODO: Refactor this out so we can use it everywhere
+        //
+        public int ScaleCoordinate(int maxOriginCoor, int actualOriginCoor, int maxDestCoor)
+        {
+            //
+            // Cast everything to double for the greatest accuracy and rounding
+            //
+            double MaxOriginCoorD = maxOriginCoor;
+            double ActualOriginCoorD = actualOriginCoor;
+            double MaxDestCoorD = maxDestCoor;
+
+            double result = (ActualOriginCoorD / MaxOriginCoorD) * MaxDestCoorD;
+
+            return (int)result;
+        }
+
         //public void setParent(Universe u)
         //{
         //    parent = u;

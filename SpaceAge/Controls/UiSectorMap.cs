@@ -60,25 +60,10 @@ namespace SpaceAge.Controls
                 {
                     Star currentStar = currentSector.StarSystemsList[i].stars[0];
                     Point currentPoint = currentSector.StarSystemsList[i].StarSystemLocation;
-                    ObjectCharactaristics.StarSize ss = currentStar.StarSize;
-                    ObjectCharactaristics.StarType st = currentStar.StarColor;
-                    //int ss = currentStar.starSize;
-                    //int st = currentStar.starType;
 
-                    Rectangle rect = ObjectCharactaristics.StarSizeRectangles[(int)ss];
-
-                    rect.X = currentPoint.X / stepsPerCoordinate;
-                    rect.Y = currentPoint.Y / stepsPerCoordinate;
-
-                    g.FillEllipse(ObjectCharactaristics.StarTypeBrushes[(int)st], rect);
+                    currentStar.DrawStarGraphics(g, currentPoint.X / stepsPerCoordinate, currentPoint.Y / stepsPerCoordinate);
 
                 }
-                //g.FillEllipse(staticGraphics.greenBrush, this.DisplayRectangle);
-                //using (Pen p = new Pen(greenBrush))
-                //{
-                //    g.DrawEllipse(p, this.DisplayRectangle);
-                //}
-               
             }
         }
     }
