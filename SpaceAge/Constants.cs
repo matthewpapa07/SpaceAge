@@ -25,8 +25,8 @@ namespace SpaceAge
         /// <summary>
         /// These numbers MUST be odd for now
         /// </summary>
-        public const int MAP_SECTORS_ROWS = 5;
-        public const int MAP_SECTORS_COLUMNS = 5;
+        public const int MAP_SECTORS_ROWS = 7;
+        public const int MAP_SECTORS_COLUMNS = 7;
 
         public const int MAP_PADDING_PERCENT = 3;
 

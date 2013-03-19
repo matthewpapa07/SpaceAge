@@ -25,6 +25,10 @@ namespace SpaceAge.Controls
         {
             uiMap1.drawMap();
         }
+        public void HouseKeeping()
+        {
+            uiMap1.Refresh();
+        }
 
         private void ui_buttonVisitSector_Click(object sender, EventArgs e)
         {
