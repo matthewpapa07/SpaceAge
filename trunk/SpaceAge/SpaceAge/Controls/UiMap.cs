@@ -55,38 +55,26 @@ namespace SpaceAge
 
         public void drawMap()
         {
-            //using (Graphics g = this.CreateGraphics())
-            //{
-            //    g.FillRectangle(greenBrush, this.DisplayRectangle);
-            //}
-
-            //base.OnPaint(e);
-            //height = ClientRectangle.Height;
-            //width = ClientRectangle.Width;
             height = this.Height;
             width = this.Width;
 
             sectorHeight= height / Constants.MAP_SECTORS_COLUMNS;
             sectorWidth = width / Constants.MAP_SECTORS_ROWS;
 
-            double tempDoub;
-            tempDoub = sectorWidth * ((float)Constants.MAP_PADDING_PERCENT / 100);
-            spaceWidth = (int)tempDoub;
-            spaceWidth /= 2;
-            tempDoub = sectorHeight * ((float)Constants.MAP_PADDING_PERCENT / 100);
-            spaceHeight = (int)tempDoub;
-            spaceHeight /= 2;
+            spaceWidth = 0;
+            spaceHeight = 0;
 
             sectorHeight -= spaceHeight;
             sectorWidth -= spaceWidth;
 
-            int tempx;
-            int tempy;
-            int tempWidth;
-            int tempHeight;
+            double tempx;
+            double tempy;
+            double tempWidth;
+            double tempHeight;
 
             using (Graphics g = this.CreateGraphics())
             {
+                //g.FillRectangle(staticGraphics.blackBrush, this.
                 for (int CurrentRow = 0; CurrentRow < Constants.MAP_SECTORS_ROWS; CurrentRow++)
                 {
                     for (int CurrentCol = 0; CurrentCol < Constants.MAP_SECTORS_COLUMNS; CurrentCol++)
@@ -96,10 +84,13 @@ namespace SpaceAge
                         tempWidth = sectorWidth - spaceWidth;
                         tempHeight = sectorHeight - spaceHeight;
 
-                        theGrid[CurrentRow, CurrentCol].Height = tempHeight;
-                        theGrid[CurrentRow, CurrentCol].Width = tempWidth;
-                        theGrid[CurrentRow, CurrentCol].X = tempx;
-                        theGrid[CurrentRow, CurrentCol].Y = tempy;
+                        //
+                        // Snap the sectors to the grid
+                        //
+                        theGrid[CurrentRow, CurrentCol].Height = (int)Math.Ceiling(tempHeight);
+                        theGrid[CurrentRow, CurrentCol].Width = (int)Math.Ceiling(tempWidth);
+                        theGrid[CurrentRow, CurrentCol].X = (int)tempx;
+                        theGrid[CurrentRow, CurrentCol].Y = (int)tempy;
 
                         //using (Graphics g = this.CreateGraphics())
                         {
@@ -111,23 +102,11 @@ namespace SpaceAge
                             }
                             else
                             {
-                                /////
-                                /////TODO: Make these numbers constants so they can be easily adjusted
-                                /////
-                                //if (thisSector.getNumOfSystems() == 0)
-                                //{
-                                //    g.DrawImage(staticGraphics.emptySpace, theGrid[CurrentRow, CurrentCol]);
-                                //}
-                                //if ((thisSector.getNumOfSystems() >= 1) && (thisSector.getNumOfSystems() <= 3))
-                                //{
-                                //    g.DrawImage(staticGraphics.fewSystems, theGrid[CurrentRow, CurrentCol]);
-                                //}
-                                //if (thisSector.getNumOfSystems() > 3)
-                                //{
-                                //    g.DrawImage(staticGraphics.manySystems, theGrid[CurrentRow, CurrentCol]);
-                                //}
                                 thisSector.DrawSectorGraphics(g, theGrid[CurrentRow, CurrentCol]);
 
+                                //
+                                // If in middle position draw the ship
+                                //
                                 if(CurrentRow == (Constants.MAP_SECTORS_ROWS / 2))
                                     if(CurrentCol == (Constants.MAP_SECTORS_COLUMNS / 2))
                                         g.DrawImage(StaticGraphics.getSpaceShip(), theGrid[CurrentRow, CurrentCol]);

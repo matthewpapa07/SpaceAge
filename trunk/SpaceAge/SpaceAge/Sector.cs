@@ -82,7 +82,7 @@ namespace SpaceAge
         public void DrawSectorGraphics(Graphics GraphicsToUse, Rectangle RectToUse)
         {
             int dimension = RectToUse.Width;
-            GraphicsToUse.DrawImage(staticGraphics.emptySpace, RectToUse);
+            //GraphicsToUse.DrawImage(staticGraphics.emptySpace, RectToUse);
             int DrawX;
             int DrawY;
 
