@@ -13,12 +13,9 @@ namespace SpaceAge
 {
     public partial class UiMap : UserControl
     {
-        SolidBrush blackBrush = new SolidBrush(System.Drawing.Color.Black);
-        SolidBrush greenBrush = new SolidBrush(System.Drawing.Color.Green);
-        SolidBrush redBrush = new SolidBrush(System.Drawing.Color.Red);
         HatchBrush hatchBrush = new HatchBrush(HatchStyle.Cross, System.Drawing.Color.Red, System.Drawing.Color.Blue);
 
-        Rectangle[,] theGrid;
+        public static Rectangle[,] theGrid;
         StaticGraphics staticGraphics = StaticGraphics.getStaticGraphics();
 
         int height;
@@ -31,6 +28,8 @@ namespace SpaceAge
         public UiMap()
         {
             InitializeComponent();
+            //DoubleBuffered = true;
+
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -50,6 +49,7 @@ namespace SpaceAge
                     theGrid[CurrentRow, CurrentCol] = new Rectangle();
                 }
             }
+
         }
 
 
@@ -103,17 +103,36 @@ namespace SpaceAge
                             else
                             {
                                 thisSector.DrawSectorGraphics(g, theGrid[CurrentRow, CurrentCol]);
-
-                                //
-                                // If in middle position draw the ship
-                                //
-                                if(CurrentRow == (Constants.MAP_SECTORS_ROWS / 2))
-                                    if(CurrentCol == (Constants.MAP_SECTORS_COLUMNS / 2))
-                                        g.DrawImage(StaticGraphics.getSpaceShip(), theGrid[CurrentRow, CurrentCol]);
                             }
                         }
                         
                     }
+                }
+
+                //
+                // If in middle position draw the ship
+                //
+                using(Image im = staticGraphics.GetSpaceShip())
+                {
+                    switch (UserState.progState)
+                    {
+                        case (int)UserState.ShipOrientationState.Down:
+                            im.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                            break;
+                        case (int)UserState.ShipOrientationState.Up:
+                            im.RotateFlip(RotateFlipType.RotateNoneFlipNone);
+                            break;
+                        case (int)UserState.ShipOrientationState.Left:
+                            im.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                            break;
+                        case (int)UserState.ShipOrientationState.Right:
+                            im.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                            break;
+                        default:
+                            break;
+                    }
+
+                    g.DrawImage(im, theGrid[Constants.MAP_SECTORS_ROWS / 2, Constants.MAP_SECTORS_COLUMNS / 2]);
                 }
             }
         }

@@ -14,6 +14,7 @@ namespace SpaceAge.Controls
         public SectorBrowserWhole()
         {
             InitializeComponent();
+            DoubleBuffered = true;
         }
 
         protected override void OnPaint(PaintEventArgs e)

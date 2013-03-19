@@ -75,8 +75,9 @@ namespace SpaceAge
                     default:
                         break;
                 }
+
                 TheMainSectorBrowserWhole.HouseKeeping();
-                TheMainSectorBrowserWhole.UpdateUi();
+                //TheMainSectorBrowserWhole.UpdateUi();
                 UpdateUi();
             }
 
