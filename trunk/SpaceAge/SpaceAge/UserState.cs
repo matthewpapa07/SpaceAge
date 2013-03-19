@@ -16,7 +16,7 @@ namespace SpaceAge
         public static Point playerLocation;
         private static Sector currentSector;
 
-        public enum lastState { Up = 1, Down = 2, Left = 3, Right = 4 };
+        public enum ShipOrientationState { Up = 1, Down = 2, Left = 3, Right = 4 };
         public static int progState;
         public static int progStateLast;
 
@@ -38,8 +38,8 @@ namespace SpaceAge
             playerLocation = new Point(startingRow, startingColumn);
             currentSector = Universe.getSector(startingRow, startingColumn);
             
-            progState = (int)lastState.Up;
-            progStateLast = (int)lastState.Up;
+            progState = (int)ShipOrientationState.Up;
+            progStateLast = (int)ShipOrientationState.Up;
 
             PlayerLevel = 1;
 
@@ -56,7 +56,7 @@ namespace SpaceAge
                 return Constants.FAILURE;
 
             progStateLast = progState;
-            progState = (int)lastState.Right;
+            progState = (int)ShipOrientationState.Right;
 
             currentSector = Universe.getSector(currentX + 1, currentY);
             if (currentSector != null)
@@ -81,7 +81,7 @@ namespace SpaceAge
                 return Constants.FAILURE;
 
             progStateLast = progState;
-            progState = (int)lastState.Left;
+            progState = (int)ShipOrientationState.Left;
 
             currentSector = Universe.getSector(currentX - 1, currentY);
             if (currentSector != null)
@@ -106,7 +106,7 @@ namespace SpaceAge
                 return Constants.FAILURE;
 
             progStateLast = progState;
-            progState = (int)lastState.Down;
+            progState = (int)ShipOrientationState.Down;
 
             currentSector = Universe.getSector(currentX, currentY + 1);
             if (currentSector != null)
@@ -131,7 +131,7 @@ namespace SpaceAge
                 return Constants.FAILURE;
 
             progStateLast = progState;
-            progState = (int)lastState.Up;
+            progState = (int)ShipOrientationState.Up;
 
             currentSector = Universe.getSector(currentX, currentY - 1);
             if (currentSector != null)
