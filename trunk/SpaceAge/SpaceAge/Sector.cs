@@ -99,16 +99,36 @@ namespace SpaceAge
             }
         }
 
+        public void DrawSectorGraphics(Graphics GraphicsToUse, Rectangle RectToUse, int StartX, int StartY, int SegWidth, int SegHeight)
+        {
+            int DrawX;
+            int DrawY;
+
+            foreach (StarSystem StarSys in StarSystemsList)
+            {
+                //
+                // For now assume one star per system, and at least one star per system
+                //
+                DrawX = ScaleCoordinate(MAX_DISTANCE_FROM_AXIS, StarSys.StarSystemLocation.X, SegWidth);
+                DrawX += StartX;
+                DrawY = ScaleCoordinate(MAX_DISTANCE_FROM_AXIS, StarSys.StarSystemLocation.Y, SegHeight);
+                DrawY += StartY;
+                if (DrawX < 0 || DrawY < 0)
+                    continue;
+                StarSys.stars[0].DrawStarGraphics(GraphicsToUse, DrawX, DrawY);
+            }
+        }
+
         //
         // TODO: Refactor this out so we can use it everywhere
         //
-        public int ScaleCoordinate(int maxOriginCoor, int actualOriginCoor, int maxDestCoor)
+        public int ScaleCoordinate(int maxOriginalCoor, int actualOriginalCoor, int maxDestCoor)
         {
             //
             // Cast everything to double for the greatest accuracy and rounding
             //
-            double MaxOriginCoorD = maxOriginCoor;
-            double ActualOriginCoorD = actualOriginCoor;
+            double MaxOriginCoorD = maxOriginalCoor;
+            double ActualOriginCoorD = actualOriginalCoor;
             double MaxDestCoorD = maxDestCoor;
 
             double result = (ActualOriginCoorD / MaxOriginCoorD) * MaxDestCoorD;
