@@ -15,7 +15,6 @@ namespace SpaceAge
     {
         HatchBrush hatchBrush = new HatchBrush(HatchStyle.Cross, System.Drawing.Color.Red, System.Drawing.Color.Blue);
 
-        public static Rectangle[,] theGrid;
         StaticGraphics staticGraphics = StaticGraphics.getStaticGraphics();
 
         int height;
@@ -28,32 +27,23 @@ namespace SpaceAge
         public UiMap()
         {
             InitializeComponent();
-            //DoubleBuffered = true;
+            DoubleBuffered = true;
 
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            drawMap();
+            drawMap(e.Graphics);
         }
 
 
         private void UiMap_Load(object sender, EventArgs e)
         {
-            theGrid = new Rectangle[Constants.MAP_SECTORS_ROWS, Constants.MAP_SECTORS_COLUMNS];
-
-            for (int CurrentRow = 0; CurrentRow < Constants.MAP_SECTORS_ROWS; CurrentRow++)
-            {
-                for (int CurrentCol = 0; CurrentCol < Constants.MAP_SECTORS_COLUMNS; CurrentCol++)
-                {
-                    theGrid[CurrentRow, CurrentCol] = new Rectangle();
-                }
-            }
 
         }
 
 
-        public void drawMap()
+        public void drawMap(Graphics g)
         {
             height = this.Height;
             width = this.Width;
@@ -72,8 +62,10 @@ namespace SpaceAge
             double tempWidth;
             double tempHeight;
 
-            using (Graphics g = this.CreateGraphics())
+            //using (Graphics g = this.CreateGraphics())
             {
+                g.FillRectangle(staticGraphics.blackBrush, this.ClientRectangle);
+
                 //g.FillRectangle(staticGraphics.blackBrush, this.
                 for (int CurrentRow = 0; CurrentRow < Constants.MAP_SECTORS_ROWS; CurrentRow++)
                 {
@@ -84,27 +76,14 @@ namespace SpaceAge
                         tempWidth = sectorWidth - spaceWidth;
                         tempHeight = sectorHeight - spaceHeight;
 
-                        //
-                        // Snap the sectors to the grid
-                        //
-                        theGrid[CurrentRow, CurrentCol].Height = (int)Math.Ceiling(tempHeight);
-                        theGrid[CurrentRow, CurrentCol].Width = (int)Math.Ceiling(tempWidth);
-                        theGrid[CurrentRow, CurrentCol].X = (int)tempx;
-                        theGrid[CurrentRow, CurrentCol].Y = (int)tempy;
-
-                        //using (Graphics g = this.CreateGraphics())
+                        Sector ThisSector = UserState.theGrid[CurrentRow, CurrentCol];
+                        if (ThisSector != null)
                         {
-                            Sector thisSector = UserState.theGrid[CurrentRow, CurrentCol];
-
-                            if (thisSector == null)
-                            {
-                                g.FillRectangle(hatchBrush, theGrid[CurrentRow, CurrentCol]);
-                            }
-                            else
-                            {
-                                thisSector.DrawSectorGraphics(g, theGrid[CurrentRow, CurrentCol]);
-                            }
+                            // g.FillRectangle(staticGraphics.blackBrush, (int)tempx, (int)tempy, (int)Math.Ceiling(tempWidth), (int)Math.Ceiling(tempHeight));
+                            ThisSector.DrawSectorGraphics(g, this.ClientRectangle, (int)tempx, (int)tempy, (int)Math.Ceiling(tempWidth), (int)Math.Ceiling(tempHeight));
                         }
+                        else
+                            g.FillRectangle(hatchBrush, (int)tempx, (int)tempy, (int)Math.Ceiling(tempWidth), (int)Math.Ceiling(tempHeight));
                         
                     }
                 }
@@ -132,7 +111,12 @@ namespace SpaceAge
                             break;
                     }
 
-                    g.DrawImage(im, theGrid[Constants.MAP_SECTORS_ROWS / 2, Constants.MAP_SECTORS_COLUMNS / 2]);
+                    tempx = (Constants.MAP_SECTORS_COLUMNS / 2) * sectorWidth + spaceWidth * ((Constants.MAP_SECTORS_COLUMNS / 2) + 1);
+                    tempy = (Constants.MAP_SECTORS_ROWS / 2) * sectorHeight + spaceHeight * ((Constants.MAP_SECTORS_ROWS / 2) + 1);
+                    tempWidth = sectorWidth - spaceWidth;
+                    tempHeight = sectorHeight - spaceHeight;
+
+                    g.DrawImage(im, (int)tempx, (int)tempy, (int)Math.Ceiling(tempWidth), (int)Math.Ceiling(tempHeight));
                 }
             }
         }
@@ -142,8 +126,9 @@ namespace SpaceAge
             using (Graphics g = this.CreateGraphics())
             {
                 g.FillRectangle(staticGraphics.blackBrush, this.DisplayRectangle);
+                drawMap(g);
             }
-            drawMap();
+            
         }
     }
 }

@@ -19,12 +19,12 @@ namespace SpaceAge.Controls
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            UpdateUi();
+            UpdateUi(e.Graphics);
         }
 
-        public void UpdateUi()
+        public void UpdateUi(Graphics g)
         {
-            uiMap1.drawMap();
+            uiMap1.drawMap(g);
         }
         public void HouseKeeping()
         {

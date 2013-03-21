@@ -43,6 +43,7 @@ namespace SpaceAge
             ui_Time.Text = GameDriver.TimeToStringLong();
 
             userFuelMeter1.UpdateUi();
+            TheMainSectorBrowserWhole.Refresh();
             //sectorBrowser1.UpdateUi();
             
         }
@@ -75,9 +76,7 @@ namespace SpaceAge
                     default:
                         break;
                 }
-
-                TheMainSectorBrowserWhole.HouseKeeping();
-                //TheMainSectorBrowserWhole.UpdateUi();
+                
                 UpdateUi();
             }
 
