@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 
 namespace SpaceAge
 {
@@ -26,6 +27,15 @@ namespace SpaceAge
         public SolidBrush grayBrush = new SolidBrush(System.Drawing.Color.Gray);
         public SolidBrush greenBrush = new SolidBrush(System.Drawing.Color.Green);
 
+        //
+        // Fancy brushes
+        //
+        public HatchBrush hatchBrush = new HatchBrush(HatchStyle.Cross, System.Drawing.Color.Red, System.Drawing.Color.Blue);
+        public TextureBrush spaceBrush;
+        public Pen blackPen = new Pen(Color.Black);
+        public Pen greenPen = new Pen(Color.LightYellow, 2);
+
+
         private StaticGraphics()
         {
             System.Reflection.Assembly myAssembly = System.Reflection.Assembly.GetExecutingAssembly();
@@ -33,6 +43,7 @@ namespace SpaceAge
             {
                 Stream s = myAssembly.GetManifestResourceStream("SpaceAge.Graphics.Empty.bmp");
                 emptySpace = Image.FromStream(s);
+                spaceBrush = new TextureBrush(emptySpace);
                 s.Close();
 
             }

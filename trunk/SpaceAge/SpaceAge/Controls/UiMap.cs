@@ -13,8 +13,6 @@ namespace SpaceAge
 {
     public partial class UiMap : UserControl
     {
-        HatchBrush hatchBrush = new HatchBrush(HatchStyle.Cross, System.Drawing.Color.Red, System.Drawing.Color.Blue);
-
         StaticGraphics staticGraphics = StaticGraphics.getStaticGraphics();
 
         int height;
@@ -64,9 +62,9 @@ namespace SpaceAge
 
             //using (Graphics g = this.CreateGraphics())
             {
-                g.FillRectangle(staticGraphics.blackBrush, this.ClientRectangle);
+                g.FillRectangle(staticGraphics.spaceBrush, this.ClientRectangle);
+                g.DrawRectangle(staticGraphics.greenPen, this.ClientRectangle);
 
-                //g.FillRectangle(staticGraphics.blackBrush, this.
                 for (int CurrentRow = 0; CurrentRow < Constants.MAP_SECTORS_ROWS; CurrentRow++)
                 {
                     for (int CurrentCol = 0; CurrentCol < Constants.MAP_SECTORS_COLUMNS; CurrentCol++)
@@ -79,11 +77,10 @@ namespace SpaceAge
                         Sector ThisSector = UserState.theGrid[CurrentRow, CurrentCol];
                         if (ThisSector != null)
                         {
-                            // g.FillRectangle(staticGraphics.blackBrush, (int)tempx, (int)tempy, (int)Math.Ceiling(tempWidth), (int)Math.Ceiling(tempHeight));
                             ThisSector.DrawSectorGraphics(g, this.ClientRectangle, (int)tempx, (int)tempy, (int)Math.Ceiling(tempWidth), (int)Math.Ceiling(tempHeight));
                         }
                         else
-                            g.FillRectangle(hatchBrush, (int)tempx, (int)tempy, (int)Math.Ceiling(tempWidth), (int)Math.Ceiling(tempHeight));
+                            g.FillRectangle(staticGraphics.hatchBrush, (int)tempx, (int)tempy, (int)Math.Ceiling(tempWidth), (int)Math.Ceiling(tempHeight));
                         
                     }
                 }
