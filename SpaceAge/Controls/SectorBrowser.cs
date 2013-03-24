@@ -129,7 +129,7 @@ namespace SpaceAge
                     s = currentlySelectedSystem.stars[i];
                     SystemContentsListView[i] = new ListViewItem("Star " + s.ToString(), i);
                     SystemContentsListView[i].SubItems.Add(ObjectCharactaristics.StarSizeString[(int)s.StarSize]);
-                    SystemContentsListView[i].SubItems.Add(ObjectCharactaristics.StarColorString[(int)s.StarColor] + " " + s.LocalStarNumber.ToString());
+                    SystemContentsListView[i].SubItems.Add(s.StarColor.ToString() + " " + s.LocalStarNumber.ToString());
                     SystemContentsListView[i].SubItems.Add("N/A");
 
                     allObjects[i] = currentlySelectedSystem.stars[i];

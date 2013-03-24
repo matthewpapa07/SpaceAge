@@ -15,23 +15,13 @@ namespace SpaceAge
         static ObjectCharactaristics()
         {
             StaticGraphics staticGraphics = StaticGraphics.getStaticGraphics();
-            StarTypeBrushes = new SolidBrush[] 
-                {staticGraphics.whiteBrush, staticGraphics.brownBrush, staticGraphics.orangeBrush, staticGraphics.yellowBrush,
-                staticGraphics.blueBrush, staticGraphics.redBrush};
-            StarSizeRectangles = new Rectangle[] { new Rectangle(0, 0, 5, 5), new Rectangle(0, 0, 6, 6), new Rectangle(0, 0, 7, 7) ,
-            new Rectangle(0,0,10,10), new Rectangle(0,0,12,12), new Rectangle(0,0,15,15)};
+
         }
 
-        //
-        // Commonly Associated with Stars
-        //
-        public static string[] StarColorString = { "White", "Brown", "Orange", "Yellow", "Blue", "Red" };
-        public enum StarType { White, Brown, Orange, Yellow, Blue, Red };
-        public static SolidBrush[] StarTypeBrushes;     // Populate on construction
+
 
         public static string[] StarSizeString = { "Dwarf", "Micro", "Normal", "Medium", "Giant", "Ultra Giant" };
         public enum StarSize { Dwarf, Micro, Normal, Medium, Giant, UltraGiant};
-        public static Rectangle[] StarSizeRectangles;
 //        public static int [] StarSizeValues = {1000,2000,23432};  //TODO: Size Values
 
         //
