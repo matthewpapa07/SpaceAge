@@ -9,20 +9,13 @@ namespace SpaceAge
 {
     class Star
     {
-        //
-        // Commonly Associated with Stars
-        //
-        public static string[] StarColorString = { "White", "Brown", "Orange", "Yellow", "Blue", "Red" };
-        public static Color[] StarColors = { Color.White, Color.Brown, Color.Orange, Color.Yellow, Color.Blue, Color.Red };
+        public static int GlobalStarCounter = 0;
+        public int UniqueStarNumber;
 
-        public static Rectangle[] StarSizeRectangles = new Rectangle[] { new Rectangle(0, 0, 5, 5), new Rectangle(0, 0, 6, 6), new Rectangle(0, 0, 7, 7) ,
-            new Rectangle(0,0,10,10), new Rectangle(0,0,12,12), new Rectangle(0,0,15,15)};
-
-
-        public static int GlobalStarNumber = 0;
-        public int LocalStarNumber;
-        public ObjectCharactaristics.StarSize StarSize;
+        public StarConstant.StarClass StarClass;
         public Color StarColor;
+        public double StarMass;
+        public string StarClassString;
 
         public StarSystem parent;
 
@@ -34,18 +27,28 @@ namespace SpaceAge
         {
             this.generateStar();
             this.setParent(s);
-            LocalStarNumber = GlobalStarNumber++;
-
-            //
-            // Graphics stuff initializers
-            //
-            StarRectangle = StarSizeRectangles[(int)StarSize];
+            UniqueStarNumber = GlobalStarCounter++;
         }
 
         public void generateStar()
         {
-            StarSize = NumberGenerator.getInstance().RandomEnum<ObjectCharactaristics.StarSize>();
-            StarColor = StarColors[NumberGenerator.getInstance().GetRandNumberInRange(0, StarColors.Length - 1)];
+            double StarSizeP = numGen.GetRandDouble();
+
+            double Counter = 0.0;
+            for (int i = 0; i < StarConstant.StarTypes; i++)
+            {
+                Counter += StarConstant.StarP[i];
+                if (StarSizeP <= Counter)
+                {
+                    StarClass = (StarConstant.StarClass)i;
+                    break;
+                }
+            }
+
+            StarMass = numGen.GetRandDoubleInRange(StarConstant.MassMin[(int)StarClass], StarConstant.MassMax[(int)StarClass]);
+            StarColor = StarConstant.BaseColor[(int)StarClass];
+            StarRectangle = new Rectangle(0, 0, StarConstant.RectSideLength[(int)StarClass], StarConstant.RectSideLength[(int)StarClass]);
+            StarClassString = StarConstant.StarClassStr[(int)StarClass];
         }
 
         public void setParent(StarSystem s)
@@ -55,7 +58,7 @@ namespace SpaceAge
 
         public override string ToString()
         {
-            return Constants.intToHex(LocalStarNumber);
+            return Constants.intToHex(UniqueStarNumber);
         }
 
         public void DrawStarGraphics(Graphics GraphicsToUse, int x, int y)
@@ -78,5 +81,24 @@ namespace SpaceAge
         {
             return InColor;
         }
+    }
+
+    static class StarConstant
+    {
+        //
+        // Commonly Associated with Stars
+        //
+        public static int StarTypes = 10;
+        public enum StarClass { O, B, A, F, G, K, M, L, T, Y };       // Ten total star classifications
+        public static string[] StarClassStr = { "XXXL", "XXL", "XL", "L", "M", "S", "XS", "XXS", "XXS", "XXS" };
+        public static double[] StarP = { 0.03, 0.07, 0.07, 0.13, 0.15, 0.2, 0.3, 0.03, 0.01, 0.01 };    // These numbers MUST total to 1
+        public static Color[] BaseColor = { Color.FromArgb(0x00, 0xbf, 0xff), Color.FromArgb(0x87, 0xce, 0xeb), Color.FromArgb(0xb0, 0xe0, 0xe6),
+                                            Color.FromArgb(0xf8, 0xf8, 0xff), Color.FromArgb(0xff, 0xff, 0x00), Color.FromArgb(0xff, 0xa5, 0x00),
+                                            Color.FromArgb(0xff, 0x00, 0x00), Color.FromArgb(0xb2, 0x22, 0x22), Color.FromArgb(0xcd, 0x85, 0x3f),
+                                            Color.FromArgb(0x8b, 0x45, 0x13) };
+        public static double[] MassMin = { 16.0, 2.1, 1.4, 1.04, 0.8, 0.45, 0.30, 0.20, 0.10, 0.05 };
+        public static double[] MassMax = { 30.0, 16.0, 2.1, 1.4, 1.04, 0.8, 0.45, 0.30, 0.20, 0.10 };
+        
+        public static int[] RectSideLength = { 45, 41, 38, 36, 34, 30, 28, 27, 26, 25 };
     }
 }

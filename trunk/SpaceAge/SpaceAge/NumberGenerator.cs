@@ -47,6 +47,16 @@ namespace SpaceAge
             return rnd1.Next(min, max + 1);
         }
 
+        public double GetRandDouble()
+        {
+            return rnd1.NextDouble();
+        }
+
+        public double GetRandDoubleInRange(double min, double max)
+        {
+            return rnd1.NextDouble() * (max - min) + min;
+        }
+
         /// <summary>
         /// Picks a random value of an enum
         /// </summary>
