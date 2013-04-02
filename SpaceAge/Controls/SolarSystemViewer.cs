@@ -85,7 +85,7 @@ namespace SpaceAge.Controls
             {
                 s = ThisStarSystem.stars[i];
                 Liststars[i] = new ListViewItem(s.ToString(), i);
-                Liststars[i].SubItems.Add(ObjectCharactaristics.StarSizeString[(int)s.StarSize]);
+                Liststars[i].SubItems.Add(s.StarClassString);
                 Liststars[i].SubItems.Add(s.StarColor.ToString());
                 Liststars[i].SubItems.Add("TODO");
                 Liststars[i].SubItems.Add("TODO");

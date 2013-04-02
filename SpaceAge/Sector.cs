@@ -8,7 +8,7 @@ namespace SpaceAge
 {
     class Sector
     {
-        public const int MAX_SYSTEMS_PER_SECTOR = 5;
+        public const int STARS_PER_SECTOR_CHANCE = 25;
         public const int MAX_DISTANCE_FROM_AXIS = 5000;      //Number must be significantly larger than UiSectorMap Height/Width
         public const int STARTING_SPACESHIP_SPACES = 12;     // This list initializer is demand based. Sectors with higher traffic will end up
                                                              // being allocated more space while ones who dont will only need 25 slots max
@@ -41,10 +41,10 @@ namespace SpaceAge
             //
             if (!n.LinearPmfResult(8, 25))
             {
-                StarSystemsList = new StarSystem[0];
+                StarSystemsList = new StarSystem[0]; // Empty Array
                 return;
             }
-            systemsToPopulate = n.GetRandNumberInRange(0, MAX_SYSTEMS_PER_SECTOR);
+            systemsToPopulate = n.CompoundPmfResult(STARS_PER_SECTOR_CHANCE, 100);
             StarSystemsList = new StarSystem[systemsToPopulate];
 
             for (int i = 0; i < systemsToPopulate; i++)

@@ -18,12 +18,6 @@ namespace SpaceAge
 
         }
 
-
-
-        public static string[] StarSizeString = { "Dwarf", "Micro", "Normal", "Medium", "Giant", "Ultra Giant" };
-        public enum StarSize { Dwarf, Micro, Normal, Medium, Giant, UltraGiant};
-//        public static int [] StarSizeValues = {1000,2000,23432};  //TODO: Size Values
-
         //
         // Charactaristics Associated with Planets
         //
