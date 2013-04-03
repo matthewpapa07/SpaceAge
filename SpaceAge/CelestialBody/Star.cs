@@ -69,8 +69,10 @@ namespace SpaceAge
             GraphicsPath path = new GraphicsPath();
             path.AddEllipse(StarRectangle);
             PathGradientBrush pthGrBrush = new PathGradientBrush(path);
-            pthGrBrush.CenterColor = StarColor;
-            pthGrBrush.SurroundColors = new Color[] { Color.FromArgb(50, StarColor) };
+            //pthGrBrush.CenterColor = StarColor;
+            pthGrBrush.CenterColor = Color.White;
+            pthGrBrush.SurroundColors = new Color[] { Color.FromArgb(255, StarColor), Color.FromArgb(200, StarColor), Color.FromArgb(180, StarColor) };
+            //pthGrBrush.SurroundColors = new Color[] { Color.FromArgb(120, StarColor) };
             GraphicsToUse.FillEllipse(pthGrBrush, StarRectangle);
         }
 
@@ -99,6 +101,6 @@ namespace SpaceAge
         public static double[] MassMin = { 16.0, 2.1, 1.4, 1.04, 0.8, 0.45, 0.30, 0.20, 0.10, 0.05 };
         public static double[] MassMax = { 30.0, 16.0, 2.1, 1.4, 1.04, 0.8, 0.45, 0.30, 0.20, 0.10 };
         
-        public static int[] RectSideLength = { 45, 41, 38, 36, 34, 30, 28, 27, 26, 25 };
+        public static int[] RectSideLength = { 35, 30, 28, 25, 22, 19, 18, 17, 16, 15 };
     }
 }

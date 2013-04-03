@@ -34,6 +34,7 @@ namespace SpaceAge
         public TextureBrush spaceBrush;
         public Pen blackPen = new Pen(Color.Black);
         public Pen greenPen = new Pen(Color.LightYellow, 2);
+        public Pen whitePen = new Pen(Color.White);
 
 
         private StaticGraphics()
@@ -66,6 +67,20 @@ namespace SpaceAge
             s.Close();
 
             return SpaceShipOne;
+        }
+
+        public int ScaleCoordinate(int maxOriginalCoor, int actualOriginalCoor, int maxDestCoor)
+        {
+            //
+            // Cast everything to double for the greatest accuracy and rounding
+            //
+            double MaxOriginCoorD = maxOriginalCoor;
+            double ActualOriginCoorD = actualOriginalCoor;
+            double MaxDestCoorD = maxDestCoor;
+
+            double result = (ActualOriginCoorD / MaxOriginCoorD) * MaxDestCoorD;
+
+            return (int)result;
         }
     }
 }

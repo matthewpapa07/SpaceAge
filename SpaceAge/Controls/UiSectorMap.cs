@@ -26,7 +26,7 @@ namespace SpaceAge.Controls
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            drawSector();
+            drawSector(e.Graphics);
         }
 
         private void UiSectorMap_Load(object sender, EventArgs e)
@@ -34,36 +34,50 @@ namespace SpaceAge.Controls
 
         }
 
-        public void drawSector()
+        public void drawSector(Graphics GraphicsToUse)
         {
+            UserState.UserStateMachine = UserState.UserState.SectorMap;
+
             int listLength;
             stepsPerCoordinate = Sector.MAX_DISTANCE_FROM_AXIS / Height;
+            int DrawX;
+            int DrawY;
 
-            using (Graphics g = this.CreateGraphics())
+            GraphicsToUse.FillRectangle(staticGraphics.blackBrush, this.DisplayRectangle);
+            //
+            // Draw the random stars in the background
+            //
+            foreach (Point p in currentSector.RandomBackgroundStars)
             {
-                g.FillRectangle(staticGraphics.blackBrush, this.DisplayRectangle);
+                DrawX = staticGraphics.ScaleCoordinate(Sector.MAX_DISTANCE_FROM_AXIS, p.X, this.ClientRectangle.Width);
+                DrawY = staticGraphics.ScaleCoordinate(Sector.MAX_DISTANCE_FROM_AXIS, p.Y, this.ClientRectangle.Height);
+                if (DrawX < 0 || DrawY < 0)
+                    continue;
 
-                if (currentSector == null)
-                    return;
+                GraphicsToUse.DrawRectangle(staticGraphics.whitePen, new Rectangle(DrawX, DrawY, 1, 1));
+            }
 
-                listLength = currentSector.StarSystemsList.Length;
-                //using (Pen p = new Pen(StaticGraphics.getStaticGraphics().greenBrush))
-                //{
-                //    g.DrawLine(p, 0, Sector.MAX_DISTANCE_FROM_AXIS / 2, Sector.MAX_DISTANCE_FROM_AXIS / 2, 0);
-                //}
 
-                if(listLength == 0)
-                    return;
+            if (currentSector == null)
+                return;
 
-                //Star[] theStars = new Star[listLength];
-                for (int i = 0; i < listLength; i++)
-                {
-                    Star currentStar = currentSector.StarSystemsList[i].stars[0];
-                    Point currentPoint = currentSector.StarSystemsList[i].StarSystemLocation;
+            listLength = currentSector.StarSystemsList.Length;
+            //using (Pen p = new Pen(StaticGraphics.getStaticGraphics().greenBrush))
+            //{
+            //    g.DrawLine(p, 0, Sector.MAX_DISTANCE_FROM_AXIS / 2, Sector.MAX_DISTANCE_FROM_AXIS / 2, 0);
+            //}
 
-                    currentStar.DrawStarGraphics(g, currentPoint.X / stepsPerCoordinate, currentPoint.Y / stepsPerCoordinate);
+            if (listLength == 0)
+                return;
 
-                }
+            //Star[] theStars = new Star[listLength];
+            for (int i = 0; i < listLength; i++)
+            {
+                Star currentStar = currentSector.StarSystemsList[i].stars[0];
+                Point currentPoint = currentSector.StarSystemsList[i].StarSystemLocation;
+
+                currentStar.DrawStarGraphics(GraphicsToUse, currentPoint.X / stepsPerCoordinate, currentPoint.Y / stepsPerCoordinate);
+
             }
         }
     }

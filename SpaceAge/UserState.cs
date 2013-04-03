@@ -29,6 +29,9 @@ namespace SpaceAge
         public static SpaceShip PlayerShip = Preconstructs.ConstructedShips.StarterShip();
         public static int PlayerLevel;
 
+        public enum UserState { UiMap, SectorMap, Other };
+        public static UserState UserStateMachine = UserState.Other;
+
         static UserState()
         {
             int startingRow = Constants.UNIVERSE_ROWS / 2;

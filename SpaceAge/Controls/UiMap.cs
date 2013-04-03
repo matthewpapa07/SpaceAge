@@ -43,6 +43,8 @@ namespace SpaceAge
 
         public void drawMap(Graphics g)
         {
+            UserState.UserStateMachine = UserState.UserState.UiMap;
+
             height = this.Height;
             width = this.Width;
 
@@ -62,7 +64,7 @@ namespace SpaceAge
 
             //using (Graphics g = this.CreateGraphics())
             {
-                g.FillRectangle(staticGraphics.spaceBrush, this.ClientRectangle);
+                //g.FillRectangle(staticGraphics.spaceBrush, this.ClientRectangle);
                 g.DrawRectangle(staticGraphics.greenPen, this.ClientRectangle);
 
                 for (int CurrentRow = 0; CurrentRow < Constants.MAP_SECTORS_ROWS; CurrentRow++)
