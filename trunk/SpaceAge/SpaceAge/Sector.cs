@@ -8,8 +8,9 @@ namespace SpaceAge
 {
     class Sector
     {
-        public const int STARS_PER_SECTOR_CHANCE = 25;
+        public const int STARS_PER_SECTOR_CHANCE = 20;
         public const int MAX_DISTANCE_FROM_AXIS = 5000;      //Number must be significantly larger than UiSectorMap Height/Width
+        public const int SECTOR_EDGE_PADDING = 500;
         public const int STARTING_SPACESHIP_SPACES = 12;     // This list initializer is demand based. Sectors with higher traffic will end up
                                                              // being allocated more space while ones who dont will only need 25 slots max
 
@@ -17,6 +18,7 @@ namespace SpaceAge
         public Point SectorGridLocation;
         public List<MerchantSpaceShip> PresentSpaceShips = new List<MerchantSpaceShip>(STARTING_SPACESHIP_SPACES);
         public List<ItemStore> RegisteredItemStores = new List<ItemStore>(20); //Register ItemStores here to avoid tight nested loop in the AI
+        public Point[] RandomBackgroundStars;
 
         public static StaticGraphics staticGraphics = StaticGraphics.getStaticGraphics();
 
@@ -36,8 +38,15 @@ namespace SpaceAge
 
             n = NumberGenerator.getInstance();
 
+            int BackgStarsCount = n.GetRandNumberInRange(Constants.BACKGROUND_STARS_MIN, Constants.BACKGROUND_STARS_MAX);
+            RandomBackgroundStars = new Point[BackgStarsCount];
+            for (int i = 0; i < BackgStarsCount; i++)
+            {
+                RandomBackgroundStars[i] = new Point(n.GetRandNumberInRange(0, MAX_DISTANCE_FROM_AXIS), n.GetRandNumberInRange(0, MAX_DISTANCE_FROM_AXIS));
+            }
+
             //
-            // Tune this to change the density of systems generated
+            // Tune this to change the density of sectors that are populated with stars
             //
             if (!n.LinearPmfResult(8, 25))
             {
@@ -49,12 +58,13 @@ namespace SpaceAge
 
             for (int i = 0; i < systemsToPopulate; i++)
             {
-                coord1 = n.GetRandNumberInRange(0, MAX_DISTANCE_FROM_AXIS);
-                coord2 = n.GetRandNumberInRange(0, MAX_DISTANCE_FROM_AXIS);
+                coord1 = n.GetRandNumberInRange(SECTOR_EDGE_PADDING, MAX_DISTANCE_FROM_AXIS - SECTOR_EDGE_PADDING);
+                coord2 = n.GetRandNumberInRange(SECTOR_EDGE_PADDING, MAX_DISTANCE_FROM_AXIS - SECTOR_EDGE_PADDING);
 
                 StarSystemsList[i] = (new StarSystem(this, new Point(coord1, coord2)));
             }
             coord1 = 0;
+
         }
 
         public int getNumOfSystems()
@@ -79,61 +89,39 @@ namespace SpaceAge
             return true;
         }
 
-        public void DrawSectorGraphics(Graphics GraphicsToUse, Rectangle RectToUse)
-        {
-            int dimension = RectToUse.Width;
-            //GraphicsToUse.DrawImage(staticGraphics.emptySpace, RectToUse);
-            int DrawX;
-            int DrawY;
-
-            foreach (StarSystem StarSys in StarSystemsList)
-            {
-                //
-                // For now assume one star per system, and at least one star per system
-                //
-                DrawX = ScaleCoordinate(MAX_DISTANCE_FROM_AXIS, StarSys.StarSystemLocation.X, RectToUse.Width);
-                DrawX += RectToUse.X;
-                DrawY = ScaleCoordinate(MAX_DISTANCE_FROM_AXIS, StarSys.StarSystemLocation.Y, RectToUse.Height);
-                DrawY += RectToUse.Y;
-                StarSys.stars[0].DrawStarGraphics(GraphicsToUse, DrawX, DrawY);
-            }
-        }
-
         public void DrawSectorGraphics(Graphics GraphicsToUse, Rectangle RectToUse, int StartX, int StartY, int SegWidth, int SegHeight)
         {
             int DrawX;
             int DrawY;
 
+            //
+            // Draw the random stars in the background
+            //
+            foreach (Point p in RandomBackgroundStars)
+            {
+                DrawX = staticGraphics.ScaleCoordinate(MAX_DISTANCE_FROM_AXIS, p.X, SegWidth);
+                DrawX += StartX;
+                DrawY = staticGraphics.ScaleCoordinate(MAX_DISTANCE_FROM_AXIS, p.Y, SegHeight);
+                DrawY += StartY;
+                if (DrawX < 0 || DrawY < 0)
+                    continue;
+
+                GraphicsToUse.DrawRectangle(staticGraphics.whitePen, new Rectangle(DrawX, DrawY, 1, 1));
+            }
+
             foreach (StarSystem StarSys in StarSystemsList)
             {
                 //
                 // For now assume one star per system, and at least one star per system
                 //
-                DrawX = ScaleCoordinate(MAX_DISTANCE_FROM_AXIS, StarSys.StarSystemLocation.X, SegWidth);
+                DrawX = staticGraphics.ScaleCoordinate(MAX_DISTANCE_FROM_AXIS, StarSys.StarSystemLocation.X, SegWidth);
                 DrawX += StartX;
-                DrawY = ScaleCoordinate(MAX_DISTANCE_FROM_AXIS, StarSys.StarSystemLocation.Y, SegHeight);
+                DrawY = staticGraphics.ScaleCoordinate(MAX_DISTANCE_FROM_AXIS, StarSys.StarSystemLocation.Y, SegHeight);
                 DrawY += StartY;
                 if (DrawX < 0 || DrawY < 0)
                     continue;
                 StarSys.stars[0].DrawStarGraphics(GraphicsToUse, DrawX, DrawY);
             }
-        }
-
-        //
-        // TODO: Refactor this out so we can use it everywhere
-        //
-        public int ScaleCoordinate(int maxOriginalCoor, int actualOriginalCoor, int maxDestCoor)
-        {
-            //
-            // Cast everything to double for the greatest accuracy and rounding
-            //
-            double MaxOriginCoorD = maxOriginalCoor;
-            double ActualOriginCoorD = actualOriginalCoor;
-            double MaxDestCoorD = maxDestCoor;
-
-            double result = (ActualOriginCoorD / MaxOriginCoorD) * MaxDestCoorD;
-
-            return (int)result;
         }
 
         //public void setParent(Universe u)
