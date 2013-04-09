@@ -11,7 +11,7 @@ using System.Drawing.Drawing2D;
 
 namespace SpaceAge
 {
-    public partial class UiMap : UserControl
+    public partial class UniverseMap : UserControl
     {
         StaticGraphics staticGraphics = StaticGraphics.getStaticGraphics();
 
@@ -22,7 +22,7 @@ namespace SpaceAge
         int spaceWidth;
         int spaceHeight;
 
-        public UiMap()
+        public UniverseMap()
         {
             InitializeComponent();
             DoubleBuffered = true;
@@ -35,7 +35,7 @@ namespace SpaceAge
         }
 
 
-        private void UiMap_Load(object sender, EventArgs e)
+        private void UniverseMap_Load(object sender, EventArgs e)
         {
 
         }
@@ -43,7 +43,7 @@ namespace SpaceAge
 
         public void drawMap(Graphics g)
         {
-            UserState.UserStateMachine = UserState.UserState.UiMap;
+            UserState.UserStateMachine = UserState.UState.UniverseMap;
 
             height = this.Height;
             width = this.Width;
@@ -120,7 +120,7 @@ namespace SpaceAge
             }
         }
 
-        private void UiMap_SizeChanged(object sender, EventArgs e)
+        private void UniverseMap_SizeChanged(object sender, EventArgs e)
         {
             using (Graphics g = this.CreateGraphics())
             {

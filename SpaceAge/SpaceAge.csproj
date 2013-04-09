@@ -65,11 +65,23 @@
     <Compile Include="Controls\PlanetViewer.Designer.cs">
       <DependentUpon>PlanetViewer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\SectorBrowserWhole.cs">
+    <Compile Include="Controls\SectorBrowser.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\SectorBrowserWhole.Designer.cs">
-      <DependentUpon>SectorBrowserWhole.cs</DependentUpon>
+    <Compile Include="Controls\SectorBrowser.Designer.cs">
+      <DependentUpon>SectorBrowser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SectorMapComplex.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\SectorMapComplex.Designer.cs">
+      <DependentUpon>SectorMapComplex.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\UniverseMapBrowser.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\UniverseMapBrowser.Designer.cs">
+      <DependentUpon>UniverseMapBrowser.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\SolarSystemViewer.cs">
       <SubType>UserControl</SubType>
@@ -77,11 +89,11 @@
     <Compile Include="Controls\SolarSystemViewer.Designer.cs">
       <DependentUpon>SolarSystemViewer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\UiSectorMap.cs">
+    <Compile Include="Controls\SectorMapSimple.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\UiSectorMap.Designer.cs">
-      <DependentUpon>UiSectorMap.cs</DependentUpon>
+    <Compile Include="Controls\SectorMapSimple.Designer.cs">
+      <DependentUpon>SectorMapSimple.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\UiInventory.cs">
       <SubType>UserControl</SubType>
@@ -94,6 +106,7 @@
     <Compile Include="Graphics\GraphicsLib.cs" />
     <Compile Include="CelestialBody\IHarvestableBody.cs" />
     <Compile Include="CelestialBody\IInteractableBody.cs" />
+    <Compile Include="HumanInterfaceObj.cs" />
     <Compile Include="MerchantSpaceShip.cs" />
     <Compile Include="CelestialBody\Moon.cs" />
     <Compile Include="PortInteraction\Factory.cs" />
@@ -116,11 +129,11 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Controls\SectorBrowser.cs">
+    <Compile Include="Controls\SectorInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\SectorBrowser.Designer.cs">
-      <DependentUpon>SectorBrowser.cs</DependentUpon>
+    <Compile Include="Controls\SectorInfo.Designer.cs">
+      <DependentUpon>SectorInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\SpaceshipStatus.cs">
       <SubType>UserControl</SubType>
@@ -141,11 +154,11 @@
     <Compile Include="ShipComponents\ShipWeapon.cs" />
     <Compile Include="SpaceShip.cs" />
     <Compile Include="Graphics\StaticGraphics.cs" />
-    <Compile Include="Controls\UiMap.cs">
+    <Compile Include="Controls\UniverseMap.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\UiMap.Designer.cs">
-      <DependentUpon>UiMap.cs</DependentUpon>
+    <Compile Include="Controls\UniverseMap.Designer.cs">
+      <DependentUpon>UniverseMap.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\UserFuelMeter.cs">
       <SubType>UserControl</SubType>
@@ -176,14 +189,20 @@
     <EmbeddedResource Include="Controls\PlanetViewer.resx">
       <DependentUpon>PlanetViewer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\SectorBrowserWhole.resx">
-      <DependentUpon>SectorBrowserWhole.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\SectorBrowser.resx">
+      <DependentUpon>SectorBrowser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\SectorMapComplex.resx">
+      <DependentUpon>SectorMapComplex.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\UniverseMapBrowser.resx">
+      <DependentUpon>UniverseMapBrowser.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\SolarSystemViewer.resx">
       <DependentUpon>SolarSystemViewer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\UiSectorMap.resx">
-      <DependentUpon>UiSectorMap.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\SectorMapSimple.resx">
+      <DependentUpon>SectorMapSimple.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\UiInventory.resx">
       <DependentUpon>UiInventory.cs</DependentUpon>
@@ -192,15 +211,15 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\SectorBrowser.resx">
-      <DependentUpon>SectorBrowser.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\SectorInfo.resx">
+      <DependentUpon>SectorInfo.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\SpaceshipStatus.resx">
       <DependentUpon>SpaceshipStatus.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\UiMap.resx">
-      <DependentUpon>UiMap.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\UniverseMap.resx">
+      <DependentUpon>UniverseMap.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\UserFuelMeter.resx">
       <DependentUpon>UserFuelMeter.cs</DependentUpon>
