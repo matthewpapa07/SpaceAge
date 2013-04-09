@@ -1,6 +1,6 @@
 ﻿namespace SpaceAge.Controls
 {
-    partial class UiSectorMap
+    partial class SectorMapSimple
     {
         /// <summary> 
         /// Required designer variable.

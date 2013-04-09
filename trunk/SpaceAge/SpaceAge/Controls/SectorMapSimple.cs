@@ -9,13 +9,13 @@ using System.Windows.Forms;
 
 namespace SpaceAge.Controls
 {
-    partial class UiSectorMap : UserControl
+    partial class SectorMapSimple : UserControl
     {
         Sector          currentSector;
         StaticGraphics  staticGraphics = StaticGraphics.getStaticGraphics();
         int             stepsPerCoordinate = 0;
 
-        public UiSectorMap(Sector s)
+        public SectorMapSimple(Sector s)
         {
             currentSector = s;
             //
@@ -36,7 +36,7 @@ namespace SpaceAge.Controls
 
         public void drawSector(Graphics GraphicsToUse)
         {
-            UserState.UserStateMachine = UserState.UserState.SectorMap;
+            UserState.UserStateMachine = UserState.UState.SectorMap;
 
             int listLength;
             stepsPerCoordinate = Sector.MAX_DISTANCE_FROM_AXIS / Height;

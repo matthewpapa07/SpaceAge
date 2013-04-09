@@ -12,7 +12,7 @@ namespace SpaceAge
 {
     public partial class UserInterface : Form
     {
-        Controls.SectorBrowserWhole TheMainSectorBrowserWhole;
+        Controls.UniverseMapBrowser TheMainSectorBrowserWhole;
         public static UserInterface thisOneInterface;
         private Control currentControl;
         private Control previousControl;
@@ -29,7 +29,7 @@ namespace SpaceAge
             ResizeRedraw = true;
             KeyPreview = true;
 
-            TheMainSectorBrowserWhole = new SpaceAge.Controls.SectorBrowserWhole();
+            TheMainSectorBrowserWhole = new SpaceAge.Controls.UniverseMapBrowser();
             currentControl = TheMainSectorBrowserWhole;
             ui_MAINPANEL.Controls.Add(TheMainSectorBrowserWhole);
             UpdateUi();
@@ -54,31 +54,21 @@ namespace SpaceAge
         }
         private void UserInterface_KeyPress(object sender, KeyPressEventArgs e)
         {
+            HumanInterfaceObj TempKeyPress;
             int key = e.KeyChar;
+
+            //Console.WriteLine("Key pressed: " + key);
 
             if (key > 0)
             {
-                //Console.WriteLine("Key pressed: " + key);
-                switch (key)
+                if(currentControl is HumanInterfaceObj)
                 {
-                    case 'w':       // Up
-                        UserState.moveUp();
-                        break;
-                    case 's':       // Down
-                        UserState.moveDown();
-                        break;
-                    case 'a':       // Left
-                        UserState.moveLeft();
-                        break;
-                    case 'd':       // Right
-                        UserState.moveRight();
-                        break;
-                    default:
-                        break;
+                    TempKeyPress = (HumanInterfaceObj)currentControl;
+                    TempKeyPress.UserKeyPress(key);
                 }
-                
-                UpdateUi();
             }
+
+            UpdateUi();
 
         }
 
