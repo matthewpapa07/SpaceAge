@@ -13,7 +13,8 @@ namespace SpaceAge
         public static int USER_FUEL_USED_PER_SECTOR = 5;    //TODO: Scale with ship later
 
         public static Sector[,] theGrid;
-        public static Point playerLocation;
+        public static Point PlayerGridLocation;
+        public static Point FineGridLocation;
         private static Sector currentSector;
 
         public enum ShipOrientationState { Up = 1, Down = 2, Left = 3, Right = 4 };
@@ -38,7 +39,8 @@ namespace SpaceAge
             int startingColumn = Constants.UNIVERSE_COLUMNS / 2;
 
             theGrid = new Sector[Constants.MAP_SECTORS_ROWS, Constants.MAP_SECTORS_COLUMNS];
-            playerLocation = new Point(startingRow, startingColumn);
+            PlayerGridLocation = new Point(startingRow, startingColumn);
+            FineGridLocation = new Point(Sector.MAX_DISTANCE_FROM_AXIS / 2, Sector.MAX_DISTANCE_FROM_AXIS / 2);
             currentSector = Universe.getSector(startingRow, startingColumn);
             
             progState = (int)ShipOrientationState.Up;
@@ -51,8 +53,8 @@ namespace SpaceAge
 
         public static int moveRight()
         {
-            int currentX = playerLocation.X;
-            int currentY = playerLocation.Y;
+            int currentX = PlayerGridLocation.X;
+            int currentY = PlayerGridLocation.Y;
             Sector currentSector;
 
             if (onEachTravel() == Constants.FAILURE)
@@ -64,7 +66,7 @@ namespace SpaceAge
             currentSector = Universe.getSector(currentX + 1, currentY);
             if (currentSector != null)
             {
-                playerLocation.X = currentX + 1;
+                PlayerGridLocation.X = currentX + 1;
                 updateGrid();
                 return Constants.SUCCESS;
             }
@@ -76,8 +78,8 @@ namespace SpaceAge
 
         public static int moveLeft()
         {
-            int currentX = playerLocation.X;
-            int currentY = playerLocation.Y;
+            int currentX = PlayerGridLocation.X;
+            int currentY = PlayerGridLocation.Y;
             Sector currentSector;
 
             if (onEachTravel() == Constants.FAILURE)
@@ -89,7 +91,7 @@ namespace SpaceAge
             currentSector = Universe.getSector(currentX - 1, currentY);
             if (currentSector != null)
             {
-                playerLocation.X = currentX - 1;
+                PlayerGridLocation.X = currentX - 1;
                 updateGrid();
                 return Constants.SUCCESS;
             }
@@ -101,8 +103,8 @@ namespace SpaceAge
 
         public static int moveDown()
         {
-            int currentX = playerLocation.X;
-            int currentY = playerLocation.Y;
+            int currentX = PlayerGridLocation.X;
+            int currentY = PlayerGridLocation.Y;
             Sector currentSector;
 
             if (onEachTravel() == Constants.FAILURE)
@@ -114,7 +116,7 @@ namespace SpaceAge
             currentSector = Universe.getSector(currentX, currentY + 1);
             if (currentSector != null)
             {
-                playerLocation.Y = currentY + 1;
+                PlayerGridLocation.Y = currentY + 1;
                 updateGrid();
                 return Constants.SUCCESS;
             }
@@ -126,8 +128,8 @@ namespace SpaceAge
 
         public static int moveUp()
         {
-            int currentX = playerLocation.X;
-            int currentY = playerLocation.Y;
+            int currentX = PlayerGridLocation.X;
+            int currentY = PlayerGridLocation.Y;
             Sector currentSector;
 
             if (onEachTravel() == Constants.FAILURE)
@@ -139,7 +141,7 @@ namespace SpaceAge
             currentSector = Universe.getSector(currentX, currentY - 1);
             if (currentSector != null)
             {
-                playerLocation.Y = currentY - 1;
+                PlayerGridLocation.Y = currentY - 1;
                 updateGrid();
                 return Constants.SUCCESS;
             }
@@ -153,8 +155,8 @@ namespace SpaceAge
         {     
             const int colRadius = Constants.MAP_SECTORS_COLUMNS /2;    //truncate here if odd
             const int rowRadius = Constants.MAP_SECTORS_ROWS / 2;      //truncate here if odd
-            int currentCol = playerLocation.X;
-            int currentRow = playerLocation.Y;
+            int currentCol = PlayerGridLocation.X;
+            int currentRow = PlayerGridLocation.Y;
 
             for (int rowOffset = (-1) * rowRadius; rowOffset <= rowRadius; rowOffset++)
             {

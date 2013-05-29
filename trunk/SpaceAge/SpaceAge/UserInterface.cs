@@ -38,7 +38,7 @@ namespace SpaceAge
         public void UpdateUi()
         {
             Sector currentSector = UserState.getCurrentSector();
-            ui_CoordinateLabel.Text = UserState.playerLocation.ToString();
+            ui_CoordinateLabel.Text = UserState.PlayerGridLocation.ToString();
             ui_Credits.Text = UserState.getPlayerFunds().ToString();
             ui_Time.Text = GameDriver.TimeToStringLong();
 

@@ -88,7 +88,7 @@ namespace SpaceAge
                 }
 
                 //
-                // If in middle position draw the ship
+                // Draw the ship in the middle
                 //
                 using(Image im = staticGraphics.GetSpaceShip())
                 {
