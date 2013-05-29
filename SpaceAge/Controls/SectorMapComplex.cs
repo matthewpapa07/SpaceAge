@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace SpaceAge.Controls
 {
@@ -13,15 +14,25 @@ namespace SpaceAge.Controls
     {
         Sector currentSector;
         StaticGraphics staticGraphics = StaticGraphics.getStaticGraphics();
-        int stepsPerCoordinate = 0;
+        Image SpaceShipImage;
+
+        // For Threads
+        Thread BackgroundThread;
+        public delegate void ShipInTransit();
+        public ShipInTransit PlayerShipInTransit;
 
         public SectorMapComplex()
         {
             currentSector = UserState.getCurrentSector();
+            SpaceShipImage = staticGraphics.GetSpaceShip();
+            PlayerShipInTransit = new ShipInTransit(ShipMoverDelegate);
+            BackgroundThread = new Thread(new ThreadStart(MoveShips));
+            this.DoubleBuffered = true;
             //
             // Assume height == width when determining points per pixel
             //
             InitializeComponent();
+
         }
 
 
@@ -32,53 +43,45 @@ namespace SpaceAge.Controls
 
         private void UiSectorMap_Load(object sender, EventArgs e)
         {
+            
+        }
 
+        public void StartMovement()
+        {
+            BackgroundThread.Start();
         }
 
         public void drawSector(Graphics GraphicsToUse)
         {
-            UserState.UserStateMachine = UserState.UState.SectorMap;
+            Rectangle RectToUse = this.ClientRectangle;
+            if(currentSector != null)
+                currentSector.DrawSectorGraphics(GraphicsToUse, RectToUse, 0, 0, RectToUse.Width, RectToUse.Height);
 
-            int listLength;
-            stepsPerCoordinate = Sector.MAX_DISTANCE_FROM_AXIS / Height;
-            int DrawX;
-            int DrawY;
+            //GraphicsToUse.DrawImage(SpaceShipImage,
+            //    (staticGraphics.ScaleCoordinate(Sector.MAX_DISTANCE_FROM_AXIS, UserState.FineGridLocation.Y-SpaceShipImage.Width, RectToUse.Width)),
+            //    (staticGraphics.ScaleCoordinate(Sector.MAX_DISTANCE_FROM_AXIS, UserState.FineGridLocation.X - SpaceShipImage.Height, RectToUse.Height))
+            //    );
+            GraphicsToUse.DrawImage(SpaceShipImage,
+                (staticGraphics.ScaleCoordinate(Sector.MAX_DISTANCE_FROM_AXIS, UserState.FineGridLocation.Y - SpaceShipImage.Width, RectToUse.Width)),
+                (staticGraphics.ScaleCoordinate(Sector.MAX_DISTANCE_FROM_AXIS, UserState.FineGridLocation.X - SpaceShipImage.Height, RectToUse.Height))
+                ,35,35);
+        }
 
-            GraphicsToUse.FillRectangle(staticGraphics.blackBrush, this.DisplayRectangle);
-            //
-            // Draw the random stars in the background
-            //
-            foreach (Point p in currentSector.RandomBackgroundStars)
+        public void ShipMoverDelegate()
+        {
+            // TODO: Eventually make this based off the ship stat
+            // TODO: Bounds checking
+            UserState.FineGridLocation.Y += 10;
+            UserState.FineGridLocation.X += 10;
+            this.Refresh();
+        }
+
+        public void MoveShips()
+        {
+            for (int i = 0; i < 200; i++)
             {
-                DrawX = staticGraphics.ScaleCoordinate(Sector.MAX_DISTANCE_FROM_AXIS, p.X, this.ClientRectangle.Width);
-                DrawY = staticGraphics.ScaleCoordinate(Sector.MAX_DISTANCE_FROM_AXIS, p.Y, this.ClientRectangle.Height);
-                if (DrawX < 0 || DrawY < 0)
-                    continue;
-
-                GraphicsToUse.DrawRectangle(staticGraphics.whitePen, new Rectangle(DrawX, DrawY, 1, 1));
-            }
-
-
-            if (currentSector == null)
-                return;
-
-            listLength = currentSector.StarSystemsList.Length;
-            //using (Pen p = new Pen(StaticGraphics.getStaticGraphics().greenBrush))
-            //{
-            //    g.DrawLine(p, 0, Sector.MAX_DISTANCE_FROM_AXIS / 2, Sector.MAX_DISTANCE_FROM_AXIS / 2, 0);
-            //}
-
-            if (listLength == 0)
-                return;
-
-            //Star[] theStars = new Star[listLength];
-            for (int i = 0; i < listLength; i++)
-            {
-                Star currentStar = currentSector.StarSystemsList[i].stars[0];
-                Point currentPoint = currentSector.StarSystemsList[i].StarSystemLocation;
-
-                currentStar.DrawStarGraphics(GraphicsToUse, currentPoint.X / stepsPerCoordinate, currentPoint.Y / stepsPerCoordinate);
-
+                this.Invoke(PlayerShipInTransit);
+                Thread.Sleep(100);
             }
         }
     }

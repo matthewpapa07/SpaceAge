@@ -12,10 +12,23 @@ namespace SpaceAge.Controls
     public partial class SectorBrowser : UserControl, HumanInterfaceObj
     {
         bool ShipAlreadyMoving = false;
+        Sector CurrentSector = UserState.getCurrentSector();
 
         public SectorBrowser()
         {
             InitializeComponent();
+            
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            DrawStuff(e.Graphics);
+
+        }
+
+        public void DrawStuff(Graphics GraphicsToUse)
+        {
+
         }
 
         public void UserKeyPress(int Key)
@@ -36,6 +49,11 @@ namespace SpaceAge.Controls
                         break;
                 }
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            sectorMapComplex1.StartMovement();
         }
     }
 }

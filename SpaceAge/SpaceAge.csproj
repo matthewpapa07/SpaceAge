@@ -59,6 +59,12 @@
     <Compile Include="Controls\InteractionCenterUi.Designer.cs">
       <DependentUpon>InteractionCenterUi.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\LogWindow.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\LogWindow.Designer.cs">
+      <DependentUpon>LogWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PlanetViewer.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -185,6 +191,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Controls\InteractionCenterUi.resx">
       <DependentUpon>InteractionCenterUi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LogWindow.resx">
+      <DependentUpon>LogWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PlanetViewer.resx">
       <DependentUpon>PlanetViewer.cs</DependentUpon>
