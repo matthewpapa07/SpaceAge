@@ -23,6 +23,8 @@ namespace SpaceAge.Controls
         protected override void OnPaint(PaintEventArgs e)
         {
             DrawStuff(e.Graphics);
+            sectorMapComplex1.MapRefreshThread.Start();
+            sectorMapComplex1.ShipVelocityThread.Start();
 
         }
 
@@ -45,6 +47,8 @@ namespace SpaceAge.Controls
                         break;
                     case 'd':       // Right
                         break;
+                    case ' ':       // Stop
+                        break;
                     default:
                         break;
                 }
@@ -53,7 +57,7 @@ namespace SpaceAge.Controls
 
         private void button1_Click(object sender, EventArgs e)
         {
-            sectorMapComplex1.StartMovement();
+            //sectorMapComplex1.StartMovement();
         }
     }
 }
