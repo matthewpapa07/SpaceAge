@@ -46,6 +46,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CargoItemList.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="HumanInterfaceObj.cs" />
     <Compile Include="MerchantSpaceShip.cs" />
     <Compile Include="CelestialBody\Moon.cs" />
+    <Compile Include="PointD.cs" />
     <Compile Include="PortInteraction\Factory.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="ItemList.cs" />
@@ -187,6 +189,7 @@
     <Compile Include="CelestialBody\StarSystem.cs" />
     <Compile Include="Universe.cs" />
     <Compile Include="UserState.cs" />
+    <Compile Include="VectorD.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Controls\InteractionCenterUi.resx">

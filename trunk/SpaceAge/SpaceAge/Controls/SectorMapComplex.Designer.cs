@@ -34,8 +34,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Black;
             this.Name = "SectorMapComplex";
             this.Size = new System.Drawing.Size(350, 350);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SectorMapComplex_KeyPress);
+            this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.SectorMapComplex_MouseDoubleClick);
             this.ResumeLayout(false);
 
         }
