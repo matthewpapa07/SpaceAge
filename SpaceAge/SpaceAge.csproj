@@ -174,6 +174,7 @@
     <Compile Include="Controls\UserFuelMeter.Designer.cs">
       <DependentUpon>UserFuelMeter.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserInput.cs" />
     <Compile Include="UserInterface.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 
 namespace SpaceAge
 {
@@ -14,6 +15,12 @@ namespace SpaceAge
         {
             X = inPoint.X;
             Y = inPoint.Y;
+        }
+
+        public VectorD(VectorD inVectorD)
+        {
+            X = inVectorD.X;
+            Y = inVectorD.Y;
         }
 
         public VectorD(double x, double y)
@@ -31,6 +38,20 @@ namespace SpaceAge
 
             X = X / Z;
             Y = Y / Z;
+        }
+
+        public int GetAngle()
+        {
+            double temp = Math.Atan2(Y, X);
+            temp *= 180;
+            temp /= Math.PI;
+            return (int)temp;
+        }
+
+        public void SetVector(Point p)
+        {
+            X = (double)p.X;
+            Y = (double)p.Y;
         }
     }
 }

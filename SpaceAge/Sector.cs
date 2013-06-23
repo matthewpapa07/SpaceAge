@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace SpaceAge
 {
@@ -87,6 +88,18 @@ namespace SpaceAge
             PresentSpaceShips.Add(mss);
             mss.CurrentSector = this;
             return true;
+        }
+
+        public static void SetSectorObjectListViewItemsMini(ListView ui_SectorList)
+        {
+            ui_SectorList.Columns.Clear();
+            //
+            // Add columns
+            //
+            ui_SectorList.Columns.Add("Name", 40);
+            ui_SectorList.Columns.Add("Stars", 40);
+            ui_SectorList.Columns.Add("Planets", 50);
+            ui_SectorList.Columns.Add("Soverignty", 50);
         }
 
         public void DrawSectorGraphics(Graphics GraphicsToUse, Rectangle RectToUse, int StartX, int StartY, int SegWidth, int SegHeight)
