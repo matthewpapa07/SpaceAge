@@ -57,7 +57,7 @@ namespace SpaceAge
             HumanInterfaceObj TempKeyPress;
             int key = e.KeyChar;
 
-            Console.WriteLine("Key pressed: " + key);
+            //Console.WriteLine("Key pressed: " + key);
 
             if (key > 0)
             {

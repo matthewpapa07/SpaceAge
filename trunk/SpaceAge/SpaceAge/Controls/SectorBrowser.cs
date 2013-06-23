@@ -17,6 +17,9 @@ namespace SpaceAge.Controls
         public SectorBrowser()
         {
             InitializeComponent();
+
+            GraphicsLib.ApplyListviewProperties(listview_sectoritems);
+            Sector.SetSectorObjectListViewItemsMini(listview_sectoritems);
             
         }
 
@@ -25,6 +28,7 @@ namespace SpaceAge.Controls
             DrawStuff(e.Graphics);
             sectorMapComplex1.MapRefreshThread.Start();
             sectorMapComplex1.ShipVelocityThread.Start();
+            sectorMapComplex1.KeyboardCheckThread.Start();
 
         }
 
@@ -58,6 +62,11 @@ namespace SpaceAge.Controls
         private void button1_Click(object sender, EventArgs e)
         {
             //sectorMapComplex1.StartMovement();
+        }
+
+        private void sectorMapComplex1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
