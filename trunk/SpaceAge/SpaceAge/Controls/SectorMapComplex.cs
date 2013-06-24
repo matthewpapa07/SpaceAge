@@ -15,13 +15,11 @@ namespace SpaceAge.Controls
         Sector currentSector;
         StaticGraphics staticGraphics = StaticGraphics.getStaticGraphics();
         Image SpaceShipImage;
-        int MovementVelocity;
-        VectorD DirectionVector = new VectorD(0.0, 0.0);
-        Point ShipControlCoordinates = new Point(0, 0);
+        VectorD DirectionVector = new VectorD(0.0, 1.0);
+        PointD DestinationPoint = new PointD(0.0, 0.0);
         //Point TempCoordiantes = new Point(0, 0);
         
         // For ship waypoints
-        Point ClickPoint = new Point(0, 0);
         bool ClickEnabled = false;
 
         public int TempShipSpeed = 15;
@@ -30,10 +28,10 @@ namespace SpaceAge.Controls
         // For Threads
         public Thread MapRefreshThread;
         public Thread ShipVelocityThread;
-        public Thread KeyboardCheckThread;
+        //public Thread KeyboardCheckThread;
         public delegate void EventToInvoke();
         public EventToInvoke PlayerShipInTransit;
-        public EventToInvoke KeyboardCheck;
+        //public EventToInvoke KeyboardCheck;
 
         // For graphics
         public Bitmap OriginalImage;
@@ -43,10 +41,10 @@ namespace SpaceAge.Controls
             currentSector = UserState.getCurrentSector();
             SpaceShipImage = staticGraphics.GetSpaceShip();
             PlayerShipInTransit = new EventToInvoke(ShipMoverDelegate);
-            KeyboardCheck = new EventToInvoke(TakeUserInput);
+            //KeyboardCheck = new EventToInvoke(TakeUserInput);
             MapRefreshThread = new Thread(new ThreadStart(RefreshScreen));
             ShipVelocityThread = new Thread(new ThreadStart(UpdateMovingShipsPosition));
-            KeyboardCheckThread = new Thread(new ThreadStart(RefreshKeystrokes));
+            //KeyboardCheckThread = new Thread(new ThreadStart(RefreshKeystrokes));
             this.DoubleBuffered = true;
             OriginalImage = new Bitmap(staticGraphics.GetSpaceShip());
 
@@ -69,6 +67,7 @@ namespace SpaceAge.Controls
 
         public void drawSector(Graphics GraphicsToUse)
         {
+            Point ShipControlCoordinates = new Point(0, 0);
             //Bitmap RotatedImage;
             Rectangle RectToUse = this.ClientRectangle;
             if(currentSector != null)
@@ -77,8 +76,16 @@ namespace SpaceAge.Controls
             using (Bitmap RotatedImage = GraphicsLib.RotateBitmap(OriginalImage, ((DirectionVector.GetAngle())) ))
             {
                 //Console.WriteLine("Rotation angle " + MovementVector.GetAngle());
-                ShipControlCoordinates.Y = (staticGraphics.ScaleCoordinate(Sector.MAX_DISTANCE_FROM_AXIS, (int)UserState.SectorFineGridLocation.Y - SpaceShipImage.Width, RectToUse.Width));
-                ShipControlCoordinates.X = (staticGraphics.ScaleCoordinate(Sector.MAX_DISTANCE_FROM_AXIS, (int)UserState.SectorFineGridLocation.X - SpaceShipImage.Height, RectToUse.Height));
+                ShipControlCoordinates.Y = (
+                    staticGraphics.ScaleCoordinate(
+                    Sector.MAX_DISTANCE_FROM_AXIS, 
+                    (int)UserState.SectorFineGridLocation.Y  - SpaceShipImage.Width/2, RectToUse.Width
+                    ));
+                ShipControlCoordinates.X = (
+                    staticGraphics.ScaleCoordinate(
+                    Sector.MAX_DISTANCE_FROM_AXIS, 
+                    (int)UserState.SectorFineGridLocation.X - SpaceShipImage.Height/2, RectToUse.Height
+                    ));
                 GraphicsToUse.DrawImage(RotatedImage,
                     ShipControlCoordinates.Y,
                     ShipControlCoordinates.X,
@@ -87,7 +94,16 @@ namespace SpaceAge.Controls
 
             if (ClickEnabled)
             {
-                Rectangle waypointRect = new Rectangle(ClickPoint.X, ClickPoint.Y, 5, 5);
+                Rectangle waypointRect = new Rectangle(staticGraphics.ScaleCoordinate(
+                    Sector.MAX_DISTANCE_FROM_AXIS, 
+                    (int)DestinationPoint.X, RectToUse.Height),
+                    staticGraphics.ScaleCoordinate(
+                        Sector.MAX_DISTANCE_FROM_AXIS, 
+                        (int)DestinationPoint.Y, 
+                        RectToUse.Width), 
+                    5, 
+                    5
+                    );
                 GraphicsToUse.FillEllipse(staticGraphics.greenBrush, waypointRect);
                 
             }
@@ -114,118 +130,131 @@ namespace SpaceAge.Controls
             }
         }
 
-        public void RefreshKeystrokes()
-        {
-            while (!this.IsDisposed)
-            {
-                if (PlayerShipInTransit != null && this.IsHandleCreated == true)
-                {
-                    try
-                    {
-                        this.Invoke(KeyboardCheck);
-                    }
-                    catch { }
-                }
-                Thread.Sleep(20);
-            }
-        }
+        //public void RefreshKeystrokes()
+        //{
+        //    while (!this.IsDisposed)
+        //    {
+        //        if (PlayerShipInTransit != null && this.IsHandleCreated == true)
+        //        {
+        //            try
+        //            {
+        //                this.Invoke(KeyboardCheck);
+        //            }
+        //            catch { }
+        //        }
+        //        Thread.Sleep(20);
+        //    }
+        //}
 
         public void UpdateMovingShipsPosition()
         {
+            // Only refresh position as fast as the ship's rate of speed
             double WaitAmount = (1/(double)TempShipSpeed)*1000;
             while (!this.IsDisposed && this.IsHandleCreated == true)
             {
-                UserState.SectorFineGridLocation.Y += DirectionVector.Y * (MovementVelocity) * TempShipSpeed;
-                UserState.SectorFineGridLocation.X += DirectionVector.X * (MovementVelocity) * TempShipSpeed;
+
+                if (!DestinationPoint.Equals(UserState.SectorFineGridLocation) && ClickEnabled)
+                {
+                    DirectionVector.X = UserState.SectorFineGridLocation.X - DestinationPoint.X;
+                    DirectionVector.Y = UserState.SectorFineGridLocation.Y - DestinationPoint.Y;
+                    DirectionVector.Normalize();
+      
+                    double dx = DirectionVector.X * TempShipSpeed;
+                    double dy = DirectionVector.Y * TempShipSpeed;
+                    double distanceActual = DestinationPoint.Distance(UserState.SectorFineGridLocation);
+                    
+                    // Since the frame only refreshes the period of the velocity, our distance will always be 1.0
+                    if (distanceActual <= 1.0)
+                    {
+                        UserState.SectorFineGridLocation.X = DestinationPoint.X;
+                        UserState.SectorFineGridLocation.Y = DestinationPoint.Y;
+                        ClickEnabled = false;
+                    }
+                    else
+                    {
+                        PointD TestPoint = new PointD(0.0, 0.0);
+                        TestPoint.X = UserState.SectorFineGridLocation.X + dx;
+                        if (distanceActual > TestPoint.Distance(DestinationPoint))
+                        {
+                            UserState.SectorFineGridLocation.X += dx;
+                        }
+                        else
+                        {
+                            UserState.SectorFineGridLocation.X -= dx;
+                        }
+                        distanceActual = DestinationPoint.Distance(UserState.SectorFineGridLocation);
+                        TestPoint.Y = UserState.SectorFineGridLocation.Y + dy;
+                        if (distanceActual > TestPoint.Distance(DestinationPoint))
+                        {
+                            UserState.SectorFineGridLocation.Y += dy;
+                        }
+                        else
+                        {
+                            UserState.SectorFineGridLocation.Y -= dy;
+                        }
+
+
+                        //TestPoint.Y = UserState.SectorFineGridLocation.Y + dy;
+                        //UserState.SectorFineGridLocation.X += dx;
+                        //UserState.SectorFineGridLocation.Y += dy;
+                        //double absLocation = UserState.SectorFineGridLocation.X + dx;
+                        //if (absLocation > UserState.SectorFineGridLocation.X)
+                        //    UserState.SectorFineGridLocation.X -= dx;
+                        //else
+                        //    UserState.SectorFineGridLocation.X += dx;
+
+                        //absLocation = UserState.SectorFineGridLocation.Y + dy;
+                        //if (absLocation > UserState.SectorFineGridLocation.Y)
+                        //    UserState.SectorFineGridLocation.Y -= dy;
+                        //else
+                        //    UserState.SectorFineGridLocation.Y += dy;
+
+
+                    }
+
+                }
+
                 Thread.Sleep((int)WaitAmount);
             }
             // TODO: Keep track of sector boundry
         }
 
-        public void AlterMovement(int delta)
-        {
-            //MovementVector.X = dX + MovementVector.X;
-            //MovementVector.Y = dY + MovementVector.Y;
-            //if (MovementVector.X != 0)
-            //    Console.WriteLine("Speed of x " + MovementVector.X);
-            //if (MovementVector.Y != 0)
-            //    Console.WriteLine("Speed of y " + MovementVector.Y);
-            //// TODO: Incorporate ship agility/inertia
-            //if (MovementVector.X <= 2 && dX > 0)
-            //    MovementVector.X += dX;
-            //if (MovementVector.X >= -2 && dX < 0)
-            //    MovementVector.X += dX;
-
-            //if (MovementVector.Y <= 2 && dY > 0)
-            //    MovementVector.Y += dY;
-            //if (MovementVector.Y >= -2 && dY < 0)
-            //    MovementVector.Y += dY;
-
-            MovementVelocity += delta;
-            if (MovementVelocity < 0)
-                MovementVelocity = 0;
-            if (MovementVelocity > 1)
-                MovementVelocity = 1;
-
-        }
-
-        public void TakeUserInput()
-        {
-            //if (UserInput.CheckKey('w'))
-            //{
-            //    AlterMovement(1, 0);
-            //}
-            //if (UserInput.CheckKey('s'))
-            //{
-            //    AlterMovement(-1, 0);
-            //}
-            //if (UserInput.CheckKey('a'))
-            //{
-            //    AlterMovement(0, 1);
-            //}
-            //if (UserInput.CheckKey('d'))
-            //{
-            //    AlterMovement(0, -1);
-            //}
-            //if (UserInput.CheckKey(' '))
-            //{
-            //    MovementVector.X = 0.0;
-            //    MovementVector.Y = 0.0;
-            //}
-            //DirectionVector.X = this.PointToScreen(ShipControlCoordinates).X - Cursor.Position.X;
-            //DirectionVector.Y = this.PointToScreen(ShipControlCoordinates).Y - Cursor.Position.Y;
-            //DirectionVector.Normalize();
-        }
 
         private void SectorMapComplex_KeyPress(object sender, KeyPressEventArgs e)
         {
-            int Key = e.KeyChar;
-            switch (Key)
-            {
-                case 'w':       // Up
-                    AlterMovement(1);
-                    break;
-                case 's':       // Down
-                    AlterMovement(-1);
-                    break;
-                //case 'a':       // Left
-                //    AlterMovement(0, -1);
-                //    break;
-                //case 'd':       // Right
-                //    AlterMovement(0, 1);
-                //    break;
-                case ' ':       // Stop
-                    MovementVelocity = 0;
-                    break;
-                default:
-                    break;
-            }
+            //int Key = e.KeyChar;
+            //switch (Key)
+            //{
+            //    //case 'w':       // Up
+            //    //    break;
+            //    //case 's':       // Down
+            //    //    break;
+            //    //case 'a':       // Left
+            //    //    break;
+            //    //case 'd':       // Right
+            //    //    break;
+            //    //case ' ':       // Stop
+            //    //    break;
+            //    //default:
+            //    //    break;
+            //}
         }
 
         private void SectorMapComplex_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+            Point ClickPoint;
+
+            // Convert graphics point to sector coordinate. loss of precision is expected of course
             ClickPoint = e.Location;
+            DestinationPoint.X = staticGraphics.ScaleCoordinate(ClientRectangle.Height, ClickPoint.X, Sector.MAX_DISTANCE_FROM_AXIS);
+            DestinationPoint.Y = staticGraphics.ScaleCoordinate(ClientRectangle.Width, ClickPoint.Y, Sector.MAX_DISTANCE_FROM_AXIS);
+
+            DirectionVector.X = UserState.SectorFineGridLocation.X - DestinationPoint.X;
+            DirectionVector.Y = UserState.SectorFineGridLocation.Y - DestinationPoint.Y;
+
             ClickEnabled = true;
+
+            Console.WriteLine("Double click at X:" + ClickPoint.X + " Y:" + ClickPoint.Y + " Angle:" + DirectionVector.GetAngle());
 
         }
     }

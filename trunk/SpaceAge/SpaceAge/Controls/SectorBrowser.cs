@@ -28,7 +28,7 @@ namespace SpaceAge.Controls
             DrawStuff(e.Graphics);
             sectorMapComplex1.MapRefreshThread.Start();
             sectorMapComplex1.ShipVelocityThread.Start();
-            sectorMapComplex1.KeyboardCheckThread.Start();
+            //sectorMapComplex1.KeyboardCheckThread.Start();
 
         }
 

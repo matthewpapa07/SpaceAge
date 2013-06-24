@@ -15,5 +15,33 @@ namespace SpaceAge
             X = inx;
             Y = iny;
         }
+
+        public double Distance(PointD OtherPt)
+        {
+            double x = X - OtherPt.X;
+            double y = Y - OtherPt.Y;
+
+            x = Math.Pow(x, 2);
+            y = Math.Pow(y, 2);
+
+            double determinant = x + y;
+
+            return Math.Sqrt(determinant);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is PointD)
+            {
+                PointD OtherPoint = (PointD)obj;
+                if (OtherPoint.X == X)
+                    if (OtherPoint.Y == Y)
+                        return true;
+
+                return false;
+            }
+            else
+                throw new FormatException();
+        }
     }
 }
