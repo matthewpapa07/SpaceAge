@@ -16,6 +16,12 @@ namespace SpaceAge
             Y = iny;
         }
 
+        public PointD(PointD InPoint)
+        {
+            X = InPoint.X;
+            Y = InPoint.Y;
+        }
+
         public double Distance(PointD OtherPt)
         {
             double x = X - OtherPt.X;
