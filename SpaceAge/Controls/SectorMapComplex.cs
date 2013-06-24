@@ -22,7 +22,7 @@ namespace SpaceAge.Controls
         // For ship waypoints
         bool ClickEnabled = false;
 
-        public int TempShipSpeed = 15;
+        public int TempShipSpeed = 20;
         public int TempRefreshRate = 20;  //ms
 
         // For Threads
@@ -79,16 +79,16 @@ namespace SpaceAge.Controls
                 ShipControlCoordinates.Y = (
                     staticGraphics.ScaleCoordinate(
                     Sector.MAX_DISTANCE_FROM_AXIS, 
-                    (int)UserState.SectorFineGridLocation.Y  - SpaceShipImage.Width/2, RectToUse.Width
+                    (int)UserState.SectorFineGridLocation.Y  - SpaceShipImage.Height/2, RectToUse.Height
                     ));
                 ShipControlCoordinates.X = (
                     staticGraphics.ScaleCoordinate(
                     Sector.MAX_DISTANCE_FROM_AXIS, 
-                    (int)UserState.SectorFineGridLocation.X - SpaceShipImage.Height/2, RectToUse.Height
+                    (int)UserState.SectorFineGridLocation.X - SpaceShipImage.Width/2, RectToUse.Width
                     ));
                 GraphicsToUse.DrawImage(RotatedImage,
-                    ShipControlCoordinates.Y,
                     ShipControlCoordinates.X,
+                    ShipControlCoordinates.Y,
                     35, 35);
             }
 
@@ -96,11 +96,11 @@ namespace SpaceAge.Controls
             {
                 Rectangle waypointRect = new Rectangle(staticGraphics.ScaleCoordinate(
                     Sector.MAX_DISTANCE_FROM_AXIS, 
-                    (int)DestinationPoint.X, RectToUse.Height),
+                    (int)DestinationPoint.X, RectToUse.Width),
                     staticGraphics.ScaleCoordinate(
                         Sector.MAX_DISTANCE_FROM_AXIS, 
                         (int)DestinationPoint.Y, 
-                        RectToUse.Width), 
+                        RectToUse.Height), 
                     5, 
                     5
                     );
@@ -157,14 +157,15 @@ namespace SpaceAge.Controls
                 {
                     DirectionVector.X = UserState.SectorFineGridLocation.X - DestinationPoint.X;
                     DirectionVector.Y = UserState.SectorFineGridLocation.Y - DestinationPoint.Y;
+
                     DirectionVector.Normalize();
       
-                    double dx = DirectionVector.X * TempShipSpeed;
-                    double dy = DirectionVector.Y * TempShipSpeed;
+                    double dx = DirectionVector.X * TempShipSpeed * (-1);
+                    double dy = DirectionVector.Y * TempShipSpeed * (-1);
                     double distanceActual = DestinationPoint.Distance(UserState.SectorFineGridLocation);
                     
                     // Since the frame only refreshes the period of the velocity, our distance will always be 1.0
-                    if (distanceActual <= 1.0)
+                    if (distanceActual <= 30.0)
                     {
                         UserState.SectorFineGridLocation.X = DestinationPoint.X;
                         UserState.SectorFineGridLocation.Y = DestinationPoint.Y;
@@ -172,26 +173,31 @@ namespace SpaceAge.Controls
                     }
                     else
                     {
-                        PointD TestPoint = new PointD(0.0, 0.0);
-                        TestPoint.X = UserState.SectorFineGridLocation.X + dx;
-                        if (distanceActual > TestPoint.Distance(DestinationPoint))
-                        {
-                            UserState.SectorFineGridLocation.X += dx;
-                        }
-                        else
-                        {
-                            UserState.SectorFineGridLocation.X -= dx;
-                        }
-                        distanceActual = DestinationPoint.Distance(UserState.SectorFineGridLocation);
-                        TestPoint.Y = UserState.SectorFineGridLocation.Y + dy;
-                        if (distanceActual > TestPoint.Distance(DestinationPoint))
-                        {
-                            UserState.SectorFineGridLocation.Y += dy;
-                        }
-                        else
-                        {
-                            UserState.SectorFineGridLocation.Y -= dy;
-                        }
+                        UserState.SectorFineGridLocation.X += dx;
+                        UserState.SectorFineGridLocation.Y += dy;
+
+                        //PointD TestPoint = new PointD(UserState.SectorFineGridLocation);
+                        //TestPoint.X = UserState.SectorFineGridLocation.X + dx;
+                        //if (distanceActual > TestPoint.Distance(DestinationPoint))
+                        //{
+                        //    UserState.SectorFineGridLocation.X += dx;
+                        //}
+                        //else
+                        //{
+                        //    UserState.SectorFineGridLocation.X -= dx;
+                        //}
+
+                        //distanceActual = DestinationPoint.Distance(UserState.SectorFineGridLocation);
+                        //TestPoint = new PointD(UserState.SectorFineGridLocation);
+                        //TestPoint.Y = UserState.SectorFineGridLocation.Y + dy;
+                        //if (distanceActual > TestPoint.Distance(DestinationPoint))
+                        //{
+                        //    UserState.SectorFineGridLocation.Y += dy;
+                        //}
+                        //else
+                        //{
+                        //    UserState.SectorFineGridLocation.Y -= dy;
+                        //}
 
 
                         //TestPoint.Y = UserState.SectorFineGridLocation.Y + dy;
@@ -246,11 +252,14 @@ namespace SpaceAge.Controls
 
             // Convert graphics point to sector coordinate. loss of precision is expected of course
             ClickPoint = e.Location;
-            DestinationPoint.X = staticGraphics.ScaleCoordinate(ClientRectangle.Height, ClickPoint.X, Sector.MAX_DISTANCE_FROM_AXIS);
-            DestinationPoint.Y = staticGraphics.ScaleCoordinate(ClientRectangle.Width, ClickPoint.Y, Sector.MAX_DISTANCE_FROM_AXIS);
+            DestinationPoint.X = staticGraphics.ScaleCoordinate(ClientRectangle.Width, ClickPoint.X, Sector.MAX_DISTANCE_FROM_AXIS);
+            DestinationPoint.Y = staticGraphics.ScaleCoordinate(ClientRectangle.Height, ClickPoint.Y, Sector.MAX_DISTANCE_FROM_AXIS);
+
 
             DirectionVector.X = UserState.SectorFineGridLocation.X - DestinationPoint.X;
             DirectionVector.Y = UserState.SectorFineGridLocation.Y - DestinationPoint.Y;
+
+            DirectionVector.Normalize();
 
             ClickEnabled = true;
 
