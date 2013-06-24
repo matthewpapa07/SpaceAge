@@ -95,16 +95,16 @@ namespace SpaceAge
                     switch (UserState.progState)
                     {
                         case (int)UserState.ShipOrientationState.Down:
-                            im.RotateFlip(RotateFlipType.Rotate180FlipNone);
-                            break;
-                        case (int)UserState.ShipOrientationState.Up:
-                            im.RotateFlip(RotateFlipType.RotateNoneFlipNone);
-                            break;
-                        case (int)UserState.ShipOrientationState.Left:
                             im.RotateFlip(RotateFlipType.Rotate270FlipNone);
                             break;
-                        case (int)UserState.ShipOrientationState.Right:
+                        case (int)UserState.ShipOrientationState.Up:
                             im.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                            break;
+                        case (int)UserState.ShipOrientationState.Left:
+                            im.RotateFlip(RotateFlipType.RotateNoneFlipNone);
+                            break;
+                        case (int)UserState.ShipOrientationState.Right:
+                            im.RotateFlip(RotateFlipType.Rotate180FlipNone);
                             break;
                         default:
                             break;
