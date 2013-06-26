@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 
 namespace SpaceAge
 {
@@ -20,6 +21,12 @@ namespace SpaceAge
         {
             X = InPoint.X;
             Y = InPoint.Y;
+        }
+
+        public void ReplaceDataFromPoint(Point inPoint)
+        {
+            X = inPoint.X;
+            Y = inPoint.Y;
         }
 
         public double Distance(PointD OtherPt)
@@ -48,6 +55,11 @@ namespace SpaceAge
             }
             else
                 throw new FormatException();
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

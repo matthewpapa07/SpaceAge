@@ -20,6 +20,7 @@ namespace SpaceAge
         public List<MerchantSpaceShip> PresentSpaceShips = new List<MerchantSpaceShip>(STARTING_SPACESHIP_SPACES);
         public List<ItemStore> RegisteredItemStores = new List<ItemStore>(20); //Register ItemStores here to avoid tight nested loop in the AI
         public Point[] RandomBackgroundStars;
+        public StarSystem HighlightSystem;
 
         public static StaticGraphics staticGraphics = StaticGraphics.getStaticGraphics();
 
@@ -135,6 +136,29 @@ namespace SpaceAge
                     continue;
                 StarSys.stars[0].DrawStarGraphics(GraphicsToUse, DrawX, DrawY);
             }
+
+            if (HighlightSystem != null)
+            {
+                GraphicsToUse.FillEllipse(staticGraphics.blueBrush, HighlightSystem.stars[0].StarRectangle);
+            }
+        }
+        public StarSystem ClickForObject(PointD ClickCoordinates)
+        {
+            PointD TempPointD = new PointD(0.0,0.0);
+            double PointDistance;
+
+            foreach (StarSystem StarSys in StarSystemsList)
+            {
+                TempPointD.ReplaceDataFromPoint(StarSys.StarSystemLocation);
+                PointDistance = TempPointD.Distance(ClickCoordinates);
+                if (PointDistance <= StarSys.stars[0].StarRectangle.Height)
+                {
+                    HighlightSystem = StarSys;
+                    return StarSys;
+                }
+            }
+
+            return null;
         }
 
         //public void setParent(Universe u)

@@ -8,6 +8,7 @@ namespace SpaceAge
 {
     static class UserState
     {
+        public static volatile bool ThreadsRunning = true;
         public static int USER_MAX_FUEL_AMOUNT = 1500;
         public static int USER_STARTING_FUNDS = 20000;
         public static int USER_FUEL_USED_PER_SECTOR = 5;    //TODO: Scale with ship later

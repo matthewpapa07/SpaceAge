@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.SectorBrowserSidePanel = new System.Windows.Forms.Panel();
+            this.listview_sectoritems = new System.Windows.Forms.ListView();
             this.label1 = new System.Windows.Forms.Label();
             this.wpnt_txt = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.listview_sectoritems = new System.Windows.Forms.ListView();
             this.sectorMapComplex1 = new SpaceAge.Controls.SectorMapComplex();
             this.SectorBrowserSidePanel.SuspendLayout();
             this.SuspendLayout();
@@ -54,6 +54,14 @@
             this.SectorBrowserSidePanel.Name = "SectorBrowserSidePanel";
             this.SectorBrowserSidePanel.Size = new System.Drawing.Size(201, 620);
             this.SectorBrowserSidePanel.TabIndex = 1;
+            // 
+            // listview_sectoritems
+            // 
+            this.listview_sectoritems.Location = new System.Drawing.Point(6, 114);
+            this.listview_sectoritems.Name = "listview_sectoritems";
+            this.listview_sectoritems.Size = new System.Drawing.Size(191, 148);
+            this.listview_sectoritems.TabIndex = 5;
+            this.listview_sectoritems.UseCompatibleStateImageBehavior = false;
             // 
             // label1
             // 
@@ -106,14 +114,6 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // listview_sectoritems
-            // 
-            this.listview_sectoritems.Location = new System.Drawing.Point(6, 114);
-            this.listview_sectoritems.Name = "listview_sectoritems";
-            this.listview_sectoritems.Size = new System.Drawing.Size(191, 148);
-            this.listview_sectoritems.TabIndex = 5;
-            this.listview_sectoritems.UseCompatibleStateImageBehavior = false;
-            // 
             // sectorMapComplex1
             // 
             this.sectorMapComplex1.BackColor = System.Drawing.Color.Black;
@@ -132,6 +132,8 @@
             this.Controls.Add(this.SectorBrowserSidePanel);
             this.Name = "SectorBrowser";
             this.Size = new System.Drawing.Size(807, 620);
+            this.Enter += new System.EventHandler(this.SectorBrowser_Enter);
+            this.Leave += new System.EventHandler(this.SectorBrowser_Leave);
             this.SectorBrowserSidePanel.ResumeLayout(false);
             this.SectorBrowserSidePanel.PerformLayout();
             this.ResumeLayout(false);
