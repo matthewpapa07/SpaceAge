@@ -116,7 +116,7 @@ namespace SpaceAge.Controls
 
         public void RefreshScreen()
         {
-            while (!this.IsDisposed)
+            while (MapRefreshThread.IsAlive && UserState.ThreadsRunning)
             {
                 if (PlayerShipInTransit != null && this.IsHandleCreated == true)
                 {
@@ -150,7 +150,7 @@ namespace SpaceAge.Controls
         {
             // Only refresh position as fast as the ship's rate of speed
             double WaitAmount = (1/(double)TempShipSpeed)*1000;
-            while (!this.IsDisposed && this.IsHandleCreated == true)
+            while (ShipVelocityThread.IsAlive && UserState.ThreadsRunning)
             {
 
                 if (!DestinationPoint.Equals(UserState.SectorFineGridLocation) && ClickEnabled)
@@ -175,47 +175,6 @@ namespace SpaceAge.Controls
                     {
                         UserState.SectorFineGridLocation.X += dx;
                         UserState.SectorFineGridLocation.Y += dy;
-
-                        //PointD TestPoint = new PointD(UserState.SectorFineGridLocation);
-                        //TestPoint.X = UserState.SectorFineGridLocation.X + dx;
-                        //if (distanceActual > TestPoint.Distance(DestinationPoint))
-                        //{
-                        //    UserState.SectorFineGridLocation.X += dx;
-                        //}
-                        //else
-                        //{
-                        //    UserState.SectorFineGridLocation.X -= dx;
-                        //}
-
-                        //distanceActual = DestinationPoint.Distance(UserState.SectorFineGridLocation);
-                        //TestPoint = new PointD(UserState.SectorFineGridLocation);
-                        //TestPoint.Y = UserState.SectorFineGridLocation.Y + dy;
-                        //if (distanceActual > TestPoint.Distance(DestinationPoint))
-                        //{
-                        //    UserState.SectorFineGridLocation.Y += dy;
-                        //}
-                        //else
-                        //{
-                        //    UserState.SectorFineGridLocation.Y -= dy;
-                        //}
-
-
-                        //TestPoint.Y = UserState.SectorFineGridLocation.Y + dy;
-                        //UserState.SectorFineGridLocation.X += dx;
-                        //UserState.SectorFineGridLocation.Y += dy;
-                        //double absLocation = UserState.SectorFineGridLocation.X + dx;
-                        //if (absLocation > UserState.SectorFineGridLocation.X)
-                        //    UserState.SectorFineGridLocation.X -= dx;
-                        //else
-                        //    UserState.SectorFineGridLocation.X += dx;
-
-                        //absLocation = UserState.SectorFineGridLocation.Y + dy;
-                        //if (absLocation > UserState.SectorFineGridLocation.Y)
-                        //    UserState.SectorFineGridLocation.Y -= dy;
-                        //else
-                        //    UserState.SectorFineGridLocation.Y += dy;
-
-
                     }
 
                 }
@@ -263,8 +222,8 @@ namespace SpaceAge.Controls
 
             ClickEnabled = true;
 
-            Console.WriteLine("Double click at X:" + ClickPoint.X + " Y:" + ClickPoint.Y + " Angle:" + DirectionVector.GetAngle());
-
+            //Console.WriteLine("Double click at X:" + ClickPoint.X + " Y:" + ClickPoint.Y + " Angle:" + DirectionVector.GetAngle());
+            currentSector.ClickForObject(DestinationPoint);
         }
     }
 }

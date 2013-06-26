@@ -109,5 +109,11 @@ namespace SpaceAge
             SetMainPanel(previousControl);
         }
 
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            // close out all threads
+            UserState.ThreadsRunning = false;
+            base.OnFormClosing(e);
+        }
     }
 }
