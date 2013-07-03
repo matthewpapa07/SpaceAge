@@ -36,12 +36,18 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.sectorMapComplex1 = new SpaceAge.Controls.SectorMapComplex();
+            this.label2 = new System.Windows.Forms.Label();
+            this.listview_sectorships = new System.Windows.Forms.ListView();
+            this.label3 = new System.Windows.Forms.Label();
             this.SectorBrowserSidePanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // SectorBrowserSidePanel
             // 
             this.SectorBrowserSidePanel.BackColor = System.Drawing.Color.Black;
+            this.SectorBrowserSidePanel.Controls.Add(this.label3);
+            this.SectorBrowserSidePanel.Controls.Add(this.listview_sectorships);
+            this.SectorBrowserSidePanel.Controls.Add(this.label2);
             this.SectorBrowserSidePanel.Controls.Add(this.listview_sectoritems);
             this.SectorBrowserSidePanel.Controls.Add(this.label1);
             this.SectorBrowserSidePanel.Controls.Add(this.wpnt_txt);
@@ -57,7 +63,7 @@
             // 
             // listview_sectoritems
             // 
-            this.listview_sectoritems.Location = new System.Drawing.Point(6, 114);
+            this.listview_sectoritems.Location = new System.Drawing.Point(6, 133);
             this.listview_sectoritems.Name = "listview_sectoritems";
             this.listview_sectoritems.Size = new System.Drawing.Size(191, 148);
             this.listview_sectoritems.TabIndex = 5;
@@ -66,18 +72,18 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 65);
+            this.label1.Location = new System.Drawing.Point(7, 65);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(110, 13);
+            this.label1.Size = new System.Drawing.Size(128, 13);
             this.label1.TabIndex = 4;
-            this.label1.Text = "Throttle Meter: TODO";
+            this.label1.Text = "Throttle Meter: TODO???";
             // 
             // wpnt_txt
             // 
             this.wpnt_txt.AutoSize = true;
             this.wpnt_txt.BackColor = System.Drawing.Color.Black;
             this.wpnt_txt.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.wpnt_txt.Location = new System.Drawing.Point(13, 43);
+            this.wpnt_txt.Location = new System.Drawing.Point(7, 43);
             this.wpnt_txt.Name = "wpnt_txt";
             this.wpnt_txt.Size = new System.Drawing.Size(107, 13);
             this.wpnt_txt.TabIndex = 3;
@@ -124,6 +130,32 @@
             this.sectorMapComplex1.TabIndex = 2;
             this.sectorMapComplex1.Click += new System.EventHandler(this.sectorMapComplex1_Click);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(7, 115);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(68, 13);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "Star Systems";
+            // 
+            // listview_sectorships
+            // 
+            this.listview_sectorships.Location = new System.Drawing.Point(6, 301);
+            this.listview_sectorships.Name = "listview_sectorships";
+            this.listview_sectorships.Size = new System.Drawing.Size(191, 148);
+            this.listview_sectorships.TabIndex = 7;
+            this.listview_sectorships.UseCompatibleStateImageBehavior = false;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(7, 285);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(33, 13);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Ships";
+            // 
             // SectorBrowser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -150,5 +182,8 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ListView listview_sectoritems;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ListView listview_sectorships;
+        private System.Windows.Forms.Label label2;
     }
 }

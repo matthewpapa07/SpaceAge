@@ -19,20 +19,45 @@ namespace SpaceAge.Controls
             InitializeComponent();
 
             GraphicsLib.ApplyListviewProperties(listview_sectoritems);
+            GraphicsLib.ApplyListviewProperties(listview_sectorships);
+
             Sector.SetSectorObjectListViewItemsMini(listview_sectoritems);
-            
+            SpaceShip.SpaceShipObjectListViewItemsMini(listview_sectorships);
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             DrawStuff(e.Graphics);
             //sectorMapComplex1.KeyboardCheckThread.Start();
+            RefreshShipsLv();
+            RefreshSectorItemsLv();
 
         }
 
         public void DrawStuff(Graphics GraphicsToUse)
         {
 
+        }
+
+        void RefreshShipsLv()
+        {
+            // TODO: Determine if refresh is even needed
+            listview_sectorships.Items.Clear();
+            foreach (SpaceShip sps in CurrentSector.PresentSpaceShips)
+            {
+                listview_sectorships.Items.Add(sps.SpaceShipListViewItem);
+            }
+        }
+
+        void RefreshSectorItemsLv()
+        {
+            // TODO: Determine if refresh is even needed
+            listview_sectoritems.Items.Clear();
+            foreach (StarSystem sss in CurrentSector.StarSystemsList)
+            {
+                listview_sectoritems.Items.Add(sss.StarSystemListViewItem);
+            }
+           
         }
 
         public void UserKeyPress(int Key)

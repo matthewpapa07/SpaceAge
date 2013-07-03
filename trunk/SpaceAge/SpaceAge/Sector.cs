@@ -139,9 +139,10 @@ namespace SpaceAge
 
             if (HighlightSystem != null)
             {
-                GraphicsToUse.FillEllipse(staticGraphics.blueBrush, HighlightSystem.stars[0].StarRectangle);
+                GraphicsToUse.DrawRectangle(staticGraphics.greenPen, HighlightSystem.stars[0].StarRectangle);
             }
         }
+
         public StarSystem ClickForObject(PointD ClickCoordinates)
         {
             PointD TempPointD = new PointD(0.0,0.0);
@@ -151,13 +152,14 @@ namespace SpaceAge
             {
                 TempPointD.ReplaceDataFromPoint(StarSys.StarSystemLocation);
                 PointDistance = TempPointD.Distance(ClickCoordinates);
-                if (PointDistance <= StarSys.stars[0].StarRectangle.Height)
+                if (PointDistance <= 200 /* StarSys.stars[0].StarRectangle.Height */)
                 {
                     HighlightSystem = StarSys;
                     return StarSys;
                 }
             }
 
+            HighlightSystem = null;
             return null;
         }
 

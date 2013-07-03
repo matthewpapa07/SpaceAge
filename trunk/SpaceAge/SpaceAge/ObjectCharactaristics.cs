@@ -70,7 +70,7 @@ namespace SpaceAge
         // Finally an enum to give the right offset for each enum
         public enum ResourceCommodityType { CommonAtmosphere = 0, RareAtmosphere, CommonElement, RareElement, ResourceStatic };
 
-        //
+        // TODO: Move to class specific values, names etc
         // Charactaristics assocaited with items
         //
         public static string[] ItemSizeStaticString = { "Extra Small", "Small", "Medium", "Large", "Extra Large", "N/A" };
