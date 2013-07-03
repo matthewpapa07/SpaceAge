@@ -28,6 +28,9 @@ namespace SpaceAge
             base(inWeaponMounts, inDefensiveMounts, inEngineMounts, inSpecialMounts)
         {
             MerchantId = GlobalMerchantId++;
+
+            SpaceShipName = "Merch: " + MerchantId;
+
         }
 
         public void Live()

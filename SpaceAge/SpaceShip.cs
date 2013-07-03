@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace SpaceAge
 {
@@ -36,6 +37,16 @@ namespace SpaceAge
         public List<ShipComponents.ShipEngines> EngineMounts = new List<ShipComponents.ShipEngines>();
         public List<Item> SpecialMounts = new List<Item>();
 
+        /// <summary>
+        /// Effective instance data. Much of this still needs to be implemented
+        /// </summary>
+        /// 
+        public int SpaceShipHpPercentage = 100; // Change this to accessor method
+        public ListViewItem SpaceShipListViewItem;
+        public string SpaceShipName = "TODO:Name";
+        SpaceShipConstant.SpaceShipClass SpaceShipClass = SpaceShipConstant.SpaceShipClass.Generic;
+        SpaceShipConstant.SpaceShipSize SpaceShipSize = SpaceShipConstant.SpaceShipSize.Medium;
+
         public SpaceShip(int inWeaponMounts, int inDefensiveMounts, int inEngineMounts, int inSpecialMounts)
         {
             SpaceShipCargo = new CargoItemList(100000, this); // Hard code large cargo list size for now...
@@ -59,6 +70,8 @@ namespace SpaceAge
             RefreshSpaceShipStats();
 
             ShipInitialized = true;
+
+            RefreshSpaceShipListViewItem();
         }
 
         /// <summary>
@@ -200,5 +213,46 @@ namespace SpaceAge
                 }
             }
         }
+
+        public static void SpaceShipObjectListViewItemsMini(ListView ui_SpaceShipList)
+        {
+            ui_SpaceShipList.Columns.Clear();
+            //
+            // Add columns
+            //
+            ui_SpaceShipList.Columns.Add("Name", 40);
+            ui_SpaceShipList.Columns.Add("HP %", 40);
+            ui_SpaceShipList.Columns.Add("Class", 50);
+            ui_SpaceShipList.Columns.Add("Size", 50);
+        }
+
+        void RefreshSpaceShipListViewItem()
+        {
+            if (SpaceShipListViewItem == null)
+            {
+                SpaceShipListViewItem = new ListViewItem(SpaceShipName);
+                SpaceShipListViewItem.SubItems.Add("100%"); // TODO once combat implemented
+                SpaceShipListViewItem.SubItems.Add(SpaceShipConstant.SpaceShipClassString[(int)SpaceShipClass]);
+                SpaceShipListViewItem.SubItems.Add(SpaceShipConstant.SpaceShipSizeString[(int)SpaceShipSize]);
+            }
+            else
+            {
+                // TODO: Refresh these values after they might have changed
+            }
+        }
+    }
+
+    static class SpaceShipConstant
+    {
+        //
+        // Commonly Associated with SpaceShip
+        //
+        public enum SpaceShipClass { Generic, Merchant };
+        public static string[] SpaceShipClassString = { "Generic", "Merchant" };
+
+        public static string[] SpaceShipSizeString = { "Extra Small", "Small", "Medium", "Large", "Extra Large", "N/A" };
+        public enum SpaceShipSize { ExtraSmall, Small, Medium, Large, ExraLarge, NoSize };
+        //public static int[] ItemSizeStatMultiplier = { 1, 3, 10, 25, 50, 1 };
+        //public static int[] ItemSizeStatDivider = { 5, 4, 3, 2, 1, 1 };
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace SpaceAge
 {
@@ -24,6 +25,8 @@ namespace SpaceAge
         public Sector parent;
         public string SystemName;
 
+        public ListViewItem StarSystemListViewItem;
+
 
         public StarSystem(Sector s, Point location)
         {
@@ -31,6 +34,11 @@ namespace SpaceAge
             LocalStarSystemNumber = GlobalStarSystemNumber++;
             generateStarSystem();
             StarSystemLocation = location;
+
+            StarSystemListViewItem = new ListViewItem(SystemName);
+            StarSystemListViewItem.SubItems.Add(stars.Length.ToString());
+            StarSystemListViewItem.SubItems.Add(planets.Length.ToString());
+            StarSystemListViewItem.SubItems.Add("N/A");
         }
 
         public void generateStarSystem()
