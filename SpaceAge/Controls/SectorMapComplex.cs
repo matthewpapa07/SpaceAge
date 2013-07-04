@@ -107,6 +107,8 @@ namespace SpaceAge.Controls
                 GraphicsToUse.FillEllipse(staticGraphics.greenBrush, waypointRect);
                 
             }
+
+            GraphicsToUse.DrawRectangle(staticGraphics.redPen, this.ClientRectangle);
         }
 
         public void ShipMoverDelegate()

@@ -23,15 +23,14 @@ namespace SpaceAge.Controls
 
             Sector.SetSectorObjectListViewItemsMini(listview_sectoritems);
             SpaceShip.SpaceShipObjectListViewItemsMini(listview_sectorships);
+
+            RefreshShipsLv();
+            RefreshSectorItemsLv();
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             DrawStuff(e.Graphics);
-            //sectorMapComplex1.KeyboardCheckThread.Start();
-            RefreshShipsLv();
-            RefreshSectorItemsLv();
-
         }
 
         public void DrawStuff(Graphics GraphicsToUse)
@@ -41,21 +40,37 @@ namespace SpaceAge.Controls
 
         void RefreshShipsLv()
         {
+            ListViewItem tempLv;
             // TODO: Determine if refresh is even needed
-            listview_sectorships.Items.Clear();
-            foreach (SpaceShip sps in CurrentSector.PresentSpaceShips)
+            try
             {
-                listview_sectorships.Items.Add(sps.SpaceShipListViewItem);
+                listview_sectorships.Items.Clear();
+                foreach (SpaceShip sps in CurrentSector.PresentSpaceShips)
+                {
+                    tempLv = (ListViewItem)sps.SpaceShipListViewItem.Clone();
+                    listview_sectorships.Items.Add(tempLv);
+                }
+            }
+            catch
+            {
             }
         }
 
         void RefreshSectorItemsLv()
         {
+            ListViewItem tempLv;
             // TODO: Determine if refresh is even needed
-            listview_sectoritems.Items.Clear();
-            foreach (StarSystem sss in CurrentSector.StarSystemsList)
+            try
             {
-                listview_sectoritems.Items.Add(sss.StarSystemListViewItem);
+                listview_sectoritems.Items.Clear();
+                foreach (StarSystem sss in CurrentSector.StarSystemsList)
+                {
+                    tempLv = (ListViewItem)sss.StarSystemListViewItem.Clone();
+                    listview_sectoritems.Items.Add(tempLv);
+                }
+            }
+            catch
+            {
             }
            
         }

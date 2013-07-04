@@ -97,10 +97,11 @@ namespace SpaceAge
             //
             // Add columns
             //
-            ui_SectorList.Columns.Add("Name", 40);
-            ui_SectorList.Columns.Add("Stars", 40);
-            ui_SectorList.Columns.Add("Planets", 50);
-            ui_SectorList.Columns.Add("Soverignty", 50);
+            double BoxLength = ui_SectorList.Width;
+            ui_SectorList.Columns.Add("Name", (int) (BoxLength*.35));
+            ui_SectorList.Columns.Add("Stars", (int) (BoxLength*.18));
+            ui_SectorList.Columns.Add("Planets", (int) (BoxLength*.20));
+            ui_SectorList.Columns.Add("Soverignty", (int)(BoxLength* .25));
         }
 
         public void DrawSectorGraphics(Graphics GraphicsToUse, Rectangle RectToUse, int StartX, int StartY, int SegWidth, int SegHeight)
