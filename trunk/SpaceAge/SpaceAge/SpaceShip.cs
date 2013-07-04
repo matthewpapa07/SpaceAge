@@ -220,10 +220,11 @@ namespace SpaceAge
             //
             // Add columns
             //
-            ui_SpaceShipList.Columns.Add("Name", 40);
-            ui_SpaceShipList.Columns.Add("HP %", 40);
-            ui_SpaceShipList.Columns.Add("Class", 50);
-            ui_SpaceShipList.Columns.Add("Size", 50);
+            double BoxLength = ui_SpaceShipList.Width;
+            ui_SpaceShipList.Columns.Add("Name", (int) (BoxLength * .30));
+            ui_SpaceShipList.Columns.Add("HP %", (int)(BoxLength * .20));
+            ui_SpaceShipList.Columns.Add("Class", (int)(BoxLength * .25));
+            ui_SpaceShipList.Columns.Add("Size", (int)(BoxLength * .20));
         }
 
         void RefreshSpaceShipListViewItem()
@@ -250,7 +251,7 @@ namespace SpaceAge
         public enum SpaceShipClass { Generic, Merchant };
         public static string[] SpaceShipClassString = { "Generic", "Merchant" };
 
-        public static string[] SpaceShipSizeString = { "Extra Small", "Small", "Medium", "Large", "Extra Large", "N/A" };
+        public static string[] SpaceShipSizeString = { "XS", "S", "M", "L", "XL", "N/A" };
         public enum SpaceShipSize { ExtraSmall, Small, Medium, Large, ExraLarge, NoSize };
         //public static int[] ItemSizeStatMultiplier = { 1, 3, 10, 25, 50, 1 };
         //public static int[] ItemSizeStatDivider = { 5, 4, 3, 2, 1, 1 };

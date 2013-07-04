@@ -35,6 +35,8 @@ namespace SpaceAge
         public Pen blackPen = new Pen(Color.Black);
         public Pen greenPen = new Pen(Color.LightYellow, 2);
         public Pen whitePen = new Pen(Color.White);
+        public Pen redPen = new Pen(Color.Red, 2);
+        public Pen bluePen = new Pen(Color.Blue);
 
 
         private StaticGraphics()

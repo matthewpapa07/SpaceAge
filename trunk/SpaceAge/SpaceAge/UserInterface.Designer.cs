@@ -140,7 +140,7 @@
             this.panel1.ForeColor = System.Drawing.Color.White;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 620);
+            this.panel1.Size = new System.Drawing.Size(200, 682);
             this.panel1.TabIndex = 17;
             // 
             // button_sectorBrowser
@@ -227,9 +227,9 @@
             this.label10.AutoSize = true;
             this.label10.Location = new System.Drawing.Point(106, 36);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(48, 13);
+            this.label10.Size = new System.Drawing.Size(57, 13);
             this.label10.TabIndex = 12;
-            this.label10.Text = "Guage 3";
+            this.label10.Text = "Hull: 100%";
             // 
             // label9
             // 
@@ -245,9 +245,9 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(3, 36);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(48, 13);
+            this.label8.Size = new System.Drawing.Size(73, 13);
             this.label8.TabIndex = 10;
-            this.label8.Text = "Guage 1";
+            this.label8.Text = "Shields: 100%";
             // 
             // label7
             // 
@@ -295,9 +295,9 @@
             this.ui_MAINPANEL.BackColor = System.Drawing.Color.Black;
             this.ui_MAINPANEL.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ui_MAINPANEL.Location = new System.Drawing.Point(200, 0);
-            this.ui_MAINPANEL.MinimumSize = new System.Drawing.Size(800, 620);
+            this.ui_MAINPANEL.MinimumSize = new System.Drawing.Size(984, 682);
             this.ui_MAINPANEL.Name = "ui_MAINPANEL";
-            this.ui_MAINPANEL.Size = new System.Drawing.Size(800, 620);
+            this.ui_MAINPANEL.Size = new System.Drawing.Size(984, 682);
             this.ui_MAINPANEL.TabIndex = 18;
             // 
             // userFuelMeter1
@@ -320,7 +320,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1000, 620);
+            this.ClientSize = new System.Drawing.Size(1184, 682);
             this.Controls.Add(this.ui_MAINPANEL);
             this.Controls.Add(this.panel1);
             this.Name = "UserInterface";

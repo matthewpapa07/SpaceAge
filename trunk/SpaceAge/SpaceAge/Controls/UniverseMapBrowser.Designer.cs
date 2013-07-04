@@ -45,16 +45,16 @@
             this.panel1.Controls.Add(this.bSectorView);
             this.panel1.Controls.Add(this.ui_buttonVisitSector);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(620, 0);
+            this.panel1.Location = new System.Drawing.Point(682, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(186, 620);
+            this.panel1.Size = new System.Drawing.Size(302, 682);
             this.panel1.TabIndex = 0;
             // 
             // bSetWaypoint
             // 
-            this.bSetWaypoint.Location = new System.Drawing.Point(3, 130);
+            this.bSetWaypoint.Location = new System.Drawing.Point(153, 255);
             this.bSetWaypoint.Name = "bSetWaypoint";
-            this.bSetWaypoint.Size = new System.Drawing.Size(180, 119);
+            this.bSetWaypoint.Size = new System.Drawing.Size(146, 32);
             this.bSetWaypoint.TabIndex = 3;
             this.bSetWaypoint.Text = "SetWaypoint";
             this.bSetWaypoint.UseVisualStyleBackColor = true;
@@ -63,7 +63,7 @@
             // 
             this.bSectorView.Location = new System.Drawing.Point(3, 255);
             this.bSectorView.Name = "bSectorView";
-            this.bSectorView.Size = new System.Drawing.Size(180, 119);
+            this.bSectorView.Size = new System.Drawing.Size(144, 70);
             this.bSectorView.TabIndex = 2;
             this.bSectorView.Text = "Sector View";
             this.bSectorView.UseVisualStyleBackColor = true;
@@ -71,9 +71,9 @@
             // 
             // ui_buttonVisitSector
             // 
-            this.ui_buttonVisitSector.Location = new System.Drawing.Point(3, 380);
+            this.ui_buttonVisitSector.Location = new System.Drawing.Point(153, 294);
             this.ui_buttonVisitSector.Name = "ui_buttonVisitSector";
-            this.ui_buttonVisitSector.Size = new System.Drawing.Size(180, 119);
+            this.ui_buttonVisitSector.Size = new System.Drawing.Size(146, 30);
             this.ui_buttonVisitSector.TabIndex = 1;
             this.ui_buttonVisitSector.Text = "Sector Details";
             this.ui_buttonVisitSector.UseVisualStyleBackColor = true;
@@ -86,7 +86,7 @@
             this.sectorViewerPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sectorViewerPanel.Location = new System.Drawing.Point(0, 0);
             this.sectorViewerPanel.Name = "sectorViewerPanel";
-            this.sectorViewerPanel.Size = new System.Drawing.Size(620, 620);
+            this.sectorViewerPanel.Size = new System.Drawing.Size(682, 682);
             this.sectorViewerPanel.TabIndex = 1;
             // 
             // UniverseMap1
@@ -97,9 +97,9 @@
             this.UniverseMap1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.UniverseMap1.ForeColor = System.Drawing.Color.White;
             this.UniverseMap1.Location = new System.Drawing.Point(0, 0);
-            this.UniverseMap1.MinimumSize = new System.Drawing.Size(620, 620);
+            this.UniverseMap1.MinimumSize = new System.Drawing.Size(682, 682);
             this.UniverseMap1.Name = "UniverseMap1";
-            this.UniverseMap1.Size = new System.Drawing.Size(620, 620);
+            this.UniverseMap1.Size = new System.Drawing.Size(682, 682);
             this.UniverseMap1.TabIndex = 0;
             // 
             // UniverseMapBrowser
@@ -109,9 +109,9 @@
             this.AutoSize = true;
             this.Controls.Add(this.sectorViewerPanel);
             this.Controls.Add(this.panel1);
-            this.MinimumSize = new System.Drawing.Size(800, 620);
+            this.MinimumSize = new System.Drawing.Size(984, 682);
             this.Name = "UniverseMapBrowser";
-            this.Size = new System.Drawing.Size(806, 620);
+            this.Size = new System.Drawing.Size(984, 682);
             this.panel1.ResumeLayout(false);
             this.sectorViewerPanel.ResumeLayout(false);
             this.sectorViewerPanel.PerformLayout();
