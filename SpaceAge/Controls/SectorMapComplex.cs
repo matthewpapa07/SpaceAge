@@ -12,7 +12,6 @@ namespace SpaceAge.Controls
 {
     partial class SectorMapComplex : UserControl
     {
-        Sector currentSector;
         StaticGraphics staticGraphics = StaticGraphics.getStaticGraphics();
         Image SpaceShipImage;
         VectorD DirectionVector = new VectorD(0.0, 1.0);
@@ -23,7 +22,7 @@ namespace SpaceAge.Controls
         bool ClickEnabled = false;
 
         public int TempShipSpeed = 20;
-        public int TempRefreshRate = 20;  //ms
+        public int TempRefreshRate = 28;  //ms
 
         // For Threads
         public Thread MapRefreshThread;
@@ -38,7 +37,6 @@ namespace SpaceAge.Controls
 
         public SectorMapComplex()
         {
-            currentSector = UserState.getCurrentSector();
             SpaceShipImage = staticGraphics.GetSpaceShip();
             PlayerShipInTransit = new EventToInvoke(ShipMoverDelegate);
             //KeyboardCheck = new EventToInvoke(TakeUserInput);
@@ -67,10 +65,13 @@ namespace SpaceAge.Controls
 
         public void drawSector(Graphics GraphicsToUse)
         {
+            Sector currentSector = UserState.getCurrentSector();
+            CheckSectorBoundary();
+
             Point ShipControlCoordinates = new Point(0, 0);
             //Bitmap RotatedImage;
             Rectangle RectToUse = this.ClientRectangle;
-            if(currentSector != null)
+            if (currentSector != null)
                 currentSector.DrawSectorGraphics(GraphicsToUse, RectToUse, 0, 0, RectToUse.Width, RectToUse.Height);
 
             using (Bitmap RotatedImage = GraphicsLib.RotateBitmap(OriginalImage, ((DirectionVector.GetAngle())) ))
@@ -86,7 +87,8 @@ namespace SpaceAge.Controls
                     Sector.MAX_DISTANCE_FROM_AXIS, 
                     (int)UserState.SectorFineGridLocation.X - SpaceShipImage.Width/2, RectToUse.Width
                     ));
-                GraphicsToUse.DrawImage(RotatedImage,
+                GraphicsToUse.DrawImage(
+                    RotatedImage,
                     ShipControlCoordinates.X,
                     ShipControlCoordinates.Y,
                     35, 35);
@@ -94,7 +96,8 @@ namespace SpaceAge.Controls
 
             if (ClickEnabled)
             {
-                Rectangle waypointRect = new Rectangle(staticGraphics.ScaleCoordinate(
+                Rectangle waypointRect = new Rectangle(
+                    staticGraphics.ScaleCoordinate(
                     Sector.MAX_DISTANCE_FROM_AXIS, 
                     (int)DestinationPoint.X, RectToUse.Width),
                     staticGraphics.ScaleCoordinate(
@@ -147,6 +150,54 @@ namespace SpaceAge.Controls
         //        Thread.Sleep(20);
         //    }
         //}
+
+        public void CheckSectorBoundary()
+        {
+            if (UserState.getCurrentSector() == null)
+                return;
+            Sector TransitionSector = null;
+            int currentX = UserState.getCurrentSector().SectorGridLocation.X;
+            int currentY = UserState.getCurrentSector().SectorGridLocation.Y;
+
+            if (UserState.SectorFineGridLocation.X == 0)
+            {
+                TransitionSector = Universe.getSector(currentX, currentY - 1);
+            }
+            if (UserState.SectorFineGridLocation.X == Sector.MAX_DISTANCE_FROM_AXIS)
+            {
+                TransitionSector = Universe.getSector(currentX, currentY + 1);
+            }
+            if (UserState.SectorFineGridLocation.Y == 0)
+            {
+                TransitionSector = Universe.getSector(currentX - 1, currentY);
+            }
+            if (UserState.SectorFineGridLocation.Y == Sector.MAX_DISTANCE_FROM_AXIS)
+            {
+                TransitionSector = Universe.getSector(currentX + 1, currentY);
+            }
+
+            if (TransitionSector != null)
+            {
+                UserState.setCurrentSector(TransitionSector);
+            }
+
+            if (UserState.SectorFineGridLocation.X == 0)
+            {
+                UserState.SectorFineGridLocation.X = Sector.MAX_DISTANCE_FROM_AXIS - 20;
+            }
+            if (UserState.SectorFineGridLocation.X == Sector.MAX_DISTANCE_FROM_AXIS)
+            {
+                UserState.SectorFineGridLocation.X = 20;
+            }
+            if (UserState.SectorFineGridLocation.Y == 0)
+            {
+                UserState.SectorFineGridLocation.Y = Sector.MAX_DISTANCE_FROM_AXIS - 20;
+            }
+            if (UserState.SectorFineGridLocation.Y == Sector.MAX_DISTANCE_FROM_AXIS)
+            {
+                UserState.SectorFineGridLocation.Y = 20;
+            }
+        }
 
         public void UpdateMovingShipsPosition()
         {
@@ -225,7 +276,38 @@ namespace SpaceAge.Controls
             ClickEnabled = true;
 
             //Console.WriteLine("Double click at X:" + ClickPoint.X + " Y:" + ClickPoint.Y + " Angle:" + DirectionVector.GetAngle());
-            currentSector.ClickForObject(DestinationPoint);
+            UserState.getCurrentSector().ClickForObject(DestinationPoint);
+        }
+
+        public void ExecuteMoveSector(Sector.GateDirections GateDir)
+        {
+            switch (GateDir)
+            {
+                case Sector.GateDirections.North:
+                    DestinationPoint.Y = 0;
+                    DestinationPoint.X = UserState.SectorFineGridLocation.X;
+                    break;
+                case Sector.GateDirections.South:
+                    DestinationPoint.Y = Sector.MAX_DISTANCE_FROM_AXIS;
+                    DestinationPoint.X = UserState.SectorFineGridLocation.X;
+                    break;
+                case Sector.GateDirections.East:
+                    DestinationPoint.X = Sector.MAX_DISTANCE_FROM_AXIS;
+                    DestinationPoint.Y = UserState.SectorFineGridLocation.Y;
+                    break;
+                case Sector.GateDirections.West:
+                    DestinationPoint.X = 0;
+                    DestinationPoint.Y = UserState.SectorFineGridLocation.Y;
+                    break;
+                default:
+                    break;
+            }
+
+            DirectionVector.X = UserState.SectorFineGridLocation.X - DestinationPoint.X;
+            DirectionVector.Y = UserState.SectorFineGridLocation.Y - DestinationPoint.Y;
+
+            DirectionVector.Normalize();
+            ClickEnabled = true;
         }
     }
 }

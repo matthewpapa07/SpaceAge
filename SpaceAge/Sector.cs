@@ -20,9 +20,10 @@ namespace SpaceAge
         public List<MerchantSpaceShip> PresentSpaceShips = new List<MerchantSpaceShip>(STARTING_SPACESHIP_SPACES);
         public List<ItemStore> RegisteredItemStores = new List<ItemStore>(20); //Register ItemStores here to avoid tight nested loop in the AI
         public Point[] RandomBackgroundStars;
-        public StarSystem HighlightSystem;
+        public static StarSystem HighlightSystem;
 
         public static StaticGraphics staticGraphics = StaticGraphics.getStaticGraphics();
+        public enum GateDirections { North, South, East, West };
 
         public Sector(int x, int y)
         {
@@ -138,7 +139,7 @@ namespace SpaceAge
                 StarSys.stars[0].DrawStarGraphics(GraphicsToUse, DrawX, DrawY);
             }
 
-            if (HighlightSystem != null)
+            if (HighlightSystem != null && StarSystemsList.Contains(HighlightSystem))
             {
                 GraphicsToUse.DrawRectangle(staticGraphics.greenPen, HighlightSystem.stars[0].StarRectangle);
             }
