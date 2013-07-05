@@ -38,7 +38,7 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.sectorMapComplex1 = new SpaceAge.Controls.SectorMapComplex();
+            this.sectorNavigationPane1 = new SpaceAge.Controls.SectorNavigationPane();
             this.SectorBrowserSidePanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -146,24 +146,20 @@
             this.button1.TabIndex = 0;
             this.button1.Text = "Toggle Waypoint";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // sectorMapComplex1
+            // sectorNavigationPane1
             // 
-            this.sectorMapComplex1.BackColor = System.Drawing.Color.Black;
-            this.sectorMapComplex1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.sectorMapComplex1.Location = new System.Drawing.Point(0, 0);
-            this.sectorMapComplex1.MinimumSize = new System.Drawing.Size(682, 682);
-            this.sectorMapComplex1.Name = "sectorMapComplex1";
-            this.sectorMapComplex1.Size = new System.Drawing.Size(682, 682);
-            this.sectorMapComplex1.TabIndex = 2;
-            this.sectorMapComplex1.Click += new System.EventHandler(this.sectorMapComplex1_Click);
+            this.sectorNavigationPane1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.sectorNavigationPane1.Location = new System.Drawing.Point(0, 0);
+            this.sectorNavigationPane1.Name = "sectorNavigationPane1";
+            this.sectorNavigationPane1.Size = new System.Drawing.Size(682, 682);
+            this.sectorNavigationPane1.TabIndex = 2;
             // 
             // SectorBrowser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.sectorMapComplex1);
+            this.Controls.Add(this.sectorNavigationPane1);
             this.Controls.Add(this.SectorBrowserSidePanel);
             this.Name = "SectorBrowser";
             this.Size = new System.Drawing.Size(984, 682);
@@ -180,7 +176,6 @@
         private System.Windows.Forms.Panel SectorBrowserSidePanel;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
-        private SectorMapComplex sectorMapComplex1;
         private System.Windows.Forms.Label wpnt_txt;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label1;
@@ -188,5 +183,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ListView listview_sectorships;
         private System.Windows.Forms.Label label2;
+        private SectorNavigationPane sectorNavigationPane1;
     }
 }

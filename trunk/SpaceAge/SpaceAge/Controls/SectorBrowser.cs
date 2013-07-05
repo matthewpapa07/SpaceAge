@@ -114,8 +114,8 @@ namespace SpaceAge.Controls
 
         private void SectorBrowser_Enter(object sender, EventArgs e)
         {
-            sectorMapComplex1.MapRefreshThread.Start();
-            sectorMapComplex1.ShipVelocityThread.Start();
+            sectorNavigationPane1.LocalSectorMapComplex.MapRefreshThread.Start();
+            sectorNavigationPane1.LocalSectorMapComplex.ShipVelocityThread.Start();
         }
 
     }

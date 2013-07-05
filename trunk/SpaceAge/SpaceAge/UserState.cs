@@ -14,9 +14,8 @@ namespace SpaceAge
         public static int USER_FUEL_USED_PER_SECTOR = 5;    //TODO: Scale with ship later
 
         public static Sector[,] theGrid;
-        public static Point UniverseSectorGridLocation;
         public static PointD SectorFineGridLocation;
-        private static Sector currentSector;
+        private static Sector CurrentSectorUser;
 
         public enum ShipOrientationState { Up = 1, Down = 2, Left = 3, Right = 4 };
         public static int progState;
@@ -40,9 +39,8 @@ namespace SpaceAge
             int startingColumn = Constants.UNIVERSE_COLUMNS / 2;
 
             theGrid = new Sector[Constants.MAP_SECTORS_ROWS, Constants.MAP_SECTORS_COLUMNS];
-            UniverseSectorGridLocation = new Point(startingRow, startingColumn);
             SectorFineGridLocation = new PointD(Sector.MAX_DISTANCE_FROM_AXIS / 2, Sector.MAX_DISTANCE_FROM_AXIS / 2);
-            currentSector = Universe.getSector(startingRow, startingColumn);
+            CurrentSectorUser = Universe.getSector(startingRow, startingColumn);
             
             progState = (int)ShipOrientationState.Up;
             progStateLast = (int)ShipOrientationState.Up;
@@ -52,11 +50,9 @@ namespace SpaceAge
             updateGrid();
         }
 
-        public static int moveRight()
+        public static int moveRightUniverseBrowser()
         {
-            int currentX = UniverseSectorGridLocation.X;
-            int currentY = UniverseSectorGridLocation.Y;
-            Sector currentSector;
+            Sector prospectiveSector;
 
             if (onEachTravel() == Constants.FAILURE)
                 return Constants.FAILURE;
@@ -64,10 +60,10 @@ namespace SpaceAge
             progStateLast = progState;
             progState = (int)ShipOrientationState.Right;
 
-            currentSector = Universe.getSector(currentX + 1, currentY);
-            if (currentSector != null)
+            prospectiveSector = Universe.getSector(CurrentSectorUser.SectorGridLocation.X, CurrentSectorUser.SectorGridLocation.Y + 1);
+            if (prospectiveSector != null)
             {
-                UniverseSectorGridLocation.X = currentX + 1;
+                CurrentSectorUser = prospectiveSector;
                 updateGrid();
                 return Constants.SUCCESS;
             }
@@ -77,11 +73,9 @@ namespace SpaceAge
             }
         }
 
-        public static int moveLeft()
+        public static int moveLeftUniverseBrowser()
         {
-            int currentX = UniverseSectorGridLocation.X;
-            int currentY = UniverseSectorGridLocation.Y;
-            Sector currentSector;
+            Sector prospectiveSector;
 
             if (onEachTravel() == Constants.FAILURE)
                 return Constants.FAILURE;
@@ -89,10 +83,10 @@ namespace SpaceAge
             progStateLast = progState;
             progState = (int)ShipOrientationState.Left;
 
-            currentSector = Universe.getSector(currentX - 1, currentY);
-            if (currentSector != null)
+            prospectiveSector = Universe.getSector(CurrentSectorUser.SectorGridLocation.X, CurrentSectorUser.SectorGridLocation.Y - 1);
+            if (prospectiveSector != null)
             {
-                UniverseSectorGridLocation.X = currentX - 1;
+                CurrentSectorUser = prospectiveSector;
                 updateGrid();
                 return Constants.SUCCESS;
             }
@@ -102,11 +96,9 @@ namespace SpaceAge
             }
         }
 
-        public static int moveDown()
+        public static int moveDownUniverseBrowser()
         {
-            int currentX = UniverseSectorGridLocation.X;
-            int currentY = UniverseSectorGridLocation.Y;
-            Sector currentSector;
+            Sector prospectiveSector;
 
             if (onEachTravel() == Constants.FAILURE)
                 return Constants.FAILURE;
@@ -114,10 +106,10 @@ namespace SpaceAge
             progStateLast = progState;
             progState = (int)ShipOrientationState.Down;
 
-            currentSector = Universe.getSector(currentX, currentY + 1);
-            if (currentSector != null)
+            prospectiveSector = Universe.getSector(CurrentSectorUser.SectorGridLocation.X + 1, CurrentSectorUser.SectorGridLocation.Y);
+            if (prospectiveSector != null)
             {
-                UniverseSectorGridLocation.Y = currentY + 1;
+                CurrentSectorUser = prospectiveSector;
                 updateGrid();
                 return Constants.SUCCESS;
             }
@@ -127,11 +119,9 @@ namespace SpaceAge
             }
         }
 
-        public static int moveUp()
+        public static int moveUpUniverseBrowser()
         {
-            int currentX = UniverseSectorGridLocation.X;
-            int currentY = UniverseSectorGridLocation.Y;
-            Sector currentSector;
+            Sector prospectiveSector;
 
             if (onEachTravel() == Constants.FAILURE)
                 return Constants.FAILURE;
@@ -139,10 +129,10 @@ namespace SpaceAge
             progStateLast = progState;
             progState = (int)ShipOrientationState.Up;
 
-            currentSector = Universe.getSector(currentX, currentY - 1);
-            if (currentSector != null)
+            prospectiveSector = Universe.getSector(CurrentSectorUser.SectorGridLocation.X - 1, CurrentSectorUser.SectorGridLocation.Y);
+            if (prospectiveSector != null)
             {
-                UniverseSectorGridLocation.Y = currentY - 1;
+                CurrentSectorUser = prospectiveSector;
                 updateGrid();
                 return Constants.SUCCESS;
             }
@@ -154,10 +144,14 @@ namespace SpaceAge
 
         public static void updateGrid()
         {     
-            const int colRadius = Constants.MAP_SECTORS_COLUMNS /2;    //truncate here if odd
+            const int colRadius = Constants.MAP_SECTORS_COLUMNS / 2;    //truncate here if odd
             const int rowRadius = Constants.MAP_SECTORS_ROWS / 2;      //truncate here if odd
-            int currentCol = UniverseSectorGridLocation.X;
-            int currentRow = UniverseSectorGridLocation.Y;
+            //int currentCol = UniverseSectorGridLocation.X;
+            //int currentRow = UniverseSectorGridLocation.Y;
+            if (CurrentSectorUser == null)
+                return;
+            int currentCol = CurrentSectorUser.SectorGridLocation.Y;
+            int currentRow = CurrentSectorUser.SectorGridLocation.X;
 
             for (int rowOffset = (-1) * rowRadius; rowOffset <= rowRadius; rowOffset++)
             {
@@ -205,7 +199,14 @@ namespace SpaceAge
 
         public static Sector getCurrentSector()
         {
-            return theGrid[Constants.MAP_SECTORS_ROWS / 2, Constants.MAP_SECTORS_COLUMNS / 2];
+            //return theGrid[Constants.MAP_SECTORS_ROWS / 2, Constants.MAP_SECTORS_COLUMNS / 2];
+            return CurrentSectorUser;
+        }
+
+        public static void setCurrentSector(Sector sector)
+        {
+            CurrentSectorUser = sector;
+            updateGrid();
         }
 
         public static int reduceFuel(int reduceAmount)

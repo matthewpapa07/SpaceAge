@@ -11,6 +11,8 @@ namespace SpaceAge.Controls
 {
     partial class UniverseMapBrowser : UserControl, HumanInterfaceObj
     {
+
+        SectorInfo si = new SectorInfo();
         public UniverseMapBrowser()
         {
             InitializeComponent();
@@ -29,7 +31,6 @@ namespace SpaceAge.Controls
 
         private void ui_buttonVisitSector_Click(object sender, EventArgs e)
         {
-            SectorInfo si = new SectorInfo();
             //sd.TopLevel = false;
             UserInterface.thisOneInterface.SetMainPanel(si);
         }
@@ -45,16 +46,16 @@ namespace SpaceAge.Controls
             switch (Key)
             {
                 case 'w':       // Up
-                    UserState.moveUp();
+                    UserState.moveUpUniverseBrowser();
                     break;
                 case 's':       // Down
-                    UserState.moveDown();
+                    UserState.moveDownUniverseBrowser();
                     break;
                 case 'a':       // Left
-                    UserState.moveLeft();
+                    UserState.moveLeftUniverseBrowser();
                     break;
                 case 'd':       // Right
-                    UserState.moveRight();
+                    UserState.moveRightUniverseBrowser();
                     break;
                 default:
                     break;

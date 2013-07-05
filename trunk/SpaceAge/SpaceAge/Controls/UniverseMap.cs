@@ -82,7 +82,7 @@ namespace SpaceAge
                             ThisSector.DrawSectorGraphics(g, this.ClientRectangle, (int)tempx, (int)tempy, (int)Math.Ceiling(tempWidth), (int)Math.Ceiling(tempHeight));
                         }
                         else
-                            g.FillRectangle(staticGraphics.hatchBrush, (int)tempx, (int)tempy, (int)Math.Ceiling(tempWidth), (int)Math.Ceiling(tempHeight));
+                            g.FillRectangle(staticGraphics.UniverseBorderBrush, (int)tempx, (int)tempy, (int)Math.Ceiling(tempWidth), (int)Math.Ceiling(tempHeight));
                         
                     }
                 }
