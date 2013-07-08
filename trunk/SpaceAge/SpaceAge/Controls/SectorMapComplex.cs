@@ -28,7 +28,6 @@ namespace SpaceAge.Controls
         public Thread MapRefreshThread;
         public Thread ShipVelocityThread;
         //public Thread KeyboardCheckThread;
-        public delegate void EventToInvoke();
         public EventToInvoke PlayerShipInTransit;
         //public EventToInvoke KeyboardCheck;
 

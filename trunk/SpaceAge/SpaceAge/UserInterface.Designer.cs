@@ -50,10 +50,14 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.userFuelMeter1 = new SpaceAge.UserFuelMeter();
             this.panel2 = new System.Windows.Forms.Panel();
             this.ui_MAINPANEL = new System.Windows.Forms.Panel();
-            this.userFuelMeter1 = new SpaceAge.UserFuelMeter();
             this.uiShipInventory1 = new SpaceAge.Controls.UiInventory();
+            this.waypointsectordistance = new System.Windows.Forms.Label();
+            this.waypointsectorcoordinates = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel5.SuspendLayout();
@@ -167,10 +171,14 @@
             // 
             // panel6
             // 
+            this.panel6.Controls.Add(this.waypointsectordistance);
+            this.panel6.Controls.Add(this.waypointsectorcoordinates);
+            this.panel6.Controls.Add(this.label12);
+            this.panel6.Controls.Add(this.label13);
             this.panel6.Controls.Add(this.label11);
             this.panel6.Location = new System.Drawing.Point(3, 188);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(194, 58);
+            this.panel6.Size = new System.Drawing.Size(194, 55);
             this.panel6.TabIndex = 20;
             // 
             // label11
@@ -271,10 +279,18 @@
             // 
             this.panel3.Controls.Add(this.label3);
             this.panel3.Controls.Add(this.userFuelMeter1);
-            this.panel3.Location = new System.Drawing.Point(3, 250);
+            this.panel3.Location = new System.Drawing.Point(3, 247);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(194, 58);
             this.panel3.TabIndex = 18;
+            // 
+            // userFuelMeter1
+            // 
+            this.userFuelMeter1.Location = new System.Drawing.Point(6, 26);
+            this.userFuelMeter1.Name = "userFuelMeter1";
+            this.userFuelMeter1.Size = new System.Drawing.Size(185, 23);
+            this.userFuelMeter1.TabIndex = 6;
+            this.userFuelMeter1.Load += new System.EventHandler(this.userFuelMeter1_Load);
             // 
             // panel2
             // 
@@ -300,20 +316,52 @@
             this.ui_MAINPANEL.Size = new System.Drawing.Size(984, 682);
             this.ui_MAINPANEL.TabIndex = 18;
             // 
-            // userFuelMeter1
-            // 
-            this.userFuelMeter1.Location = new System.Drawing.Point(6, 26);
-            this.userFuelMeter1.Name = "userFuelMeter1";
-            this.userFuelMeter1.Size = new System.Drawing.Size(185, 23);
-            this.userFuelMeter1.TabIndex = 6;
-            this.userFuelMeter1.Load += new System.EventHandler(this.userFuelMeter1_Load);
-            // 
             // uiShipInventory1
             // 
             this.uiShipInventory1.Location = new System.Drawing.Point(592, 299);
             this.uiShipInventory1.Name = "uiShipInventory1";
             this.uiShipInventory1.Size = new System.Drawing.Size(334, 235);
             this.uiShipInventory1.TabIndex = 14;
+            // 
+            // waypointsectordistance
+            // 
+            this.waypointsectordistance.AutoSize = true;
+            this.waypointsectordistance.ForeColor = System.Drawing.Color.White;
+            this.waypointsectordistance.Location = new System.Drawing.Point(81, 35);
+            this.waypointsectordistance.Name = "waypointsectordistance";
+            this.waypointsectordistance.Size = new System.Drawing.Size(13, 13);
+            this.waypointsectordistance.TabIndex = 23;
+            this.waypointsectordistance.Text = "0";
+            // 
+            // waypointsectorcoordinates
+            // 
+            this.waypointsectorcoordinates.AutoSize = true;
+            this.waypointsectorcoordinates.ForeColor = System.Drawing.Color.White;
+            this.waypointsectorcoordinates.Location = new System.Drawing.Point(81, 18);
+            this.waypointsectorcoordinates.Name = "waypointsectorcoordinates";
+            this.waypointsectorcoordinates.Size = new System.Drawing.Size(59, 13);
+            this.waypointsectorcoordinates.TabIndex = 22;
+            this.waypointsectorcoordinates.Text = "x = 0, y = 0";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.ForeColor = System.Drawing.Color.White;
+            this.label12.Location = new System.Drawing.Point(3, 35);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(52, 13);
+            this.label12.TabIndex = 21;
+            this.label12.Text = "Distance:";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.ForeColor = System.Drawing.Color.White;
+            this.label13.Location = new System.Drawing.Point(3, 18);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(66, 13);
+            this.label13.TabIndex = 20;
+            this.label13.Text = "Coordinates:";
             // 
             // UserInterface
             // 
@@ -371,6 +419,10 @@
         private System.Windows.Forms.Panel ui_MAINPANEL;
         private System.Windows.Forms.Button ui_buttonBack;
         private System.Windows.Forms.Button button_sectorBrowser;
+        private System.Windows.Forms.Label waypointsectordistance;
+        private System.Windows.Forms.Label waypointsectorcoordinates;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
 
 
 

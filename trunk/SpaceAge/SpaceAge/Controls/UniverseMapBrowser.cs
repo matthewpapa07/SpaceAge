@@ -11,17 +11,22 @@ namespace SpaceAge.Controls
 {
     partial class UniverseMapBrowser : UserControl, HumanInterfaceObj
     {
-
         SectorInfo si = new SectorInfo();
+        EventToInvoke RefreshElementsEvent = null;
+
         public UniverseMapBrowser()
         {
             InitializeComponent();
             DoubleBuffered = true;
+
+            UniverseMap1.RefreshParentUi = new EventToInvoke(RefreshElementsInEvent);
+
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             UpdateUi(e.Graphics);
+            RefreshElementsInEvent();
         }
 
         public void UpdateUi(Graphics g)
@@ -43,24 +48,40 @@ namespace SpaceAge.Controls
 
         public void UserKeyPress(int Key)
         {
-            switch (Key)
+            UniverseMap1.UserKeyPress(Key);
+        }
+
+        public void RefreshElementsInv()
+        {
+            this.Invoke(RefreshElementsEvent);
+        }
+
+        public void RefreshElementsInEvent()
+        {
+            if (UniverseMap1.ClickedSquare != null)
             {
-                case 'w':       // Up
-                    UserState.moveUpUniverseBrowser();
-                    break;
-                case 's':       // Down
-                    UserState.moveDownUniverseBrowser();
-                    break;
-                case 'a':       // Left
-                    UserState.moveLeftUniverseBrowser();
-                    break;
-                case 'd':       // Right
-                    UserState.moveRightUniverseBrowser();
-                    break;
-                default:
-                    break;
+                clickedsectorcoordinates.Text = UniverseMap1.ClickedSquare.SectorGridLocation.ToString();
+                clickedsectorname.Text = UniverseMap1.ClickedSquare.ToString();
+                clickedsectordistance.Text = UniverseMap1.ClickedSquare.Distance(UserState.getCurrentSector()).ToString();
+            }
+            else
+            {
+                clickedsectorcoordinates.Text = "N/A";
+                clickedsectorname.Text = "N/A";
+                clickedsectordistance.Text = "N/A";
+            }
+                
+        }
+
+        private void bSetWaypoint_Click(object sender, EventArgs e)
+        {
+            if (UniverseMap1.ClickedSquare != null)
+            {
+                UserState.setCurrentWaypoint(UniverseMap1.ClickedSquare);
             }
         }
+
+
 
     }
 }

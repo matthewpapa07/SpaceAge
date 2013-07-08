@@ -29,18 +29,30 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.clickedsectordistance = new System.Windows.Forms.Label();
+            this.clickedsectorcoordinates = new System.Windows.Forms.Label();
+            this.clickedsectorname = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
             this.bSetWaypoint = new System.Windows.Forms.Button();
             this.bSectorView = new System.Windows.Forms.Button();
             this.ui_buttonVisitSector = new System.Windows.Forms.Button();
             this.sectorViewerPanel = new System.Windows.Forms.Panel();
             this.UniverseMap1 = new SpaceAge.UniverseMap();
             this.panel1.SuspendLayout();
+            this.panel6.SuspendLayout();
             this.sectorViewerPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Black;
+            this.panel1.Controls.Add(this.checkBox1);
+            this.panel1.Controls.Add(this.panel6);
             this.panel1.Controls.Add(this.bSetWaypoint);
             this.panel1.Controls.Add(this.bSectorView);
             this.panel1.Controls.Add(this.ui_buttonVisitSector);
@@ -50,14 +62,110 @@
             this.panel1.Size = new System.Drawing.Size(302, 682);
             this.panel1.TabIndex = 0;
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.ForeColor = System.Drawing.Color.White;
+            this.checkBox1.Location = new System.Drawing.Point(12, 131);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(106, 17);
+            this.checkBox1.TabIndex = 22;
+            this.checkBox1.Text = "Show Soverignty";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // panel6
+            // 
+            this.panel6.Controls.Add(this.clickedsectordistance);
+            this.panel6.Controls.Add(this.clickedsectorcoordinates);
+            this.panel6.Controls.Add(this.clickedsectorname);
+            this.panel6.Controls.Add(this.label3);
+            this.panel6.Controls.Add(this.label2);
+            this.panel6.Controls.Add(this.label1);
+            this.panel6.Controls.Add(this.label11);
+            this.panel6.Location = new System.Drawing.Point(6, 3);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(194, 83);
+            this.panel6.TabIndex = 21;
+            // 
+            // clickedsectordistance
+            // 
+            this.clickedsectordistance.AutoSize = true;
+            this.clickedsectordistance.ForeColor = System.Drawing.Color.White;
+            this.clickedsectordistance.Location = new System.Drawing.Point(93, 57);
+            this.clickedsectordistance.Name = "clickedsectordistance";
+            this.clickedsectordistance.Size = new System.Drawing.Size(13, 13);
+            this.clickedsectordistance.TabIndex = 19;
+            this.clickedsectordistance.Text = "0";
+            // 
+            // clickedsectorcoordinates
+            // 
+            this.clickedsectorcoordinates.AutoSize = true;
+            this.clickedsectorcoordinates.ForeColor = System.Drawing.Color.White;
+            this.clickedsectorcoordinates.Location = new System.Drawing.Point(93, 40);
+            this.clickedsectorcoordinates.Name = "clickedsectorcoordinates";
+            this.clickedsectorcoordinates.Size = new System.Drawing.Size(59, 13);
+            this.clickedsectorcoordinates.TabIndex = 18;
+            this.clickedsectorcoordinates.Text = "x = 0, y = 0";
+            // 
+            // clickedsectorname
+            // 
+            this.clickedsectorname.AutoSize = true;
+            this.clickedsectorname.ForeColor = System.Drawing.Color.White;
+            this.clickedsectorname.Location = new System.Drawing.Point(93, 24);
+            this.clickedsectorname.Name = "clickedsectorname";
+            this.clickedsectorname.Size = new System.Drawing.Size(96, 13);
+            this.clickedsectorname.TabIndex = 17;
+            this.clickedsectorname.Text = "clickedsectorname";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.ForeColor = System.Drawing.Color.White;
+            this.label3.Location = new System.Drawing.Point(15, 57);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(52, 13);
+            this.label3.TabIndex = 16;
+            this.label3.Text = "Distance:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(15, 40);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(66, 13);
+            this.label2.TabIndex = 15;
+            this.label2.Text = "Coordinates:";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(15, 24);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(72, 13);
+            this.label1.TabIndex = 14;
+            this.label1.Text = "Sector Name:";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.ForeColor = System.Drawing.Color.White;
+            this.label11.Location = new System.Drawing.Point(3, 2);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(59, 13);
+            this.label11.TabIndex = 13;
+            this.label11.Text = "Sector Info";
+            // 
             // bSetWaypoint
             // 
-            this.bSetWaypoint.Location = new System.Drawing.Point(153, 255);
+            this.bSetWaypoint.Location = new System.Drawing.Point(6, 92);
             this.bSetWaypoint.Name = "bSetWaypoint";
             this.bSetWaypoint.Size = new System.Drawing.Size(146, 32);
             this.bSetWaypoint.TabIndex = 3;
-            this.bSetWaypoint.Text = "SetWaypoint";
+            this.bSetWaypoint.Text = "Set Waypoint";
             this.bSetWaypoint.UseVisualStyleBackColor = true;
+            this.bSetWaypoint.Click += new System.EventHandler(this.bSetWaypoint_Click);
             // 
             // bSectorView
             // 
@@ -113,6 +221,9 @@
             this.Name = "UniverseMapBrowser";
             this.Size = new System.Drawing.Size(984, 682);
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.panel6.ResumeLayout(false);
+            this.panel6.PerformLayout();
             this.sectorViewerPanel.ResumeLayout(false);
             this.sectorViewerPanel.PerformLayout();
             this.ResumeLayout(false);
@@ -127,5 +238,14 @@
         private System.Windows.Forms.Panel sectorViewerPanel;
         private System.Windows.Forms.Button bSectorView;
         private System.Windows.Forms.Button bSetWaypoint;
+        private System.Windows.Forms.Panel panel6;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Label clickedsectordistance;
+        private System.Windows.Forms.Label clickedsectorcoordinates;
+        private System.Windows.Forms.Label clickedsectorname;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
     }
 }
