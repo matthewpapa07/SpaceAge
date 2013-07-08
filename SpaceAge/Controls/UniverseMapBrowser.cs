@@ -12,6 +12,7 @@ namespace SpaceAge.Controls
     partial class UniverseMapBrowser : UserControl, HumanInterfaceObj
     {
         SectorInfo si = new SectorInfo();
+        SectorBrowser sb = new SectorBrowser();
         EventToInvoke RefreshElementsEvent = null;
 
         public UniverseMapBrowser()
@@ -42,7 +43,6 @@ namespace SpaceAge.Controls
 
         private void bSectorView_Click(object sender, EventArgs e)
         {
-            SectorBrowser sb = new SectorBrowser();
             UserInterface.thisOneInterface.SetMainPanel(sb);
         }
 
