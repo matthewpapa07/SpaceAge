@@ -40,9 +40,9 @@
             this.MinimumSize = new System.Drawing.Size(620, 620);
             this.Name = "UniverseMap";
             this.Size = new System.Drawing.Size(620, 620);
-            this.AutoSizeChanged += new System.EventHandler(this.UniverseMap_SizeChanged);
             this.Load += new System.EventHandler(this.UniverseMap_Load);
-            this.SizeChanged += new System.EventHandler(this.UniverseMap_SizeChanged);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.UniverseMap_KeyPress);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.UniverseMap_MouseClick);
             this.ResumeLayout(false);
 
         }

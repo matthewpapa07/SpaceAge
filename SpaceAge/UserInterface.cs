@@ -10,12 +10,16 @@ using System.Drawing.Drawing2D;
 
 namespace SpaceAge
 {
+    public delegate void EventToInvoke();
+
     public partial class UserInterface : Form
     {
         Controls.UniverseMapBrowser TheMainSectorBrowserWhole;
         public static UserInterface thisOneInterface;
         private Control currentControl;
         private Control previousControl;
+        EventToInvoke RefreshElementsEvent = null;
+        EventToInvoke UserStateRefreshCallback = null;
 
         public UserInterface()
         {
@@ -33,17 +37,33 @@ namespace SpaceAge
             currentControl = TheMainSectorBrowserWhole;
             ui_MAINPANEL.Controls.Add(TheMainSectorBrowserWhole);
             UpdateUi();
+
+            RefreshElementsEvent = new EventToInvoke(RefreshElementsInEvent);
+            UserStateRefreshCallback = new EventToInvoke(RefreshElementsInv);
+            UserState.OnSectorChange.Add(UserStateRefreshCallback);
+            UserState.OnWaypointChange.Add(UserStateRefreshCallback);
         }
 
         public void UpdateUi()
         {
-            Sector currentSector = UserState.getCurrentSector();
             ui_CoordinateLabel.Text = UserState.getCurrentSector().SectorGridLocation.ToString();
             ui_Credits.Text = UserState.getPlayerFunds().ToString();
             ui_Time.Text = GameDriver.TimeToStringLong();
 
+            if (UserState.getCurrentWaypoint() != null)
+            {
+                waypointsectorcoordinates.Text = UserState.getCurrentWaypoint().SectorGridLocation.ToString();
+                waypointsectordistance.Text = UserState.getCurrentWaypoint().Distance(UserState.getCurrentSector()).ToString();
+            }
+            else
+            {
+                waypointsectorcoordinates.Text = "N/A";
+                waypointsectordistance.Text = "N/A";
+            }
+
             userFuelMeter1.UpdateUi();
             TheMainSectorBrowserWhole.Refresh();
+            
             //sectorBrowser1.UpdateUi();
             
         }
@@ -95,7 +115,6 @@ namespace SpaceAge
                 ui_buttonBack.Enabled = true;
             else
                 ui_buttonBack.Enabled = false;
-            //ToShow.Show();
         }
 
         private void button_sectorBrowser_Click(object sender, EventArgs e)
@@ -114,6 +133,26 @@ namespace SpaceAge
             // close out all threads
             UserState.ThreadsRunning = false;
             base.OnFormClosing(e);
+        }
+
+        public void RefreshElementsInv()
+        {
+            this.Invoke(RefreshElementsEvent);
+        }
+
+        public void RefreshElementsInEvent()
+        {
+            ui_CoordinateLabel.Text = UserState.getCurrentSector().SectorGridLocation.ToString();
+            ui_Credits.Text = UserState.getPlayerFunds().ToString();
+            ui_Time.Text = GameDriver.TimeToStringLong();
+
+            if (UserState.getCurrentWaypoint() != null)
+            {
+                waypointsectorcoordinates.Text = UserState.getCurrentWaypoint().SectorGridLocation.ToString();
+                waypointsectordistance.Text = UserState.getCurrentWaypoint().Distance(UserState.getCurrentSector()).ToString();
+            }
+
+            userFuelMeter1.UpdateUi();
         }
     }
 }

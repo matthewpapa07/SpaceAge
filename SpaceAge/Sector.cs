@@ -9,7 +9,7 @@ namespace SpaceAge
 {
     class Sector
     {
-        public const int STARS_PER_SECTOR_CHANCE = 20;
+        public const int STARS_PER_SECTOR_CHANCE = 35;
         public const int MAX_DISTANCE_FROM_AXIS = 5000;      //Number must be significantly larger than UiSectorMap Height/Width
         public const int SECTOR_EDGE_PADDING = 500;
         public const int STARTING_SPACESHIP_SPACES = 12;     // This list initializer is demand based. Sectors with higher traffic will end up
@@ -51,7 +51,8 @@ namespace SpaceAge
             //
             // Tune this to change the density of sectors that are populated with stars
             //
-            if (!n.LinearPmfResult(8, 25))
+            //if (!n.LinearPmfResult(8, 25)) Changed for greater density of systems in universe
+            if (!n.LinearPmfResult(12, 25))
             {
                 StarSystemsList = new StarSystem[0]; // Empty Array
                 return;
@@ -163,6 +164,33 @@ namespace SpaceAge
 
             HighlightSystem = null;
             return null;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Sector)
+            {
+                Point p1 = this.SectorGridLocation;
+                Point p2 = ((Sector)obj).SectorGridLocation;
+                if (p1.X == p2.X && p1.Y == p2.Y)
+                    return true;
+                else
+                    return false;
+            }
+            return false;
+            //return base.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public int Distance(Sector inSec)
+        {
+            return (int)Math.Sqrt(
+                Math.Pow((SectorGridLocation.X - inSec.SectorGridLocation.X), 2) + Math.Pow((SectorGridLocation.Y - inSec.SectorGridLocation.Y), 2)
+                );
         }
 
         //public void setParent(Universe u)

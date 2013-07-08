@@ -33,11 +33,11 @@ namespace SpaceAge
         public HatchBrush UniverseBorderBrush = new HatchBrush(HatchStyle.Cross, System.Drawing.Color.Red, System.Drawing.Color.Blue);
         public HatchBrush SectorBorderBrush = new HatchBrush(HatchStyle.Percent20, Color.Red, Color.Transparent);
         public TextureBrush spaceBrush;
-        public Pen blackPen = new Pen(Color.Black);
+        public Pen blackPen = new Pen(Color.Black, 2);
         public Pen greenPen = new Pen(Color.LightYellow, 2);
-        public Pen whitePen = new Pen(Color.White);
+        public Pen whitePen = new Pen(Color.White, 2);
         public Pen redPen = new Pen(Color.Red, 2);
-        public Pen bluePen = new Pen(Color.Blue);
+        public Pen bluePen = new Pen(Color.Blue, 2);
 
 
         private StaticGraphics()

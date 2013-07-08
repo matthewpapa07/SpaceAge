@@ -12,7 +12,8 @@ namespace SpaceAge.Controls
     public partial class SectorBrowser : UserControl, HumanInterfaceObj
     {
         bool ShipAlreadyMoving = false;
-        Sector CurrentSector = UserState.getCurrentSector();
+        EventToInvoke RefreshElementsEvent = null;
+        EventToInvoke UserStateRefreshCallback = null;
 
         public SectorBrowser()
         {
@@ -26,6 +27,10 @@ namespace SpaceAge.Controls
 
             RefreshShipsLv();
             RefreshSectorItemsLv();
+
+            RefreshElementsEvent = new EventToInvoke(RefreshElementsInEvent);
+            UserStateRefreshCallback = new EventToInvoke(RefreshElementsInv);
+            UserState.OnSectorChange.Add(UserStateRefreshCallback);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -45,14 +50,15 @@ namespace SpaceAge.Controls
             try
             {
                 listview_sectorships.Items.Clear();
-                foreach (SpaceShip sps in CurrentSector.PresentSpaceShips)
+                foreach (SpaceShip sps in UserState.getCurrentSector().PresentSpaceShips)
                 {
                     tempLv = (ListViewItem)sps.SpaceShipListViewItem.Clone();
                     listview_sectorships.Items.Add(tempLv);
                 }
             }
-            catch
+            catch(Exception ex)
             {
+                Console.WriteLine(ex.ToString());
             }
         }
 
@@ -63,16 +69,30 @@ namespace SpaceAge.Controls
             try
             {
                 listview_sectoritems.Items.Clear();
-                foreach (StarSystem sss in CurrentSector.StarSystemsList)
+                foreach (StarSystem sss in UserState.getCurrentSector().StarSystemsList)
                 {
                     tempLv = (ListViewItem)sss.StarSystemListViewItem.Clone();
                     listview_sectoritems.Items.Add(tempLv);
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
             }
            
+        }
+
+        public void RefreshElementsInv()
+        {
+            this.Invoke(RefreshElementsEvent);
+        }
+
+        public void RefreshElementsInEvent()
+        {
+            RefreshShipsLv();
+            RefreshSectorItemsLv();
+            listview_sectorships.Refresh();
+            listview_sectoritems.Refresh();
         }
 
         public void UserKeyPress(int Key)
