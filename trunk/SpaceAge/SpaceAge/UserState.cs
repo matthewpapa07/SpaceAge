@@ -61,7 +61,6 @@ namespace SpaceAge
 
         public static Sector getCurrentSector()
         {
-            //return theGrid[Constants.MAP_SECTORS_ROWS / 2, Constants.MAP_SECTORS_COLUMNS / 2];
             return CurrentSectorUser;
         }
 

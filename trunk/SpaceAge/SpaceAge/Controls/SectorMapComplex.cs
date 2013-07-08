@@ -198,6 +198,7 @@ namespace SpaceAge.Controls
             }
         }
 
+        // TODO: Move this to UserState or SpaceShip. This control should not be tracking this because the control isnt necessarily persistent
         public void UpdateMovingShipsPosition()
         {
             // Only refresh position as fast as the ship's rate of speed
@@ -233,7 +234,6 @@ namespace SpaceAge.Controls
 
                 Thread.Sleep((int)WaitAmount);
             }
-            // TODO: Keep track of sector boundry
         }
 
 
@@ -278,6 +278,7 @@ namespace SpaceAge.Controls
             UserState.getCurrentSector().ClickForObject(DestinationPoint);
         }
 
+        // TODO: Move this to UserState or SpaceShip. This control should not be tracking this because the control isnt necessarily persistent
         public void ExecuteMoveSector(Sector.GateDirections GateDir)
         {
             switch (GateDir)
