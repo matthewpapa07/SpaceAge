@@ -10,6 +10,8 @@ namespace SpaceAge
     {
         public Thread ShipVelocityThread;
 
+        public PointD SectorFineGridLocation;
+
         public PointD DestinationPoint = new PointD(0.0, 0.0);
         public VectorD DirectionVector = new VectorD(0.0, 1.0);
 
@@ -24,19 +26,19 @@ namespace SpaceAge
             int currentX = UserState.getCurrentSector().SectorGridLocation.X;
             int currentY = UserState.getCurrentSector().SectorGridLocation.Y;
 
-            if (UserState.SectorFineGridLocation.X == 0)
+            if (SectorFineGridLocation.X == 0)
             {
                 TransitionSector = Universe.getSector(currentX, currentY - 1);
             }
-            if (UserState.SectorFineGridLocation.X == Sector.MAX_DISTANCE_FROM_AXIS)
+            if (SectorFineGridLocation.X == Sector.MAX_DISTANCE_FROM_AXIS)
             {
                 TransitionSector = Universe.getSector(currentX, currentY + 1);
             }
-            if (UserState.SectorFineGridLocation.Y == 0)
+            if (SectorFineGridLocation.Y == 0)
             {
                 TransitionSector = Universe.getSector(currentX - 1, currentY);
             }
-            if (UserState.SectorFineGridLocation.Y == Sector.MAX_DISTANCE_FROM_AXIS)
+            if (SectorFineGridLocation.Y == Sector.MAX_DISTANCE_FROM_AXIS)
             {
                 TransitionSector = Universe.getSector(currentX + 1, currentY);
             }
@@ -46,21 +48,21 @@ namespace SpaceAge
                 UserState.setCurrentSector(TransitionSector);
             }
 
-            if (UserState.SectorFineGridLocation.X == 0)
+            if (SectorFineGridLocation.X == 0)
             {
-                UserState.SectorFineGridLocation.X = Sector.MAX_DISTANCE_FROM_AXIS - 20;
+                SectorFineGridLocation.X = Sector.MAX_DISTANCE_FROM_AXIS - 20;
             }
-            if (UserState.SectorFineGridLocation.X == Sector.MAX_DISTANCE_FROM_AXIS)
+            if (SectorFineGridLocation.X == Sector.MAX_DISTANCE_FROM_AXIS)
             {
-                UserState.SectorFineGridLocation.X = 20;
+                SectorFineGridLocation.X = 20;
             }
-            if (UserState.SectorFineGridLocation.Y == 0)
+            if (SectorFineGridLocation.Y == 0)
             {
-                UserState.SectorFineGridLocation.Y = Sector.MAX_DISTANCE_FROM_AXIS - 20;
+                SectorFineGridLocation.Y = Sector.MAX_DISTANCE_FROM_AXIS - 20;
             }
-            if (UserState.SectorFineGridLocation.Y == Sector.MAX_DISTANCE_FROM_AXIS)
+            if (SectorFineGridLocation.Y == Sector.MAX_DISTANCE_FROM_AXIS)
             {
-                UserState.SectorFineGridLocation.Y = 20;
+                SectorFineGridLocation.Y = 20;
             }
         }
 
@@ -71,28 +73,28 @@ namespace SpaceAge
             while (ShipVelocityThread.IsAlive && UserState.ThreadsRunning)
             {
 
-                if (!DestinationPoint.Equals(UserState.SectorFineGridLocation) && InTransit)
+                if (!DestinationPoint.Equals(SectorFineGridLocation) && InTransit)
                 {
-                    DirectionVector.X = UserState.SectorFineGridLocation.X - DestinationPoint.X;
-                    DirectionVector.Y = UserState.SectorFineGridLocation.Y - DestinationPoint.Y;
+                    DirectionVector.X = SectorFineGridLocation.X - DestinationPoint.X;
+                    DirectionVector.Y = SectorFineGridLocation.Y - DestinationPoint.Y;
 
                     DirectionVector.Normalize();
 
                     double dx = DirectionVector.X * EffectiveWarpSpeed * (-1);
                     double dy = DirectionVector.Y * EffectiveWarpSpeed * (-1);
-                    double distanceActual = DestinationPoint.Distance(UserState.SectorFineGridLocation);
+                    double distanceActual = DestinationPoint.Distance(SectorFineGridLocation);
 
                     // Since the frame only refreshes the period of the velocity, our distance will always be 1.0
                     if (distanceActual <= 30.0)
                     {
-                        UserState.SectorFineGridLocation.X = DestinationPoint.X;
-                        UserState.SectorFineGridLocation.Y = DestinationPoint.Y;
+                        SectorFineGridLocation.X = DestinationPoint.X;
+                        SectorFineGridLocation.Y = DestinationPoint.Y;
                         InTransit = false;
                     }
                     else
                     {
-                        UserState.SectorFineGridLocation.X += dx;
-                        UserState.SectorFineGridLocation.Y += dy;
+                        SectorFineGridLocation.X += dx;
+                        SectorFineGridLocation.Y += dy;
                     }
 
                 }

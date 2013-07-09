@@ -193,15 +193,70 @@ namespace SpaceAge
 
         public int Distance(Sector inSec)
         {
-            return (int)Math.Sqrt(
-                Math.Pow((SectorGridLocation.X - inSec.SectorGridLocation.X), 2) + Math.Pow((SectorGridLocation.Y - inSec.SectorGridLocation.Y), 2)
-                );
+            // Wait until diagonals are added
+            //return (int)Math.Sqrt(
+            //    Math.Pow((SectorGridLocation.X - inSec.SectorGridLocation.X), 2) + Math.Pow((SectorGridLocation.Y - inSec.SectorGridLocation.Y), 2)
+            //    );
+            return Math.Abs((SectorGridLocation.X - inSec.SectorGridLocation.X)) + Math.Abs((SectorGridLocation.Y - inSec.SectorGridLocation.Y));
         }
 
         //public void setParent(Universe u)
         //{
         //    parent = u;
         //}
+
+        // Later enhance algorithm to use diagonals
+        public Sector[] GetSectorPath(Sector Destination)
+        {
+            int DistanceToGo = Distance(Destination);
+            Sector[] Options = new Sector[4];
+            int[] OptionsDistance = new int[4];
+            Sector[] SectorPath = new Sector[DistanceToGo];
+            int SelectedSectorDistance;
+            int SelectedSector;
+
+            Options[0] = Universe.getSector(SectorGridLocation.X + 1, SectorGridLocation.Y);
+            Options[1] = Universe.getSector(SectorGridLocation.X, SectorGridLocation.Y + 1);
+            Options[2] = Universe.getSector(SectorGridLocation.X - 1, SectorGridLocation.Y);
+            Options[3] = Universe.getSector(SectorGridLocation.X, SectorGridLocation.Y - 1);
+
+            if (Equals(Destination))
+            {
+                return null;
+            }
+
+            for (int j = 0; j < DistanceToGo; j++)
+            {
+                for (int i = 0; i <= 3; i++)
+                {
+                    OptionsDistance[i] = 0;
+
+                    if (Options[i] != null)
+                    {
+                        OptionsDistance[i] = Options[i].Distance(Destination);
+                    }
+                }
+                SelectedSectorDistance = 999999;
+                SelectedSector = 0;
+                for (int k = 0; k <= 3; k++)
+                {
+                    if (OptionsDistance[k] < SelectedSectorDistance)
+                    {
+                        SelectedSector = k;
+                        SelectedSectorDistance = OptionsDistance[k];
+                    }
+                }
+
+                SectorPath[j] = Options[SelectedSector];
+
+                Options[0] = Universe.getSector(SectorPath[j].SectorGridLocation.X + 1, SectorPath[j].SectorGridLocation.Y);
+                Options[1] = Universe.getSector(SectorPath[j].SectorGridLocation.X, SectorPath[j].SectorGridLocation.Y + 1);
+                Options[2] = Universe.getSector(SectorPath[j].SectorGridLocation.X - 1, SectorPath[j].SectorGridLocation.Y);
+                Options[3] = Universe.getSector(SectorPath[j].SectorGridLocation.X, SectorPath[j].SectorGridLocation.Y - 1);
+            }
+
+            return SectorPath;
+        }
         
     }
 }

@@ -12,14 +12,13 @@ namespace SpaceAge
         public static int USER_MAX_FUEL_AMOUNT = 1500;
         public static int USER_STARTING_FUNDS = 20000;
         public static int USER_FUEL_USED_PER_SECTOR = 5;    //TODO: Scale with ship later
-
-        public static PointD SectorFineGridLocation;
-        private static Sector CurrentSectorUser = null;
+        
+        private static Sector CurrentShipSector = null;
         private static Sector CurrentWaypoint = null;
 
         public enum ShipOrientationState { Up = 1, Down = 2, Left = 3, Right = 4 };
-        public static int progState;
-        public static int progStateLast;
+        //public static int progState;
+        //public static int progStateLast;
 
         //
         // User variables
@@ -42,11 +41,10 @@ namespace SpaceAge
             int startingRow = Constants.UNIVERSE_ROWS / 2;
             int startingColumn = Constants.UNIVERSE_COLUMNS / 2;
 
-            SectorFineGridLocation = new PointD(Sector.MAX_DISTANCE_FROM_AXIS / 2, Sector.MAX_DISTANCE_FROM_AXIS / 2);
-            CurrentSectorUser = Universe.getSector(startingRow, startingColumn);
+            CurrentShipSector = Universe.getSector(startingRow, startingColumn);
             
-            progState = (int)ShipOrientationState.Up;
-            progStateLast = (int)ShipOrientationState.Up;
+            //progState = (int)ShipOrientationState.Up;
+            //progStateLast = (int)ShipOrientationState.Up;
 
             PlayerLevel = 1;
         }
@@ -61,12 +59,12 @@ namespace SpaceAge
 
         public static Sector getCurrentSector()
         {
-            return CurrentSectorUser;
+            return CurrentShipSector;
         }
 
         public static void setCurrentSector(Sector sector)
         {
-            CurrentSectorUser = sector;
+            CurrentShipSector = sector;
 
             // Events that key off of a sector change. Fire them all off
             foreach (EventToInvoke evtoinv in OnSectorChange)
