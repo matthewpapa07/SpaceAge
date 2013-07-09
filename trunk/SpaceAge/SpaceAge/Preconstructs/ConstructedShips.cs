@@ -10,7 +10,7 @@ namespace SpaceAge.Preconstructs
         public static SpaceShip StarterShip()
         {
             SpaceShip prototype = new SpaceShip(2, 2, 1, 1);
-            prototype.IntializeStats(100, 100, 5, 400, 10, 1);
+            prototype.IntializeStats(100, 100, 5, 400, 30, 1);
 
             Item itemToAdd;
             Commodity.CommodityEnum commidityToAdd;
