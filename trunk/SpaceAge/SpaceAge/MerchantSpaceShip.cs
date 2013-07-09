@@ -13,14 +13,11 @@ namespace SpaceAge
         // Data for what will hopefully become the state machine dictating AI action
         public enum MerchantShipState { Moving, Holding, Arrived, Idle };
         public MerchantShipState ShipState = MerchantShipState.Idle;
-        public Sector DestinationSector = null; // Prepetuated by AI
-        public Sector CurrentSector = null; // Initialized when placed in sector, prepetuated by AI
         public ItemStore DestinationItemStore = null;   // TODO: Implement this
         public bool IsAlive = true;
 
         public static int GlobalMerchantId = 0;
         public int MerchantId = -1;
-        public int MerchantMoney = 50000; // For now start out merchants with 50k
 
         ResourceVector currVect; // Temporary variable used in price acquisition
 
@@ -65,40 +62,40 @@ namespace SpaceAge
             StarSystem TargetSystem;
             int i = START_SYSTEM_DISTANCE_AWAY + 1;
 
-            SystemsToVisit = DriverLibrary.NavigationLib.GetStarSystemsInDistance(CurrentSector, START_SYSTEM_DISTANCE_AWAY);
+            SystemsToVisit = DriverLibrary.NavigationLib.GetStarSystemsInDistance(CurrentShipSector, START_SYSTEM_DISTANCE_AWAY);
             while (SystemsToVisit.Length == 0)
             {
-                SystemsToVisit = DriverLibrary.NavigationLib.GetStarSystemsInDistance(CurrentSector, i++);
+                SystemsToVisit = DriverLibrary.NavigationLib.GetStarSystemsInDistance(CurrentShipSector, i++);
             }
 
             TargetSystem = SystemsToVisit[NumberGenerator.getInstance().GetRandNumberInRange(0, SystemsToVisit.Length - 1)];
-            DestinationSector = TargetSystem.parent;
+            CurrentWaypoint = TargetSystem.parent;
             ShipState = MerchantShipState.Moving;
             ContinueOnJourney();
         }
 
         private void ContinueOnJourney()
         {
-            DriverLibrary.NavigationLib.Directions Direction = DriverLibrary.NavigationLib.NextDirection(CurrentSector, DestinationSector);
-            Sector NextSector = DriverLibrary.NavigationLib.GetSectorInDirection(CurrentSector, Direction);
+            DriverLibrary.NavigationLib.Directions Direction = DriverLibrary.NavigationLib.NextDirection(CurrentShipSector, CurrentWaypoint);
+            Sector NextSector = DriverLibrary.NavigationLib.GetSectorInDirection(CurrentShipSector, Direction);
             if (NextSector == null)
             {
                 throw new Exception();
             }
-            if (NextSector.Equals(DestinationSector))
+            if (NextSector.Equals(CurrentWaypoint))
             {
                 ShipState = MerchantShipState.Arrived;
             }
-            CurrentSector.ShipMoveOut(this);
-            CurrentSector = NextSector;
-            CurrentSector.ShipMoveIn(this);
+            CurrentShipSector.ShipMoveOut(this);
+            CurrentShipSector = NextSector;
+            CurrentShipSector.ShipMoveIn(this);
         }
 
         private void ConductCommerce()
         {
             bool Status = false;
             // Make sure there are stores here, if not leave this state
-            if (CurrentSector.RegisteredItemStores.Count == 0)
+            if (CurrentShipSector.RegisteredItemStores.Count == 0)
             {
                 ShipState = MerchantShipState.Idle;
                 return;
@@ -110,7 +107,7 @@ namespace SpaceAge
                 List<ResourceVector> BestSellPrices = new List<ResourceVector>(3);
                 foreach (Commodity.CommodityEnum curCom in onboardCommodities)
                 {
-                    currVect = ResourceVector.GetBestSellPriceForCommodity(curCom, CurrentSector);
+                    currVect = ResourceVector.GetBestSellPriceForCommodity(curCom, CurrentShipSector);
                     if(currVect != null)
                         BestSellPrices.Add(currVect);
                 }
@@ -130,7 +127,7 @@ namespace SpaceAge
                                 Console.WriteLine("Debug: There was a problem selling");
                             }
                             SpaceShipCargo.RemoveCommodity(rv.TypeOfCommodity, HowManyDoIHave);
-                            MerchantMoney += HowManyDoIHave * rv.Price;
+                            SpaceShipFunds += HowManyDoIHave * rv.Price;
                             //MoneyChangedHands += HowManyDoIHave * rv.Price;     // Diagnostic field
                         }
                         else
@@ -138,7 +135,7 @@ namespace SpaceAge
                             // Case 2 the itemstore has limited space for the merchants items
                             rv.WhichStore.UserSellCommodity(rv.TypeOfCommodity, HowManyCanISell);
                             SpaceShipCargo.RemoveCommodity(rv.TypeOfCommodity, HowManyCanISell);
-                            MerchantMoney += HowManyCanISell * rv.Price;
+                            SpaceShipFunds += HowManyCanISell * rv.Price;
                             //MoneyChangedHands += HowManyCanISell * rv.Price;    // Diagnostic field
                         }
                     }
@@ -161,7 +158,7 @@ namespace SpaceAge
             List<ResourceVector> BestBuyPrices = new List<ResourceVector>(3);
             foreach (Commodity.CommodityEnum curCom in TryToBuyCommodities)
             {
-                currVect = ResourceVector.GetBestBuyPriceForCommodity(curCom, CurrentSector);
+                currVect = ResourceVector.GetBestBuyPriceForCommodity(curCom, CurrentShipSector);
                 if(currVect != null)
                     BestBuyPrices.Add(currVect);
             }
@@ -180,14 +177,14 @@ namespace SpaceAge
                             Console.WriteLine("Debug: There was a problem buying");
                         }
                         SpaceShipCargo.AddCommodity(rv.TypeOfCommodity, HowManyCanIFit);
-                        MerchantMoney -= HowManyCanIFit * rv.Price;
+                        SpaceShipFunds -= HowManyCanIFit * rv.Price;
                         MoneyChangedHands += HowManyCanIFit * rv.Price;         // Diagnostic Field
                     }
                     else
                     {
                         rv.WhichStore.UserBuyCommodity(rv.TypeOfCommodity, HowManyCanIBuy);
                         SpaceShipCargo.AddCommodity(rv.TypeOfCommodity, HowManyCanIBuy);
-                        MerchantMoney -= HowManyCanIBuy * rv.Price;
+                        SpaceShipFunds -= HowManyCanIBuy * rv.Price;
                         MoneyChangedHands += HowManyCanIBuy * rv.Price;       // Diagnostic field
                     }
                 }

@@ -11,6 +11,12 @@ namespace SpaceAge
         SpaceShipConstant.SpaceShipClass SpaceShipClass = SpaceShipConstant.SpaceShipClass.Generic;
         SpaceShipConstant.SpaceShipSize SpaceShipSize = SpaceShipConstant.SpaceShipSize.Medium;
 
+        //
+        // User variables
+        //
+        public int fuelLevel = UserState.USER_MAX_FUEL_AMOUNT;  // Change to accessor function, so that we may have max and effective fuel level
+        public int SpaceShipFunds = UserState.USER_STARTING_FUNDS;
+
     }
 
     static class SpaceShipConstant

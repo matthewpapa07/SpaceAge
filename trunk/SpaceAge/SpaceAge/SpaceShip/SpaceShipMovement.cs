@@ -8,12 +8,15 @@ namespace SpaceAge
 {
     partial class SpaceShip
     {
-        public Thread ShipVelocityThread;
+        public Sector CurrentShipSector = null;
+        public Sector CurrentWaypoint = null;
 
         public PointD SectorFineGridLocation;
 
         public PointD DestinationPoint = new PointD(0.0, 0.0);
         public VectorD DirectionVector = new VectorD(0.0, 1.0);
+
+        public Thread ShipVelocityThread;
 
         // For ship waypoints. Eventually make a new structure for a destination vector
         public bool InTransit = false;
