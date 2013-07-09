@@ -146,6 +146,11 @@ namespace SpaceAge
             }
         }
 
+        /// <summary>
+        /// Function called to see if the user clicked on anything drawn in the sector
+        /// </summary>
+        /// <param name="ClickCoordinates"></param>
+        /// <returns></returns>
         public StarSystem ClickForObject(PointD ClickCoordinates)
         {
             PointD TempPointD = new PointD(0.0,0.0);

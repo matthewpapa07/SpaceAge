@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace SpaceAge
 {
-    class SpaceShip
+    partial class SpaceShip
     {
         public CargoItemList SpaceShipCargo;
 
@@ -43,9 +44,6 @@ namespace SpaceAge
         /// 
         public int SpaceShipHpPercentage = 100; // Change this to accessor method
         public ListViewItem SpaceShipListViewItem;
-        public string SpaceShipName = "TODO:Name";
-        SpaceShipConstant.SpaceShipClass SpaceShipClass = SpaceShipConstant.SpaceShipClass.Generic;
-        SpaceShipConstant.SpaceShipSize SpaceShipSize = SpaceShipConstant.SpaceShipSize.Medium;
 
         public SpaceShip(int inWeaponMounts, int inDefensiveMounts, int inEngineMounts, int inSpecialMounts)
         {
@@ -55,6 +53,8 @@ namespace SpaceAge
             NumDefensiveMounts = inDefensiveMounts;
             NumEngineMounts = inEngineMounts;
             NumSpecialMounts = inSpecialMounts;
+
+            ShipVelocityThread = new Thread(new ThreadStart(UpdateMovingShipsPosition));
         }
 
         public void IntializeStats(int inBaseArmor, int inBaseStructure, int inBaseAgility, int inBaseCargoSpace, int inBaseWarpSpeed, int inBaseScanStrength)
@@ -243,17 +243,4 @@ namespace SpaceAge
         }
     }
 
-    static class SpaceShipConstant
-    {
-        //
-        // Commonly Associated with SpaceShip
-        //
-        public enum SpaceShipClass { Generic, Merchant };
-        public static string[] SpaceShipClassString = { "Generic", "Merchant" };
-
-        public static string[] SpaceShipSizeString = { "XS", "S", "M", "L", "XL", "N/A" };
-        public enum SpaceShipSize { ExtraSmall, Small, Medium, Large, ExraLarge, NoSize };
-        //public static int[] ItemSizeStatMultiplier = { 1, 3, 10, 25, 50, 1 };
-        //public static int[] ItemSizeStatDivider = { 5, 4, 3, 2, 1, 1 };
-    }
 }

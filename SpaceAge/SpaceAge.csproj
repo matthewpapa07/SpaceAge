@@ -172,7 +172,7 @@
     <Compile Include="ShipComponents\ShipScanner.cs" />
     <Compile Include="ShipComponents\ShipShield.cs" />
     <Compile Include="ShipComponents\ShipWeapon.cs" />
-    <Compile Include="SpaceShip.cs" />
+    <Compile Include="SpaceShip\SpaceShipStats.cs" />
     <Compile Include="Graphics\StaticGraphics.cs" />
     <Compile Include="Controls\UniverseMap.cs">
       <SubType>UserControl</SubType>
@@ -186,6 +186,8 @@
     <Compile Include="Controls\UserFuelMeter.Designer.cs">
       <DependentUpon>UserFuelMeter.cs</DependentUpon>
     </Compile>
+    <Compile Include="SpaceShip\SpaceShipMain.cs" />
+    <Compile Include="SpaceShip\SpaceShipMovement.cs" />
     <Compile Include="UserInput.cs" />
     <Compile Include="UserInterface.cs">
       <SubType>Form</SubType>

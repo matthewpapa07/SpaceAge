@@ -133,9 +133,5 @@ namespace SpaceAge
                 return Constants.FAILURE;
             }
         }
-        
-        //public static updateShip()
-        //{
-        //}
     }
 }
