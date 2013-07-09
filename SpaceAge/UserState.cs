@@ -10,21 +10,10 @@ namespace SpaceAge
     {
         public static volatile bool ThreadsRunning = true;
         public static int USER_MAX_FUEL_AMOUNT = 1500;
-        public static int USER_STARTING_FUNDS = 20000;
+        public static int USER_STARTING_FUNDS = 50000;
         public static int USER_FUEL_USED_PER_SECTOR = 5;    //TODO: Scale with ship later
-        
-        private static Sector CurrentShipSector = null;
-        private static Sector CurrentWaypoint = null;
 
         public enum ShipOrientationState { Up = 1, Down = 2, Left = 3, Right = 4 };
-        //public static int progState;
-        //public static int progStateLast;
-
-        //
-        // User variables
-        //
-        private static int fuelLevel = USER_MAX_FUEL_AMOUNT;
-        private static int playerFunds = USER_STARTING_FUNDS;
 
         public static SpaceShip PlayerShip = Preconstructs.ConstructedShips.StarterShip();
         public static int PlayerLevel;
@@ -41,7 +30,7 @@ namespace SpaceAge
             int startingRow = Constants.UNIVERSE_ROWS / 2;
             int startingColumn = Constants.UNIVERSE_COLUMNS / 2;
 
-            CurrentShipSector = Universe.getSector(startingRow, startingColumn);
+            PlayerShip.CurrentShipSector = Universe.getSector(startingRow, startingColumn);
             
             //progState = (int)ShipOrientationState.Up;
             //progStateLast = (int)ShipOrientationState.Up;
@@ -59,12 +48,12 @@ namespace SpaceAge
 
         public static Sector getCurrentSector()
         {
-            return CurrentShipSector;
+            return PlayerShip.CurrentShipSector;
         }
 
         public static void setCurrentSector(Sector sector)
         {
-            CurrentShipSector = sector;
+            PlayerShip.CurrentShipSector = sector;
 
             // Events that key off of a sector change. Fire them all off
             foreach (EventToInvoke evtoinv in OnSectorChange)
@@ -75,12 +64,12 @@ namespace SpaceAge
 
         public static Sector getCurrentWaypoint()
         {
-            return CurrentWaypoint;
+            return PlayerShip.CurrentWaypoint;
         }
 
         public static void setCurrentWaypoint(Sector sector)
         {
-            CurrentWaypoint = sector;
+            PlayerShip.CurrentWaypoint = sector;
             // Broadcast to everyone who would be interested
             foreach (EventToInvoke evtoinv in OnWaypointChange)
             {
@@ -90,7 +79,7 @@ namespace SpaceAge
 
         public static int reduceFuel(int reduceAmount)
         {
-            int tempReduce = fuelLevel;
+            int tempReduce = PlayerShip.fuelLevel;
 
             tempReduce -= reduceAmount;
 
@@ -100,30 +89,30 @@ namespace SpaceAge
             }
             else
             {
-                fuelLevel -= reduceAmount;
+                PlayerShip.fuelLevel -= reduceAmount;
                 return Constants.SUCCESS;
             }
         }
 
         public static int getFuelLevel()
         {
-            return fuelLevel;
+            return PlayerShip.fuelLevel;
         }
 
         public static int getPlayerFunds()
         {
-            return playerFunds;
+            return PlayerShip.SpaceShipFunds;
         }
 
         public static int changePlayerFunds(int offset)
         {
-            int tempFunds = playerFunds;
+            int tempFunds = PlayerShip.SpaceShipFunds;
 
-            playerFunds += offset;
+            PlayerShip.SpaceShipFunds += offset;
 
             if (tempFunds >= 0)
             {
-                playerFunds += offset;
+                PlayerShip.SpaceShipFunds += offset;
                 return Constants.SUCCESS;
             }
             else

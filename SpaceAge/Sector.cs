@@ -89,7 +89,7 @@ namespace SpaceAge
         public bool ShipMoveIn(MerchantSpaceShip mss)
         {
             PresentSpaceShips.Add(mss);
-            mss.CurrentSector = this;
+            mss.CurrentShipSector = this;
             return true;
         }
 
