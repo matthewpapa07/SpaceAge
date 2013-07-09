@@ -55,6 +55,7 @@ namespace SpaceAge
             NumSpecialMounts = inSpecialMounts;
 
             ShipVelocityThread = new Thread(new ThreadStart(UpdateMovingShipsPosition));
+            SectorFineGridLocation = new PointD(Sector.MAX_DISTANCE_FROM_AXIS / 2, Sector.MAX_DISTANCE_FROM_AXIS / 2);
         }
 
         public void IntializeStats(int inBaseArmor, int inBaseStructure, int inBaseAgility, int inBaseCargoSpace, int inBaseWarpSpeed, int inBaseScanStrength)

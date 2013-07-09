@@ -43,6 +43,7 @@
             this.ui_buttonVisitSector = new System.Windows.Forms.Button();
             this.sectorViewerPanel = new System.Windows.Forms.Panel();
             this.UniverseMap1 = new SpaceAge.UniverseMap();
+            this.bSetHome = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel6.SuspendLayout();
             this.sectorViewerPanel.SuspendLayout();
@@ -51,6 +52,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Black;
+            this.panel1.Controls.Add(this.bSetHome);
             this.panel1.Controls.Add(this.checkBox1);
             this.panel1.Controls.Add(this.panel6);
             this.panel1.Controls.Add(this.bSetWaypoint);
@@ -210,6 +212,16 @@
             this.UniverseMap1.Size = new System.Drawing.Size(682, 682);
             this.UniverseMap1.TabIndex = 0;
             // 
+            // bSetHome
+            // 
+            this.bSetHome.Location = new System.Drawing.Point(153, 92);
+            this.bSetHome.Name = "bSetHome";
+            this.bSetHome.Size = new System.Drawing.Size(146, 32);
+            this.bSetHome.TabIndex = 23;
+            this.bSetHome.Text = "Home";
+            this.bSetHome.UseVisualStyleBackColor = true;
+            this.bSetHome.Click += new System.EventHandler(this.bSetHome_Click);
+            // 
             // UniverseMapBrowser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -247,5 +259,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button bSetHome;
     }
 }

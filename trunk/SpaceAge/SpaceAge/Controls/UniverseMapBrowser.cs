@@ -81,6 +81,12 @@ namespace SpaceAge.Controls
             }
         }
 
+        private void bSetHome_Click(object sender, EventArgs e)
+        {
+            UniverseMap1.UniverseMapCenter = UserState.getCurrentSector();
+            UniverseMap1.Refresh();
+        }
+
 
 
     }

@@ -71,12 +71,12 @@ namespace SpaceAge.Controls
                 ShipControlCoordinates.Y = (
                     staticGraphics.ScaleCoordinate(
                     Sector.MAX_DISTANCE_FROM_AXIS, 
-                    (int)UserState.SectorFineGridLocation.Y  - SpaceShipImage.Height/2, RectToUse.Height
+                    (int)UserState.PlayerShip.SectorFineGridLocation.Y  - SpaceShipImage.Height/2, RectToUse.Height
                     ));
                 ShipControlCoordinates.X = (
                     staticGraphics.ScaleCoordinate(
-                    Sector.MAX_DISTANCE_FROM_AXIS, 
-                    (int)UserState.SectorFineGridLocation.X - SpaceShipImage.Width/2, RectToUse.Width
+                    Sector.MAX_DISTANCE_FROM_AXIS,
+                    (int)UserState.PlayerShip.SectorFineGridLocation.X - SpaceShipImage.Width / 2, RectToUse.Width
                     ));
                 GraphicsToUse.DrawImage(
                     RotatedImage,
@@ -172,8 +172,8 @@ namespace SpaceAge.Controls
             UserState.PlayerShip.DestinationPoint.Y = staticGraphics.ScaleCoordinate(ClientRectangle.Height, ClickPoint.Y, Sector.MAX_DISTANCE_FROM_AXIS);
 
 
-            UserState.PlayerShip.DirectionVector.X = UserState.SectorFineGridLocation.X - UserState.PlayerShip.DestinationPoint.X;
-            UserState.PlayerShip.DirectionVector.Y = UserState.SectorFineGridLocation.Y - UserState.PlayerShip.DestinationPoint.Y;
+            UserState.PlayerShip.DirectionVector.X = UserState.PlayerShip.SectorFineGridLocation.X - UserState.PlayerShip.DestinationPoint.X;
+            UserState.PlayerShip.DirectionVector.Y = UserState.PlayerShip.SectorFineGridLocation.Y - UserState.PlayerShip.DestinationPoint.Y;
 
             UserState.getCurrentSector().ClickForObject(UserState.PlayerShip.DestinationPoint);
             UserState.PlayerShip.DirectionVector.Normalize();
@@ -185,33 +185,32 @@ namespace SpaceAge.Controls
 
         }
 
-        // TODO: Move this to UserState or SpaceShip. This control should not be tracking this because the control isnt necessarily persistent
         public void ExecuteMoveSector(Sector.GateDirections GateDir)
         {
             switch (GateDir)
             {
                 case Sector.GateDirections.North:
                     UserState.PlayerShip.DestinationPoint.Y = 0;
-                    UserState.PlayerShip.DestinationPoint.X = UserState.SectorFineGridLocation.X;
+                    UserState.PlayerShip.DestinationPoint.X = UserState.PlayerShip.SectorFineGridLocation.X;
                     break;
                 case Sector.GateDirections.South:
                     UserState.PlayerShip.DestinationPoint.Y = Sector.MAX_DISTANCE_FROM_AXIS;
-                    UserState.PlayerShip.DestinationPoint.X = UserState.SectorFineGridLocation.X;
+                    UserState.PlayerShip.DestinationPoint.X = UserState.PlayerShip.SectorFineGridLocation.X;
                     break;
                 case Sector.GateDirections.East:
                     UserState.PlayerShip.DestinationPoint.X = Sector.MAX_DISTANCE_FROM_AXIS;
-                    UserState.PlayerShip.DestinationPoint.Y = UserState.SectorFineGridLocation.Y;
+                    UserState.PlayerShip.DestinationPoint.Y = UserState.PlayerShip.SectorFineGridLocation.Y;
                     break;
                 case Sector.GateDirections.West:
                     UserState.PlayerShip.DestinationPoint.X = 0;
-                    UserState.PlayerShip.DestinationPoint.Y = UserState.SectorFineGridLocation.Y;
+                    UserState.PlayerShip.DestinationPoint.Y = UserState.PlayerShip.SectorFineGridLocation.Y;
                     break;
                 default:
                     break;
             }
 
-            UserState.PlayerShip.DirectionVector.X = UserState.SectorFineGridLocation.X - UserState.PlayerShip.DestinationPoint.X;
-            UserState.PlayerShip.DirectionVector.Y = UserState.SectorFineGridLocation.Y - UserState.PlayerShip.DestinationPoint.Y;
+            UserState.PlayerShip.DirectionVector.X = UserState.PlayerShip.SectorFineGridLocation.X - UserState.PlayerShip.DestinationPoint.X;
+            UserState.PlayerShip.DirectionVector.Y = UserState.PlayerShip.SectorFineGridLocation.Y - UserState.PlayerShip.DestinationPoint.Y;
 
             UserState.PlayerShip.DirectionVector.Normalize();
             RefreshImages();
