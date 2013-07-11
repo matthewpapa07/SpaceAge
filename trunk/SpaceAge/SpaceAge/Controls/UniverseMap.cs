@@ -56,7 +56,6 @@ namespace SpaceAge
         public void drawMap(Graphics g)
         {
             updateGrid();
-            UserState.UserStateMachine = UserState.UState.UniverseMap;
 
             height = this.Height;
             width = this.Width;

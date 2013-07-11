@@ -138,5 +138,10 @@ namespace SpaceAge.Controls
             UserState.PlayerShip.ShipVelocityThread.Start();
         }
 
+        private void bAutopilot_Click(object sender, EventArgs e)
+        {
+            UserState.ExecuteWaypoint = true;
+        }
+
     }
 }
