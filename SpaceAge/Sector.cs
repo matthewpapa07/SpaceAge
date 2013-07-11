@@ -257,6 +257,50 @@ namespace SpaceAge
 
             return SectorPath;
         }
+
+        public Sector GetNextSectorToWaypoint(Sector Destination)
+        {
+            Sector[] Options = new Sector[4];
+            int[] OptionsDistance = new int[4];
+
+            Options[0] = Universe.getSector(SectorGridLocation.X + 1, SectorGridLocation.Y);
+            Options[1] = Universe.getSector(SectorGridLocation.X, SectorGridLocation.Y + 1);
+            Options[2] = Universe.getSector(SectorGridLocation.X - 1, SectorGridLocation.Y);
+            Options[3] = Universe.getSector(SectorGridLocation.X, SectorGridLocation.Y - 1);
+
+            for (int i = 0; i <= 3; i++)
+            {
+                OptionsDistance[i] = 999999999;
+            }
+
+            for (int i = 0; i <= 3; i++)
+            {
+                if (Options[i] != null)
+                {
+                    OptionsDistance[i] = Options[i].Distance(Destination);
+                }
+            }
+
+            int SelectedSectorDistance;
+            int SelectedSector;
+            SelectedSectorDistance = 999999999;
+            SelectedSector = 0;
+            for (int k = 0; k <= 3; k++)
+            {
+                if (OptionsDistance[k] < SelectedSectorDistance)
+                {
+                    SelectedSector = k;
+                    SelectedSectorDistance = OptionsDistance[k];
+                }
+            }
+
+            return Options[SelectedSector];
+        }
+
+        //public Point GetSectorOffset(Sector AdjacentSector)
+        //{
+
+        //}
         
     }
 }

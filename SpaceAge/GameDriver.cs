@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace SpaceAge
 {
@@ -15,6 +16,11 @@ namespace SpaceAge
 
         public static TimeSpan TimePeriod = TimeSpan.FromDays(1);
         public static DateTime TimeStart = new DateTime(2450, 10, 17);
+
+        //
+        // Management Threads
+        //
+        public static Thread TakeCareOfUserThread = new Thread(new ThreadStart(TakeCareOfUserShip));
 
         public static void InitializeDriver()
         {
@@ -49,6 +55,29 @@ namespace SpaceAge
 
             }
 
+            TakeCareOfUserThread.Start();
+        }
+
+        // Thread that runs in the background to ferry the user's ship around. 
+        public static void TakeCareOfUserShip()
+        {
+            // User service loop, check conditions on an imperceptible interval
+            while (UserState.ThreadsRunning)
+            {
+                if (UserState.ExecuteWaypoint)
+                {
+                    if (!UserState.PlayerShip.CurrentShipSector.Equals(UserState.PlayerShip.CurrentWaypoint))
+                    {
+
+                    }
+                    else
+                    {
+                        // End ExecuteWaypoint because destination has been reached
+                        UserState.ExecuteWaypoint = false;
+                    }
+                }
+                Thread.Sleep(100);
+            }
         }
 
         public static void PassTurn(int days)

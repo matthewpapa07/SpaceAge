@@ -36,7 +36,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.wpnt_txt = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.bAutopilot = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.sectorNavigationPane1 = new SpaceAge.Controls.SectorNavigationPane();
             this.SectorBrowserSidePanel.SuspendLayout();
@@ -52,7 +52,7 @@
             this.SectorBrowserSidePanel.Controls.Add(this.label1);
             this.SectorBrowserSidePanel.Controls.Add(this.wpnt_txt);
             this.SectorBrowserSidePanel.Controls.Add(this.button3);
-            this.SectorBrowserSidePanel.Controls.Add(this.button2);
+            this.SectorBrowserSidePanel.Controls.Add(this.bAutopilot);
             this.SectorBrowserSidePanel.Controls.Add(this.button1);
             this.SectorBrowserSidePanel.Dock = System.Windows.Forms.DockStyle.Right;
             this.SectorBrowserSidePanel.ForeColor = System.Drawing.SystemColors.ButtonFace;
@@ -127,15 +127,16 @@
             this.button3.Text = "Toggle Local Waypoint";
             this.button3.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // bAutopilot
             // 
-            this.button2.ForeColor = System.Drawing.Color.Black;
-            this.button2.Location = new System.Drawing.Point(6, 81);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(201, 27);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Autopilot";
-            this.button2.UseVisualStyleBackColor = true;
+            this.bAutopilot.ForeColor = System.Drawing.Color.Black;
+            this.bAutopilot.Location = new System.Drawing.Point(6, 81);
+            this.bAutopilot.Name = "bAutopilot";
+            this.bAutopilot.Size = new System.Drawing.Size(201, 27);
+            this.bAutopilot.TabIndex = 1;
+            this.bAutopilot.Text = "Autopilot";
+            this.bAutopilot.UseVisualStyleBackColor = true;
+            this.bAutopilot.Click += new System.EventHandler(this.bAutopilot_Click);
             // 
             // button1
             // 
@@ -174,7 +175,7 @@
         #endregion
 
         private System.Windows.Forms.Panel SectorBrowserSidePanel;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button bAutopilot;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label wpnt_txt;
         private System.Windows.Forms.Button button3;

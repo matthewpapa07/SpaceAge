@@ -21,22 +21,22 @@ namespace SpaceAge.Controls
 
         private void North_Panel_DoubleClick(object sender, EventArgs e)
         {
-            LocalSectorMapComplex.ExecuteMoveSector(Sector.GateDirections.North);
+            UserState.PlayerShip.ExecuteMoveSector(Sector.GateDirections.North);
         }
 
         private void South_Panel_DoubleClick(object sender, EventArgs e)
         {
-            LocalSectorMapComplex.ExecuteMoveSector(Sector.GateDirections.South);
+            UserState.PlayerShip.ExecuteMoveSector(Sector.GateDirections.South);
         }
 
         private void East_Panel_DoubleClick(object sender, EventArgs e)
         {
-            LocalSectorMapComplex.ExecuteMoveSector(Sector.GateDirections.East);
+            UserState.PlayerShip.ExecuteMoveSector(Sector.GateDirections.East);
         }
 
         private void West_Panel_DoubleClick(object sender, EventArgs e)
         {
-            LocalSectorMapComplex.ExecuteMoveSector(Sector.GateDirections.West);
+            UserState.PlayerShip.ExecuteMoveSector(Sector.GateDirections.West);
         }
 
 

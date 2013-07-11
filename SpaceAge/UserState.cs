@@ -18,12 +18,12 @@ namespace SpaceAge
         public static SpaceShip PlayerShip = Preconstructs.ConstructedShips.StarterShip();
         public static int PlayerLevel;
 
-        public enum UState { UniverseMap, SectorMap, Other };
-        public static UState UserStateMachine = UState.Other;
-
         // Event list to execute when user state changes
         public static List<EventToInvoke> OnSectorChange = new List<EventToInvoke>();
         public static List<EventToInvoke> OnWaypointChange = new List<EventToInvoke>();
+
+        // Boolean flags set indicating user desires
+        public static bool ExecuteWaypoint = false;
 
         static UserState()
         {

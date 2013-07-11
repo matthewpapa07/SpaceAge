@@ -15,7 +15,7 @@ namespace SpaceAge.Preconstructs
             Item itemToAdd;
             Commodity.CommodityEnum commidityToAdd;
             bool EquipStatus = false;
-
+            
             //
             // Add starting items
             //

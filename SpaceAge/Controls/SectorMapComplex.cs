@@ -185,38 +185,6 @@ namespace SpaceAge.Controls
 
         }
 
-        public void ExecuteMoveSector(Sector.GateDirections GateDir)
-        {
-            switch (GateDir)
-            {
-                case Sector.GateDirections.North:
-                    UserState.PlayerShip.DestinationPoint.Y = 0;
-                    UserState.PlayerShip.DestinationPoint.X = UserState.PlayerShip.SectorFineGridLocation.X;
-                    break;
-                case Sector.GateDirections.South:
-                    UserState.PlayerShip.DestinationPoint.Y = Sector.MAX_DISTANCE_FROM_AXIS;
-                    UserState.PlayerShip.DestinationPoint.X = UserState.PlayerShip.SectorFineGridLocation.X;
-                    break;
-                case Sector.GateDirections.East:
-                    UserState.PlayerShip.DestinationPoint.X = Sector.MAX_DISTANCE_FROM_AXIS;
-                    UserState.PlayerShip.DestinationPoint.Y = UserState.PlayerShip.SectorFineGridLocation.Y;
-                    break;
-                case Sector.GateDirections.West:
-                    UserState.PlayerShip.DestinationPoint.X = 0;
-                    UserState.PlayerShip.DestinationPoint.Y = UserState.PlayerShip.SectorFineGridLocation.Y;
-                    break;
-                default:
-                    break;
-            }
-
-            UserState.PlayerShip.DirectionVector.X = UserState.PlayerShip.SectorFineGridLocation.X - UserState.PlayerShip.DestinationPoint.X;
-            UserState.PlayerShip.DirectionVector.Y = UserState.PlayerShip.SectorFineGridLocation.Y - UserState.PlayerShip.DestinationPoint.Y;
-
-            UserState.PlayerShip.DirectionVector.Normalize();
-            RefreshImages();
-            UserState.PlayerShip.InTransit = true;
-        }
-
         public void RefreshImages()
         {
             if (RotatedImage != null)

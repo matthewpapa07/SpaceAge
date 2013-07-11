@@ -36,7 +36,6 @@ namespace SpaceAge.Controls
 
         public void drawSector(Graphics GraphicsToUse)
         {
-            UserState.UserStateMachine = UserState.UState.SectorMap;
 
             int listLength;
             stepsPerCoordinate = Sector.MAX_DISTANCE_FROM_AXIS / Height;
