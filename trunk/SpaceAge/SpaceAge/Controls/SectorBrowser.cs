@@ -31,6 +31,9 @@ namespace SpaceAge.Controls
             RefreshElementsEvent = new EventToInvoke(RefreshElementsInEvent);
             UserStateRefreshCallback = new EventToInvoke(RefreshElementsInv);
             UserState.OnSectorChange.Add(UserStateRefreshCallback);
+
+            // Start child map refresh thread
+            sectorNavigationPane1.LocalSectorMapComplex.MapRefreshThread.Start();
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -134,8 +137,7 @@ namespace SpaceAge.Controls
 
         private void SectorBrowser_Enter(object sender, EventArgs e)
         {
-            sectorNavigationPane1.LocalSectorMapComplex.MapRefreshThread.Start();
-            UserState.PlayerShip.ShipVelocityThread.Start();
+            
         }
 
         private void bAutopilot_Click(object sender, EventArgs e)

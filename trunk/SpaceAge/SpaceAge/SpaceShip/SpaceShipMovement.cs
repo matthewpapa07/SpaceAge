@@ -130,7 +130,6 @@ namespace SpaceAge
                         SectorFineGridLocation.X += dx;
                         SectorFineGridLocation.Y += dy;
                     }
-
                 }
 
                 CheckSectorBoundary();
