@@ -8,8 +8,8 @@ namespace SpaceAge
     static class Universe
     {
         public static Sector[,] map;
-        public static int uniRows;
-        public static int uniCols;
+        public static int uniWidth;
+        public static int uniHeight;
 
         // ATTN: Row = x and Column = y
 
@@ -18,20 +18,20 @@ namespace SpaceAge
         //    GenerateUniverse(rows,columns);
         //}
 
-        public static void GenerateUniverse(int rows, int columns)
+        public static void GenerateUniverse(int Width, int Height)
         {
-            map = new Sector[rows, columns];
+            map = new Sector[Width, Height];
 
-            for (int i = 0; i < rows; i++)
+            for (int i = 0; i < Width; i++)
             {
-                for (int j = 0; j < columns; j++)
+                for (int j = 0; j < Height; j++)
                 {
                     map[i, j] = new Sector(i, j);
                 }
             }
 
-            uniCols = columns;
-            uniRows = rows;
+            uniHeight = Height;
+            uniWidth = Width;
         }
 
         /// <summary>
@@ -42,15 +42,15 @@ namespace SpaceAge
 
         }
 
-        public static Sector getSector(int row, int column)
+        public static Sector getSector(int xCoor, int yCoor)
         {
-            if ((row < Constants.UNIVERSE_ROWS) && (column < Constants.UNIVERSE_COLUMNS))
+            if ((xCoor < Constants.UNIVERSE_WIDTH) && (yCoor < Constants.UNIVERSE_HEIGHT))
             {
-                if ((row >= 0) && (column >= 0))
+                if ((xCoor >= 0) && (yCoor >= 0))
                 {
                     try
                     {
-                        return map[row, column];
+                        return map[xCoor, yCoor];
                     }
                     catch (Exception e)
                     {

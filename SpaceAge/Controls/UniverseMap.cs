@@ -13,8 +13,8 @@ namespace SpaceAge
 {
     partial class UniverseMap : UserControl, HumanInterfaceObj
     {
-        const int colRadius = Constants.MAP_SECTORS_COLUMNS / 2;    //truncate here if odd
-        const int rowRadius = Constants.MAP_SECTORS_ROWS / 2;      //truncate here if odd
+        const int yRadius = Constants.MAP_SECTORS_HEIGHT / 2;    //truncate here if odd
+        const int xRadius = Constants.MAP_SECTORS_WIDTH / 2;      //truncate here if odd
         public Sector UniverseMapCenter;
         public Sector ClickedSquare;
         public static Sector[,] theGrid;
@@ -33,10 +33,10 @@ namespace SpaceAge
             InitializeComponent();
             DoubleBuffered = true;
 
-            int startingRow = Constants.UNIVERSE_ROWS / 2;
-            int startingColumn = Constants.UNIVERSE_COLUMNS / 2;
-            theGrid = new Sector[Constants.MAP_SECTORS_ROWS, Constants.MAP_SECTORS_COLUMNS];
-            UniverseMapCenter = Universe.getSector(startingRow, startingColumn);
+            int startingX = Constants.UNIVERSE_WIDTH / 2;
+            int startingY = Constants.UNIVERSE_HEIGHT / 2;
+            theGrid = new Sector[Constants.MAP_SECTORS_WIDTH, Constants.MAP_SECTORS_HEIGHT];
+            UniverseMapCenter = Universe.getSector(startingX, startingY);
 
             updateGrid();
         }
@@ -60,8 +60,8 @@ namespace SpaceAge
             height = this.Height;
             width = this.Width;
 
-            sectorHeight= height / Constants.MAP_SECTORS_COLUMNS;
-            sectorWidth = width / Constants.MAP_SECTORS_ROWS;
+            sectorHeight= height / Constants.MAP_SECTORS_HEIGHT;
+            sectorWidth = width / Constants.MAP_SECTORS_WIDTH;
 
             double tempx;
             double tempy;
@@ -73,16 +73,16 @@ namespace SpaceAge
                 //g.FillRectangle(staticGraphics.spaceBrush, this.ClientRectangle);
                 g.DrawRectangle(staticGraphics.greenPen, this.ClientRectangle);
 
-                for (int CurrentRow = 0; CurrentRow < Constants.MAP_SECTORS_ROWS; CurrentRow++)
+                for (int CurrentY = 0; CurrentY < Constants.MAP_SECTORS_WIDTH; CurrentY++)
                 {
-                    for (int CurrentCol = 0; CurrentCol < Constants.MAP_SECTORS_COLUMNS; CurrentCol++)
+                    for (int CurrentX = 0; CurrentX < Constants.MAP_SECTORS_HEIGHT; CurrentX++)
                     {
-                        tempx = CurrentCol * sectorWidth;
-                        tempy = CurrentRow * sectorHeight;
+                        tempx = CurrentX * sectorWidth;
+                        tempy = CurrentY * sectorHeight;
                         tempWidth = sectorWidth;
                         tempHeight = sectorHeight ;
 
-                        Sector ThisSector = theGrid[CurrentRow, CurrentCol];
+                        Sector ThisSector = theGrid[CurrentX, CurrentY];
                         if (ThisSector != null)
                         {
                             ThisSector.DrawSectorGraphics(g, this.ClientRectangle, (int)tempx, (int)tempy, (int)Math.Ceiling(tempWidth), (int)Math.Ceiling(tempHeight));
@@ -102,8 +102,8 @@ namespace SpaceAge
                             {
                                 using (Image im = staticGraphics.GetSpaceShip())
                                 {
-                                    tempx = (CurrentCol) * sectorWidth;
-                                    tempy = (CurrentRow) * sectorHeight;
+                                    tempx = (CurrentX) * sectorWidth;
+                                    tempy = (CurrentY) * sectorHeight;
                                     tempWidth = sectorWidth;
                                     tempHeight = sectorHeight;
 
@@ -160,37 +160,37 @@ namespace SpaceAge
 
             if (UniverseMapCenter == null)
                 return;
-            int currentCol = UniverseMapCenter.SectorGridLocation.Y;
-            int currentRow = UniverseMapCenter.SectorGridLocation.X;
+            int currentY = UniverseMapCenter.SectorGridLocation.Y;
+            int currentX = UniverseMapCenter.SectorGridLocation.X;
 
-            for (int rowOffset = (-1) * rowRadius; rowOffset <= rowRadius; rowOffset++)
+            for (int xOffset = (-1) * xRadius; xOffset <= xRadius; xOffset++)
             {
-                for (int colOffset = (-1) * colRadius; colOffset <= colRadius; colOffset++)
+                for (int yOffset = (-1) * yRadius; yOffset <= yRadius; yOffset++)
                 {
-                    int gridRow = rowOffset + rowRadius;
-                    int gridCol = colOffset + colRadius;
+                    int gridX = xOffset + xRadius;
+                    int gridY = yOffset + yRadius;
 
-                    if (validatePoint(currentRow + rowOffset, currentCol + colOffset))
+                    if (validatePoint(currentX + xOffset, currentY + yOffset))
                     {
-                        theGrid[gridRow, gridCol] =
-                            Universe.getSector(currentRow + rowOffset, currentCol + colOffset);
+                        theGrid[gridX, gridY] =
+                            Universe.getSector(currentX + xOffset, currentY + yOffset);
                     }
                     else
                     {
                         // 
                         // Null is sentinel for now for off map. Need to change that at some point.
                         //
-                        theGrid[gridRow, gridCol] = null;
+                        theGrid[gridX, gridY] = null;
                     }
                 }
             }
         }
 
-        private static bool validatePoint(int row, int col)
+        private static bool validatePoint(int inx, int iny)
         {
-            if ((row < Constants.UNIVERSE_ROWS) && (row >= 0))
+            if ((inx < Constants.UNIVERSE_WIDTH) && (inx >= 0))
             {
-                if ((col < Constants.UNIVERSE_COLUMNS) && (col >= 0))
+                if ((iny < Constants.UNIVERSE_HEIGHT) && (iny >= 0))
                 {
                     return true;
                 }
@@ -207,16 +207,16 @@ namespace SpaceAge
             switch (Key)
             {
                 case 'w':       // Up
-                    newSector = Universe.getSector(UniverseMapCenter.SectorGridLocation.X - 1, UniverseMapCenter.SectorGridLocation.Y);
-                    break;
-                case 's':       // Down
-                    newSector = Universe.getSector(UniverseMapCenter.SectorGridLocation.X + 1, UniverseMapCenter.SectorGridLocation.Y);
-                    break;
-                case 'a':       // Left
                     newSector = Universe.getSector(UniverseMapCenter.SectorGridLocation.X, UniverseMapCenter.SectorGridLocation.Y - 1);
                     break;
-                case 'd':       // Right
+                case 's':       // Down
                     newSector = Universe.getSector(UniverseMapCenter.SectorGridLocation.X, UniverseMapCenter.SectorGridLocation.Y + 1);
+                    break;
+                case 'a':       // Left
+                    newSector = Universe.getSector(UniverseMapCenter.SectorGridLocation.X - 1, UniverseMapCenter.SectorGridLocation.Y);
+                    break;
+                case 'd':       // Right
+                    newSector = Universe.getSector(UniverseMapCenter.SectorGridLocation.X + 1, UniverseMapCenter.SectorGridLocation.Y);
                     break;
                 default:
                     return;
@@ -238,21 +238,19 @@ namespace SpaceAge
         {
             Point ClickPoint = e.Location;
             Sector tempClickedSector;
-            int rowClicked, colClicked;
+            int yClicked, xClicked;
 
-            height = this.Height;
-            width = this.Width;
+            sectorHeight = Height / Constants.MAP_SECTORS_HEIGHT;
+            sectorWidth = Width / Constants.MAP_SECTORS_WIDTH;
 
-            sectorHeight = height / Constants.MAP_SECTORS_COLUMNS;
-            sectorWidth = width / Constants.MAP_SECTORS_ROWS;
+            // Divide click by height/width, discard remainder and you get sector
+            yClicked = ClickPoint.Y / sectorHeight;
+            xClicked = ClickPoint.X / sectorWidth;
 
-            rowClicked = ClickPoint.Y / sectorHeight;
-            colClicked = ClickPoint.X / sectorWidth;
-
-            if (Constants.MAP_SECTORS_ROWS <= rowClicked || Constants.MAP_SECTORS_COLUMNS <= colClicked)
+            if (Constants.MAP_SECTORS_HEIGHT <= yClicked || Constants.MAP_SECTORS_WIDTH <= xClicked)
                 return;
 
-            tempClickedSector = theGrid[rowClicked, colClicked];
+            tempClickedSector = theGrid[xClicked, yClicked];
             if (ClickedSquare != null)
             {
                 // Unselect if clicked twice

@@ -34,22 +34,22 @@ namespace SpaceAge.DriverLibrary
                 return Directions.Hold;
 
             //Up
-            newDistance = GetTaxiDistance(origin.X - 1, destination.X, origin.Y, destination.Y);
+            newDistance = GetTaxiDistance(origin.X, destination.X, origin.Y - 1, destination.Y);
             if (newDistance < distanceToTravel)
                 return Directions.Up;
 
             //Down
-            newDistance = GetTaxiDistance(origin.X + 1, destination.X, origin.Y, destination.Y);
+            newDistance = GetTaxiDistance(origin.X, destination.X, origin.Y + 1, destination.Y);
             if (newDistance < distanceToTravel)
                 return Directions.Down;
 
             //Left
-            newDistance = GetTaxiDistance(origin.X, destination.X, origin.Y - 1, destination.Y);
+            newDistance = GetTaxiDistance(origin.X - 1, destination.X, origin.Y, destination.Y);
             if (newDistance < distanceToTravel)
                 return Directions.Left;
 
             //Right
-            newDistance = GetTaxiDistance(origin.X, destination.X, origin.Y + 1, destination.Y);
+            newDistance = GetTaxiDistance(origin.X + 1, destination.X, origin.Y, destination.Y);
             if (newDistance < distanceToTravel)
                 return Directions.Right;
 
@@ -98,6 +98,9 @@ namespace SpaceAge.DriverLibrary
             return SSList.ToArray();
         }
 
+        // Get ring of sectors at a range. NOTE: This function was not refactored when I fixed 
+        // The universe coordinate system. I dont think it is necessary to do this. So remember that
+        // Up/Down is Rigth/Left and vise versa
         public static Sector[] GetRingAtRadius(Sector s, int radius)
         {
             if(radius == 0)
@@ -150,13 +153,13 @@ namespace SpaceAge.DriverLibrary
             switch (WhichDirection)
             {
                 case Directions.Down:
-                    return Universe.getSector(CurrentSector.SectorGridLocation.X + 1, CurrentSector.SectorGridLocation.Y);
-                case Directions.Up:
-                    return Universe.getSector(CurrentSector.SectorGridLocation.X - 1, CurrentSector.SectorGridLocation.Y);
-                case Directions.Right:
                     return Universe.getSector(CurrentSector.SectorGridLocation.X, CurrentSector.SectorGridLocation.Y + 1);
-                case Directions.Left:
+                case Directions.Up:
                     return Universe.getSector(CurrentSector.SectorGridLocation.X, CurrentSector.SectorGridLocation.Y - 1);
+                case Directions.Right:
+                    return Universe.getSector(CurrentSector.SectorGridLocation.X + 1, CurrentSector.SectorGridLocation.Y);
+                case Directions.Left:
+                    return Universe.getSector(CurrentSector.SectorGridLocation.X - 1, CurrentSector.SectorGridLocation.Y);
                 case Directions.Hold:
                     return CurrentSector;
                 default:
