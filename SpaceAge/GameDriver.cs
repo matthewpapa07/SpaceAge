@@ -55,6 +55,7 @@ namespace SpaceAge
 
             }
 
+            UserState.PlayerShip.ShipVelocityThread.Start();
             TakeCareOfUserThread.Start();
         }
 

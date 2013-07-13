@@ -117,11 +117,6 @@ namespace SpaceAge
                 ui_buttonBack.Enabled = false;
         }
 
-        private void button_sectorBrowser_Click(object sender, EventArgs e)
-        {
-            SetMainPanel(TheMainSectorBrowserWhole);
-        }
-
         private void ui_buttonBack_Click(object sender, EventArgs e)
         {
             currentControl = null;

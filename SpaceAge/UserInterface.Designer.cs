@@ -36,9 +36,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.ui_Time = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.button_sectorBrowser = new System.Windows.Forms.Button();
             this.ui_buttonBack = new System.Windows.Forms.Button();
             this.panel6 = new System.Windows.Forms.Panel();
+            this.waypointsectordistance = new System.Windows.Forms.Label();
+            this.waypointsectorcoordinates = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
@@ -54,10 +57,6 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.ui_MAINPANEL = new System.Windows.Forms.Panel();
             this.uiShipInventory1 = new SpaceAge.Controls.UiInventory();
-            this.waypointsectordistance = new System.Windows.Forms.Label();
-            this.waypointsectorcoordinates = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel5.SuspendLayout();
@@ -133,7 +132,6 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Black;
-            this.panel1.Controls.Add(this.button_sectorBrowser);
             this.panel1.Controls.Add(this.ui_buttonBack);
             this.panel1.Controls.Add(this.panel6);
             this.panel1.Controls.Add(this.panel5);
@@ -147,21 +145,10 @@
             this.panel1.Size = new System.Drawing.Size(200, 682);
             this.panel1.TabIndex = 17;
             // 
-            // button_sectorBrowser
-            // 
-            this.button_sectorBrowser.ForeColor = System.Drawing.Color.Black;
-            this.button_sectorBrowser.Location = new System.Drawing.Point(3, 512);
-            this.button_sectorBrowser.Name = "button_sectorBrowser";
-            this.button_sectorBrowser.Size = new System.Drawing.Size(194, 39);
-            this.button_sectorBrowser.TabIndex = 22;
-            this.button_sectorBrowser.Text = "Sector Browser";
-            this.button_sectorBrowser.UseVisualStyleBackColor = true;
-            this.button_sectorBrowser.Click += new System.EventHandler(this.button_sectorBrowser_Click);
-            // 
             // ui_buttonBack
             // 
             this.ui_buttonBack.ForeColor = System.Drawing.Color.Black;
-            this.ui_buttonBack.Location = new System.Drawing.Point(3, 557);
+            this.ui_buttonBack.Location = new System.Drawing.Point(3, 311);
             this.ui_buttonBack.Name = "ui_buttonBack";
             this.ui_buttonBack.Size = new System.Drawing.Size(194, 39);
             this.ui_buttonBack.TabIndex = 21;
@@ -180,6 +167,46 @@
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(194, 55);
             this.panel6.TabIndex = 20;
+            // 
+            // waypointsectordistance
+            // 
+            this.waypointsectordistance.AutoSize = true;
+            this.waypointsectordistance.ForeColor = System.Drawing.Color.White;
+            this.waypointsectordistance.Location = new System.Drawing.Point(81, 35);
+            this.waypointsectordistance.Name = "waypointsectordistance";
+            this.waypointsectordistance.Size = new System.Drawing.Size(13, 13);
+            this.waypointsectordistance.TabIndex = 23;
+            this.waypointsectordistance.Text = "0";
+            // 
+            // waypointsectorcoordinates
+            // 
+            this.waypointsectorcoordinates.AutoSize = true;
+            this.waypointsectorcoordinates.ForeColor = System.Drawing.Color.White;
+            this.waypointsectorcoordinates.Location = new System.Drawing.Point(81, 18);
+            this.waypointsectorcoordinates.Name = "waypointsectorcoordinates";
+            this.waypointsectorcoordinates.Size = new System.Drawing.Size(59, 13);
+            this.waypointsectorcoordinates.TabIndex = 22;
+            this.waypointsectorcoordinates.Text = "x = 0, y = 0";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.ForeColor = System.Drawing.Color.White;
+            this.label12.Location = new System.Drawing.Point(3, 35);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(52, 13);
+            this.label12.TabIndex = 21;
+            this.label12.Text = "Distance:";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.ForeColor = System.Drawing.Color.White;
+            this.label13.Location = new System.Drawing.Point(3, 18);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(66, 13);
+            this.label13.TabIndex = 20;
+            this.label13.Text = "Coordinates:";
             // 
             // label11
             // 
@@ -323,46 +350,6 @@
             this.uiShipInventory1.Size = new System.Drawing.Size(334, 235);
             this.uiShipInventory1.TabIndex = 14;
             // 
-            // waypointsectordistance
-            // 
-            this.waypointsectordistance.AutoSize = true;
-            this.waypointsectordistance.ForeColor = System.Drawing.Color.White;
-            this.waypointsectordistance.Location = new System.Drawing.Point(81, 35);
-            this.waypointsectordistance.Name = "waypointsectordistance";
-            this.waypointsectordistance.Size = new System.Drawing.Size(13, 13);
-            this.waypointsectordistance.TabIndex = 23;
-            this.waypointsectordistance.Text = "0";
-            // 
-            // waypointsectorcoordinates
-            // 
-            this.waypointsectorcoordinates.AutoSize = true;
-            this.waypointsectorcoordinates.ForeColor = System.Drawing.Color.White;
-            this.waypointsectorcoordinates.Location = new System.Drawing.Point(81, 18);
-            this.waypointsectorcoordinates.Name = "waypointsectorcoordinates";
-            this.waypointsectorcoordinates.Size = new System.Drawing.Size(59, 13);
-            this.waypointsectorcoordinates.TabIndex = 22;
-            this.waypointsectorcoordinates.Text = "x = 0, y = 0";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.ForeColor = System.Drawing.Color.White;
-            this.label12.Location = new System.Drawing.Point(3, 35);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(52, 13);
-            this.label12.TabIndex = 21;
-            this.label12.Text = "Distance:";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.ForeColor = System.Drawing.Color.White;
-            this.label13.Location = new System.Drawing.Point(3, 18);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(66, 13);
-            this.label13.TabIndex = 20;
-            this.label13.Text = "Coordinates:";
-            // 
             // UserInterface
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -418,7 +405,6 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Panel ui_MAINPANEL;
         private System.Windows.Forms.Button ui_buttonBack;
-        private System.Windows.Forms.Button button_sectorBrowser;
         private System.Windows.Forms.Label waypointsectordistance;
         private System.Windows.Forms.Label waypointsectorcoordinates;
         private System.Windows.Forms.Label label12;

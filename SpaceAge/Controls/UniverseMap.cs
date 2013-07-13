@@ -249,6 +249,9 @@ namespace SpaceAge
             rowClicked = ClickPoint.Y / sectorHeight;
             colClicked = ClickPoint.X / sectorWidth;
 
+            if (Constants.MAP_SECTORS_ROWS <= rowClicked || Constants.MAP_SECTORS_COLUMNS <= colClicked)
+                return;
+
             tempClickedSector = theGrid[rowClicked, colClicked];
             if (ClickedSquare != null)
             {
