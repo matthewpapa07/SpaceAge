@@ -23,7 +23,7 @@ namespace SpaceAge
         public static StarSystem HighlightSystem;
 
         public static StaticGraphics staticGraphics = StaticGraphics.getStaticGraphics();
-        public enum GateDirections { North, South, East, West };
+        public enum GateDirections { North, South, East, West, None, Unknown };
 
         public Sector(int x, int y)
         {
@@ -297,6 +297,38 @@ namespace SpaceAge
             return Options[SelectedSector];
         }
 
+
+        public GateDirections GetNextSectorDirection(Sector Destination)
+        {
+            Sector[] Options = new Sector[4];
+
+            Options[0] = Universe.getSector(SectorGridLocation.X + 1, SectorGridLocation.Y);
+            Options[1] = Universe.getSector(SectorGridLocation.X, SectorGridLocation.Y + 1);
+            Options[2] = Universe.getSector(SectorGridLocation.X - 1, SectorGridLocation.Y);
+            Options[3] = Universe.getSector(SectorGridLocation.X, SectorGridLocation.Y - 1);
+
+            Sector NextSec = GetNextSectorToWaypoint(Destination);
+
+            if (Options[0] != null && NextSec.Equals(Options[0]))
+            {
+                return GateDirections.East;
+            }
+            if (Options[1] != null && NextSec.Equals(Options[1]))
+            {
+                return GateDirections.South;
+            }
+            if (Options[2] != null && NextSec.Equals(Options[2]))
+            {
+                return GateDirections.West;
+            }
+            if (Options[3] != null && NextSec.Equals(Options[3]))
+            {
+                return GateDirections.North;
+            }
+
+            throw new Exception();
+
+        }
         //public Point GetSectorOffset(Sector AdjacentSector)
         //{
 

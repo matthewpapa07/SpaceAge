@@ -27,8 +27,8 @@ namespace SpaceAge
 
         static UserState()
         {
-            int startingRow = Constants.UNIVERSE_ROWS / 2;
-            int startingColumn = Constants.UNIVERSE_COLUMNS / 2;
+            int startingRow = Constants.UNIVERSE_WIDTH / 2;
+            int startingColumn = Constants.UNIVERSE_HEIGHT / 2;
 
             PlayerShip.CurrentShipSector = Universe.getSector(startingRow, startingColumn);
             
