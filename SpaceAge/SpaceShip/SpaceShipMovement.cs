@@ -62,19 +62,19 @@ namespace SpaceAge
 
             if (SectorFineGridLocation.X == 0)
             {
-                TransitionSector = Universe.getSector(currentX, currentY - 1);
+                TransitionSector = Universe.getSector(currentX - 1, currentY);
             }
             if (SectorFineGridLocation.X == Sector.MAX_DISTANCE_FROM_AXIS)
             {
-                TransitionSector = Universe.getSector(currentX, currentY + 1);
+                TransitionSector = Universe.getSector(currentX + 1, currentY);
             }
             if (SectorFineGridLocation.Y == 0)
             {
-                TransitionSector = Universe.getSector(currentX - 1, currentY);
+                TransitionSector = Universe.getSector(currentX, currentY - 1);
             }
             if (SectorFineGridLocation.Y == Sector.MAX_DISTANCE_FROM_AXIS)
             {
-                TransitionSector = Universe.getSector(currentX + 1, currentY);
+                TransitionSector = Universe.getSector(currentX, currentY + 1);
             }
 
             if (TransitionSector != null)
