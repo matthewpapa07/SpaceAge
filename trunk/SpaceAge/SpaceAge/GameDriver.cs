@@ -21,6 +21,7 @@ namespace SpaceAge
         // Management Threads
         //
         public static Thread TakeCareOfUserThread = new Thread(new ThreadStart(TakeCareOfUserShip));
+        public static Thread TakeCareOfAiThread = new Thread(new ThreadStart(TakeCareOfAiShip));
 
         public static void InitializeDriver()
         {
@@ -57,6 +58,7 @@ namespace SpaceAge
 
             UserState.PlayerShip.ShipVelocityThread.Start();
             TakeCareOfUserThread.Start();
+            TakeCareOfAiThread.Start();
         }
 
         // Thread that runs in the background to ferry the user's ship around. 
@@ -69,7 +71,7 @@ namespace SpaceAge
                 {
                     if (!UserState.PlayerShip.CurrentShipSector.Equals(UserState.PlayerShip.CurrentWaypoint))
                     {
-
+                        UserState.PlayerShip.ExecuteMoveSector(UserState.PlayerShip.CurrentShipSector.GetNextSectorDirection(UserState.PlayerShip.CurrentWaypoint));
                     }
                     else
                     {
@@ -77,6 +79,15 @@ namespace SpaceAge
                         UserState.ExecuteWaypoint = false;
                     }
                 }
+                Thread.Sleep(100);
+            }
+        }
+
+        public static void TakeCareOfAiShip()
+        {
+            // User service loop, check conditions on an imperceptible interval
+            while (UserState.ThreadsRunning)
+            {
                 Thread.Sleep(100);
             }
         }
