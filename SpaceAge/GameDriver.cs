@@ -12,16 +12,17 @@ namespace SpaceAge
         static NumberGenerator numGenerator = NumberGenerator.getInstance();
         public static List<MerchantSpaceShip> AllShips = new List<MerchantSpaceShip>(200);
         public static List<RawMaterialExtractor> AllExtractors = new List<RawMaterialExtractor>(200);
-        public static long Time = 0; // Keep track of game time. Could go in userstate too
 
-        public static TimeSpan TimePeriod = TimeSpan.FromDays(1);
         public static DateTime TimeStart = new DateTime(2450, 10, 17);
+        public static long GameTimeTicksSinceTimeStart = 0;
 
         //
         // Management Threads
         //
+        public static Thread GameTimeThread = new Thread(new ThreadStart(GameTimeFunc));
         public static Thread TakeCareOfUserThread = new Thread(new ThreadStart(TakeCareOfUserShip));
         public static Thread TakeCareOfAiThread = new Thread(new ThreadStart(TakeCareOfAiShip));
+        public static Thread StationLivingThread = new Thread(new ThreadStart(StationLiving));
 
         public static void InitializeDriver()
         {
@@ -56,10 +57,24 @@ namespace SpaceAge
 
             }
 
-            UserState.PlayerShip.ShipVelocityThread.Start();
+            GameTimeThread.Start();
             TakeCareOfUserThread.Start();
             TakeCareOfAiThread.Start();
+            StationLivingThread.Start();
+            SpaceShip.UserSpaceShipMovementThread.Start();
         }
+
+        // Game time ticker. Should be just used as a reference to the user, progromatic events will be based on real time
+        public static void GameTimeFunc()
+        {
+            // User service loop, check conditions on an imperceptible interval
+            while (UserState.ThreadsRunning)
+            {
+                GameTimeTicksSinceTimeStart += TimeSpan.FromMinutes(5).Ticks;
+                Thread.Sleep(200);
+            }
+        }
+
 
         // Thread that runs in the background to ferry the user's ship around. 
         public static void TakeCareOfUserShip()
@@ -67,7 +82,7 @@ namespace SpaceAge
             // User service loop, check conditions on an imperceptible interval
             while (UserState.ThreadsRunning)
             {
-                if (UserState.ExecuteWaypoint)
+                if (UserState.PlayerShip.ShipState == SpaceShip.SpaceShipState.Moving)
                 {
                     if (!UserState.PlayerShip.CurrentShipSector.Equals(UserState.PlayerShip.CurrentWaypoint))
                     {
@@ -75,8 +90,7 @@ namespace SpaceAge
                     }
                     else
                     {
-                        // End ExecuteWaypoint because destination has been reached
-                        UserState.ExecuteWaypoint = false;
+                        UserState.PlayerShip.ShipState = SpaceShip.SpaceShipState.Idle;
                     }
                 }
                 Thread.Sleep(100);
@@ -92,10 +106,9 @@ namespace SpaceAge
             }
         }
 
-        public static void PassTurn(int days)
+        public static void StationLiving()
         {
-            Time++;
-            for (int i = 0; i < days; i++)
+            while (UserState.ThreadsRunning)
             {
                 foreach (Sector currentSect in Universe.map)
                 {
@@ -112,16 +125,24 @@ namespace SpaceAge
                     mss.Live();
                 }
                 Console.WriteLine("Global GDP is now " + MerchantSpaceShip.MoneyChangedHands.ToString());
+                for (int i = 0; i < 10; i++)
+                {
+                    if (UserState.ThreadsRunning)
+                        Thread.Sleep(1000);
+                    else
+                        break;
+                }
             }
         }
+
 
         // Try and keep this static class clean, but lets have function to interpret time
         public static string TimeToStringLong()
         {
-            DateTime futureDate = new DateTime(TimePeriod.Ticks * Time + TimeStart.Ticks);
+            DateTime futureDate = new DateTime(GameTimeTicksSinceTimeStart + TimeStart.Ticks);
 
             // Convert ticks to real time
-            return futureDate.ToShortDateString();
+            return futureDate.ToString();
         }
     }
 }

@@ -16,54 +16,52 @@ namespace SpaceAge
         public PointD DestinationPoint = new PointD(0.0, 0.0);
         public VectorD DirectionVector = new VectorD(0.0, 1.0);
 
-        public Thread ShipVelocityThread;
-
         // For ship waypoints. Eventually make a new structure for a destination vector
         public bool InTransit = false;
-
+        
         public void ExecuteMoveSector(Sector.GateDirections GateDir)
         {
             switch (GateDir)
             {
                 case Sector.GateDirections.North:
-                    UserState.PlayerShip.DestinationPoint.Y = 0;
-                    UserState.PlayerShip.DestinationPoint.X = UserState.PlayerShip.SectorFineGridLocation.X;
+                    DestinationPoint.Y = 0;
+                    DestinationPoint.X = SectorFineGridLocation.X;
                     break;
                 case Sector.GateDirections.South:
-                    UserState.PlayerShip.DestinationPoint.Y = Sector.MAX_DISTANCE_FROM_AXIS;
-                    UserState.PlayerShip.DestinationPoint.X = UserState.PlayerShip.SectorFineGridLocation.X;
+                    DestinationPoint.Y = Sector.MAX_DISTANCE_FROM_AXIS;
+                    DestinationPoint.X = SectorFineGridLocation.X;
                     break;
                 case Sector.GateDirections.East:
-                    UserState.PlayerShip.DestinationPoint.X = Sector.MAX_DISTANCE_FROM_AXIS;
-                    UserState.PlayerShip.DestinationPoint.Y = UserState.PlayerShip.SectorFineGridLocation.Y;
+                    DestinationPoint.X = Sector.MAX_DISTANCE_FROM_AXIS;
+                    DestinationPoint.Y = SectorFineGridLocation.Y;
                     break;
                 case Sector.GateDirections.West:
-                    UserState.PlayerShip.DestinationPoint.X = 0;
-                    UserState.PlayerShip.DestinationPoint.Y = UserState.PlayerShip.SectorFineGridLocation.Y;
+                    DestinationPoint.X = 0;
+                    DestinationPoint.Y = SectorFineGridLocation.Y;
                     break;
                 default:
                     break;
-            }
+            } 
 
-            UserState.PlayerShip.DirectionVector.X = UserState.PlayerShip.SectorFineGridLocation.X - UserState.PlayerShip.DestinationPoint.X;
-            UserState.PlayerShip.DirectionVector.Y = UserState.PlayerShip.SectorFineGridLocation.Y - UserState.PlayerShip.DestinationPoint.Y;
+            DirectionVector.X = SectorFineGridLocation.X - DestinationPoint.X;
+            DirectionVector.Y = SectorFineGridLocation.Y - DestinationPoint.Y;
 
-            UserState.PlayerShip.DirectionVector.Normalize();;
-            UserState.PlayerShip.InTransit = true;
+            DirectionVector.Normalize();
+            InTransit = true;
         }
 
         public void CheckSectorBoundary()
         {
-            if (UserState.getCurrentSector() == null)
+            if (CurrentShipSector == null)
                 return;
             Sector TransitionSector = null;
-            int currentX = UserState.getCurrentSector().SectorGridLocation.X;
-            int currentY = UserState.getCurrentSector().SectorGridLocation.Y;
+            int currentX = CurrentShipSector.SectorGridLocation.X;
+            int currentY = CurrentShipSector.SectorGridLocation.Y;
 
             if (SectorFineGridLocation.X == 0)
             {
                 TransitionSector = Universe.getSector(currentX - 1, currentY);
-            }
+            } 
             if (SectorFineGridLocation.X == Sector.MAX_DISTANCE_FROM_AXIS)
             {
                 TransitionSector = Universe.getSector(currentX + 1, currentY);
@@ -74,12 +72,12 @@ namespace SpaceAge
             }
             if (SectorFineGridLocation.Y == Sector.MAX_DISTANCE_FROM_AXIS)
             {
-                TransitionSector = Universe.getSector(currentX, currentY + 1);
+                TransitionSector = Universe.getSector(currentX, currentY + 1  );
             }
 
             if (TransitionSector != null)
             {
-                UserState.setCurrentSector(TransitionSector);
+                CurrentShipSector = TransitionSector;
             }
 
             if (SectorFineGridLocation.X == 0)
@@ -103,8 +101,8 @@ namespace SpaceAge
         public void UpdateMovingShipsPosition()
         {
             // Only refresh position as fast as the ship's rate of speed
-            double WaitAmount = (1 / (double)EffectiveWarpSpeed) * 1000;
-            while (ShipVelocityThread.IsAlive && UserState.ThreadsRunning)
+            //double WaitAmount = (1 / (double)EffectiveWarpSpeed) * 1000;
+//            while (ShipVelocityThread.IsAlive && UserState.ThreadsRunning)
             {
 
                 if (!DestinationPoint.Equals(SectorFineGridLocation) && InTransit)
@@ -133,7 +131,7 @@ namespace SpaceAge
                 }
 
                 CheckSectorBoundary();
-                Thread.Sleep((int)WaitAmount);
+                //Thread.Sleep((int)WaitAmount);
             }
         }
 

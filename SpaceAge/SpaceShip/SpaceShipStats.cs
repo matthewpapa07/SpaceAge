@@ -54,7 +54,6 @@ namespace SpaceAge
             NumEngineMounts = inEngineMounts;
             NumSpecialMounts = inSpecialMounts;
 
-            ShipVelocityThread = new Thread(new ThreadStart(UpdateMovingShipsPosition));
             SectorFineGridLocation = new PointD(Sector.MAX_DISTANCE_FROM_AXIS / 2, Sector.MAX_DISTANCE_FROM_AXIS / 2);
         }
 

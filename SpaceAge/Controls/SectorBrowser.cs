@@ -142,7 +142,7 @@ namespace SpaceAge.Controls
 
         private void bAutopilot_Click(object sender, EventArgs e)
         {
-            UserState.ExecuteWaypoint = true;
+            UserState.PlayerShip.ShipState = SpaceShip.SpaceShipState.Moving;
         }
 
     }
