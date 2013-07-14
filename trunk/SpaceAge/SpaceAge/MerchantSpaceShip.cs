@@ -11,8 +11,6 @@ namespace SpaceAge
         public static long MoneyChangedHands = 0;
         public static int START_SYSTEM_DISTANCE_AWAY = 5;
         // Data for what will hopefully become the state machine dictating AI action
-        public enum MerchantShipState { Moving, Holding, Arrived, Idle };
-        public MerchantShipState ShipState = MerchantShipState.Idle;
         public ItemStore DestinationItemStore = null;   // TODO: Implement this
         public bool IsAlive = true;
 
@@ -36,16 +34,16 @@ namespace SpaceAge
             //    Console.WriteLine("Tracking ship 120");
             switch (ShipState)
             {
-                case MerchantShipState.Holding:
+                case SpaceShipState.Holding:
                     VerifyHold();
                     break;
-                case MerchantShipState.Moving:
+                case SpaceShipState.Moving:
                     ContinueOnJourney();
                     break;
-                case MerchantShipState.Idle:
+                case SpaceShipState.Idle:
                     StartNewTask();
                     break;
-                case MerchantShipState.Arrived:
+                case SpaceShipState.Arrived:
                     ConductCommerce();
                     //if (MerchantId == 120)
                     //    Console.WriteLine("Ship 120 arrived at " + CurrentSector.SectorGridLocation.ToString());
@@ -70,7 +68,7 @@ namespace SpaceAge
 
             TargetSystem = SystemsToVisit[NumberGenerator.getInstance().GetRandNumberInRange(0, SystemsToVisit.Length - 1)];
             CurrentWaypoint = TargetSystem.parent;
-            ShipState = MerchantShipState.Moving;
+            ShipState = SpaceShipState.Moving;
             ContinueOnJourney();
         }
 
@@ -84,7 +82,7 @@ namespace SpaceAge
             }
             if (NextSector.Equals(CurrentWaypoint))
             {
-                ShipState = MerchantShipState.Arrived;
+                ShipState = SpaceShipState.Arrived;
             }
             CurrentShipSector.ShipMoveOut(this);
             CurrentShipSector = NextSector;
@@ -97,7 +95,7 @@ namespace SpaceAge
             // Make sure there are stores here, if not leave this state
             if (CurrentShipSector.RegisteredItemStores.Count == 0)
             {
-                ShipState = MerchantShipState.Idle;
+                ShipState = SpaceShipState.Idle;
                 return;
             }
             // Get commodities available to sell first to make cargo room. If a good price is offered go ahead and sell
@@ -145,7 +143,7 @@ namespace SpaceAge
             // Shortcut this if no cargo space, try and go sell elsewhere
             if (SpaceShipCargo.GetFreeVolumeSpace() == 0)
             {
-                ShipState = MerchantShipState.Idle;
+                ShipState = SpaceShipState.Idle;
                 return;
             }
 
@@ -191,14 +189,14 @@ namespace SpaceAge
             }
 
             // Commerce Complete, set idle state so that a destination can be set next turn
-            ShipState = MerchantShipState.Idle;
+            ShipState = SpaceShipState.Idle;
         }
 
         private void VerifyHold()
         {
             if (NumberGenerator.getInstance().LinearPmfResult(0.25))
             {
-                ShipState = MerchantShipState.Idle;
+                ShipState = SpaceShipState.Idle;
             }
         }
 

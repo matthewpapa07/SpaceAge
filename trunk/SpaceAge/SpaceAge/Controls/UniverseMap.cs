@@ -73,9 +73,9 @@ namespace SpaceAge
                 //g.FillRectangle(staticGraphics.spaceBrush, this.ClientRectangle);
                 g.DrawRectangle(staticGraphics.greenPen, this.ClientRectangle);
 
-                for (int CurrentY = 0; CurrentY < Constants.MAP_SECTORS_WIDTH; CurrentY++)
+                for (int CurrentY = 0; CurrentY < Constants.MAP_SECTORS_HEIGHT; CurrentY++)
                 {
-                    for (int CurrentX = 0; CurrentX < Constants.MAP_SECTORS_HEIGHT; CurrentX++)
+                    for (int CurrentX = 0; CurrentX < Constants.MAP_SECTORS_WIDTH; CurrentX++)
                     {
                         tempx = CurrentX * sectorWidth;
                         tempy = CurrentY * sectorHeight;

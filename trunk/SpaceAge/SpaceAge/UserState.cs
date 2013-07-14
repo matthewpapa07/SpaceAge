@@ -22,28 +22,14 @@ namespace SpaceAge
         public static List<EventToInvoke> OnSectorChange = new List<EventToInvoke>();
         public static List<EventToInvoke> OnWaypointChange = new List<EventToInvoke>();
 
-        // Boolean flags set indicating user desires
-        public static bool ExecuteWaypoint = false;
-
         static UserState()
         {
             int startingRow = Constants.UNIVERSE_WIDTH / 2;
             int startingColumn = Constants.UNIVERSE_HEIGHT / 2;
 
             PlayerShip.CurrentShipSector = Universe.getSector(startingRow, startingColumn);
-            
-            //progState = (int)ShipOrientationState.Up;
-            //progStateLast = (int)ShipOrientationState.Up;
 
             PlayerLevel = 1;
-        }
-
-        public static int onEachTravel()
-        {
-            GameDriver.PassTurn(1);
-            // And then reduce the fuel accordingly
-            return reduceFuel(USER_FUEL_USED_PER_SECTOR);
-
         }
 
         public static Sector getCurrentSector()
@@ -74,23 +60,6 @@ namespace SpaceAge
             foreach (EventToInvoke evtoinv in OnWaypointChange)
             {
                 evtoinv.Invoke();
-            }
-        }
-
-        public static int reduceFuel(int reduceAmount)
-        {
-            int tempReduce = PlayerShip.fuelLevel;
-
-            tempReduce -= reduceAmount;
-
-            if (tempReduce <= 0)
-            {
-                return Constants.FAILURE;
-            }
-            else
-            {
-                PlayerShip.fuelLevel -= reduceAmount;
-                return Constants.SUCCESS;
             }
         }
 
