@@ -13,11 +13,11 @@ namespace SpaceAge
 
         public PointD SectorFineGridLocation;
 
-        public PointD DestinationPoint = new PointD(0.0, 0.0);
+        public PointD DestinationPoint = new PointD(Sector.MAX_DISTANCE_FROM_AXIS / 2, Sector.MAX_DISTANCE_FROM_AXIS/2);
         public VectorD DirectionVector = new VectorD(0.0, 1.0);
 
         // For ship waypoints. Eventually make a new structure for a destination vector
-        public bool InTransit = false;
+        public long LastUpdateTimeTick = 0;
         
         public void ExecuteMoveSector(Sector.GateDirections GateDir)
         {
@@ -47,65 +47,18 @@ namespace SpaceAge
             DirectionVector.Y = SectorFineGridLocation.Y - DestinationPoint.Y;
 
             DirectionVector.Normalize();
-            InTransit = true;
-        }
-
-        public void CheckSectorBoundary()
-        {
-            if (CurrentShipSector == null)
-                return;
-            Sector TransitionSector = null;
-            int currentX = CurrentShipSector.SectorGridLocation.X;
-            int currentY = CurrentShipSector.SectorGridLocation.Y;
-
-            if (SectorFineGridLocation.X == 0)
-            {
-                TransitionSector = Universe.getSector(currentX - 1, currentY);
-            } 
-            if (SectorFineGridLocation.X == Sector.MAX_DISTANCE_FROM_AXIS)
-            {
-                TransitionSector = Universe.getSector(currentX + 1, currentY);
-            }
-            if (SectorFineGridLocation.Y == 0)
-            {
-                TransitionSector = Universe.getSector(currentX, currentY - 1);
-            }
-            if (SectorFineGridLocation.Y == Sector.MAX_DISTANCE_FROM_AXIS)
-            {
-                TransitionSector = Universe.getSector(currentX, currentY + 1  );
-            }
-
-            if (TransitionSector != null)
-            {
-                CurrentShipSector = TransitionSector;
-            }
-
-            if (SectorFineGridLocation.X == 0)
-            {
-                SectorFineGridLocation.X = Sector.MAX_DISTANCE_FROM_AXIS - 20;
-            }
-            if (SectorFineGridLocation.X == Sector.MAX_DISTANCE_FROM_AXIS)
-            {
-                SectorFineGridLocation.X = 20;
-            }
-            if (SectorFineGridLocation.Y == 0)
-            {
-                SectorFineGridLocation.Y = Sector.MAX_DISTANCE_FROM_AXIS - 20;
-            }
-            if (SectorFineGridLocation.Y == Sector.MAX_DISTANCE_FROM_AXIS)
-            {
-                SectorFineGridLocation.Y = 20;
-            }
         }
 
         public void UpdateMovingShipsPosition()
         {
+            long LastUpdateDelta;
             // Only refresh position as fast as the ship's rate of speed
             //double WaitAmount = (1 / (double)EffectiveWarpSpeed) * 1000;
-//            while (ShipVelocityThread.IsAlive && UserState.ThreadsRunning)
             {
+                LastUpdateDelta = DateTime.Now.Ticks - LastUpdateTimeTick;
+                LastUpdateTimeTick = DateTime.Now.Ticks;
 
-                if (!DestinationPoint.Equals(SectorFineGridLocation) && InTransit)
+                if (!DestinationPoint.Equals(SectorFineGridLocation))
                 {
                     DirectionVector.X = SectorFineGridLocation.X - DestinationPoint.X;
                     DirectionVector.Y = SectorFineGridLocation.Y - DestinationPoint.Y;
@@ -116,23 +69,87 @@ namespace SpaceAge
                     double dy = DirectionVector.Y * EffectiveWarpSpeed * (-1);
                     double distanceActual = DestinationPoint.Distance(SectorFineGridLocation);
 
-                    // Since the frame only refreshes the period of the velocity, our distance will always be 1.0
+                    // Since the frame only refreshes the period of the velocity, our distance will always be 1.
+
                     if (distanceActual <= 30.0)
                     {
                         SectorFineGridLocation.X = DestinationPoint.X;
                         SectorFineGridLocation.Y = DestinationPoint.Y;
-                        InTransit = false;
                     }
-                    else
+                    if (!DestinationPoint.Equals(SectorFineGridLocation))
                     {
                         SectorFineGridLocation.X += dx;
                         SectorFineGridLocation.Y += dy;
                     }
                 }
+                else
+                {
+
+                }
 
                 CheckSectorBoundary();
-                //Thread.Sleep((int)WaitAmount);
             }
+        }
+
+        public void CheckSectorBoundary()
+        {
+            if (CurrentShipSector == null)
+                return;
+            Sector TransitionSector = null;
+            Sector OriginalSector = CurrentShipSector;
+            int currentX = CurrentShipSector.SectorGridLocation.X;
+            int currentY = CurrentShipSector.SectorGridLocation.Y;
+
+            if (SectorFineGridLocation.X == 0)
+            {
+                TransitionSector = Universe.getSector(currentX - 1, currentY);
+            }
+            if (SectorFineGridLocation.X == Sector.MAX_DISTANCE_FROM_AXIS)
+            {
+                TransitionSector = Universe.getSector(currentX + 1, currentY);
+            }
+            if (SectorFineGridLocation.Y == 0)
+            {
+                TransitionSector = Universe.getSector(currentX, currentY - 1);
+            }
+            if (SectorFineGridLocation.Y == Sector.MAX_DISTANCE_FROM_AXIS)
+            {
+                TransitionSector = Universe.getSector(currentX, currentY + 1);
+            }
+
+            if (TransitionSector != null)
+            {
+                CurrentShipSector = TransitionSector;
+            }
+
+            if (SectorFineGridLocation.X == 0)
+            {
+                SectorFineGridLocation.X = Sector.MAX_DISTANCE_FROM_AXIS - 20;
+                ResetDestinationPoint();
+            }
+            if (SectorFineGridLocation.X == Sector.MAX_DISTANCE_FROM_AXIS)
+            {
+                SectorFineGridLocation.X = 20;
+                ResetDestinationPoint();
+            }
+            if (SectorFineGridLocation.Y == 0)
+            {
+                SectorFineGridLocation.Y = Sector.MAX_DISTANCE_FROM_AXIS - 20;
+                ResetDestinationPoint();
+            }
+            if (SectorFineGridLocation.Y == Sector.MAX_DISTANCE_FROM_AXIS)
+            {
+                SectorFineGridLocation.Y = 20;
+                ResetDestinationPoint();
+            }
+        }
+
+        public void ResetDestinationPoint()
+        {
+            //DestinationPoint.X = SectorFineGridLocation.X;
+            //DestinationPoint.Y = SectorFineGridLocation.Y;
+            DestinationPoint.X = Sector.MAX_DISTANCE_FROM_AXIS / 2;
+            DestinationPoint.Y = Sector.MAX_DISTANCE_FROM_AXIS / 2;
         }
 
     }

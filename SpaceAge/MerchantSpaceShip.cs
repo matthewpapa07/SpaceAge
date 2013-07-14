@@ -37,7 +37,7 @@ namespace SpaceAge
                 case SpaceShipState.Holding:
                     VerifyHold();
                     break;
-                case SpaceShipState.Moving:
+                case SpaceShipState.MovingSectors:
                     ContinueOnJourney();
                     break;
                 case SpaceShipState.Idle:
@@ -68,7 +68,7 @@ namespace SpaceAge
 
             TargetSystem = SystemsToVisit[NumberGenerator.getInstance().GetRandNumberInRange(0, SystemsToVisit.Length - 1)];
             CurrentWaypoint = TargetSystem.parent;
-            ShipState = SpaceShipState.Moving;
+            ShipState = SpaceShipState.MovingSectors;
             ContinueOnJourney();
         }
 
