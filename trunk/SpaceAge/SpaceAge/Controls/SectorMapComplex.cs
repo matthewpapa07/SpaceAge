@@ -21,8 +21,7 @@ namespace SpaceAge.Controls
 
         // For Threads
         public Thread MapRefreshThread;
-        //public Thread KeyboardCheckThread;
-        public EventToInvoke PlayerShipInTransit;        //public EventToInvoke KeyboardCheck;
+        public EventToInvoke PlayerShipInTransit;
 
         // For graphics
         public Bitmap OriginalImage;
@@ -85,7 +84,7 @@ namespace SpaceAge.Controls
                     35, 35);
             }
 
-            if (UserState.PlayerShip.InTransit)
+            if (UserState.PlayerShip.ShipState == SpaceShip.SpaceShipState.MovingSectors || UserState.PlayerShip.ShipState == SpaceShip.SpaceShipState.MovingWithinSector)
             {
                 Rectangle waypointRect = new Rectangle(
                     staticGraphics.ScaleCoordinate(
@@ -93,13 +92,13 @@ namespace SpaceAge.Controls
                     (int)UserState.PlayerShip.DestinationPoint.X, RectToUse.Width),
                     staticGraphics.ScaleCoordinate(
                         Sector.MAX_DISTANCE_FROM_AXIS,
-                        (int)UserState.PlayerShip.DestinationPoint.Y, 
-                        RectToUse.Height), 
-                    5, 
+                        (int)UserState.PlayerShip.DestinationPoint.Y,
+                        RectToUse.Height),
+                    5,
                     5
                     );
                 GraphicsToUse.FillEllipse(staticGraphics.greenBrush, waypointRect);
-                
+
             }
 
             GraphicsToUse.DrawRectangle(staticGraphics.redPen, this.ClientRectangle);
@@ -125,22 +124,6 @@ namespace SpaceAge.Controls
                 Thread.Sleep(TempRefreshRate);
             }
         }
-
-        //public void RefreshKeystrokes()
-        //{
-        //    while (!this.IsDisposed)
-        //    {
-        //        if (PlayerShipInTransit != null && this.IsHandleCreated == true)
-        //        {
-        //            try
-        //            {
-        //                this.Invoke(KeyboardCheck);
-        //            }
-        //            catch { }
-        //        }
-        //        Thread.Sleep(20);
-        //    }
-        //}
 
         private void SectorMapComplex_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -179,7 +162,7 @@ namespace SpaceAge.Controls
             UserState.PlayerShip.DirectionVector.Normalize();
             RefreshImages();
 
-            UserState.PlayerShip.InTransit = true;
+            UserState.PlayerShip.ShipState = SpaceShip.SpaceShipState.MovingWithinSector;
 
             //Console.WriteLine("Double click at X:" + ClickPoint.X + " Y:" + ClickPoint.Y + " Angle:" + DirectionVector.GetAngle());
 
