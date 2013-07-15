@@ -19,6 +19,9 @@ namespace SpaceAge
 
         ResourceVector currVect; // Temporary variable used in price acquisition
 
+        public enum SpaceShipState { MovingSectors, MovingWithinSector, Holding, Arrived, Idle };
+        public SpaceShipState ShipState = SpaceShipState.Idle;
+
         public MerchantSpaceShip(int inWeaponMounts, int inDefensiveMounts, int inEngineMounts, int inSpecialMounts):
             base(inWeaponMounts, inDefensiveMounts, inEngineMounts, inSpecialMounts)
         {

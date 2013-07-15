@@ -13,8 +13,7 @@ namespace SpaceAge
         SpaceShipConstant.SpaceShipSize SpaceShipSize = SpaceShipConstant.SpaceShipSize.Medium;
 
         // State machine present for all ships so the background threads know what to do with the ships
-        public enum SpaceShipState { MovingSectors, MovingWithinSector, Holding, Arrived, Idle };
-        public SpaceShipState ShipState = SpaceShipState.Idle;
+
 
         //
         // User variables
