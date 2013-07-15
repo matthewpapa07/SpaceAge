@@ -82,13 +82,13 @@ namespace SpaceAge
             // User service loop, check conditions on an imperceptible interval
             while (UserState.ThreadsRunning)
             {
-                if (UserState.PlayerShip.ShipState == SpaceShip.SpaceShipState.MovingSectors && UserState.PlayerShip.CurrentWaypoint != null)
-                {
-                    if (!UserState.PlayerShip.CurrentShipSector.Equals(UserState.PlayerShip.CurrentWaypoint))
-                    {
-                        UserState.PlayerShip.ExecuteMoveSector(UserState.PlayerShip.CurrentShipSector.GetNextSectorDirection(UserState.PlayerShip.CurrentWaypoint));
-                    }
-                }
+            //    if (UserState.PlayerShip.ShipState == SpaceShip.SpaceShipState.MovingSectors && UserState.PlayerShip.CurrentWaypoint != null)
+            //    {
+            //        if (!UserState.PlayerShip.CurrentShipSector.Equals(UserState.PlayerShip.CurrentWaypoint))
+            //        {
+            //            UserState.PlayerShip.ExecuteMoveSector(UserState.PlayerShip.CurrentShipSector.GetNextSectorDirection(UserState.PlayerShip.CurrentWaypoint));
+            //        }
+            //    }
                 Thread.Sleep(100);
             }
         }

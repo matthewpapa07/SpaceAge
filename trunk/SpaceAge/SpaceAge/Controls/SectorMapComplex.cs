@@ -84,15 +84,15 @@ namespace SpaceAge.Controls
                     35, 35);
             }
 
-            if (UserState.PlayerShip.ShipState == SpaceShip.SpaceShipState.MovingSectors || UserState.PlayerShip.ShipState == SpaceShip.SpaceShipState.MovingWithinSector)
+            if (UserState.PlayerShip.SpaceShipMovementState == SpaceShip.SpaceShipMovementEnum.LocalWaypoint || UserState.PlayerShip.SpaceShipMovementState == SpaceShip.SpaceShipMovementEnum.RemoteWaypoint)
             {
                 Rectangle waypointRect = new Rectangle(
                     staticGraphics.ScaleCoordinate(
                     Sector.MAX_DISTANCE_FROM_AXIS,
-                    (int)UserState.PlayerShip.DestinationPoint.X, RectToUse.Width),
+                    (int)UserState.PlayerShip.GetDestinationPoint().X, RectToUse.Width),
                     staticGraphics.ScaleCoordinate(
                         Sector.MAX_DISTANCE_FROM_AXIS,
-                        (int)UserState.PlayerShip.DestinationPoint.Y,
+                        (int)UserState.PlayerShip.GetDestinationPoint().Y,
                         RectToUse.Height),
                     5,
                     5
@@ -151,19 +151,17 @@ namespace SpaceAge.Controls
 
             // Convert graphics point to sector coordinate. loss of precision is expected of course
             ClickPoint = e.Location;
-            UserState.PlayerShip.DestinationPoint.X = staticGraphics.ScaleCoordinate(ClientRectangle.Width, ClickPoint.X, Sector.MAX_DISTANCE_FROM_AXIS);
-            UserState.PlayerShip.DestinationPoint.Y = staticGraphics.ScaleCoordinate(ClientRectangle.Height, ClickPoint.Y, Sector.MAX_DISTANCE_FROM_AXIS);
+            PointD DestinationPoint = new PointD (
+                staticGraphics.ScaleCoordinate(ClientRectangle.Width, ClickPoint.X, Sector.MAX_DISTANCE_FROM_AXIS),
+                staticGraphics.ScaleCoordinate(ClientRectangle.Height, ClickPoint.Y, Sector.MAX_DISTANCE_FROM_AXIS)
+                );
+            UserState.PlayerShip.SetLocalDestinationPoint(DestinationPoint);
 
+            // Check to see if click selected a certain object
+            UserState.getCurrentSector().ClickForObject(UserState.PlayerShip.GetDestinationPoint());
 
-            UserState.PlayerShip.DirectionVector.X = UserState.PlayerShip.SectorFineGridLocation.X - UserState.PlayerShip.DestinationPoint.X;
-            UserState.PlayerShip.DirectionVector.Y = UserState.PlayerShip.SectorFineGridLocation.Y - UserState.PlayerShip.DestinationPoint.Y;
-
-            UserState.getCurrentSector().ClickForObject(UserState.PlayerShip.DestinationPoint);
-            UserState.PlayerShip.DirectionVector.Normalize();
+            // TODO: MOVE THIS  TO THE SPACESHIP CLASS, IT SHOULD NOT BE HERE!
             RefreshImages();
-
-            UserState.PlayerShip.ShipState = SpaceShip.SpaceShipState.MovingWithinSector;
-
             //Console.WriteLine("Double click at X:" + ClickPoint.X + " Y:" + ClickPoint.Y + " Angle:" + DirectionVector.GetAngle());
 
         }
