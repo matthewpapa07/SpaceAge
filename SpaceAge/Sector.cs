@@ -158,7 +158,6 @@ namespace SpaceAge
 
             foreach (StarSystem StarSys in StarSystemsList)
             {
-                TempPointD.ReplaceDataFromPoint(StarSys.StarSystemLocation);
                 PointDistance = TempPointD.Distance(ClickCoordinates);
                 if (PointDistance <= 200 /* StarSys.stars[0].StarRectangle.Height */)
                 {

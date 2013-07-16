@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
+using SpaceAge.Properties;
 
 namespace SpaceAge
 {
@@ -11,22 +12,25 @@ namespace SpaceAge
         public static long MoneyChangedHands = 0;
         public static int START_SYSTEM_DISTANCE_AWAY = 5;
         // Data for what will hopefully become the state machine dictating AI action
-        public ItemStore DestinationItemStore = null;   // TODO: Implement this
         public bool IsAlive = true;
+        //public ItemStore[] ChosenItemStores;
+        //public int ChosenItemStoresIndex = 0;
 
         public static int GlobalMerchantId = 0;
         public int MerchantId = -1;
 
         ResourceVector currVect; // Temporary variable used in price acquisition
 
-        public enum SpaceShipState { MovingSectors, MovingWithinSector, Holding, Arrived, Idle };
-        public SpaceShipState ShipState = SpaceShipState.Idle;
+        public enum MerchantSpaceShipState { MovingSectors, MovingWithinSector, Holding, Arrived, Idle };
+        public MerchantSpaceShipState ShipState = MerchantSpaceShipState.Idle;
 
         public MerchantSpaceShip(int inWeaponMounts, int inDefensiveMounts, int inEngineMounts, int inSpecialMounts):
             base(inWeaponMounts, inDefensiveMounts, inEngineMounts, inSpecialMounts)
         {
             MerchantId = GlobalMerchantId++;
 
+            SectorFineGridLocation.X = NumberGenerator.getInstance().GetRandDoubleInRange(400, Sector.MAX_DISTANCE_FROM_AXIS - 400);
+            SectorFineGridLocation.Y = NumberGenerator.getInstance().GetRandDoubleInRange(400, Sector.MAX_DISTANCE_FROM_AXIS - 400);
             SpaceShipName = "Merch: " + MerchantId;
 
         }
@@ -37,16 +41,19 @@ namespace SpaceAge
             //    Console.WriteLine("Tracking ship 120");
             switch (ShipState)
             {
-                case SpaceShipState.Holding:
+                case MerchantSpaceShipState.Holding:
                     VerifyHold();
                     break;
-                case SpaceShipState.MovingSectors:
-                    ContinueOnJourney();
+                case MerchantSpaceShipState.MovingSectors:
+                    CheckSectorArrival();
                     break;
-                case SpaceShipState.Idle:
+                case MerchantSpaceShipState.MovingWithinSector:
+                    GotoLocalWpts();
+                    break;
+                case MerchantSpaceShipState.Idle:
                     StartNewTask();
                     break;
-                case SpaceShipState.Arrived:
+                case MerchantSpaceShipState.Arrived:
                     ConductCommerce();
                     //if (MerchantId == 120)
                     //    Console.WriteLine("Ship 120 arrived at " + CurrentSector.SectorGridLocation.ToString());
@@ -70,26 +77,36 @@ namespace SpaceAge
             }
 
             TargetSystem = SystemsToVisit[NumberGenerator.getInstance().GetRandNumberInRange(0, SystemsToVisit.Length - 1)];
-            CurrentWaypoint = TargetSystem.parent;
-            ShipState = SpaceShipState.MovingSectors;
-            ContinueOnJourney();
+            ShipState = MerchantSpaceShipState.MovingSectors;
+            ExecuteWaypoints();
+
+            CheckSectorArrival();
         }
 
-        private void ContinueOnJourney()
+        private void CheckSectorArrival()
         {
-            DriverLibrary.NavigationLib.Directions Direction = DriverLibrary.NavigationLib.NextDirection(CurrentShipSector, CurrentWaypoint);
-            Sector NextSector = DriverLibrary.NavigationLib.GetSectorInDirection(CurrentShipSector, Direction);
-            if (NextSector == null)
+            if (SpaceShipMovementState == SpaceShipMovementEnum.None)
             {
-                throw new Exception();
+                StarSystem[] tempStarSystems = CurrentShipSector.StarSystemsList.ToArray();
+                if (tempStarSystems.Length == 0)
+                {
+                    ShipState = MerchantSpaceShipState.Idle;
+                    return;
+                }
+                
+                SetLocalDestinationPoint(new PointD(tempStarSystems[NumberGenerator.getInstance().GetRandNumberInRange(0, tempStarSystems.Length - 1)].StarSystemLocation));
+
+                ShipState = MerchantSpaceShipState.MovingWithinSector;
             }
-            if (NextSector.Equals(CurrentWaypoint))
+        }
+
+        private void GotoLocalWpts()
+        {
+            if (SpaceShipMovementState == SpaceShipMovementEnum.None)
             {
-                ShipState = SpaceShipState.Arrived;
+                ShipState = MerchantSpaceShipState.Idle;
             }
-            CurrentShipSector.ShipMoveOut(this);
-            CurrentShipSector = NextSector;
-            CurrentShipSector.ShipMoveIn(this);
+            
         }
 
         private void ConductCommerce()
@@ -98,7 +115,7 @@ namespace SpaceAge
             // Make sure there are stores here, if not leave this state
             if (CurrentShipSector.RegisteredItemStores.Count == 0)
             {
-                ShipState = SpaceShipState.Idle;
+                ShipState = MerchantSpaceShipState.Idle;
                 return;
             }
             // Get commodities available to sell first to make cargo room. If a good price is offered go ahead and sell
@@ -146,7 +163,7 @@ namespace SpaceAge
             // Shortcut this if no cargo space, try and go sell elsewhere
             if (SpaceShipCargo.GetFreeVolumeSpace() == 0)
             {
-                ShipState = SpaceShipState.Idle;
+                ShipState = MerchantSpaceShipState.Idle;
                 return;
             }
 
@@ -192,15 +209,20 @@ namespace SpaceAge
             }
 
             // Commerce Complete, set idle state so that a destination can be set next turn
-            ShipState = SpaceShipState.Idle;
+            ShipState = MerchantSpaceShipState.Idle;
         }
 
         private void VerifyHold()
         {
-            if (NumberGenerator.getInstance().LinearPmfResult(0.25))
+            if (NumberGenerator.getInstance().LinearPmfResult(0.90))
             {
-                ShipState = SpaceShipState.Idle;
+                ShipState = MerchantSpaceShipState.Idle;
             }
+        }
+
+        public void PerformCommerceOnSector()
+        {
+
         }
 
     }
