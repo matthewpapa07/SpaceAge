@@ -100,7 +100,7 @@ namespace SpaceAge
                         {
                             if (ThisSector.Equals(UserState.getCurrentSector()))
                             {
-                                using (Image im = staticGraphics.GetSpaceShip())
+                                using (Image im = UserState.PlayerShip.GetSpaceShipImage())
                                 {
                                     tempx = (CurrentX) * sectorWidth;
                                     tempy = (CurrentY) * sectorHeight;

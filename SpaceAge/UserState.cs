@@ -28,6 +28,7 @@ namespace SpaceAge
             int startingColumn = Constants.UNIVERSE_HEIGHT / 2;
 
             PlayerShip.CurrentShipSector = Universe.getSector(startingRow, startingColumn);
+            PlayerShip.CurrentShipSector.PresentSpaceShips.Add(PlayerShip);
 
             PlayerLevel = 1;
         }

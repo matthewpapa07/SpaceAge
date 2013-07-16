@@ -282,6 +282,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Graphics\SpaceShip1.bmp" />
+    <None Include="Graphics\SpaceShip2.gif" />
+    <None Include="Resources\UserSpaceShip.bmp" />
     <None Include="Resources\star-space-tile.jpg" />
     <None Include="Resources\space_bg.gif" />
     <None Include="Resources\678124main_hubble_sparkles_1600_1600-1200.jpg" />

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
+using System.Threading;
 
 namespace SpaceAge
 {
@@ -20,6 +21,9 @@ namespace SpaceAge
         private Control previousControl;
         EventToInvoke RefreshElementsEvent = null;
         EventToInvoke UserStateRefreshCallback = null;
+        EventToInvoke PeriodicRefreshMenusEvent = null;
+
+        Thread PeriodicRefreshMenusThread;
 
         public UserInterface()
         {
@@ -40,6 +44,11 @@ namespace SpaceAge
 
             RefreshElementsEvent = new EventToInvoke(RefreshElementsInEvent);
             UserStateRefreshCallback = new EventToInvoke(RefreshElementsInv);
+            PeriodicRefreshMenusEvent = new EventToInvoke(PeriodicRefreshMenus);
+
+            PeriodicRefreshMenusThread = new Thread(new ThreadStart(RefreshMenus));
+            //PeriodicRefreshMenusThread.Start();
+
             UserState.OnSectorChange.Add(UserStateRefreshCallback);
             UserState.OnWaypointChange.Add(UserStateRefreshCallback);
         }
@@ -148,6 +157,21 @@ namespace SpaceAge
             }
 
             userFuelMeter1.UpdateUi();
+        }
+
+        public void RefreshMenus()
+        {
+            // User service loop, check conditions on an imperceptible interval
+            while (UserState.ThreadsRunning)
+            {
+                this.Invoke(PeriodicRefreshMenusEvent);
+                Thread.Sleep(100);
+            }
+
+        }
+        public void PeriodicRefreshMenus()
+        {
+            RefreshElementsInEvent();
         }
     }
 }

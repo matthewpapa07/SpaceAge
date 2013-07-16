@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Drawing;
+using SpaceAge.Properties;
 
 namespace SpaceAge
 {
@@ -12,8 +14,7 @@ namespace SpaceAge
         SpaceShipConstant.SpaceShipClass SpaceShipClass = SpaceShipConstant.SpaceShipClass.Generic;
         SpaceShipConstant.SpaceShipSize SpaceShipSize = SpaceShipConstant.SpaceShipSize.Medium;
 
-        // State machine present for all ships so the background threads know what to do with the ships
-
+        static Bitmap SpaceShipImage;
 
         //
         // User variables
@@ -24,6 +25,11 @@ namespace SpaceAge
         // Management threads
         public static Thread UserSpaceShipMovementThread = new Thread(new ThreadStart(UserSpaceShipMovement));
         public static Thread AiSpaceShipMovementThread = new Thread(new ThreadStart(AiSpaceShipMovement));
+
+        static SpaceShip()
+        {
+            SpaceShipImage = new Bitmap(Resources.SpaceShip1);
+        }
 
         public static void UserSpaceShipMovement()
         {
@@ -41,6 +47,11 @@ namespace SpaceAge
             {
                 Thread.Sleep(100);
             }
+        }
+
+        public Bitmap GetSpaceShipImage()
+        {
+            return new Bitmap(SpaceShipImage);
         }
     }
 

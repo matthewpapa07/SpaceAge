@@ -12,7 +12,6 @@ namespace SpaceAge
     {
         private static StaticGraphics myGraphics = new StaticGraphics();
         public Image emptySpace;
-        private Image SpaceShipOne;
 
         //
         // Brushes that may be used { "White", "Brown", "Orange", "Yellow", "Blue", "Red" };
@@ -62,15 +61,6 @@ namespace SpaceAge
             return myGraphics;
         }
 
-        public Image GetSpaceShip()
-        {
-            System.Reflection.Assembly myAssembly = System.Reflection.Assembly.GetExecutingAssembly();
-            Stream s = myAssembly.GetManifestResourceStream("SpaceAge.Graphics.SpaceShip1.gif");
-            SpaceShipOne = Image.FromStream(s);
-            s.Close();
-
-            return SpaceShipOne;
-        }
 
         public int ScaleCoordinate(int maxOriginalCoor, int actualOriginalCoor, int maxDestCoor)
         {

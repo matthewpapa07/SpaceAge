@@ -13,8 +13,6 @@ namespace SpaceAge.Controls
     partial class SectorMapComplex : UserControl
     {
         StaticGraphics staticGraphics = StaticGraphics.getStaticGraphics();
-        Image SpaceShipImage;
-        Bitmap RotatedImage;
 
         public int TempShipSpeed = 20;
         public int TempRefreshRate = 28;  //ms
@@ -23,20 +21,14 @@ namespace SpaceAge.Controls
         public Thread MapRefreshThread;
         public EventToInvoke PlayerShipInTransit;
 
-        // For graphics
-        public Bitmap OriginalImage;
-
         public SectorMapComplex()
-        {
-            SpaceShipImage = staticGraphics.GetSpaceShip();
+        { 
             PlayerShipInTransit = new EventToInvoke(ShipMoverDelegate);
             //KeyboardCheck = new EventToInvoke(TakeUserInput);
             MapRefreshThread = new Thread(new ThreadStart(RefreshScreen));
             
             //KeyboardCheckThread = new Thread(new ThreadStart(RefreshKeystrokes));
             this.DoubleBuffered = true;
-            OriginalImage = new Bitmap(staticGraphics.GetSpaceShip());
-            RotatedImage = GraphicsLib.RotateBitmap(OriginalImage, ((UserState.PlayerShip.DirectionVector.GetAngle())));
 
             //
             // Assume height == width when determining points per pixel
@@ -64,24 +56,32 @@ namespace SpaceAge.Controls
             Rectangle RectToUse = this.ClientRectangle;
             if (currentSector != null)
                 currentSector.DrawSectorGraphics(GraphicsToUse, RectToUse, 0, 0, RectToUse.Width, RectToUse.Height);
+            else
+                return;
 
+            foreach (SpaceShip ss in currentSector.PresentSpaceShips)
             {
-                //Console.WriteLine("Rotation angle " + MovementVector.GetAngle());
-                ShipControlCoordinates.Y = (
-                    staticGraphics.ScaleCoordinate(
-                    Sector.MAX_DISTANCE_FROM_AXIS, 
-                    (int)UserState.PlayerShip.SectorFineGridLocation.Y  - SpaceShipImage.Height/2, RectToUse.Height
-                    ));
-                ShipControlCoordinates.X = (
-                    staticGraphics.ScaleCoordinate(
-                    Sector.MAX_DISTANCE_FROM_AXIS,
-                    (int)UserState.PlayerShip.SectorFineGridLocation.X - SpaceShipImage.Width / 2, RectToUse.Width
-                    ));
-                GraphicsToUse.DrawImage(
-                    RotatedImage,
-                    ShipControlCoordinates.X,
-                    ShipControlCoordinates.Y,
-                    35, 35);
+                // TODO: Cache these bitmaps at the very least
+                using (Bitmap SsImage = ss.GetSpaceShipImage())
+                {
+                    //Console.WriteLine("Rotation angle " + MovementVector.GetAngle());
+                    ShipControlCoordinates.Y = (
+                        staticGraphics.ScaleCoordinate(
+                        Sector.MAX_DISTANCE_FROM_AXIS,
+                        (int)ss.SectorFineGridLocation.Y - SsImage.Height / 2, RectToUse.Height
+                        ));
+                    ShipControlCoordinates.X = (
+                        staticGraphics.ScaleCoordinate(
+                        Sector.MAX_DISTANCE_FROM_AXIS,
+                        (int)ss.SectorFineGridLocation.X - SsImage.Width / 2, RectToUse.Width
+                        ));
+                    GraphicsToUse.DrawImage(
+                        SsImage,
+                        ShipControlCoordinates.X,
+                        ShipControlCoordinates.Y,
+                        35, 35
+                        );
+                }
             }
 
             if (UserState.PlayerShip.SpaceShipMovementState == SpaceShip.SpaceShipMovementEnum.LocalWaypoint || UserState.PlayerShip.SpaceShipMovementState == SpaceShip.SpaceShipMovementEnum.RemoteWaypoint)
@@ -158,21 +158,10 @@ namespace SpaceAge.Controls
             UserState.PlayerShip.SetLocalDestinationPoint(DestinationPoint);
 
             // Check to see if click selected a certain object
-            UserState.getCurrentSector().ClickForObject(UserState.PlayerShip.GetDestinationPoint());
+            UserState.getCurrentSector().ClickForObject(DestinationPoint);
 
-            // TODO: MOVE THIS  TO THE SPACESHIP CLASS, IT SHOULD NOT BE HERE!
-            RefreshImages();
             //Console.WriteLine("Double click at X:" + ClickPoint.X + " Y:" + ClickPoint.Y + " Angle:" + DirectionVector.GetAngle());
 
-        }
-
-        public void RefreshImages()
-        {
-            if (RotatedImage != null)
-            {
-                RotatedImage.Dispose();
-            }
-            RotatedImage = GraphicsLib.RotateBitmap(OriginalImage, ((UserState.PlayerShip.DirectionVector.GetAngle())));
         }
     }
 }
