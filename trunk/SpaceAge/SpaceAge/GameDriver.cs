@@ -62,6 +62,7 @@ namespace SpaceAge
             TakeCareOfAiThread.Start();
             StationLivingThread.Start();
             SpaceShip.UserSpaceShipMovementThread.Start();
+            SpaceShip.AiSpaceShipMovementThread.Start();
         }
 
         // Game time ticker. Should be just used as a reference to the user, progromatic events will be based on real time
@@ -121,13 +122,15 @@ namespace SpaceAge
                     mss.Live();
                 }
                 Console.WriteLine("Global GDP is now " + MerchantSpaceShip.MoneyChangedHands.ToString());
-                for (int i = 0; i < 10; i++)
-                {
-                    if (UserState.ThreadsRunning)
-                        Thread.Sleep(1000);
-                    else
-                        break;
-                }
+                //for (int i = 0; i < 10; i++)
+                //{
+                //    if (UserState.ThreadsRunning)
+                //        Thread.Sleep(1000);
+                //    else
+                //        break;
+                //}
+                Thread.Sleep(1000);
+                
             }
         }
 
