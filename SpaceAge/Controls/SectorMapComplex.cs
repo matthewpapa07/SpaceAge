@@ -39,7 +39,14 @@ namespace SpaceAge.Controls
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            drawSector(e.Graphics);
+            try
+            {
+                drawSector(e.Graphics);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
         }
 
         private void UiSectorMap_Load(object sender, EventArgs e)
@@ -59,7 +66,8 @@ namespace SpaceAge.Controls
             else
                 return;
 
-            foreach (SpaceShip ss in currentSector.PresentSpaceShips)
+            SpaceShip[] SectSpaceShips = currentSector.PresentSpaceShips.ToArray();
+            foreach (SpaceShip ss in SectSpaceShips)
             {
                 // TODO: Cache these bitmaps at the very least
                 using (Bitmap SsImage = ss.GetSpaceShipImage())

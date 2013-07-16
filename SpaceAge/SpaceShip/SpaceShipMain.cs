@@ -45,13 +45,18 @@ namespace SpaceAge
         {
             while (UserState.ThreadsRunning)
             {
-                Thread.Sleep(100);
+                foreach (MerchantSpaceShip mss in MerchantSpaceShip.AllMerchants)
+                {
+                    mss.UpdateMovingShipsPosition();
+                }
+                Thread.Sleep(2);
             }
         }
 
-        public Bitmap GetSpaceShipImage()
+        public virtual Bitmap GetSpaceShipImage()
         {
-            return new Bitmap(SpaceShipImage);
+            Bitmap RotatedImage = GraphicsLib.RotateBitmap(SpaceShipImage, DirectionVector.GetAngle());
+            return RotatedImage;
         }
     }
 

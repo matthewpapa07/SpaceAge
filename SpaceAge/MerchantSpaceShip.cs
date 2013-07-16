@@ -18,6 +18,9 @@ namespace SpaceAge
 
         public static int GlobalMerchantId = 0;
         public int MerchantId = -1;
+        public static List<MerchantSpaceShip> AllMerchants = new List<MerchantSpaceShip>(1000);
+
+        static Bitmap SpaceShipImage2 = new Bitmap(Resources.SpaceShip2);
 
         ResourceVector currVect; // Temporary variable used in price acquisition
 
@@ -33,6 +36,7 @@ namespace SpaceAge
             SectorFineGridLocation.Y = NumberGenerator.getInstance().GetRandDoubleInRange(400, Sector.MAX_DISTANCE_FROM_AXIS - 400);
             SpaceShipName = "Merch: " + MerchantId;
 
+            AllMerchants.Add(this);
         }
 
         public void Live()
@@ -67,7 +71,6 @@ namespace SpaceAge
         private void StartNewTask()
         {
             StarSystem[] SystemsToVisit;
-            StarSystem TargetSystem;
             int i = START_SYSTEM_DISTANCE_AWAY + 1;
 
             SystemsToVisit = DriverLibrary.NavigationLib.GetStarSystemsInDistance(CurrentShipSector, START_SYSTEM_DISTANCE_AWAY);
@@ -76,7 +79,7 @@ namespace SpaceAge
                 SystemsToVisit = DriverLibrary.NavigationLib.GetStarSystemsInDistance(CurrentShipSector, i++);
             }
 
-            TargetSystem = SystemsToVisit[NumberGenerator.getInstance().GetRandNumberInRange(0, SystemsToVisit.Length - 1)];
+            CurrentWaypoint = SystemsToVisit[NumberGenerator.getInstance().GetRandNumberInRange(0, SystemsToVisit.Length - 1)].parent;
             ShipState = MerchantSpaceShipState.MovingSectors;
             ExecuteWaypoints();
 
@@ -223,6 +226,12 @@ namespace SpaceAge
         public void PerformCommerceOnSector()
         {
 
+        }
+
+        public override Bitmap GetSpaceShipImage()
+        {
+            Bitmap RotatedImage = GraphicsLib.RotateBitmap(SpaceShipImage2, DirectionVector.GetAngle());
+            return RotatedImage;
         }
 
     }
