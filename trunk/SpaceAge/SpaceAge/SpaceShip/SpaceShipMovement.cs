@@ -147,6 +147,8 @@ namespace SpaceAge
 
             if (TransitionSector != null)
             {
+                CurrentShipSector.PresentSpaceShips.Remove(this);
+                TransitionSector.PresentSpaceShips.Add(this);
                 CurrentShipSector = TransitionSector;
             }
 
