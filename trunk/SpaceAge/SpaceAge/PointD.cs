@@ -23,6 +23,13 @@ namespace SpaceAge
             Y = InPoint.Y;
         }
 
+
+        public PointD(Point inPoint)
+        {
+            X = inPoint.X;
+            Y = inPoint.Y;
+        }
+
         public void ReplaceDataFromPoint(Point inPoint)
         {
             X = inPoint.X;
@@ -60,6 +67,11 @@ namespace SpaceAge
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+
+        public Point ToPoint()
+        {
+            return new Point((int)X, (int)Y);
         }
     }
 }
