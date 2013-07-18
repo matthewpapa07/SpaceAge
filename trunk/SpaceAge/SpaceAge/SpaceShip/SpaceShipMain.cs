@@ -15,6 +15,8 @@ namespace SpaceAge
         SpaceShipConstant.SpaceShipSize SpaceShipSize = SpaceShipConstant.SpaceShipSize.Medium;
 
         static Bitmap SpaceShipImage;
+        private int SpaceShipId = 0;
+        private static int SpaceShipIdStatic = -1;
 
         //
         // User variables
@@ -57,6 +59,25 @@ namespace SpaceAge
         {
             Bitmap RotatedImage = GraphicsLib.RotateBitmap(SpaceShipImage, DirectionVector.GetAngle());
             return RotatedImage;
+        }
+
+        // Better for atomic operations
+        public virtual Bitmap GetSpaceShipImage(int Angle)
+        {
+            Bitmap RotatedImage = GraphicsLib.RotateBitmap(SpaceShipImage, Angle);
+            return RotatedImage;
+        }
+
+        public bool Equals(SpaceShip obj)
+        {
+            if (obj.SpaceShipId == SpaceShipId)
+                return true;
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return SpaceShipId;
         }
     }
 

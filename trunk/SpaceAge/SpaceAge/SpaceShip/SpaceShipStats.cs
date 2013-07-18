@@ -72,6 +72,7 @@ namespace SpaceAge
             ShipInitialized = true;
 
             RefreshSpaceShipListViewItem();
+            SpaceShipId = ++SpaceShipIdStatic;
         }
 
         /// <summary>

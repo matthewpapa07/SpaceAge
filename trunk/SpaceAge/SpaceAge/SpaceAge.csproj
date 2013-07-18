@@ -122,6 +122,7 @@
     </Compile>
     <Compile Include="DriverLibrary\NavigationLib.cs" />
     <Compile Include="GameDriver.cs" />
+    <Compile Include="Graphics\GraphicsCache.cs" />
     <Compile Include="Graphics\GraphicsLib.cs" />
     <Compile Include="CelestialBody\IHarvestableBody.cs" />
     <Compile Include="CelestialBody\IInteractableBody.cs" />
@@ -281,7 +282,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Graphics\SpaceShip1.bmp" />
     <None Include="Graphics\SpaceShip2.gif" />
     <None Include="Resources\UserSpaceShip.bmp" />
     <None Include="Resources\star-space-tile.jpg" />

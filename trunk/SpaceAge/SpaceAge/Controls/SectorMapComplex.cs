@@ -13,6 +13,7 @@ namespace SpaceAge.Controls
     partial class SectorMapComplex : UserControl
     {
         StaticGraphics staticGraphics = StaticGraphics.getStaticGraphics();
+        GraphicsCache SectorGc = new GraphicsCache();
 
         public int TempShipSpeed = 20;
         public int TempRefreshRate = 28;  //ms
@@ -57,6 +58,8 @@ namespace SpaceAge.Controls
         public void drawSector(Graphics GraphicsToUse)
         {
             Sector currentSector = UserState.getCurrentSector();
+            Bitmap SsImage;
+            int SsAngle;
 
             Point ShipControlCoordinates = new Point(0, 0);
             //Bitmap RotatedImage;
@@ -69,27 +72,36 @@ namespace SpaceAge.Controls
             SpaceShip[] SectSpaceShips = currentSector.PresentSpaceShips.ToArray();
             foreach (SpaceShip ss in SectSpaceShips)
             {
-                // TODO: Cache these bitmaps at the very least
-                using (Bitmap SsImage = ss.GetSpaceShipImage())
+                // Try image cache for image, if it doesnt exist make a new one
+                SsAngle = ss.DirectionVector.GetAngle();
+                SsImage = SectorGc.GetImage(ss, SsAngle);
+                if (SsImage == null)
                 {
-                    //Console.WriteLine("Rotation angle " + MovementVector.GetAngle());
-                    ShipControlCoordinates.Y = (
-                        staticGraphics.ScaleCoordinate(
-                        Sector.MAX_DISTANCE_FROM_AXIS,
-                        (int)ss.SectorFineGridLocation.Y - SsImage.Height / 2, RectToUse.Height
-                        ));
-                    ShipControlCoordinates.X = (
-                        staticGraphics.ScaleCoordinate(
-                        Sector.MAX_DISTANCE_FROM_AXIS,
-                        (int)ss.SectorFineGridLocation.X - SsImage.Width / 2, RectToUse.Width
-                        ));
-                    GraphicsToUse.DrawImage(
-                        SsImage,
-                        ShipControlCoordinates.X,
-                        ShipControlCoordinates.Y,
-                        35, 35
-                        );
+                    SsImage = ss.GetSpaceShipImage(SsAngle);
+                    if (SsImage == null)
+                    {
+                        throw new Exception();
+                    }
+                    SectorGc.SetImage(ss, SsImage, SsAngle);
+                    Console.Write("si ");
                 }
+
+                ShipControlCoordinates.Y = (
+                    staticGraphics.ScaleCoordinate(
+                    Sector.MAX_DISTANCE_FROM_AXIS,
+                    (int)ss.SectorFineGridLocation.Y - SsImage.Height / 2, RectToUse.Height
+                    ));
+                ShipControlCoordinates.X = (
+                    staticGraphics.ScaleCoordinate(
+                    Sector.MAX_DISTANCE_FROM_AXIS,
+                    (int)ss.SectorFineGridLocation.X - SsImage.Width / 2, RectToUse.Width
+                    ));
+                GraphicsToUse.DrawImage(
+                    SsImage,
+                    ShipControlCoordinates.X,
+                    ShipControlCoordinates.Y,
+                    35, 35
+                    );
             }
 
             if (UserState.PlayerShip.SpaceShipMovementState == SpaceShip.SpaceShipMovementEnum.LocalWaypoint || UserState.PlayerShip.SpaceShipMovementState == SpaceShip.SpaceShipMovementEnum.RemoteWaypoint)

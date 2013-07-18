@@ -53,5 +53,14 @@ namespace SpaceAge
             X = (double)p.X;
             Y = (double)p.Y;
         }
+
+        //public override bool Equals(object obj)
+        //{
+        //    PointD inP = (PointD)obj;
+
+        //    if (inP.X == X && inP.Y == Y)
+        //        return true;
+        //}
+
     }
 }
