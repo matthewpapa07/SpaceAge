@@ -234,5 +234,12 @@ namespace SpaceAge
             return RotatedImage;
         }
 
+        // Better for atomic operations
+        public override Bitmap GetSpaceShipImage(int Angle)
+        {
+            Bitmap RotatedImage = GraphicsLib.RotateBitmap(SpaceShipImage2, Angle);
+            return RotatedImage;
+        }
+
     }
 }
