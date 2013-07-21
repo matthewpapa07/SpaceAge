@@ -21,7 +21,7 @@ namespace SpaceAge
         public bool FollowToWaypoint = false;
 
         // For ship waypoints. Eventually make a new structure for a destination vector
-        public long LastUpdateTimeTick = 0;
+        public long LastUpdateTimeTick = DateTime.Now.Ticks;
         
         public void ExecuteMoveSector(Sector.GateDirections GateDir)
         {
@@ -50,69 +50,70 @@ namespace SpaceAge
 
         private void UpdateMovingShipsPosition()
         {
-            long LastUpdateDelta;
-            // Only refresh position as fast as the ship's rate of speed
-            //double WaitAmount = (1 / (double)EffectiveWarpSpeed) * 1000;
-            {
-                LastUpdateDelta = DateTime.Now.Ticks - LastUpdateTimeTick;
-                LastUpdateTimeTick = DateTime.Now.Ticks;
+            long lastUpdateInMs;
 
+            lastUpdateInMs = (DateTime.Now.Ticks - LastUpdateTimeTick) / TimeSpan.TicksPerMillisecond;
+            LastUpdateTimeTick = DateTime.Now.Ticks;
+
+            double DistanceSinceThen = lastUpdateInMs*EffectiveWarpSpeed;
+            DistanceSinceThen /= 10;
+
+            if (!DestinationPoint.Equals(SectorFineGridLocation))
+            {
+                // Reset so we can get dx and dy
+                ResetDirectionVector();
+
+                double dx = DirectionVector.X * DistanceSinceThen * (-1);
+                double dy = DirectionVector.Y * DistanceSinceThen * (-1);
+                double distanceActual = DestinationPoint.Distance(SectorFineGridLocation);
+
+                // Since the frame only refreshes the period of the velocity, our distance will always be 1.
+
+                if (distanceActual <= DistanceSinceThen)
+                {
+                    SectorFineGridLocation.X = DestinationPoint.X;
+                    SectorFineGridLocation.Y = DestinationPoint.Y;
+                }
                 if (!DestinationPoint.Equals(SectorFineGridLocation))
                 {
-                    // Reset so we can get dx and dy
-                    ResetDirectionVector();
+                    SectorFineGridLocation.X += dx;
+                    SectorFineGridLocation.Y += dy;
+                }
 
-                    double dx = DirectionVector.X * EffectiveWarpSpeed * (-1);
-                    double dy = DirectionVector.Y * EffectiveWarpSpeed * (-1);
-                    double distanceActual = DestinationPoint.Distance(SectorFineGridLocation);
-
-                    // Since the frame only refreshes the period of the velocity, our distance will always be 1.
-
-                    if (distanceActual <= 30.0)
+                //we have arrived at the local waypoint, what to do now
+                if (DestinationPoint.Equals(SectorFineGridLocation))
+                {
+                    // If user has engaged the "follow to remote waypoint"
+                    if (FollowToWaypoint)
                     {
-                        SectorFineGridLocation.X = DestinationPoint.X;
-                        SectorFineGridLocation.Y = DestinationPoint.Y;
-                    }
-                    if (!DestinationPoint.Equals(SectorFineGridLocation))
-                    {
-                        SectorFineGridLocation.X += dx;
-                        SectorFineGridLocation.Y += dy;
-                    }
-
-                    //we have arrived at the local waypoint, what to do now
-                    if (DestinationPoint.Equals(SectorFineGridLocation))
-                    {
-                        // If user has engaged the "follow to remote waypoint"
-                        if (FollowToWaypoint)
+                        // Action has been cancelled by user or waypoint removed, disengage and do nothing
+                        if (CurrentWaypoint == null)
                         {
-                            // Action has been cancelled by user or waypoint removed, disengage and do nothing
-                            if (CurrentWaypoint == null)
+                            SpaceShipMovementState = SpaceShipMovementEnum.None;
+                            FollowToWaypoint = false;
+                        }
+                        else
+                        {
+                            int WptDistance = CurrentWaypoint.Distance(CurrentShipSector);
+
+                            // Has arrived, discard flag and disengage
+                            if (WptDistance == 0)
                             {
                                 SpaceShipMovementState = SpaceShipMovementEnum.None;
                                 FollowToWaypoint = false;
+                                CurrentWaypoint = null;
                             }
-                            else
+                            if (WptDistance > 0)
                             {
-                                int WptDistance = CurrentWaypoint.Distance(CurrentShipSector);
-
-                                // Has arrived, discard flag and disengage
-                                if (WptDistance == 0)
-                                {
-                                    SpaceShipMovementState = SpaceShipMovementEnum.None;
-                                    FollowToWaypoint = false;
-                                    CurrentWaypoint = null;
-                                }
-                                if (WptDistance > 0)
-                                {
-                                    ExecuteMoveSector(CurrentShipSector.GetNextSectorDirection(CurrentWaypoint));
-                                }
+                                ExecuteMoveSector(CurrentShipSector.GetNextSectorDirection(CurrentWaypoint));
                             }
-                        }
-                        else // Arrived at the next sector at manual user request, just close out the state machine
-                        {
-                            SpaceShipMovementState = SpaceShipMovementEnum.None;
                         }
                     }
+                    else // Arrived at the next sector at manual user request, just close out the state machine
+                    {
+                        SpaceShipMovementState = SpaceShipMovementEnum.None;
+                    }
+               
                 }
 
                 CheckSectorBoundary();

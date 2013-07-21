@@ -51,7 +51,7 @@ namespace SpaceAge
                 {
                     mss.UpdateMovingShipsPosition();
                 }
-                Thread.Sleep(2);
+                Thread.Sleep(10);
             }
         }
 
