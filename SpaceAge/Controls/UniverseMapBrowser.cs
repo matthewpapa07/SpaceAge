@@ -21,6 +21,7 @@ namespace SpaceAge.Controls
             DoubleBuffered = true;
 
             UniverseMap1.RefreshParentUi = new EventToInvoke(RefreshElementsInEvent);
+            sb.LvRefreshTh.Start();
 
         }
 
