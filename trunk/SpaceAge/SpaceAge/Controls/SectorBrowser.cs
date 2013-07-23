@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace SpaceAge.Controls
 {
@@ -13,7 +14,7 @@ namespace SpaceAge.Controls
     {
         bool ShipAlreadyMoving = false;
         EventToInvoke RefreshElementsEvent = null;
-        EventToInvoke UserStateRefreshCallback = null;
+        public Thread LvRefreshTh = null;
 
         public SectorBrowser()
         {
@@ -29,11 +30,11 @@ namespace SpaceAge.Controls
             RefreshSectorItemsLv();
 
             RefreshElementsEvent = new EventToInvoke(RefreshElementsInEvent);
-            UserStateRefreshCallback = new EventToInvoke(RefreshElementsInv);
-            UserState.OnSectorChange.Add(UserStateRefreshCallback);
 
             // Start child map refresh thread
             sectorNavigationPane1.LocalSectorMapComplex.MapRefreshThread.Start();
+            LvRefreshTh = new Thread(new ThreadStart(RefreshElementsTh));
+            //this.Disposed
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -85,6 +86,22 @@ namespace SpaceAge.Controls
            
         }
 
+        public void RefreshElementsThStart()
+        {
+            LvRefreshTh.Start();
+        }
+
+        public void RefreshElementsTh()
+        {
+            while (UserState.ThreadsRunning && !this.Disposing)
+            {
+                Thread.Sleep(100);
+                if (this.IsHandleCreated && !this.Disposing)
+                    this.Invoke(RefreshElementsEvent);
+            }
+        }
+
+
         public void RefreshElementsInv()
         {
             this.Invoke(RefreshElementsEvent);
@@ -94,8 +111,9 @@ namespace SpaceAge.Controls
         {
             RefreshShipsLv();
             RefreshSectorItemsLv();
-            listview_sectorships.Refresh();
-            listview_sectoritems.Refresh();
+            //listview_sectorships.Refresh();
+            //listview_sectoritems.Refresh();
+            //SectorBrowserSidePanel.Refresh();
         }
 
         public void UserKeyPress(int Key)
