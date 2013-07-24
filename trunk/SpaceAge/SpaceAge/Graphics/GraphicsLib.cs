@@ -66,5 +66,17 @@ namespace SpaceAge
             return returnBitmap;
         }
 
+        public static PointEx GetPointInRelativeGrid(Point ActualCoor, Point GridStart, Point GridDimensions)
+        {
+            if(((GridStart.X - ActualCoor.X) > 0) && ((GridStart.Y - ActualCoor.Y) > 0))
+            {
+                if((ActualCoor.X < (GridStart.X + GridDimensions.X)) && (ActualCoor.Y < (GridStart.Y + GridDimensions.Y)))
+                {
+                    return new PointEx(GridStart.X - ActualCoor.X, GridStart.Y - ActualCoor.Y);
+                }
+            }
+            return null;
+        }
+
     }
 }

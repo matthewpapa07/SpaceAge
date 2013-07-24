@@ -93,11 +93,17 @@ namespace SpaceAge.Controls
 
         public void RefreshElementsTh()
         {
-            while (UserState.ThreadsRunning && !this.Disposing)
+            try
             {
-                Thread.Sleep(100);
-                if (this.IsHandleCreated && !this.Disposing)
-                    this.Invoke(RefreshElementsEvent);
+                while (UserState.ThreadsRunning && !this.Disposing)
+                {
+                    Thread.Sleep(100);
+                    if (this.IsHandleCreated && !this.Disposing)
+                        this.Invoke(RefreshElementsEvent);
+                }
+            }
+            catch
+            {
             }
         }
 

@@ -146,6 +146,53 @@ namespace SpaceAge
             }
         }
 
+        public void DrawSectorGraphicsEx(Graphics GraphicsToUse, Rectangle RectToUse, Point RectStart, Point RectDimensions, Point GridStart, Point GridDimensions)
+        {
+            PointEx Actual;
+            PointEx Draw = new PointEx(0, 0) ;
+
+            //
+            // Draw the random stars in the background
+            //
+            foreach (Point p in RandomBackgroundStars)
+            {
+                Actual = GraphicsLib.GetPointInRelativeGrid(p, GridStart, GridDimensions);
+                if (Actual != null)
+                {
+                    Draw.X = staticGraphics.ScaleCoordinate(GridDimensions.X, Actual.X, RectDimensions.X);
+                    Draw.X += RectStart.X;
+                    Draw.Y = staticGraphics.ScaleCoordinate(GridDimensions.Y, Actual.Y, RectDimensions.Y);
+                    Draw.Y += RectStart.Y;
+                    if (Draw.X < 0 || Draw.Y < 0)
+                        continue;
+
+                    GraphicsToUse.DrawRectangle(staticGraphics.whitePen, new Rectangle(Draw.X, Draw.Y, 1, 1));
+                }
+            }
+
+            foreach (StarSystem StarSys in StarSystemsList)
+            {
+                Actual = GraphicsLib.GetPointInRelativeGrid(StarSys.StarSystemLocation, GridStart, GridDimensions);
+
+                if (Actual != null)
+                {
+                    Draw.X = staticGraphics.ScaleCoordinate(GridDimensions.X, Actual.X, RectDimensions.X);
+                    Draw.X += RectStart.X;
+                    Draw.Y = staticGraphics.ScaleCoordinate(GridDimensions.Y, Actual.Y, RectDimensions.Y);
+                    Draw.Y += RectStart.Y;
+                    if (Draw.X < 0 || Draw.Y < 0)
+                        continue;
+                    StarSys.stars[0].DrawStarGraphics(GraphicsToUse, Draw.X, Draw.Y);
+                }
+            }
+
+            // Broken. Need to look at this
+            //if (HighlightSystem != null && StarSystemsList.Contains(HighlightSystem))
+            //{
+            //    GraphicsToUse.DrawRectangle(staticGraphics.greenPen, HighlightSystem.stars[0].StarRectangle);
+            //}
+        }
+
         /// <summary>
         /// Function called to see if the user clicked on anything drawn in the sector
         /// </summary>
