@@ -114,9 +114,9 @@ namespace SpaceAge.Controls
                         Sector.MAX_DISTANCE_FROM_AXIS,
                         (int)UserState.PlayerShip.GetDestinationPoint().Y,
                         RectToUse.Height),
-                    5,
-                    5
-                    );
+                        5,
+                        5
+                        );
                 GraphicsToUse.FillEllipse(staticGraphics.greenBrush, waypointRect);
 
             }

@@ -113,44 +113,6 @@ namespace SpaceAge
                         }
                     }
                 }
-
-                //tempx = (Constants.MAP_SECTORS_COLUMNS / 2) * sectorWidth;
-                //tempy = (Constants.MAP_SECTORS_ROWS / 2) * sectorHeight;
-                //tempWidth = sectorWidth;
-                //tempHeight = sectorHeight;
-
-                //g.DrawRectangle(staticGraphics.whitePen, (int)tempx, (int)tempy, (int)Math.Ceiling(tempWidth), (int)Math.Ceiling(tempHeight));
-
-                ////
-                //// Draw the ship in the middle
-                ////
-                //using(Image im = staticGraphics.GetSpaceShip())
-                //{
-                //    switch (UserState.progState)
-                //    {
-                //        case (int)UserState.ShipOrientationState.Down:
-                //            im.RotateFlip(RotateFlipType.Rotate270FlipNone);
-                //            break;
-                //        case (int)UserState.ShipOrientationState.Up:
-                //            im.RotateFlip(RotateFlipType.Rotate90FlipNone);
-                //            break;
-                //        case (int)UserState.ShipOrientationState.Left:
-                //            im.RotateFlip(RotateFlipType.RotateNoneFlipNone);
-                //            break;
-                //        case (int)UserState.ShipOrientationState.Right:
-                //            im.RotateFlip(RotateFlipType.Rotate180FlipNone);
-                //            break;
-                //        default:
-                //            break;
-                //    }
-
-                //    tempx = (Constants.MAP_SECTORS_COLUMNS / 2) * sectorWidth + spaceWidth * ((Constants.MAP_SECTORS_COLUMNS / 2) + 1);
-                //    tempy = (Constants.MAP_SECTORS_ROWS / 2) * sectorHeight + spaceHeight * ((Constants.MAP_SECTORS_ROWS / 2) + 1);
-                //    tempWidth = sectorWidth - spaceWidth;
-                //    tempHeight = sectorHeight - spaceHeight;
-
-                //    g.DrawImage(im, (int)tempx, (int)tempy, (int)Math.Ceiling(tempWidth), (int)Math.Ceiling(tempHeight));
-                //}
             }
         }
 

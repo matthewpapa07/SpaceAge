@@ -131,6 +131,7 @@
     <Compile Include="CelestialBody\Moon.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PointD.cs" />
+    <Compile Include="PointEx.cs" />
     <Compile Include="PortInteraction\Factory.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="ItemList.cs" />
