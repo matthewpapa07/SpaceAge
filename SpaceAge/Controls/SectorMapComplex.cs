@@ -15,9 +15,9 @@ namespace SpaceAge.Controls
         StaticGraphics staticGraphics = StaticGraphics.getStaticGraphics();
         GraphicsCache SectorGc = new GraphicsCache();
 
-        public int TempShipSpeed = 20;
         public int TempRefreshRate = 28;  //ms
-        public int TempViewRadius = 1000;
+        public int TempViewRadius = 400;
+        public int TemoViewMult = 1;
 
         // For Threads
         public Thread MapRefreshThread;
@@ -59,83 +59,100 @@ namespace SpaceAge.Controls
         public void drawSector(Graphics GraphicsToUse)
         {
             Sector currentSector = UserState.getCurrentSector();
+            if (currentSector == null)
+            {
+                return;
+            }
+            
             Bitmap SsImage;
             int SsAngle;
 
             Point ShipControlCoordinates = new Point(0, 0);
             //Bitmap RotatedImage;
             Rectangle RectToUse = this.ClientRectangle;
-            if (currentSector != null)
-            {
-                Point RectStart = new Point(0, 0);
-                Point RectDimensions = new Point(RectToUse.Width, RectToUse.Height);
-                //DrawSectorGraphicsEx(Graphics GraphicsToUse, Rectangle RectToUse, Point RectStart, Point RectDimensions, Point GridStart, Point GridDimensions)
-                currentSector.DrawSectorGraphicsEx(
-                    GraphicsToUse, 
-                    RectToUse, 
-                    RectStart, 
-                    RectDimensions, 
-                    Sector.SECTOR_START_P, 
-                    Sector.SECTOR_END_P
-                    );
-                //currentSector.DrawSectorGraphicsEx(GraphicsToUse, RectToUse, RectStart, RectDimensions, Sector.SETOR_START_P, Sector.SETOR_END_P);
-                //currentSector.DrawSectorGraphics(GraphicsToUse, RectToUse, 0, 0, RectToUse.Width, RectToUse.Height );
-            }
-            else
-                return;
 
+            Point RectStart = new Point(0, 0);
+            Point RectDimensions = new Point(RectToUse.Width, RectToUse.Height);
+            Point GridStart = new Point((int)(UserState.PlayerShip.SectorFineGridLocation.X - TempViewRadius * TemoViewMult), (int)(UserState.PlayerShip.SectorFineGridLocation.Y - TempViewRadius * TemoViewMult));
+            Point GridDimensions = new Point(TempViewRadius * TemoViewMult * 2, TempViewRadius * TemoViewMult * 2);
+            //DrawSectorGraphicsEx(Graphics GraphicsToUse, Rectangle RectToUse, Point RectStart, Point RectDimensions, Point GridStart, Point GridDimensions)
+            currentSector.DrawSectorGraphicsEx(
+                GraphicsToUse, 
+                RectToUse, 
+                RectStart, 
+                RectDimensions,
+                GridStart,
+                GridDimensions
+                );
+            //currentSector.DrawSectorGraphicsEx(GraphicsToUse, RectToUse, RectStart, RectDimensions, Sector.SETOR_START_P, Sector.SETOR_END_P);
+            //currentSector.DrawSectorGraphics(GraphicsToUse, RectToUse, 0, 0, RectToUse.Width, RectToUse.Height );
+
+            PointEx Actual;
             SpaceShip[] SectSpaceShips = currentSector.PresentSpaceShips.ToArray();
             foreach (SpaceShip ss in SectSpaceShips)
             {
-                // Try image cache for image, if it doesnt exist make a new one
-                SsAngle = ss.DirectionVector.GetAngle();
-                SsImage = SectorGc.GetImage(ss, SsAngle);
-                if (SsImage == null)
+                Actual = GraphicsLib.GetPointInRelativeGrid(ss.SectorFineGridLocation.ToPoint(), GridStart, GridDimensions);
+
+                if (Actual != null)
                 {
-                    SsImage = ss.GetSpaceShipImage(SsAngle);
+                    // Try image cache for image, if it doesnt exist make a new one
+                    SsAngle = ss.DirectionVector.GetAngle();
+                    SsImage = SectorGc.GetImage(ss, SsAngle);
                     if (SsImage == null)
                     {
-                        throw new Exception();
+                        SsImage = ss.GetSpaceShipImage(SsAngle);
+                        if (SsImage == null)
+                        {
+                            throw new Exception();
+                        }
+                        SectorGc.SetImage(ss, SsImage, SsAngle);
                     }
-                    SectorGc.SetImage(ss, SsImage, SsAngle);
-                }
 
-                ShipControlCoordinates.Y = (
-                    staticGraphics.ScaleCoordinate(
-                    Sector.MAX_DISTANCE_FROM_AXIS,
-                    (int)ss.SectorFineGridLocation.Y - SsImage.Height / 2, RectToUse.Height
-                    ));
-                ShipControlCoordinates.X = (
-                    staticGraphics.ScaleCoordinate(
-                    Sector.MAX_DISTANCE_FROM_AXIS,
-                    (int)ss.SectorFineGridLocation.X - SsImage.Width / 2, RectToUse.Width
-                    ));
-                GraphicsToUse.DrawImage(
-                    SsImage,
-                    ShipControlCoordinates.X,
-                    ShipControlCoordinates.Y,
-                    35, 35
-                    );
+                    ShipControlCoordinates.X = (
+                        staticGraphics.ScaleCoordinate(
+                        GridDimensions.X,
+                        Actual.X,
+                        RectToUse.Width
+                        ));
+                    ShipControlCoordinates.Y = (
+                        staticGraphics.ScaleCoordinate(
+                        GridDimensions.Y,
+                        Actual.Y, 
+                        RectToUse.Height
+                        ));
+                    GraphicsToUse.DrawImage(
+                        SsImage,
+                        ShipControlCoordinates.X /* - SsImage.Height / 2 */,
+                        ShipControlCoordinates.Y /* - SsImage.Height / 2 */,
+                        35, 35
+                        );
+                }
             }
 
+            // Draw green dot representign local waypoint into the window
             if (UserState.PlayerShip.SpaceShipMovementState == SpaceShip.SpaceShipMovementEnum.LocalWaypoint || UserState.PlayerShip.SpaceShipMovementState == SpaceShip.SpaceShipMovementEnum.RemoteWaypoint)
             {
-                Rectangle waypointRect = new Rectangle(
-                    staticGraphics.ScaleCoordinate(
-                    Sector.MAX_DISTANCE_FROM_AXIS,
-                    (int)UserState.PlayerShip.GetDestinationPoint().X, RectToUse.Width),
-                    staticGraphics.ScaleCoordinate(
-                        Sector.MAX_DISTANCE_FROM_AXIS,
-                        (int)UserState.PlayerShip.GetDestinationPoint().Y,
-                        RectToUse.Height),
+                Actual = GraphicsLib.GetPointInRelativeGrid(UserState.PlayerShip.GetDestinationPoint().ToPoint(), GridStart, GridDimensions);
+
+                if (Actual != null)
+                {
+                    Rectangle waypointRect = new Rectangle(
+                        staticGraphics.ScaleCoordinate(
+                            GridDimensions.X,
+                            Actual.X, 
+                            RectToUse.Width
+                            ),
+                        staticGraphics.ScaleCoordinate(
+                            GridDimensions.Y,
+                            Actual.Y,
+                            RectToUse.Height
+                            ),
                         5,
                         5
-                        );
-                GraphicsToUse.FillEllipse(staticGraphics.greenBrush, waypointRect);
-
+                       );
+                    GraphicsToUse.FillEllipse(staticGraphics.greenBrush, waypointRect);
+                }
             }
-
-            GraphicsToUse.DrawRectangle(staticGraphics.redPen, this.ClientRectangle);
         }
 
         public void ShipMoverDelegate()
@@ -181,14 +198,19 @@ namespace SpaceAge.Controls
 
         private void SectorMapComplex_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            Point ClickPoint;
+            Point ClickPoint = e.Location;
+
+            Rectangle RectToUse = this.ClientRectangle;
+            Point GridStart = new Point((int)(UserState.PlayerShip.SectorFineGridLocation.X - TempViewRadius * TemoViewMult), (int)(UserState.PlayerShip.SectorFineGridLocation.Y - TempViewRadius * TemoViewMult));
 
             // Convert graphics point to sector coordinate. loss of precision is expected of course
-            ClickPoint = e.Location;
             PointD DestinationPoint = new PointD (
-                staticGraphics.ScaleCoordinate(ClientRectangle.Width, ClickPoint.X, Sector.MAX_DISTANCE_FROM_AXIS),
-                staticGraphics.ScaleCoordinate(ClientRectangle.Height, ClickPoint.Y, Sector.MAX_DISTANCE_FROM_AXIS)
+                staticGraphics.ScaleCoordinate(ClientRectangle.Width, ClickPoint.X, TempViewRadius * TemoViewMult * 2),
+                staticGraphics.ScaleCoordinate(ClientRectangle.Height, ClickPoint.Y, TempViewRadius * TemoViewMult * 2)
                 );
+            DestinationPoint.X += GridStart.X;
+            DestinationPoint.Y += GridStart.Y;
+
             UserState.PlayerShip.SetLocalDestinationPoint(DestinationPoint);
 
             // Check to see if click selected a certain object

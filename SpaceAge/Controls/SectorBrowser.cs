@@ -169,5 +169,10 @@ namespace SpaceAge.Controls
             UserState.PlayerShip.ExecuteWaypoints();
         }
 
+        private void trackBar1_ValueChanged(object sender, EventArgs e)
+        {
+            sectorNavigationPane1.LocalSectorMapComplex.TemoViewMult = trackBar1.Value;
+        }
+
     }
 }
