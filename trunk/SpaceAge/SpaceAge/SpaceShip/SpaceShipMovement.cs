@@ -56,7 +56,7 @@ namespace SpaceAge
             LastUpdateTimeTick = DateTime.Now.Ticks;
 
             double DistanceSinceThen = lastUpdateInMs*EffectiveWarpSpeed;
-            DistanceSinceThen /= 10;
+            DistanceSinceThen /= 100;
 
             if (!DestinationPoint.Equals(SectorFineGridLocation))
             {

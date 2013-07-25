@@ -38,13 +38,16 @@
             this.button3 = new System.Windows.Forms.Button();
             this.bAutopilot = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.sectorNavigationPane1 = new SpaceAge.Controls.SectorNavigationPane();
             this.SectorBrowserSidePanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
             // SectorBrowserSidePanel
             // 
             this.SectorBrowserSidePanel.BackColor = System.Drawing.Color.Black;
+            this.SectorBrowserSidePanel.Controls.Add(this.trackBar1);
             this.SectorBrowserSidePanel.Controls.Add(this.label3);
             this.SectorBrowserSidePanel.Controls.Add(this.listview_sectorships);
             this.SectorBrowserSidePanel.Controls.Add(this.label2);
@@ -148,6 +151,17 @@
             this.button1.Text = "Toggle Waypoint";
             this.button1.UseVisualStyleBackColor = true;
             // 
+            // trackBar1
+            // 
+            this.trackBar1.LargeChange = 1;
+            this.trackBar1.Location = new System.Drawing.Point(4, 634);
+            this.trackBar1.Minimum = 1;
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Size = new System.Drawing.Size(104, 45);
+            this.trackBar1.TabIndex = 9;
+            this.trackBar1.Value = 1;
+            this.trackBar1.ValueChanged += new System.EventHandler(this.trackBar1_ValueChanged);
+            // 
             // sectorNavigationPane1
             // 
             this.sectorNavigationPane1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -168,6 +182,7 @@
             this.Leave += new System.EventHandler(this.SectorBrowser_Leave);
             this.SectorBrowserSidePanel.ResumeLayout(false);
             this.SectorBrowserSidePanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -185,5 +200,6 @@
         private System.Windows.Forms.ListView listview_sectorships;
         private System.Windows.Forms.Label label2;
         private SectorNavigationPane sectorNavigationPane1;
+        private System.Windows.Forms.TrackBar trackBar1;
     }
 }
