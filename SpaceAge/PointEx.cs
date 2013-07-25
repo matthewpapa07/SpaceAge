@@ -70,7 +70,7 @@ namespace SpaceAge
 
         public Point ToPoint()
         {
-            return new Point((int)X, (int)Y);
+            return new Point(X, Y);
         }
     }
 }

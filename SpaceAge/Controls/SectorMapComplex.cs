@@ -17,6 +17,7 @@ namespace SpaceAge.Controls
 
         public int TempShipSpeed = 20;
         public int TempRefreshRate = 28;  //ms
+        public int TempViewRadius = 1000;
 
         // For Threads
         public Thread MapRefreshThread;
@@ -65,7 +66,21 @@ namespace SpaceAge.Controls
             //Bitmap RotatedImage;
             Rectangle RectToUse = this.ClientRectangle;
             if (currentSector != null)
-                currentSector.DrawSectorGraphics(GraphicsToUse, RectToUse, 0, 0, RectToUse.Width, RectToUse.Height);
+            {
+                Point RectStart = new Point(0, 0);
+                Point RectDimensions = new Point(RectToUse.Width, RectToUse.Height);
+                //DrawSectorGraphicsEx(Graphics GraphicsToUse, Rectangle RectToUse, Point RectStart, Point RectDimensions, Point GridStart, Point GridDimensions)
+                currentSector.DrawSectorGraphicsEx(
+                    GraphicsToUse, 
+                    RectToUse, 
+                    RectStart, 
+                    RectDimensions, 
+                    Sector.SECTOR_START_P, 
+                    Sector.SECTOR_END_P
+                    );
+                //currentSector.DrawSectorGraphicsEx(GraphicsToUse, RectToUse, RectStart, RectDimensions, Sector.SETOR_START_P, Sector.SETOR_END_P);
+                //currentSector.DrawSectorGraphics(GraphicsToUse, RectToUse, 0, 0, RectToUse.Width, RectToUse.Height );
+            }
             else
                 return;
 
@@ -83,7 +98,6 @@ namespace SpaceAge.Controls
                         throw new Exception();
                     }
                     SectorGc.SetImage(ss, SsImage, SsAngle);
-                    Console.Write("si ");
                 }
 
                 ShipControlCoordinates.Y = (
