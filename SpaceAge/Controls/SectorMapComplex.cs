@@ -13,7 +13,7 @@ namespace SpaceAge.Controls
     partial class SectorMapComplex : UserControl
     {
         StaticGraphics staticGraphics = StaticGraphics.getStaticGraphics();
-        GraphicsCache SectorGc = new GraphicsCache();
+        GraphicsCache SpaceShipGc = GraphicsCache.GraphicsCacheSpaceShip();
 
         public int TempRefreshRate = 28;  //ms
         public int TempViewRadius = 400;
@@ -82,7 +82,8 @@ namespace SpaceAge.Controls
                 RectStart, 
                 RectDimensions,
                 GridStart,
-                GridDimensions
+                GridDimensions,
+                TemoViewMult
                 );
             //currentSector.DrawSectorGraphicsEx(GraphicsToUse, RectToUse, RectStart, RectDimensions, Sector.SETOR_START_P, Sector.SETOR_END_P);
             //currentSector.DrawSectorGraphics(GraphicsToUse, RectToUse, 0, 0, RectToUse.Width, RectToUse.Height );
@@ -97,7 +98,7 @@ namespace SpaceAge.Controls
                 {
                     // Try image cache for image, if it doesnt exist make a new one
                     SsAngle = ss.DirectionVector.GetAngle();
-                    SsImage = SectorGc.GetImage(ss, SsAngle);
+                    SsImage = SpaceShipGc.GetImage(ss, SsAngle);
                     if (SsImage == null)
                     {
                         SsImage = ss.GetSpaceShipImage(SsAngle);
@@ -105,7 +106,7 @@ namespace SpaceAge.Controls
                         {
                             throw new Exception();
                         }
-                        SectorGc.SetImage(ss, SsImage, SsAngle);
+                        SpaceShipGc.SetImage(ss, SsImage, SsAngle);
                     }
 
                     ShipControlCoordinates.X = (
@@ -124,7 +125,7 @@ namespace SpaceAge.Controls
                         SsImage,
                         ShipControlCoordinates.X /* - SsImage.Height / 2 */,
                         ShipControlCoordinates.Y /* - SsImage.Height / 2 */,
-                        35, 35
+                        35 / TemoViewMult, 35 / TemoViewMult
                         );
                 }
             }
