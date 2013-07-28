@@ -75,7 +75,10 @@ namespace SpaceAge.Controls
                 Star currentStar = currentSector.StarSystemsList[i].stars[0];
                 Point currentPoint = currentSector.StarSystemsList[i].StarSystemLocation;
 
-                currentStar.DrawStarGraphics(GraphicsToUse, currentPoint.X / stepsPerCoordinate, currentPoint.Y / stepsPerCoordinate);
+                using(Bitmap starBitmap = currentStar.GetStarImage(5))
+                {
+                    GraphicsToUse.DrawImage(starBitmap,currentPoint.X / stepsPerCoordinate, currentPoint.Y / stepsPerCoordinate); 
+                }
 
             }
         }

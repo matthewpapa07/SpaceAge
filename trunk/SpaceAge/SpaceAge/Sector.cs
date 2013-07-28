@@ -10,7 +10,7 @@ namespace SpaceAge
     class Sector
     {
         public const int STARS_PER_SECTOR_CHANCE = 35;
-        public const int MAX_DISTANCE_FROM_AXIS = 5000;      //Number must be significantly larger than UiSectorMap Height/Width
+        public const int MAX_DISTANCE_FROM_AXIS = 10000;      //Number must be significantly larger than UiSectorMap Height/Width
         public const int SECTOR_EDGE_PADDING = 500;
         public const int STARTING_SPACESHIP_SPACES = 12;     // This list initializer is demand based. Sectors with higher traffic will end up being allocated more space while ones who dont will only need 25 slots max
         public const int BACKGROUND_STARS_MIN = 35;
@@ -27,6 +27,9 @@ namespace SpaceAge
 
         public static StaticGraphics staticGraphics = StaticGraphics.getStaticGraphics();
         public enum GateDirections { North, South, East, West, None, Unknown };
+
+        GraphicsCache StarGc = GraphicsCache.GraphicsCacheStar();   // If drawsector is used in anything other than Sectormapcomplex an additional cache will be needed
+        GraphicsCache StarGcEx = GraphicsCache.GraphicsCacheStar();
 
         public Sector(int x, int y)
         {
@@ -109,7 +112,7 @@ namespace SpaceAge
             ui_SectorList.Columns.Add("Soverignty", (int)(BoxLength* .25));
         }
 
-        public void DrawSectorGraphics(Graphics GraphicsToUse, Rectangle RectToUse, int StartX, int StartY, int SegWidth, int SegHeight)
+        public void DrawSectorGraphics(Graphics GraphicsToUse, Rectangle RectToUse, int StartX, int StartY, int SegWidth, int SegHeight, int Lod)
         {
             int DrawX;
             int DrawY;
@@ -146,16 +149,23 @@ namespace SpaceAge
                 DrawY += StartY;
                 if (DrawX < 0 || DrawY < 0)
                     continue;
-                StarSys.stars[0].DrawStarGraphics(GraphicsToUse, DrawX, DrawY);
+
+                Bitmap BmToDraw = StarGc.GetImage(StarSys.stars[0], Lod);
+                if (BmToDraw == null)
+                {
+                    BmToDraw = StarSys.stars[0].GetStarImage(Lod);
+                    StarGc.SetImage(StarSys.stars[0], BmToDraw, Lod);
+                }
+                GraphicsToUse.DrawImage(BmToDraw, DrawX, DrawY);
             }
 
-            if (HighlightSystem != null && StarSystemsList.Contains(HighlightSystem))
-            {
-                GraphicsToUse.DrawRectangle(staticGraphics.greenPen, HighlightSystem.stars[0].StarRectangle);
-            }
+            //if (HighlightSystem != null && StarSystemsList.Contains(HighlightSystem))
+            //{
+            //    GraphicsToUse.DrawRectangle(staticGraphics.greenPen, HighlightSystem.stars[0].StarLookupTableStarRectangle);
+            //}
         }
 
-        public void DrawSectorGraphicsEx(Graphics GraphicsToUse, Rectangle RectToUse, Point RectStart, Point RectDimensions, Point GridStart, Point GridDimensions)
+        public void DrawSectorGraphicsEx(Graphics GraphicsToUse, Rectangle RectToUse, Point RectStart, Point RectDimensions, Point GridStart, Point GridDimensions, int Lod)
         {
             PointEx Actual;
             PointEx Draw = new PointEx(0, 0) ;
@@ -191,7 +201,13 @@ namespace SpaceAge
                     Draw.Y += RectStart.Y;
                     if (Draw.X < 0 || Draw.Y < 0)
                         continue;
-                    StarSys.stars[0].DrawStarGraphics(GraphicsToUse, Draw.X, Draw.Y);
+                    Bitmap BmToDraw = StarGcEx.GetImage(StarSys.stars[0], Lod);
+                    if (BmToDraw == null)
+                    {
+                        BmToDraw = StarSys.stars[0].GetStarImage(Lod);
+                        StarGcEx.SetImage(StarSys.stars[0], BmToDraw, Lod);
+                    }
+                    GraphicsToUse.DrawImage(BmToDraw, Draw.X, Draw.Y);
                 }
             }
 

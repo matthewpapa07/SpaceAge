@@ -21,7 +21,7 @@ namespace SpaceAge
 
         public static NumberGenerator numGen = NumberGenerator.getInstance();
 
-        public Rectangle StarRectangle;
+        int StarDiameter = 10;
 
         public Star(StarSystem s)
         {
@@ -47,7 +47,8 @@ namespace SpaceAge
 
             StarMass = numGen.GetRandDoubleInRange(StarConstant.MassMin[(int)StarClass], StarConstant.MassMax[(int)StarClass]);
             StarColor = StarConstant.BaseColor[(int)StarClass];
-            StarRectangle = new Rectangle(0, 0, StarConstant.RectSideLength[(int)StarClass], StarConstant.RectSideLength[(int)StarClass]);
+            StarDiameter = StarConstant.StarDiameter[(int)StarClass];
+
             StarClassString = StarConstant.StarClassStr[(int)StarClass];
         }
 
@@ -61,28 +62,47 @@ namespace SpaceAge
             return Constants.intToHex(UniqueStarNumber);
         }
 
-        public void DrawStarGraphics(Graphics GraphicsToUse, int x, int y)
+        private Bitmap DrawStarGraphics()
         {
-            StarRectangle.X = x;
-            StarRectangle.Y = y;
+            Bitmap StarImage = new Bitmap(StarDiameter, StarDiameter);
 
-            GraphicsPath path = new GraphicsPath();
-            path.AddEllipse(StarRectangle);
-            PathGradientBrush pthGrBrush = new PathGradientBrush(path);
-            //pthGrBrush.CenterColor = StarColor;
-            pthGrBrush.CenterColor = Color.White;
-            pthGrBrush.SurroundColors = new Color[] { Color.FromArgb(255, StarColor), Color.FromArgb(200, StarColor), Color.FromArgb(180, StarColor) };
-            //pthGrBrush.SurroundColors = new Color[] { Color.FromArgb(120, StarColor) };
-            GraphicsToUse.FillEllipse(pthGrBrush, StarRectangle);
+            using (GraphicsPath path = new GraphicsPath())
+            {
+                path.AddEllipse(0, 0, StarImage.Width, StarImage.Height);
+                using (PathGradientBrush pthGrBrush = new PathGradientBrush(path))
+                {
+                    pthGrBrush.CenterColor = Color.White;
+                    pthGrBrush.SurroundColors = new Color[] { Color.FromArgb(255, StarColor), Color.FromArgb(200, StarColor), Color.FromArgb(180, StarColor) };
+
+                    using (Graphics g = Graphics.FromImage(StarImage))
+                    {
+                        g.FillEllipse(pthGrBrush, 0, 0, StarImage.Width, StarImage.Height);
+                    }
+                }
+            }
+
+            return StarImage;
         }
 
-        //
-        // TODO: Put in my graphics library
-        //
-        public static Color LightenColor(Color InColor)
+        // Better for atomic operations
+        public virtual Bitmap GetStarImage(int ScaledSize)
         {
-            return InColor;
+            StarDiameter = StarConstant.StarDiameter[(int)StarClass] / ScaledSize;
+            return DrawStarGraphics();
         }
+
+        public bool Equals(Star obj)
+        {
+            if (obj.UniqueStarNumber == UniqueStarNumber)
+                return true;
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return UniqueStarNumber;
+        }
+
     }
 
     static class StarConstant
@@ -101,6 +121,6 @@ namespace SpaceAge
         public static double[] MassMin = { 16.0, 2.1, 1.4, 1.04, 0.8, 0.45, 0.30, 0.20, 0.10, 0.05 };
         public static double[] MassMax = { 30.0, 16.0, 2.1, 1.4, 1.04, 0.8, 0.45, 0.30, 0.20, 0.10 };
         
-        public static int[] RectSideLength = { 35, 30, 28, 25, 22, 19, 18, 17, 16, 15 };
+        public static int[] StarDiameter = { 350, 300, 280, 205, 220, 190, 180, 170, 160, 150 };
     }
 }

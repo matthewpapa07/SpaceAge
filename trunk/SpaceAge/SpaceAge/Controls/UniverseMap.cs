@@ -85,7 +85,7 @@ namespace SpaceAge
                         Sector ThisSector = theGrid[CurrentX, CurrentY];
                         if (ThisSector != null)
                         {
-                            ThisSector.DrawSectorGraphics(g, this.ClientRectangle, (int)tempx, (int)tempy, (int)Math.Ceiling(tempWidth), (int)Math.Ceiling(tempHeight));
+                            ThisSector.DrawSectorGraphics(g, this.ClientRectangle, (int)tempx, (int)tempy, (int)Math.Ceiling(tempWidth), (int)Math.Ceiling(tempHeight), 10);
 
                             // Check for clicked sector
                             if (ClickedSquare != null && ClickedSquare.Equals(ThisSector))

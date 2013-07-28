@@ -11,10 +11,27 @@ namespace SpaceAge
     class GraphicsCache
     {
         Dictionary<SpaceShip, GraphicsCacheElement> SpaceShipLookUpTable;
+        Dictionary<Star, GraphicsCacheElement> StarLookupTable;
 
-        public GraphicsCache()
+        public static GraphicsCache GraphicsCacheSpaceShip()
         {
-            SpaceShipLookUpTable = new Dictionary<SpaceShip, GraphicsCacheElement>(10);
+            GraphicsCache gc = new GraphicsCache();
+            gc.SpaceShipLookUpTable = new Dictionary<SpaceShip, GraphicsCacheElement>(10);
+
+            return gc;
+        }
+
+        public static GraphicsCache GraphicsCacheStar()
+        {
+            GraphicsCache gc = new GraphicsCache();
+            gc.StarLookupTable = new Dictionary<Star, GraphicsCacheElement>(10);
+
+            return gc;
+        }
+
+        private GraphicsCache()
+        {
+            
         }
 
         public Bitmap GetImage(SpaceShip ss, int AngleValue)
@@ -45,6 +62,37 @@ namespace SpaceAge
             {
                 SpaceShipLookUpTable.Add(ss, new GraphicsCacheElement());
                 SetImage(ss, inImage, AngleValue);
+            }
+        }
+
+        public Bitmap GetImage(Star s, int Size)
+        {
+            GraphicsCacheElement OutElement;
+
+            if (StarLookupTable.TryGetValue(s, out OutElement))
+            {
+                return OutElement.GetImage(Size);
+
+            }
+            else
+                return null;
+        }
+
+        public void SetImage(Star s, Bitmap inImage, int Size)
+        {
+            GraphicsCacheElement OutElement;
+
+            if (s == null || inImage == null)
+                return;
+
+            if (StarLookupTable.TryGetValue(s, out OutElement))
+            {
+                OutElement.SetImage(Size, inImage);
+            }
+            else
+            {
+                StarLookupTable.Add(s, new GraphicsCacheElement());
+                SetImage(s, inImage, Size);
             }
         }
 
