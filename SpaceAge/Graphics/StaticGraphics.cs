@@ -30,8 +30,9 @@ namespace SpaceAge
         // Fancy brushes
         //
         public HatchBrush UniverseBorderBrush = new HatchBrush(HatchStyle.Cross, System.Drawing.Color.Red, System.Drawing.Color.Blue);
-        public HatchBrush SectorBorderBrush = new HatchBrush(HatchStyle.Percent20, Color.Red, Color.Transparent);
-        public TextureBrush spaceBrush;
+        //public HatchBrush SectorBorderBrush = new HatchBrush(HatchStyle.Percent20, Color.Red, Color.Transparent);
+        public TextureBrush SectorBorderBrush = new TextureBrush(new Bitmap(SpaceAge.Properties.Resources._678124main_hubble_sparkles_1600_1600_1200));
+		public TextureBrush spaceBrush;
         public Pen blackPen = new Pen(Color.Black, 2);
         public Pen greenPen = new Pen(Color.LightYellow, 2);
         public Pen whitePen = new Pen(Color.White, 2);

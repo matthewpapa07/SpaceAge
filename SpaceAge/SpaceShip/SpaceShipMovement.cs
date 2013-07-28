@@ -129,19 +129,19 @@ namespace SpaceAge
             int currentX = CurrentShipSector.SectorGridLocation.X;
             int currentY = CurrentShipSector.SectorGridLocation.Y;
 
-            if (SectorFineGridLocation.X == 0)
+            if (SectorFineGridLocation.X <= 0)
             {
                 TransitionSector = Universe.getSector(currentX - 1, currentY);
             }
-            if (SectorFineGridLocation.X == Sector.MAX_DISTANCE_FROM_AXIS)
+            if (SectorFineGridLocation.X >= Sector.MAX_DISTANCE_FROM_AXIS)
             {
                 TransitionSector = Universe.getSector(currentX + 1, currentY);
             }
-            if (SectorFineGridLocation.Y == 0)
+            if (SectorFineGridLocation.Y <= 0)
             {
                 TransitionSector = Universe.getSector(currentX, currentY - 1);
             }
-            if (SectorFineGridLocation.Y == Sector.MAX_DISTANCE_FROM_AXIS)
+            if (SectorFineGridLocation.Y >= Sector.MAX_DISTANCE_FROM_AXIS)
             {
                 TransitionSector = Universe.getSector(currentX, currentY + 1);
             }
@@ -153,28 +153,28 @@ namespace SpaceAge
                 CurrentShipSector = TransitionSector;
             }
 
-            if (SectorFineGridLocation.X == 0)
+            if (SectorFineGridLocation.X <= 0)
             {
                 SectorFineGridLocation.X = Sector.MAX_DISTANCE_FROM_AXIS - 1;
                 DestinationPoint.X = Sector.MAX_DISTANCE_FROM_AXIS - (Sector.MAX_DISTANCE_FROM_AXIS / 6);
                 DestinationPoint.Y = SectorFineGridLocation.Y; 
                 SpaceShipMovementState = SpaceShipMovementEnum.JustArrived;
             }
-            if (SectorFineGridLocation.X == Sector.MAX_DISTANCE_FROM_AXIS)
+            if (SectorFineGridLocation.X >= Sector.MAX_DISTANCE_FROM_AXIS)
             {
                 SectorFineGridLocation.X = 1;
                 DestinationPoint.X = Sector.MAX_DISTANCE_FROM_AXIS / 6;
                 DestinationPoint.Y = SectorFineGridLocation.Y;
                 SpaceShipMovementState = SpaceShipMovementEnum.JustArrived;
             }
-            if (SectorFineGridLocation.Y == 0)
+            if (SectorFineGridLocation.Y <= 0)
             {
                 SectorFineGridLocation.Y = Sector.MAX_DISTANCE_FROM_AXIS - 1;
                 DestinationPoint.X = SectorFineGridLocation.X;
                 DestinationPoint.Y = Sector.MAX_DISTANCE_FROM_AXIS - (Sector.MAX_DISTANCE_FROM_AXIS / 6);
                 SpaceShipMovementState = SpaceShipMovementEnum.JustArrived;
             }
-            if (SectorFineGridLocation.Y == Sector.MAX_DISTANCE_FROM_AXIS)
+            if (SectorFineGridLocation.Y >= Sector.MAX_DISTANCE_FROM_AXIS)
             {
                 SectorFineGridLocation.Y = 1;
                 DestinationPoint.X = SectorFineGridLocation.X;

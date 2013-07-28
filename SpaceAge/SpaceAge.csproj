@@ -284,7 +284,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\SpaceShip2.gif" />
-    <None Include="Resources\UserSpaceShip.bmp" />
     <None Include="Resources\star-space-tile.jpg" />
     <None Include="Resources\space_bg.gif" />
     <None Include="Resources\678124main_hubble_sparkles_1600_1600-1200.jpg" />
@@ -292,7 +291,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\1920x1200_space-awesome-stars-blinks-high-quality-image-picture-HD-Wallpaper.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

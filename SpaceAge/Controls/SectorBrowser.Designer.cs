@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.SectorBrowserSidePanel = new System.Windows.Forms.Panel();
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.label3 = new System.Windows.Forms.Label();
             this.listview_sectorships = new System.Windows.Forms.ListView();
             this.label2 = new System.Windows.Forms.Label();
@@ -38,7 +39,6 @@
             this.button3 = new System.Windows.Forms.Button();
             this.bAutopilot = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.sectorNavigationPane1 = new SpaceAge.Controls.SectorNavigationPane();
             this.SectorBrowserSidePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -63,6 +63,17 @@
             this.SectorBrowserSidePanel.Name = "SectorBrowserSidePanel";
             this.SectorBrowserSidePanel.Size = new System.Drawing.Size(302, 682);
             this.SectorBrowserSidePanel.TabIndex = 1;
+            // 
+            // trackBar1
+            // 
+            this.trackBar1.LargeChange = 1;
+            this.trackBar1.Location = new System.Drawing.Point(4, 634);
+            this.trackBar1.Minimum = 1;
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Size = new System.Drawing.Size(104, 45);
+            this.trackBar1.TabIndex = 9;
+            this.trackBar1.Value = 1;
+            this.trackBar1.ValueChanged += new System.EventHandler(this.trackBar1_ValueChanged);
             // 
             // label3
             // 
@@ -151,19 +162,9 @@
             this.button1.Text = "Toggle Waypoint";
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // trackBar1
-            // 
-            this.trackBar1.LargeChange = 1;
-            this.trackBar1.Location = new System.Drawing.Point(4, 634);
-            this.trackBar1.Minimum = 1;
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(104, 45);
-            this.trackBar1.TabIndex = 9;
-            this.trackBar1.Value = 1;
-            this.trackBar1.ValueChanged += new System.EventHandler(this.trackBar1_ValueChanged);
-            // 
             // sectorNavigationPane1
             // 
+            this.sectorNavigationPane1.BackColor = System.Drawing.Color.Black;
             this.sectorNavigationPane1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sectorNavigationPane1.Location = new System.Drawing.Point(0, 0);
             this.sectorNavigationPane1.Name = "sectorNavigationPane1";
