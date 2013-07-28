@@ -13,6 +13,8 @@ namespace SpaceAge
         public const int MAX_DISTANCE_FROM_AXIS = 5000;      //Number must be significantly larger than UiSectorMap Height/Width
         public const int SECTOR_EDGE_PADDING = 500;
         public const int STARTING_SPACESHIP_SPACES = 12;     // This list initializer is demand based. Sectors with higher traffic will end up being allocated more space while ones who dont will only need 25 slots max
+        public const int BACKGROUND_STARS_MIN = 35;
+        public const int BACKGROUND_STARS_MAX = 40;
         public static Point SECTOR_START_P = new Point(0, 0);
         public static Point SECTOR_END_P = new Point(MAX_DISTANCE_FROM_AXIS, MAX_DISTANCE_FROM_AXIS);                                                             
 
@@ -42,7 +44,7 @@ namespace SpaceAge
 
             n = NumberGenerator.getInstance();
 
-            int BackgStarsCount = n.GetRandNumberInRange(Constants.BACKGROUND_STARS_MIN, Constants.BACKGROUND_STARS_MAX);
+            int BackgStarsCount = n.GetRandNumberInRange(BACKGROUND_STARS_MIN, BACKGROUND_STARS_MAX);
             RandomBackgroundStars = new Point[BackgStarsCount];
             for (int i = 0; i < BackgStarsCount; i++)
             {
@@ -115,8 +117,14 @@ namespace SpaceAge
             //
             // Draw the random stars in the background
             //
-            foreach (Point p in RandomBackgroundStars)
+            //foreach (Point p in RandomBackgroundStars)
+            Point p;
+            for(int i = 0; i < RandomBackgroundStars.Length; i++)
             {
+                //if (i % 128 != 0)
+                //    continue;
+                p = RandomBackgroundStars[i];
+                
                 DrawX = staticGraphics.ScaleCoordinate(MAX_DISTANCE_FROM_AXIS, p.X, SegWidth);
                 DrawX += StartX;
                 DrawY = staticGraphics.ScaleCoordinate(MAX_DISTANCE_FROM_AXIS, p.Y, SegHeight);
@@ -187,6 +195,35 @@ namespace SpaceAge
                 }
             }
 
+            // Border sector if it is showing out of bounds
+            int realX = 0;
+            if (GridStart.X < SECTOR_START_P.X)
+            {
+                realX = Math.Abs(GridStart.X);
+                realX = staticGraphics.ScaleCoordinate(GridDimensions.X, realX, RectDimensions.X);
+                GraphicsToUse.FillRectangle(staticGraphics.grayBrush, RectStart.X, RectStart.Y, realX, RectDimensions.Y);
+            }
+            int realY = 0;
+            if (GridStart.Y < SECTOR_START_P.Y)
+            {
+                realY = Math.Abs(GridStart.Y);
+                realY = staticGraphics.ScaleCoordinate(GridDimensions.Y, realY, RectDimensions.Y);
+                GraphicsToUse.FillRectangle(staticGraphics.grayBrush, RectStart.X, RectStart.Y, RectDimensions.X, realY);
+            }
+            int otherX = 0;
+            if ((GridDimensions.X + GridStart.X) > SECTOR_END_P.X)
+            {
+                otherX = (GridDimensions.X + GridStart.X) - SECTOR_END_P.X;
+                otherX = staticGraphics.ScaleCoordinate(GridDimensions.X, otherX, RectDimensions.X);
+                GraphicsToUse.FillRectangle(staticGraphics.grayBrush, RectDimensions.X - otherX, RectStart.Y, otherX, RectDimensions.Y);
+            }
+            int otherY = 0;
+            if ((GridDimensions.Y + GridStart.Y) > SECTOR_END_P.Y)
+            {
+                otherY = (GridDimensions.Y + GridStart.Y) - SECTOR_END_P.Y;
+                otherY = staticGraphics.ScaleCoordinate(GridDimensions.Y, otherY, RectDimensions.Y);
+                GraphicsToUse.FillRectangle(staticGraphics.grayBrush, RectStart.X, RectDimensions.Y - otherY, RectDimensions.X, otherY);
+            }
             // Broken. Need to look at this
             //if (HighlightSystem != null && StarSystemsList.Contains(HighlightSystem))
             //{

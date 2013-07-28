@@ -30,8 +30,7 @@ namespace SpaceAge
 
         public const int MAP_PADDING_PERCENT = 3;
 
-        public const int BACKGROUND_STARS_MIN = 10;
-        public const int BACKGROUND_STARS_MAX = 20;
+
 
         public static string intToHex(int n)
         {

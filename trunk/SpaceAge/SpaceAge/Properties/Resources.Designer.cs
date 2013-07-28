@@ -60,6 +60,13 @@ namespace SpaceAge.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap _1920x1200_space_awesome_stars_blinks_high_quality_image_picture_HD_Wallpaper {
+            get {
+                object obj = ResourceManager.GetObject("_1920x1200_space_awesome_stars_blinks_high_quality_image_picture_HD_Wallpaper", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap _678124main_hubble_sparkles_1600_1600_1200 {
             get {
                 object obj = ResourceManager.GetObject("_678124main_hubble_sparkles_1600_1600_1200", resourceCulture);
