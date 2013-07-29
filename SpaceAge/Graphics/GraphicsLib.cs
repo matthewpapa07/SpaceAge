@@ -79,5 +79,26 @@ namespace SpaceAge
             return null;
         }
 
+        public static void DrawImageEx(Graphics GraphicsToUse, Bitmap BmToDraw, PointEx DrawLocation)
+        {
+            int x = DrawLocation.X - BmToDraw.Width;//(BmToDraw.Width / 2);
+            int y = DrawLocation.Y - BmToDraw.Height;//(BmToDraw.Height / 2);
+            Rectangle OutRect = new Rectangle(0, 0,BmToDraw.Width, BmToDraw.Height);
+            if (x < 0)
+            {
+                OutRect.Width += x;
+                OutRect.X = Math.Abs(x);
+                x = 0;
+            }
+            if (y < 0)
+            {
+                OutRect.Height += y;
+                OutRect.Y = Math.Abs(y);
+                y = 0;
+            }
+            //GraphicsToUse.DrawImage(BmToDraw, DrawLocation.X, DrawLocation.Y);
+            GraphicsToUse.DrawImage(BmToDraw, x, y, OutRect, GraphicsUnit.Pixel);
+        }
+
     }
 }

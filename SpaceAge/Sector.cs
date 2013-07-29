@@ -10,7 +10,7 @@ namespace SpaceAge
     class Sector
     {
         public const int STARS_PER_SECTOR_CHANCE = 35;
-        public const int MAX_DISTANCE_FROM_AXIS = 10000;      //Number must be significantly larger than UiSectorMap Height/Width
+        public const int MAX_DISTANCE_FROM_AXIS = 8000;      //Number must be significantly larger than UiSectorMap Height/Width
         public const int SECTOR_EDGE_PADDING = 500;
         public const int STARTING_SPACESHIP_SPACES = 12;     // This list initializer is demand based. Sectors with higher traffic will end up being allocated more space while ones who dont will only need 25 slots max
         public const int BACKGROUND_STARS_MIN = 35;
@@ -207,7 +207,7 @@ namespace SpaceAge
                         BmToDraw = StarSys.stars[0].GetStarImage(Lod);
                         StarGcEx.SetImage(StarSys.stars[0], BmToDraw, Lod);
                     }
-                    GraphicsToUse.DrawImage(BmToDraw, Draw.X, Draw.Y);
+                    GraphicsLib.DrawImageEx(GraphicsToUse, BmToDraw, Draw);
                 }
             }
 
