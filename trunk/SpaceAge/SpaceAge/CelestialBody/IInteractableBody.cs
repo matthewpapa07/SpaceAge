@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SpaceAge
 {
-    interface IInteractableBody : ISectorMember
+    interface IInteractableBody
     {
         object DirectParent
         {

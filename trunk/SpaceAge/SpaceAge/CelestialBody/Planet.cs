@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 
 namespace SpaceAge
 {
-    class Planet : IHarvestableBody, IInteractableBody
+    class Planet : IHarvestableBody, IInteractableBody, ISectorMember
     {
         public static double CHANCE_OF_PLANET_INHABITED = 0.37;
         public static double CHANCE_OF_PLANET_SUPERCENTER = 0.12;
@@ -14,9 +15,12 @@ namespace SpaceAge
         public int LocalPlanetNumber;
 
         // Planet resource data
-        // TODO: Refactor out and up a ResourceBearing object so other things besides planets can be harvested
-        public ObjectCharactaristics.PlanetSize PlanetSize;
-        public ObjectCharactaristics.Position PlanetPosition;
+        public PlanetConstant.PlanetSize PlanetSize;
+        public PlanetConstant.Position PlanetPosition;
+        public int PlanetDistanceFromStar;
+        public Point PlanetLocation;
+        public int PlanetDiameter;
+        public int PlanetMass;
 
         //
         // Resources, as per IHarvestableBody
@@ -51,8 +55,12 @@ namespace SpaceAge
         {
             NumberGenerator n = NumberGenerator.getInstance();
 
-            PlanetSize = n.RandomEnum<ObjectCharactaristics.PlanetSize>();
-            PlanetPosition = n.RandomEnum<ObjectCharactaristics.Position>();
+            PlanetSize = n.RandomEnum<PlanetConstant.PlanetSize>();
+            PlanetPosition = n.RandomEnum<PlanetConstant.Position>();
+            PlanetDistanceFromStar = (int) (n.GetRandDoubleInRange(.85, 1.15) * PlanetConstant.PositionBaseDistance[(int)PlanetPosition]);
+            PlanetLocation = n.GetPointDistanceFrom(PlanetDistanceFromStar, Parent.StarSystemLocation);
+            PlanetDiameter = PlanetConstant.PlanetSizeDiameter[(int)PlanetSize];
+            PlanetMass = n.GetRandNumberInRange(1000000, 100000000);
 
             generateResources();
 
@@ -70,7 +78,7 @@ namespace SpaceAge
                     {
                         Population = n.GetRandNumberInRange(0, 5000000);
                     }
-                    planetStore = ItemStore.GetGeneralStore(this);
+                    planetStore = ItemStore.GetGeneralStore(this, this);
                 }
             }
         }
@@ -225,6 +233,13 @@ namespace SpaceAge
                 return planetPolitics;
             }
         }
+        //public ISectorMember SectorMember
+        //{
+        //    get
+        //    {
+        //        return this as ISectorMember;
+        //    }
+        //}
 
         /// <summary>
         /// As per ISectorMember
@@ -235,6 +250,54 @@ namespace SpaceAge
             {
                 return Parent.parent;
             }
+        }
+
+        public Point SectorLocation
+        {
+            get
+            {
+                return PlanetLocation;
+            }
+        }
+
+        public int Diameter
+        {
+            get
+            {
+                return PlanetDiameter;
+            }
+        }
+
+        public int Mass
+        {
+            get
+            {
+                return PlanetMass;
+            }
+        }
+
+        public Sector SectorMember
+        {
+            get
+            {
+                return Parent.parent;
+            }
+        }
+
+        public static class PlanetConstant
+        {
+            //
+            // Charactaristics Associated with Planets
+            //
+            public static string[] PlanetSizeString = { "Asteroid", "Very Small", "Small", "Medium", "Large", "Super" };
+            public enum PlanetSize { Asteroid, VerySmall, Small, Medium, Large, Super };    // Size of the planet
+            public static int[] PlanetSizeDiameter = { 5, 10, 20, 15, 20, 25, 30 };  // Need better Size Values
+
+            public static string[] PositionString = { "Inner", "Middle", "Outer", "Rogue" };
+            public enum Position { Inner, Middle, Outer, Rogue };                     // Position of planet from star
+            public static int[] PositionBaseDistance = { 100, 300, 500, 1000 };
+
+            // TODO: Planet gravity, and orbits too?
         }
     }
 }

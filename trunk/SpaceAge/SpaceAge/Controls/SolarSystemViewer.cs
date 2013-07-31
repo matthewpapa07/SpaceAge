@@ -103,8 +103,8 @@ namespace SpaceAge.Controls
             {
                 p = ThisStarSystem.planets[i];
                 ListPlanets[i] = new ListViewItem(p.ToString(), i);
-                ListPlanets[i].SubItems.Add(ObjectCharactaristics.PlanetSizeString[(int)p.PlanetSize]);
-                ListPlanets[i].SubItems.Add(ObjectCharactaristics.PositionString[(int)p.PlanetPosition]);
+                ListPlanets[i].SubItems.Add(Planet.PlanetConstant.PlanetSizeString[(int)p.PlanetSize]);
+                ListPlanets[i].SubItems.Add(Planet.PlanetConstant.PositionString[(int)p.PlanetPosition]);
                 if (p.IsInhabited)
                     ListPlanets[i].SubItems.Add("Yes");
                 else

@@ -81,8 +81,8 @@ namespace SpaceAge
 
         public static void DrawImageEx(Graphics GraphicsToUse, Bitmap BmToDraw, PointEx DrawLocation)
         {
-            int x = DrawLocation.X - BmToDraw.Width;//(BmToDraw.Width / 2);
-            int y = DrawLocation.Y - BmToDraw.Height;//(BmToDraw.Height / 2);
+            int x = DrawLocation.X - (BmToDraw.Width / 2);
+            int y = DrawLocation.Y - (BmToDraw.Height / 2); 
             Rectangle OutRect = new Rectangle(0, 0,BmToDraw.Width, BmToDraw.Height);
             if (x < 0)
             {

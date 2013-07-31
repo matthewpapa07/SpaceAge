@@ -18,15 +18,15 @@ namespace SpaceAge
 
         }
 
-        //
-        // Charactaristics Associated with Planets
-        //
-        public static string[] PlanetSizeString = { "Asteroid", "Very Small", "Small", "Medium", "Large", "Super" };
-        public enum PlanetSize { Asteroid, VerySmall, Small, Medium, Large, Super };    // Size of the planet
-//        public static int[] SizeValues = { 1000, 2000, 23432 };  //TODO: Size Values
+//        //
+//        // Charactaristics Associated with Planets
+//        //
+//        public static string[] PlanetSizeString = { "Asteroid", "Very Small", "Small", "Medium", "Large", "Super" };
+//        public enum PlanetSize { Asteroid, VerySmall, Small, Medium, Large, Super };    // Size of the planet
+////        public static int[] SizeValues = { 1000, 2000, 23432 };  //TODO: Size Values
 
-        public static string[] PositionString = { "Inner", "Middle", "Outer", "Rogue" };
-        public enum Position { Inner, Middle, Outer, Rogue };                     // Position of planet from star
+//        public static string[] PositionString = { "Inner", "Middle", "Outer", "Rogue" };
+//        public enum Position { Inner, Middle, Outer, Rogue };                     // Position of planet from star
 
         ////
         //// Common resources on planet.
