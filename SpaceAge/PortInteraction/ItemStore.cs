@@ -9,7 +9,8 @@ namespace SpaceAge
     class ItemStore : ItemList
     {
         private int ItemStoreCash = 1000000000;     // 10 M starting cash
-        public IInteractableBody Parent = null;
+        public IInteractableBody ParentInteractable = null;
+        public ISectorMember ParentSectorMember = null;
 
         // *In parent: internal int[] commoditiesQuantitiy = new int[Commodity.allCommodities.Length];
 
@@ -25,17 +26,18 @@ namespace SpaceAge
         private ItemStore() 
             : base()
         {
-
+            // Leave blank
         }
 
-        public static ItemStore GetGeneralStore(IInteractableBody inParent)
+        public static ItemStore GetGeneralStore(IInteractableBody inParentInteractable, ISectorMember inParentSectorMember)
         {
             ItemStore thisStore = new ItemStore();
             Commodity[] allCommodities = Commodity.AllCommoditiesArray;
             NumberGenerator n = NumberGenerator.getInstance();
 
-            thisStore.Parent = inParent;
-            thisStore.Parent.MemberSector.RegisteredItemStores.Add(thisStore);
+            thisStore.ParentInteractable = inParentInteractable;
+            thisStore.ParentSectorMember = inParentSectorMember;
+            thisStore.ParentSectorMember.MemberSector.RegisteredItemStores.Add(thisStore);
 
             for (int i = 0; i < allCommodities.Length; i++)
             {
@@ -52,14 +54,15 @@ namespace SpaceAge
             return thisStore;
         }
 
-        public static ItemStore GetExtractorStore(IInteractableBody inParent)
+        public static ItemStore GetExtractorStore(IInteractableBody inParent, ISectorMember inParentSectorMember)
         {
             ItemStore thisStore = new ItemStore();
             Commodity[] allCommodities = Commodity.AllCommoditiesArray;
             NumberGenerator n = NumberGenerator.getInstance();
 
-            thisStore.Parent = inParent;
-            thisStore.Parent.MemberSector.RegisteredItemStores.Add(thisStore);
+            thisStore.ParentInteractable = inParent;
+            thisStore.ParentSectorMember = inParentSectorMember;
+            thisStore.ParentSectorMember.MemberSector.RegisteredItemStores.Add(thisStore);
 
             for (int i = 0; i < allCommodities.Length; i++)
             {

@@ -7,7 +7,8 @@ using System.Windows.Forms;
 
 namespace SpaceAge
 {
-    class StarSystem : ISectorMember
+    // TODO: Instead of have this be an integral part of the sector, in the near future just use it to correlate different objects
+    class StarSystem
     {
         const int MIN_PLANETS_PER_SYSTEM = 0;
         const int MAX_PLANETS_PER_SYSTEM = 15;
@@ -102,5 +103,7 @@ namespace SpaceAge
                 return parent;
             }
         }
+
+
     }
 }

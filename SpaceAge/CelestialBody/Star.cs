@@ -7,7 +7,7 @@ using System.Drawing.Drawing2D;
 
 namespace SpaceAge
 {
-    class Star
+    class Star : ISectorMember
     {
         public static int GlobalStarCounter = 0;
         public int UniqueStarNumber;
@@ -21,7 +21,7 @@ namespace SpaceAge
 
         public static NumberGenerator numGen = NumberGenerator.getInstance();
 
-        int StarDiameter = 10;
+        public int StarDiameter = 10;
 
         public Star(StarSystem s)
         {
@@ -103,7 +103,43 @@ namespace SpaceAge
             return UniqueStarNumber;
         }
 
+        /// <summary>
+        /// As per ISectorMember
+        /// </summary>
+        public Sector MemberSector
+        {
+            get
+            {
+                return parent.parent;
+            }
+        }
+
+        public Point SectorLocation
+        {
+            get
+            {
+                return parent.StarSystemLocation;
+            }
+        }
+
+        public int Diameter
+        {
+            get
+            {
+                return StarDiameter;
+            }
+        }
+
+        public int Mass
+        {
+            get
+            {
+                return (int)StarMass;
+            }
+        }
+
     }
+
 
     static class StarConstant
     {

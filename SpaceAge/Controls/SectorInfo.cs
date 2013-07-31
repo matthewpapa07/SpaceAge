@@ -139,8 +139,8 @@ namespace SpaceAge
                 {
                     p = currentlySelectedSystem.planets[i];
                     SystemContentsListView[i + numStars] = new ListViewItem("Planet " + p.ToString(), i + numStars);
-                    SystemContentsListView[i + numStars].SubItems.Add(ObjectCharactaristics.PlanetSizeString[(int)p.PlanetSize]);
-                    SystemContentsListView[i + numStars].SubItems.Add(ObjectCharactaristics.PositionString[(int)p.PlanetPosition]);
+                    SystemContentsListView[i + numStars].SubItems.Add(Planet.PlanetConstant.PlanetSizeString[(int)p.PlanetSize]);
+                    SystemContentsListView[i + numStars].SubItems.Add(Planet.PlanetConstant.PositionString[(int)p.PlanetPosition]);
                     SystemContentsListView[i + numStars].SubItems.Add(p.IsInhabited.ToString());
                     allObjects[i + numStars] = currentlySelectedSystem.planets[i];
                 }

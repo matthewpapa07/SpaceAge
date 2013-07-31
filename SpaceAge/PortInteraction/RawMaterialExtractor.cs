@@ -21,7 +21,8 @@ namespace SpaceAge
         //Titanium, Neodymium, Germanium, Gallium, Arsenic, Strontium, Gold, Silver, Platinum,    // RareElements
         //Hydrocarbons, Cellulose, Acid, Biomass, Mud                                             // ResourcesStatic
         //
-        public IInteractableBody Parent;
+        public IInteractableBody ParentInteractable;
+        public ISectorMember ParentSectorMember;
         public Commodity ProducedResourceCommodity;
 
         private RawMaterialExtractor[] dummyExtractors = null;
@@ -41,15 +42,16 @@ namespace SpaceAge
         public int Productivity = 0;
 
         // This is the constructor that will be automatically applied. Cast enum to get inResourceCommodityIndex
-        public RawMaterialExtractor(IInteractableBody inParent, Commodity c)
+        public RawMaterialExtractor(IInteractableBody inParentInteractable, ISectorMember inSectorMember, Commodity c)
         {
             if (!c.IsResource)
                 throw new Exception();
 
-            Parent = inParent;
+            ParentInteractable = inParentInteractable;
+            ParentSectorMember = inSectorMember;
 
             // Check to make sure the input object is harvestable
-            if (!(Parent is IHarvestableBody))
+            if (!(ParentInteractable is IHarvestableBody))
                 throw new Exception();
 
             // TODO: do not allow inhabited planets to be exploited
@@ -60,7 +62,7 @@ namespace SpaceAge
             if (ProducedResourceCommodity == null || !ProducedResourceCommodity.IsResource)
                 throw new Exception();
 
-            extractorStore = ItemStore.GetExtractorStore(Parent);
+            extractorStore = ItemStore.GetExtractorStore(ParentInteractable, ParentSectorMember);
 
             // Now set which items this store will accept to buy and sell
             for (int i = 0; i < Commodity.NumOfCommodities; i++)
@@ -104,7 +106,7 @@ namespace SpaceAge
                 //then create extractors for them
                 foreach (Commodity c in chosenCommodities)
                 {
-                    tempExtractor = new RawMaterialExtractor(p, c);
+                    tempExtractor = new RawMaterialExtractor(p, p, c);
                     // Register it for the planet
                     p.AddExtractor(tempExtractor);
                     // Register it for the driver
@@ -137,7 +139,7 @@ namespace SpaceAge
         {
             get
             {
-                return Parent;
+                return ParentInteractable;
             }
         }
         public RawMaterialExtractor[] Extractors
@@ -184,16 +186,16 @@ namespace SpaceAge
             }
         }
 
-        /// <summary>
-        /// As per ISectorMember
-        /// </summary>
-        public Sector MemberSector
-        {
-            get
-            {
-                return Parent.MemberSector;
-            }
-        }
+        ///// <summary>
+        ///// As per ISectorMember
+        ///// </summary>
+        //public Sector MemberSector
+        //{
+        //    get
+        //    {
+        //        return Parent.MemberSector;
+        //    }
+        //}
 
         public override string ToString()
         {

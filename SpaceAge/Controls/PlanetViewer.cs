@@ -41,8 +41,8 @@ namespace SpaceAge.Controls
             if (thisPlanet == null)
                 return;
 
-            ui_planetPosition.Text = ObjectCharactaristics.PositionString[(int)thisPlanet.PlanetPosition];
-            ui_planetSize.Text = ObjectCharactaristics.PlanetSizeString[(int)thisPlanet.PlanetSize];
+            ui_planetPosition.Text = Planet.PlanetConstant.PositionString[(int)thisPlanet.PlanetPosition];
+            ui_planetSize.Text = Planet.PlanetConstant.PlanetSizeString[(int)thisPlanet.PlanetSize];
             String starColorText = "";
             if (thisPlanet.Parent.stars.Length == 1)
             {
