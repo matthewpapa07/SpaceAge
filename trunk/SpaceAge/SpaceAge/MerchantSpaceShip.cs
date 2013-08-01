@@ -79,7 +79,7 @@ namespace SpaceAge
                 SystemsToVisit = DriverLibrary.NavigationLib.GetStarSystemsInDistance(CurrentShipSector, i++);
             }
 
-            CurrentWaypoint = SystemsToVisit[NumberGenerator.getInstance().GetRandNumberInRange(0, SystemsToVisit.Length - 1)].parent;
+            CurrentWaypoint = SystemsToVisit[NumberGenerator.getInstance().GetRandNumberInRange(0, SystemsToVisit.Length - 1)].ParentSector;
             ShipState = MerchantSpaceShipState.MovingSectors;
             ExecuteWaypoints();
 
@@ -97,7 +97,7 @@ namespace SpaceAge
                     return;
                 }
                 
-                SetLocalDestinationPoint(new PointD(tempStarSystems[NumberGenerator.getInstance().GetRandNumberInRange(0, tempStarSystems.Length - 1)].StarSystemLocation));
+                SetLocalDestinationPoint(new PointD(tempStarSystems[NumberGenerator.getInstance().GetRandNumberInRange(0, tempStarSystems.Length - 1)].stars[0].SectorFineGridLocation));
 
                 ShipState = MerchantSpaceShipState.MovingWithinSector;
             }

@@ -17,7 +17,7 @@ namespace SpaceAge.Controls
 
         public int TempRefreshRate = 28;  //ms
         public int TempViewRadius = 400;
-        public int TemoViewMult = 1;
+        public int ImageViewMultiplier = 1;
 
         // For Threads
         public Thread MapRefreshThread;
@@ -73,8 +73,8 @@ namespace SpaceAge.Controls
 
             Point RectStart = new Point(0, 0);
             Point RectDimensions = new Point(RectToUse.Width, RectToUse.Height);
-            Point GridStart = new Point((int)(UserState.PlayerShip.SectorFineGridLocation.X - TempViewRadius * TemoViewMult), (int)(UserState.PlayerShip.SectorFineGridLocation.Y - TempViewRadius * TemoViewMult));
-            Point GridDimensions = new Point(TempViewRadius * TemoViewMult * 2, TempViewRadius * TemoViewMult * 2);
+            Point GridStart = new Point((int)(UserState.PlayerShip.SectorFineGridLocation.X - TempViewRadius * ImageViewMultiplier), (int)(UserState.PlayerShip.SectorFineGridLocation.Y - TempViewRadius * ImageViewMultiplier));
+            Point GridDimensions = new Point(TempViewRadius * ImageViewMultiplier * 2, TempViewRadius * ImageViewMultiplier * 2);
             //DrawSectorGraphicsEx(Graphics GraphicsToUse, Rectangle RectToUse, Point RectStart, Point RectDimensions, Point GridStart, Point GridDimensions)
             currentSector.DrawSectorGraphicsEx(
                 GraphicsToUse, 
@@ -83,7 +83,7 @@ namespace SpaceAge.Controls
                 RectDimensions,
                 GridStart,
                 GridDimensions,
-                TemoViewMult
+                ImageViewMultiplier
                 );
             //currentSector.DrawSectorGraphicsEx(GraphicsToUse, RectToUse, RectStart, RectDimensions, Sector.SETOR_START_P, Sector.SETOR_END_P);
             //currentSector.DrawSectorGraphics(GraphicsToUse, RectToUse, 0, 0, RectToUse.Width, RectToUse.Height );
@@ -125,7 +125,7 @@ namespace SpaceAge.Controls
                         SsImage,
                         ShipControlCoordinates.X /* - SsImage.Height / 2 */,
                         ShipControlCoordinates.Y /* - SsImage.Height / 2 */,
-                        35 / TemoViewMult, 35 / TemoViewMult
+                        35 / ImageViewMultiplier, 35 / ImageViewMultiplier
                         );
                 }
             }
@@ -202,12 +202,12 @@ namespace SpaceAge.Controls
             Point ClickPoint = e.Location;
 
             Rectangle RectToUse = this.ClientRectangle;
-            Point GridStart = new Point((int)(UserState.PlayerShip.SectorFineGridLocation.X - TempViewRadius * TemoViewMult), (int)(UserState.PlayerShip.SectorFineGridLocation.Y - TempViewRadius * TemoViewMult));
+            Point GridStart = new Point((int)(UserState.PlayerShip.SectorFineGridLocation.X - TempViewRadius * ImageViewMultiplier), (int)(UserState.PlayerShip.SectorFineGridLocation.Y - TempViewRadius * ImageViewMultiplier));
 
             // Convert graphics point to sector coordinate. loss of precision is expected of course
             PointD DestinationPoint = new PointD (
-                staticGraphics.ScaleCoordinate(ClientRectangle.Width, ClickPoint.X, TempViewRadius * TemoViewMult * 2),
-                staticGraphics.ScaleCoordinate(ClientRectangle.Height, ClickPoint.Y, TempViewRadius * TemoViewMult * 2)
+                staticGraphics.ScaleCoordinate(ClientRectangle.Width, ClickPoint.X, TempViewRadius * ImageViewMultiplier * 2),
+                staticGraphics.ScaleCoordinate(ClientRectangle.Height, ClickPoint.Y, TempViewRadius * ImageViewMultiplier * 2)
                 );
             DestinationPoint.X += GridStart.X;
             DestinationPoint.Y += GridStart.Y;

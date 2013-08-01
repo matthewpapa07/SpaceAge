@@ -171,7 +171,7 @@ namespace SpaceAge.Controls
 
         private void trackBar1_ValueChanged(object sender, EventArgs e)
         {
-            sectorNavigationPane1.LocalSectorMapComplex.TemoViewMult = trackBar1.Value;
+            sectorNavigationPane1.LocalSectorMapComplex.ImageViewMultiplier = trackBar1.Value;
         }
 
     }

@@ -16,18 +16,24 @@ namespace SpaceAge
         public Color StarColor;
         public double StarMass;
         public string StarClassString;
+        public Point StarLocation;
 
-        public StarSystem parent;
+        public StarSystem AssociatedStarSystem;
+        public Sector ParentSector;
 
         public static NumberGenerator numGen = NumberGenerator.getInstance();
 
         public int StarDiameter = 10;
+        public int StarDrawBoxDimensions = 1;
 
-        public Star(StarSystem s)
+        public Star(StarSystem s, Point inStarLocation)
         {
+            UniqueStarNumber = GlobalStarCounter++;
+            StarLocation = inStarLocation;
+            ParentSector = s.ParentSector;
             this.generateStar();
             this.setParent(s);
-            UniqueStarNumber = GlobalStarCounter++;
+            ParentSector.PresentSectorMembers.Add(this);
         }
 
         public void generateStar()
@@ -54,7 +60,7 @@ namespace SpaceAge
 
         public void setParent(StarSystem s)
         {
-            parent = s;
+            AssociatedStarSystem = s;
         }
 
         public override string ToString()
@@ -64,7 +70,7 @@ namespace SpaceAge
 
         private Bitmap DrawStarGraphics()
         {
-            Bitmap StarImage = new Bitmap(StarDiameter, StarDiameter);
+            Bitmap StarImage = new Bitmap(StarDrawBoxDimensions, StarDrawBoxDimensions);
 
             using (GraphicsPath path = new GraphicsPath())
             {
@@ -84,13 +90,6 @@ namespace SpaceAge
             return StarImage;
         }
 
-        // Better for atomic operations
-        public virtual Bitmap GetStarImage(int ScaledSize)
-        {
-            StarDiameter = StarConstant.StarDiameter[(int)StarClass] / ScaledSize;
-            return DrawStarGraphics();
-        }
-
         public bool Equals(Star obj)
         {
             if (obj.UniqueStarNumber == UniqueStarNumber)
@@ -106,19 +105,19 @@ namespace SpaceAge
         /// <summary>
         /// As per ISectorMember
         /// </summary>
-        public Sector MemberSector
+        public Sector SectorContainer
         {
             get
             {
-                return parent.parent;
+                return ParentSector;
             }
         }
 
-        public Point SectorLocation
+        public Point SectorFineGridLocation
         {
             get
             {
-                return parent.StarSystemLocation;
+                return StarLocation;
             }
         }
 
@@ -136,6 +135,11 @@ namespace SpaceAge
             {
                 return (int)StarMass;
             }
+        }
+        public Bitmap GetImage(int ScaledSize)
+        {
+            StarDrawBoxDimensions = StarConstant.StarDiameter[(int)StarClass] / ScaledSize;
+            return DrawStarGraphics();
         }
 
     }

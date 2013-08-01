@@ -28,7 +28,8 @@ namespace SpaceAge
         private Commodity[] resources;
         private int[] resourcesProductivity;
 
-        public StarSystem Parent;
+        public StarSystem AssociatedStarSystem;
+        public Sector ParentSector;
 
         //
         // Data fields as per IInteractableBody
@@ -46,7 +47,8 @@ namespace SpaceAge
         {
             if (s == null)
                 throw new Exception();
-            Parent = s;
+            ParentSector = s.ParentSector;
+            AssociatedStarSystem = s;
             LocalPlanetNumber = GlobalPlanetNumber++;
             this.generatePlanet();
         }
@@ -58,7 +60,7 @@ namespace SpaceAge
             PlanetSize = n.RandomEnum<PlanetConstant.PlanetSize>();
             PlanetPosition = n.RandomEnum<PlanetConstant.Position>();
             PlanetDistanceFromStar = (int) (n.GetRandDoubleInRange(.85, 1.15) * PlanetConstant.PositionBaseDistance[(int)PlanetPosition]);
-            PlanetLocation = n.GetPointDistanceFrom(PlanetDistanceFromStar, Parent.StarSystemLocation);
+            PlanetLocation = n.GetPointDistanceFrom(PlanetDistanceFromStar, AssociatedStarSystem.stars[0].StarLocation);
             PlanetDiameter = PlanetConstant.PlanetSizeDiameter[(int)PlanetSize];
             PlanetMass = n.GetRandNumberInRange(1000000, 100000000);
 
@@ -169,7 +171,7 @@ namespace SpaceAge
         {
             get
             {
-                return Parent;
+                return AssociatedStarSystem;
             }
         }
         public Commodity[] Resources
@@ -244,15 +246,15 @@ namespace SpaceAge
         /// <summary>
         /// As per ISectorMember
         /// </summary>
-        public Sector MemberSector
+        public Sector SectorContainer
         {
             get
             {
-                return Parent.parent;
+                return ParentSector;
             }
         }
 
-        public Point SectorLocation
+        public Point SectorFineGridLocation
         {
             get
             {
@@ -280,8 +282,13 @@ namespace SpaceAge
         {
             get
             {
-                return Parent.parent;
+                return AssociatedStarSystem.ParentSector;
             }
+        }
+        public Bitmap GetImage(int ScaledSize)
+        {
+            // REALLY bad for now. TODO: Create draw routine for planet
+            return null;
         }
 
         public static class PlanetConstant

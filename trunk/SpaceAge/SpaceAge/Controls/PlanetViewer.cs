@@ -44,15 +44,15 @@ namespace SpaceAge.Controls
             ui_planetPosition.Text = Planet.PlanetConstant.PositionString[(int)thisPlanet.PlanetPosition];
             ui_planetSize.Text = Planet.PlanetConstant.PlanetSizeString[(int)thisPlanet.PlanetSize];
             String starColorText = "";
-            if (thisPlanet.Parent.stars.Length == 1)
+            if (thisPlanet.AssociatedStarSystem.stars.Length == 1)
             {
-                starColorText += thisPlanet.Parent.stars[0].StarColor.ToString();
+                starColorText += thisPlanet.AssociatedStarSystem.stars[0].StarColor.ToString();
             }
             else
             {
                 // Only two stars for now...
-                starColorText = thisPlanet.Parent.stars[0].StarColor.ToString() +
-                    " and " + thisPlanet.Parent.stars[1].StarColor.ToString() ;
+                starColorText = thisPlanet.AssociatedStarSystem.stars[0].StarColor.ToString() +
+                    " and " + thisPlanet.AssociatedStarSystem.stars[1].StarColor.ToString() ;
             }
             ui_lightSpectrum.Text = starColorText;
 

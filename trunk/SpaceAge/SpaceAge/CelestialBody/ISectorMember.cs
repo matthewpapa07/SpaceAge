@@ -11,12 +11,12 @@ namespace SpaceAge
     /// </summary>
     interface ISectorMember
     {
-        Sector MemberSector
+        Sector SectorContainer
         {
             get;
         }
 
-        Point SectorLocation
+        Point SectorFineGridLocation
         {
             get;
         }
@@ -31,5 +31,6 @@ namespace SpaceAge
             get;
         }
 
+        Bitmap GetImage(int ScaledSize);
     }
 }

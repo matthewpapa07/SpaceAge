@@ -37,7 +37,7 @@ namespace SpaceAge
 
             thisStore.ParentInteractable = inParentInteractable;
             thisStore.ParentSectorMember = inParentSectorMember;
-            thisStore.ParentSectorMember.MemberSector.RegisteredItemStores.Add(thisStore);
+            thisStore.ParentSectorMember.SectorContainer.RegisteredItemStores.Add(thisStore);
 
             for (int i = 0; i < allCommodities.Length; i++)
             {
@@ -62,7 +62,7 @@ namespace SpaceAge
 
             thisStore.ParentInteractable = inParent;
             thisStore.ParentSectorMember = inParentSectorMember;
-            thisStore.ParentSectorMember.MemberSector.RegisteredItemStores.Add(thisStore);
+            thisStore.ParentSectorMember.SectorContainer.RegisteredItemStores.Add(thisStore);
 
             for (int i = 0; i < allCommodities.Length; i++)
             {

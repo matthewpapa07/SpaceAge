@@ -350,7 +350,7 @@ namespace SpaceAge
 
         public Point GetPointDistanceFrom(int Distance, Point Origin)
         {
-            int Xcoor = this.GetRandNumberInRange((int)(Origin.X * Math.Sqrt(2)), (int)(Origin.Y * Math.Sqrt(3)));
+            int Xcoor = this.GetRandNumberInRange((int)(Origin.X * Math.Sqrt(2)), (int)(Origin.X * Math.Sqrt(3)));
             int Ycoor = (int)Math.Sqrt(Distance * Distance - Xcoor * Xcoor);
 
             return new Point(Xcoor, Ycoor);
