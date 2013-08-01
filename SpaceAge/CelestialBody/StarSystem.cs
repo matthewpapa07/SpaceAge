@@ -22,19 +22,17 @@ namespace SpaceAge
         public Star [] stars;
         public Planet [] planets;
 
-        public Point StarSystemLocation;
-        public Sector parent;
+        public Sector ParentSector;
         public string SystemName;
 
         public ListViewItem StarSystemListViewItem;
 
 
-        public StarSystem(Sector s, Point location)
+        public StarSystem(Sector s)
         {
             setParent(s);
             LocalStarSystemNumber = GlobalStarSystemNumber++;
             generateStarSystem();
-            StarSystemLocation = location;
 
             StarSystemListViewItem = new ListViewItem(SystemName);
             StarSystemListViewItem.SubItems.Add(stars.Length.ToString());
@@ -47,6 +45,7 @@ namespace SpaceAge
             NumberGenerator numGen = NumberGenerator.getInstance();
             int numStars;
             int numPlanets = numGen.GetRandNumberInRange(MIN_PLANETS_PER_SYSTEM, MAX_PLANETS_PER_SYSTEM);
+            int coord1, coord2;
 
             if (numGen.LinearPmfResult(CHANCE_OF_MULTIPLE_STARS, 100))
                 numStars = 2;
@@ -61,7 +60,9 @@ namespace SpaceAge
             //
             for (int i = 0; i < numStars; i++)
             {
-                stars[i] = new Star(this);
+                coord1 = numGen.GetRandNumberInRange(Sector.SECTOR_EDGE_PADDING, Sector.MAX_DISTANCE_FROM_AXIS - Sector.SECTOR_EDGE_PADDING);
+                coord2 = numGen.GetRandNumberInRange(Sector.SECTOR_EDGE_PADDING, Sector.MAX_DISTANCE_FROM_AXIS - Sector.SECTOR_EDGE_PADDING);
+                stars[i] = new Star(this, new Point(coord1, coord2));
             }
 
             //
@@ -85,7 +86,7 @@ namespace SpaceAge
 
         public void setParent(Sector s)
         {
-            parent = s;
+            ParentSector = s;
         }
 
         public string getName()
@@ -100,7 +101,7 @@ namespace SpaceAge
         {
             get
             {
-                return parent;
+                return ParentSector;
             }
         }
 

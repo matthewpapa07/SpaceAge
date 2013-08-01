@@ -6,25 +6,28 @@ using System.Drawing;
 
 namespace SpaceAge
 {
-    // We can generic-fy this class later for other types of data if we need to
-    // The GetSpaceShipImage can be abstracted into an interface and used in other objects
     class GraphicsCache
     {
         Dictionary<SpaceShip, GraphicsCacheElement> SpaceShipLookUpTable;
-        Dictionary<Star, GraphicsCacheElement> StarLookupTable;
+        Dictionary<ISectorMember, GraphicsCacheElement> ISectorMemberLookupTable;
 
         public static GraphicsCache GraphicsCacheSpaceShip()
         {
             GraphicsCache gc = new GraphicsCache();
-            gc.SpaceShipLookUpTable = new Dictionary<SpaceShip, GraphicsCacheElement>(10);
+            gc.SpaceShipLookUpTable = new Dictionary<SpaceShip, GraphicsCacheElement>(100);
 
             return gc;
         }
 
-        public static GraphicsCache GraphicsCacheStar()
+        public static GraphicsCache GraphicsCacheISectorMember()
         {
+            // TODO: Need a special IEqualityComparer for performance and precision
+                //int IEqualityComparer<ISectorMember>.GetHashCode(Village obj)
+                //{
+                //    return obj.AllianceName.GetHashCode();
+                //}
             GraphicsCache gc = new GraphicsCache();
-            gc.StarLookupTable = new Dictionary<Star, GraphicsCacheElement>(10);
+            gc.ISectorMemberLookupTable = new Dictionary<ISectorMember, GraphicsCacheElement>(100);
 
             return gc;
         }
@@ -65,11 +68,11 @@ namespace SpaceAge
             }
         }
 
-        public Bitmap GetImage(Star s, int Size)
+        public Bitmap GetImage(ISectorMember s, int Size)
         {
             GraphicsCacheElement OutElement;
 
-            if (StarLookupTable.TryGetValue(s, out OutElement))
+            if (ISectorMemberLookupTable.TryGetValue(s, out OutElement))
             {
                 return OutElement.GetImage(Size);
 
@@ -78,20 +81,20 @@ namespace SpaceAge
                 return null;
         }
 
-        public void SetImage(Star s, Bitmap inImage, int Size)
+        public void SetImage(ISectorMember s, Bitmap inImage, int Size)
         {
             GraphicsCacheElement OutElement;
 
             if (s == null || inImage == null)
                 return;
 
-            if (StarLookupTable.TryGetValue(s, out OutElement))
+            if (ISectorMemberLookupTable.TryGetValue(s, out OutElement))
             {
                 OutElement.SetImage(Size, inImage);
             }
             else
             {
-                StarLookupTable.Add(s, new GraphicsCacheElement());
+                ISectorMemberLookupTable.Add(s, new GraphicsCacheElement());
                 SetImage(s, inImage, Size);
             }
         }
@@ -124,7 +127,7 @@ namespace SpaceAge
 
                 if (BitmapLookUpTable.TryGetValue(Angle, out OutBitmap))
                 {
-                    return OutBitmap;
+                    return OutBitmap; 
                 }
                 else
                     return null;

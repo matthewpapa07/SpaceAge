@@ -22,14 +22,15 @@ namespace SpaceAge
         public Point SectorGridLocation;
         public List<SpaceShip> PresentSpaceShips = new List<SpaceShip>(STARTING_SPACESHIP_SPACES);
         public List<ItemStore> RegisteredItemStores = new List<ItemStore>(20); //Register ItemStores here to avoid tight nested loop in the AI
+        public List<ISectorMember> PresentSectorMembers = new List<ISectorMember>(25);
         public Point[] RandomBackgroundStars;
         public static StarSystem HighlightSystem;
 
         public static StaticGraphics staticGraphics = StaticGraphics.getStaticGraphics();
         public enum GateDirections { North, South, East, West, None, Unknown };
 
-        GraphicsCache StarGc = GraphicsCache.GraphicsCacheStar();   // If drawsector is used in anything other than Sectormapcomplex an additional cache will be needed
-        GraphicsCache StarGcEx = GraphicsCache.GraphicsCacheStar();
+        GraphicsCache StarGc = GraphicsCache.GraphicsCacheISectorMember();   // If drawsector is used in anything other than Sectormapcomplex an additional cache will be needed
+        GraphicsCache StarGcEx = GraphicsCache.GraphicsCacheISectorMember();
 
         public Sector(int x, int y)
         {
@@ -43,7 +44,7 @@ namespace SpaceAge
         {
             NumberGenerator n;
             int systemsToPopulate;
-            int coord1, coord2;
+
 
             n = NumberGenerator.getInstance();
 
@@ -68,12 +69,8 @@ namespace SpaceAge
 
             for (int i = 0; i < systemsToPopulate; i++)
             {
-                coord1 = n.GetRandNumberInRange(SECTOR_EDGE_PADDING, MAX_DISTANCE_FROM_AXIS - SECTOR_EDGE_PADDING);
-                coord2 = n.GetRandNumberInRange(SECTOR_EDGE_PADDING, MAX_DISTANCE_FROM_AXIS - SECTOR_EDGE_PADDING);
-
-                StarSystemsList[i] = (new StarSystem(this, new Point(coord1, coord2)));
+                StarSystemsList[i] = (new StarSystem(this));
             }
-            coord1 = 0;
 
         }
 
@@ -138,23 +135,29 @@ namespace SpaceAge
                 GraphicsToUse.DrawRectangle(staticGraphics.whitePen, new Rectangle(DrawX, DrawY, 1, 1));
             }
 
-            foreach (StarSystem StarSys in StarSystemsList)
+            foreach (ISectorMember ism in PresentSectorMembers)
             {
-                //
-                // For now assume one star per system, and at least one star per system
-                //
-                DrawX = staticGraphics.ScaleCoordinate(MAX_DISTANCE_FROM_AXIS, StarSys.StarSystemLocation.X, SegWidth);
+                if (ism is Star)
+                {
+                    // Just draw stars on main grid for now
+                }
+                else
+                {
+                    continue;
+                }
+
+                DrawX = staticGraphics.ScaleCoordinate(MAX_DISTANCE_FROM_AXIS, ism.SectorFineGridLocation.X, SegWidth);
                 DrawX += StartX;
-                DrawY = staticGraphics.ScaleCoordinate(MAX_DISTANCE_FROM_AXIS, StarSys.StarSystemLocation.Y, SegHeight);
+                DrawY = staticGraphics.ScaleCoordinate(MAX_DISTANCE_FROM_AXIS, ism.SectorFineGridLocation.Y, SegHeight);
                 DrawY += StartY;
                 if (DrawX < 0 || DrawY < 0)
                     continue;
 
-                Bitmap BmToDraw = StarGc.GetImage(StarSys.stars[0], Lod);
+                Bitmap BmToDraw = StarGc.GetImage(ism, Lod);
                 if (BmToDraw == null)
                 {
-                    BmToDraw = StarSys.stars[0].GetStarImage(Lod);
-                    StarGc.SetImage(StarSys.stars[0], BmToDraw, Lod);
+                    BmToDraw = ism.GetImage(Lod);
+                    StarGc.SetImage(ism, BmToDraw, Lod);
                 }
                 GraphicsToUse.DrawImage(BmToDraw, DrawX, DrawY);
             }
@@ -189,9 +192,9 @@ namespace SpaceAge
                 }
             }
 
-            foreach (StarSystem StarSys in StarSystemsList)
+            foreach (ISectorMember ism in PresentSectorMembers)
             {
-                Actual = GraphicsLib.GetPointInRelativeGrid(StarSys.StarSystemLocation, GridStart, GridDimensions);
+                Actual = GraphicsLib.GetPointInRelativeGrid(ism.SectorFineGridLocation, GridStart, GridDimensions);
 
                 if (Actual != null)
                 {
@@ -201,11 +204,11 @@ namespace SpaceAge
                     Draw.Y += RectStart.Y;
                     if (Draw.X < 0 || Draw.Y < 0)
                         continue;
-                    Bitmap BmToDraw = StarGcEx.GetImage(StarSys.stars[0], Lod);
+                    Bitmap BmToDraw = StarGcEx.GetImage(ism, Lod);
                     if (BmToDraw == null)
                     {
-                        BmToDraw = StarSys.stars[0].GetStarImage(Lod);
-                        StarGcEx.SetImage(StarSys.stars[0], BmToDraw, Lod);
+                        BmToDraw = ism.GetImage(Lod);
+                        StarGcEx.SetImage(ism, BmToDraw, Lod);
                     }
                     GraphicsLib.DrawImageEx(GraphicsToUse, BmToDraw, Draw);
                 }
@@ -429,6 +432,19 @@ namespace SpaceAge
             throw new Exception();
 
         }
+
+        public static bool IsInSector(Point p)
+        {
+            if ((p.X > SECTOR_START_P.X) && (p.Y > SECTOR_START_P.Y))
+            {
+                if ((p.X < SECTOR_END_P.X) && (p.Y < SECTOR_END_P.Y))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         //public Point GetSectorOffset(Sector AdjacentSector)
         //{
 

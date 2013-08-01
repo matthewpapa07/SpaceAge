@@ -36,8 +36,6 @@ namespace SpaceAge.Controls
 
         public void drawSector(Graphics GraphicsToUse)
         {
-
-            int listLength;
             stepsPerCoordinate = Sector.MAX_DISTANCE_FROM_AXIS / Height;
             int DrawX;
             int DrawY;
@@ -56,30 +54,15 @@ namespace SpaceAge.Controls
                 GraphicsToUse.DrawRectangle(staticGraphics.whitePen, new Rectangle(DrawX, DrawY, 1, 1));
             }
 
-
             if (currentSector == null)
                 return;
 
-            listLength = currentSector.StarSystemsList.Length;
-            //using (Pen p = new Pen(StaticGraphics.getStaticGraphics().greenBrush))
-            //{
-            //    g.DrawLine(p, 0, Sector.MAX_DISTANCE_FROM_AXIS / 2, Sector.MAX_DISTANCE_FROM_AXIS / 2, 0);
-            //}
-
-            if (listLength == 0)
-                return;
-
-            //Star[] theStars = new Star[listLength];
-            for (int i = 0; i < listLength; i++)
+            foreach (ISectorMember ism in currentSector.PresentSectorMembers)
             {
-                Star currentStar = currentSector.StarSystemsList[i].stars[0];
-                Point currentPoint = currentSector.StarSystemsList[i].StarSystemLocation;
-
-                using(Bitmap starBitmap = currentStar.GetStarImage(5))
+                using (Bitmap ismBitmap = ism.GetImage(5))
                 {
-                    GraphicsToUse.DrawImage(starBitmap,currentPoint.X / stepsPerCoordinate, currentPoint.Y / stepsPerCoordinate); 
+                    GraphicsToUse.DrawImage(ismBitmap, ism.SectorFineGridLocation.X / stepsPerCoordinate, ism.SectorFineGridLocation.Y / stepsPerCoordinate);
                 }
-
             }
         }
     }
