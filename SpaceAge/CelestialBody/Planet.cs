@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 
 namespace SpaceAge
 {
@@ -21,6 +22,7 @@ namespace SpaceAge
         public Point PlanetLocation;
         public int PlanetDiameter;
         public int PlanetMass;
+        public Color PlanetColor;
 
         //
         // Resources, as per IHarvestableBody
@@ -30,6 +32,7 @@ namespace SpaceAge
 
         public StarSystem AssociatedStarSystem;
         public Sector ParentSector;
+        int PlanetDrawBoxDimensions;
 
         //
         // Data fields as per IInteractableBody
@@ -51,6 +54,7 @@ namespace SpaceAge
             AssociatedStarSystem = s;
             LocalPlanetNumber = GlobalPlanetNumber++;
             this.generatePlanet();
+            ParentSector.PresentSectorMembers.Add(this);
         }
 
         public void generatePlanet()
@@ -63,6 +67,7 @@ namespace SpaceAge
             PlanetLocation = n.GetPointDistanceFrom(PlanetDistanceFromStar, AssociatedStarSystem.stars[0].StarLocation);
             PlanetDiameter = PlanetConstant.PlanetSizeDiameter[(int)PlanetSize];
             PlanetMass = n.GetRandNumberInRange(1000000, 100000000);
+            PlanetColor = PlanetConstant.BaseColor[n.GetRandNumberInRange(0, PlanetConstant.BaseColor.Length - 1)];
 
             generateResources();
 
@@ -129,6 +134,25 @@ namespace SpaceAge
             resourcesProductivity = returnProductivity;
         }
 
+        private Bitmap DrawPlanetGraphics()
+        {
+            try
+            {
+                Bitmap PlanetImage = new Bitmap(PlanetDrawBoxDimensions, PlanetDrawBoxDimensions);
+
+                using (Graphics g = Graphics.FromImage(PlanetImage))
+                {
+                    g.FillEllipse(new SolidBrush(PlanetColor), 0, 0, PlanetImage.Width, PlanetImage.Height);
+                }
+
+                return PlanetImage;
+            }
+            catch (Exception exx)
+            {
+                Console.WriteLine(exx);
+                return null;
+            }
+        }
 
         // Helper method to find the productivity value of a certain harvestable resource commodity
         // TODO: put this in interface
@@ -287,8 +311,13 @@ namespace SpaceAge
         }
         public Bitmap GetImage(int ScaledSize)
         {
-            // REALLY bad for now. TODO: Create draw routine for planet
-            return null;
+            PlanetDrawBoxDimensions = PlanetDiameter / ScaledSize;
+            if (PlanetDrawBoxDimensions >= 1)
+                return DrawPlanetGraphics();
+            else
+            {
+                return new Bitmap(1, 1);
+            }
         }
 
         public static class PlanetConstant
@@ -304,7 +333,13 @@ namespace SpaceAge
             public enum Position { Inner, Middle, Outer, Rogue };                     // Position of planet from star
             public static int[] PositionBaseDistance = { 100, 300, 500, 1000 };
 
+            public static Color[] BaseColor = { Color.Salmon, Color.Tomato, Color.Purple, System.Drawing.Color.Azure, System.Drawing.Color.Green, Color.LightGray, 
+                                              Color.Wheat, Color.Teal, Color.Teal, Color.Olive};
+
+            // TODO: Planet resources
+            // TODO: Planet color based on resources
             // TODO: Planet gravity, and orbits too?
         }
     }
+
 }

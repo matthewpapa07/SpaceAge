@@ -350,8 +350,23 @@ namespace SpaceAge
 
         public Point GetPointDistanceFrom(int Distance, Point Origin)
         {
-            int Xcoor = this.GetRandNumberInRange((int)(Origin.X * Math.Sqrt(2)), (int)(Origin.X * Math.Sqrt(3)));
-            int Ycoor = (int)Math.Sqrt(Distance * Distance - Xcoor * Xcoor);
+            int Xoffset = this.GetRandNumberInRange(0, Distance);
+            int Yoffset = (int)Math.Sqrt(Distance * Distance + Xoffset * Xoffset);
+            // Make X number negative if so
+            if (LinearPmfResult(.5))
+            {
+                Xoffset *= (-1);
+            }
+            // Make X number negative if so
+            if (LinearPmfResult(.5))
+            {
+                Yoffset *= (-1);
+            }
+            
+            
+            int Xcoor = Xoffset + Origin.X;
+            int Ycoor = Yoffset + Origin.Y;
+
 
             return new Point(Xcoor, Ycoor);
         }

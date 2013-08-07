@@ -25,6 +25,13 @@ namespace SpaceAge
         public SolidBrush blackBrush = new SolidBrush(System.Drawing.Color.Black);
         public SolidBrush grayBrush = new SolidBrush(System.Drawing.Color.Gray);
         public SolidBrush greenBrush = new SolidBrush(System.Drawing.Color.Green);
+        public SolidBrush azureBrush = new SolidBrush(System.Drawing.Color.Azure);
+        public SolidBrush pinkBrush = new SolidBrush(System.Drawing.Color.Pink);
+        public SolidBrush purpleBrush = new SolidBrush(System.Drawing.Color.Purple);
+        public SolidBrush salmonBrush = new SolidBrush(System.Drawing.Color.Salmon);
+        public SolidBrush tomatoBrush = new SolidBrush(System.Drawing.Color.Tomato);
+        public SolidBrush violetBrush = new SolidBrush(System.Drawing.Color.Violet);
+        public SolidBrush lgrayBrush = new SolidBrush(System.Drawing.Color.LightGray);
 
         //
         // Fancy brushes
