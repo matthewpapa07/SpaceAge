@@ -136,22 +136,14 @@ namespace SpaceAge
 
         private Bitmap DrawPlanetGraphics()
         {
-            try
-            {
-                Bitmap PlanetImage = new Bitmap(PlanetDrawBoxDimensions, PlanetDrawBoxDimensions);
+            Bitmap PlanetImage = new Bitmap(PlanetDrawBoxDimensions, PlanetDrawBoxDimensions);
 
-                using (Graphics g = Graphics.FromImage(PlanetImage))
-                {
-                    g.FillEllipse(new SolidBrush(PlanetColor), 0, 0, PlanetImage.Width, PlanetImage.Height);
-                }
-
-                return PlanetImage;
-            }
-            catch (Exception exx)
+            using (Graphics g = Graphics.FromImage(PlanetImage))
             {
-                Console.WriteLine(exx);
-                return null;
+                g.FillEllipse(new SolidBrush(PlanetColor), 0, 0, PlanetImage.Width, PlanetImage.Height);
             }
+
+            return PlanetImage;
         }
 
         // Helper method to find the productivity value of a certain harvestable resource commodity
