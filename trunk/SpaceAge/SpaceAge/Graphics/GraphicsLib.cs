@@ -83,7 +83,7 @@ namespace SpaceAge
         {
             int x = DrawLocation.X - (BmToDraw.Width / 2);
             int y = DrawLocation.Y - (BmToDraw.Height / 2); 
-            Rectangle OutRect = new Rectangle(0, 0,BmToDraw.Width, BmToDraw.Height);
+            Rectangle OutRect = new Rectangle(0, 0, BmToDraw.Width, BmToDraw.Height);
             if (x < 0)
             {
                 OutRect.Width += x;

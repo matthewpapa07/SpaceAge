@@ -171,7 +171,56 @@ namespace SpaceAge
         public void DrawSectorGraphicsEx(Graphics GraphicsToUse, Rectangle RectToUse, Point RectStart, Point RectDimensions, Point GridStart, Point GridDimensions, int Lod)
         {
             PointEx Actual;
-            PointEx Draw = new PointEx(0, 0) ;
+            PointEx Draw = new PointEx(0, 0);
+
+            Point SectorBkgStart = new Point(GridStart.X, GridStart.Y);
+            Point SectorBkgEnd = new Point(GridDimensions.X + GridStart.X, GridDimensions.Y + GridStart.Y);
+
+            // Border sector if it is showing out of bounds
+            int realX = 0;
+            if (GridStart.X < SECTOR_START_P.X)
+            {
+                realX = Math.Abs(GridStart.X);
+                SectorBkgStart.X = realX;
+                realX = staticGraphics.ScaleCoordinate(GridDimensions.X, realX, RectDimensions.X);
+                GraphicsToUse.FillRectangle(staticGraphics.grayBrush, RectStart.X, RectStart.Y, realX, RectDimensions.Y);
+            }
+            int realY = 0;
+            if (GridStart.Y < SECTOR_START_P.Y)
+            {
+                realY = Math.Abs(GridStart.Y);
+                SectorBkgStart.Y = realY;
+                realY = staticGraphics.ScaleCoordinate(GridDimensions.Y, realY, RectDimensions.Y);
+                GraphicsToUse.FillRectangle(staticGraphics.grayBrush, RectStart.X, RectStart.Y, RectDimensions.X, realY);
+            }
+            int otherX = 0;
+            if ((GridDimensions.X + GridStart.X) > SECTOR_END_P.X)
+            {
+                otherX = (GridDimensions.X + GridStart.X) - SECTOR_END_P.X;
+                SectorBkgEnd.Y = otherX;
+                otherX = staticGraphics.ScaleCoordinate(GridDimensions.X, otherX, RectDimensions.X);
+                GraphicsToUse.FillRectangle(staticGraphics.grayBrush, RectDimensions.X - otherX, RectStart.Y, otherX, RectDimensions.Y);
+            }
+            int otherY = 0;
+            if ((GridDimensions.Y + GridStart.Y) > SECTOR_END_P.Y)
+            {
+                otherY = (GridDimensions.Y + GridStart.Y) - SECTOR_END_P.Y;
+                SectorBkgEnd.Y = otherY;
+                otherY = staticGraphics.ScaleCoordinate(GridDimensions.Y, otherY, RectDimensions.Y);
+                GraphicsToUse.FillRectangle(staticGraphics.grayBrush, RectStart.X, RectDimensions.Y - otherY, RectDimensions.X, otherY);
+            }
+
+            //// Draw background image
+            //Draw.X = staticGraphics.ScaleCoordinate(GridDimensions.X, SectorBkgStart.X, staticGraphics.SectorBackground.Width);
+            //Draw.Y = staticGraphics.ScaleCoordinate(GridDimensions.Y, SectorBkgStart.Y, staticGraphics.SectorBackground.Height);
+            //Rectangle OutRect = new Rectangle(
+            //                          Draw.X,
+            //                          Draw.Y,
+            //                          staticGraphics.ScaleCoordinate(GridDimensions.X, SectorBkgEnd.X, staticGraphics.SectorBackground.Width) - Draw.X,
+            //                          staticGraphics.ScaleCoordinate(GridDimensions.Y, SectorBkgEnd.Y, staticGraphics.SectorBackground.Height) - Draw.Y
+            //                          );
+			//
+            //GraphicsToUse.DrawImage(staticGraphics.SectorBackground, realX, realY, OutRect, GraphicsUnit.Pixel);
 
             //
             // Draw the random stars in the background
@@ -214,35 +263,6 @@ namespace SpaceAge
                 }
             }
 
-            // Border sector if it is showing out of bounds
-            int realX = 0;
-            if (GridStart.X < SECTOR_START_P.X)
-            {
-                realX = Math.Abs(GridStart.X);
-                realX = staticGraphics.ScaleCoordinate(GridDimensions.X, realX, RectDimensions.X);
-                GraphicsToUse.FillRectangle(staticGraphics.grayBrush, RectStart.X, RectStart.Y, realX, RectDimensions.Y);
-            }
-            int realY = 0;
-            if (GridStart.Y < SECTOR_START_P.Y)
-            {
-                realY = Math.Abs(GridStart.Y);
-                realY = staticGraphics.ScaleCoordinate(GridDimensions.Y, realY, RectDimensions.Y);
-                GraphicsToUse.FillRectangle(staticGraphics.grayBrush, RectStart.X, RectStart.Y, RectDimensions.X, realY);
-            }
-            int otherX = 0;
-            if ((GridDimensions.X + GridStart.X) > SECTOR_END_P.X)
-            {
-                otherX = (GridDimensions.X + GridStart.X) - SECTOR_END_P.X;
-                otherX = staticGraphics.ScaleCoordinate(GridDimensions.X, otherX, RectDimensions.X);
-                GraphicsToUse.FillRectangle(staticGraphics.grayBrush, RectDimensions.X - otherX, RectStart.Y, otherX, RectDimensions.Y);
-            }
-            int otherY = 0;
-            if ((GridDimensions.Y + GridStart.Y) > SECTOR_END_P.Y)
-            {
-                otherY = (GridDimensions.Y + GridStart.Y) - SECTOR_END_P.Y;
-                otherY = staticGraphics.ScaleCoordinate(GridDimensions.Y, otherY, RectDimensions.Y);
-                GraphicsToUse.FillRectangle(staticGraphics.grayBrush, RectStart.X, RectDimensions.Y - otherY, RectDimensions.X, otherY);
-            }
             // Broken. Need to look at this
             //if (HighlightSystem != null && StarSystemsList.Contains(HighlightSystem))
             //{

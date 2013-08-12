@@ -12,6 +12,7 @@ namespace SpaceAge
     {
         private static StaticGraphics myGraphics = new StaticGraphics();
         public Image emptySpace;
+        //public Bitmap SectorBackground = new Bitmap(SpaceAge.Properties.Resources.Background1);
 
         //
         // Brushes that may be used { "White", "Brown", "Orange", "Yellow", "Blue", "Red" };
