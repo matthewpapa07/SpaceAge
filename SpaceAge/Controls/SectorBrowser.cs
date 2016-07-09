@@ -15,6 +15,8 @@ namespace SpaceAge.Controls
         bool ShipAlreadyMoving = false;
         EventToInvoke RefreshElementsEvent = null;
         public Thread LvRefreshTh = null;
+        List<SpaceShip> CurrentDisplayedShips = new List<SpaceShip>();
+        List<StarSystem> CurrentDispalyedStarSys = new List<StarSystem>();
 
         public SectorBrowser()
         {
@@ -49,15 +51,50 @@ namespace SpaceAge.Controls
 
         void RefreshShipsLv()
         {
-            ListViewItem tempLv;
-            // TODO: Determine if refresh is even needed
+            List<SpaceShip> NewShipList = UserState.getCurrentSector().PresentSpaceShips;
+            
+            List<SpaceShip> NewShips = new List<SpaceShip>();
+            List<SpaceShip> RemovedShips = new List<SpaceShip>();
+
+            {
+                // Add new ships if they exist
+                foreach(SpaceShip ss in NewShipList)
+                {
+                    if(CurrentDisplayedShips.Contains(ss))
+                    {
+                        // Do nothing
+                    }
+                    else
+                    {
+                        NewShips.Add(ss);
+                    }
+                }
+                // Remove old ones if they are no logner in range
+                foreach(SpaceShip ss in CurrentDisplayedShips)
+                {
+                    if (NewShipList.Contains(ss))
+                    {
+                        // Do nothing
+                    }
+                    else
+                    {
+                        RemovedShips.Add(ss);
+                    }
+                }
+            }
+
             try
             {
-                listview_sectorships.Items.Clear();
-                foreach (SpaceShip sps in UserState.getCurrentSector().PresentSpaceShips)
+                //listview_sectorships.Items.Clear();
+                foreach (SpaceShip ss in NewShips)
                 {
-                    tempLv = (ListViewItem)sps.SpaceShipListViewItem.Clone();
-                    listview_sectorships.Items.Add(tempLv);
+                    listview_sectorships.Items.Add(ss.SpaceShipListViewItem);
+                    CurrentDisplayedShips.Add(ss);
+                }
+                foreach (SpaceShip ss in RemovedShips)
+                {
+                    listview_sectorships.Items.Remove(ss.SpaceShipListViewItem);
+                    CurrentDisplayedShips.Remove(ss);
                 }
             }
             catch(Exception ex)
@@ -68,22 +105,56 @@ namespace SpaceAge.Controls
 
         void RefreshSectorItemsLv()
         {
-            ListViewItem tempLv;
-            // TODO: Determine if refresh is even needed
+            List<StarSystem> NewStarSysList = new List<StarSystem>(UserState.getCurrentSector().StarSystemsList);
+
+            List<StarSystem> NewStarSystem = new List<StarSystem>();
+            List<StarSystem> RemovedStarSystem = new List<StarSystem>();
+
+            {
+                // Add new ships if they exist
+                foreach (StarSystem ss in NewStarSysList)
+                {
+                    if (CurrentDispalyedStarSys.Contains(ss))
+                    {
+                        // Do nothing
+                    }
+                    else
+                    {
+                        NewStarSystem.Add(ss);
+                    }
+                }
+                // Remove old ones if they are no logner in range
+                foreach (StarSystem ss in CurrentDispalyedStarSys)
+                {
+                    if (NewStarSysList.Contains(ss))
+                    {
+                        // Do nothing
+                    }
+                    else
+                    {
+                        RemovedStarSystem.Add(ss);
+                    }
+                }
+            }
+
             try
             {
-                listview_sectoritems.Items.Clear();
-                foreach (StarSystem sss in UserState.getCurrentSector().StarSystemsList)
+                //listview_sectoritems.Items.Clear();
+                foreach (StarSystem ss in NewStarSystem)
                 {
-                    tempLv = (ListViewItem)sss.StarSystemListViewItem.Clone();
-                    listview_sectoritems.Items.Add(tempLv);
+                    listview_sectoritems.Items.Add(ss.StarSystemListViewItem);
+                    CurrentDispalyedStarSys.Add(ss);
+                }
+                foreach (StarSystem ss in RemovedStarSystem)
+                {
+                    listview_sectoritems.Items.Remove(ss.StarSystemListViewItem);
+                    CurrentDispalyedStarSys.Remove(ss);
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
             }
-           
         }
 
         public void RefreshElementsThStart()

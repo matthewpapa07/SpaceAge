@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SpaceAge
 {
-    class Moon //: IHarvestableBody, IInteractableBody, ISectorMember
+    class Moon // Inheirit from planet? //: IHarvestableBody, IInteractableBody, ISectorMember
     {
     }
 }
