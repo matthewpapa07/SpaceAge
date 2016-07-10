@@ -130,7 +130,7 @@ namespace SpaceAge.Controls
                 }
             }
 
-            // Draw green dot representign local waypoint into the window
+            // Draw green dot representing local waypoint into the window
             if (UserState.PlayerShip.SpaceShipMovementState == SpaceShip.SpaceShipMovementEnum.LocalWaypoint || UserState.PlayerShip.SpaceShipMovementState == SpaceShip.SpaceShipMovementEnum.RemoteWaypoint)
             {
                 Actual = GraphicsLib.GetPointInRelativeGrid(UserState.PlayerShip.GetDestinationPoint().ToPoint(), GridStart, GridDimensions);

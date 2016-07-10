@@ -51,7 +51,7 @@ namespace SpaceAge.Controls
                 if (DrawX < 0 || DrawY < 0)
                     continue;
 
-                GraphicsToUse.DrawRectangle(staticGraphics.whitePen, new Rectangle(DrawX, DrawY, 1, 1));
+                GraphicsToUse.DrawEllipse(staticGraphics.whitePen, new Rectangle(DrawX, DrawY, 1, 1));
             }
 
             if (currentSector == null)

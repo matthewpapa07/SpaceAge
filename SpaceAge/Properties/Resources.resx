@@ -136,4 +136,46 @@
   <data name="_1920x1200_space_awesome_stars_blinks_high_quality_image_picture_HD_Wallpaper" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\1920x1200_space-awesome-stars-blinks-high-quality-image-picture-HD-Wallpaper.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="M_Ship001" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Graphics\M_Ship001.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="M_Ship002" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Graphics\M_Ship002.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="M_Ship003" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Graphics\M_Ship003.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="S_Ship001" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Graphics\S_Ship001.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="S_Ship002" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Graphics\S_Ship002.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="S_Ship003" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Graphics\S_Ship003.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="S_Ship004" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Graphics\S_Ship004.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="S_Ship005" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Graphics\S_Ship005.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="XS_Cargo001" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Graphics\XS_Cargo001.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="XS_Ship001" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Graphics\XS_Ship001.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="XS_Ship002" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Graphics\XS_Ship002.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="XS_Ship003" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Graphics\XS_Ship003.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="XS_Ship004" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Graphics\XS_Ship004.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="XS_Ship005" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Graphics\XS_Ship005.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

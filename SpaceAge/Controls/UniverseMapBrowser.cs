@@ -11,8 +11,6 @@ namespace SpaceAge.Controls
 {
     partial class UniverseMapBrowser : UserControl, HumanInterfaceObj
     {
-        SectorInfo si = new SectorInfo();
-        SectorBrowser sb = new SectorBrowser();
         EventToInvoke RefreshElementsEvent = null;
 
         public UniverseMapBrowser()
@@ -21,8 +19,6 @@ namespace SpaceAge.Controls
             DoubleBuffered = true;
 
             UniverseMap1.RefreshParentUi = new EventToInvoke(RefreshElementsInEvent);
-            sb.LvRefreshTh.Start();
-
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -34,17 +30,6 @@ namespace SpaceAge.Controls
         public void UpdateUi(Graphics g)
         {
             UniverseMap1.drawMap(g);
-        }
-
-        private void ui_buttonVisitSector_Click(object sender, EventArgs e)
-        {
-            //sd.TopLevel = false;
-            UserInterface.thisOneInterface.SetMainPanel(si);
-        }
-
-        private void bSectorView_Click(object sender, EventArgs e)
-        {
-            UserInterface.thisOneInterface.SetMainPanel(sb);
         }
 
         public void UserKeyPress(int Key)

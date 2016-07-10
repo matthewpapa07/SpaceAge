@@ -10,7 +10,7 @@ namespace SpaceAge
     {
         public static int DAYS_PER_TICK = 1;
         static NumberGenerator numGenerator = NumberGenerator.getInstance();
-        public static List<MerchantSpaceShip> AllShips = new List<MerchantSpaceShip>(200);
+        public static List<SpaceShip> AllShips = new List<SpaceShip>(200);
         public static List<RawMaterialExtractor> AllExtractors = new List<RawMaterialExtractor>(200);
 
         public static DateTime TimeStart = new DateTime(2450, 10, 17);
@@ -26,35 +26,26 @@ namespace SpaceAge
 
         public static void InitializeDriver()
         {
-            bool Switch = true;
             MerchantSpaceShip mss;
-            int MerchantsPerSquare = 0;
+            PatrolSpaceShip pss;
 
             foreach (Sector s in Universe.map)
             {
-                // Every 5 squares create a merchant ship
-                if (MerchantsPerSquare++ >= 1)
-                {
-                    if (Switch)
-                    {
-                        Switch = false;
-                        mss = Preconstructs.ConstructedShips.MerchantShip1();
-                        s.ShipMoveIn(mss);
-                        AllShips.Add(mss);
-                    }
-                    else
-                    {
-                        Switch = true;
-                        mss = Preconstructs.ConstructedShips.MerchantShip2();
-                        s.ShipMoveIn(mss);
-                        AllShips.Add(mss);
-                    }
-                    MerchantsPerSquare = 0;
-                }
 
-                foreach(RawMaterialExtractor rme in RawMaterialExtractor.PopulateSectorWithExtractors(s))
+                mss = Preconstructs.ConstructedShips.MerchantShip1();
+                s.ShipMoveIn(mss);
+                AllShips.Add(mss);
+                
+                mss = Preconstructs.ConstructedShips.MerchantShip2();
+                s.ShipMoveIn(mss);
+                AllShips.Add(mss);
+
+                pss = Preconstructs.ConstructedShips.PatrolShip1();
+                s.ShipMoveIn(pss);
+                AllShips.Add(pss);
+
+                foreach (RawMaterialExtractor rme in RawMaterialExtractor.PopulateSectorWithExtractors(s))
                     AllExtractors.Add(rme);
-
             }
 
             GameTimeThread.Start();
@@ -117,7 +108,7 @@ namespace SpaceAge
                 {
                     r.Live();
                 }
-                foreach (MerchantSpaceShip mss in AllShips)
+                foreach (SpaceShip mss in AllShips)
                 {
                     mss.Live();
                 }
