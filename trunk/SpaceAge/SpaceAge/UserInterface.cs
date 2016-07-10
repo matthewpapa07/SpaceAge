@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using System.Threading;
+using SpaceAge.Controls;
 
 namespace SpaceAge
 {
@@ -15,10 +16,16 @@ namespace SpaceAge
 
     public partial class UserInterface : Form
     {
-        Controls.UniverseMapBrowser TheMainSectorBrowserWhole;
-        public static UserInterface thisOneInterface;
+        // Top level controls only (the ones that fit in the main pane)
+        UniverseMapBrowser ub = new UniverseMapBrowser();
+        SectorInfo si = new SectorInfo();
+        SectorBrowser sb = new SectorBrowser();
+
+        // Track user browsing so we can have a back button and context info
         private Control currentControl;
         private Control previousControl;
+
+        public static UserInterface thisOneInterface;
         EventToInvoke RefreshElementsEvent = null;
         EventToInvoke UserStateRefreshCallback = null;
         EventToInvoke PeriodicRefreshMenusEvent = null;
@@ -37,11 +44,6 @@ namespace SpaceAge
             ResizeRedraw = true;
             KeyPreview = true;
 
-            TheMainSectorBrowserWhole = new SpaceAge.Controls.UniverseMapBrowser();
-            currentControl = TheMainSectorBrowserWhole;
-            ui_MAINPANEL.Controls.Add(TheMainSectorBrowserWhole);
-            UpdateUi();
-
             RefreshElementsEvent = new EventToInvoke(RefreshElementsInEvent);
             UserStateRefreshCallback = new EventToInvoke(RefreshElementsInv);
             PeriodicRefreshMenusEvent = new EventToInvoke(PeriodicRefreshMenus);
@@ -51,6 +53,15 @@ namespace SpaceAge
 
             UserState.OnSectorChange.Add(UserStateRefreshCallback);
             UserState.OnWaypointChange.Add(UserStateRefreshCallback);
+
+            // Background threads for top level menus
+            sb.LvRefreshTh.Start();
+            
+            // Start off in the sector browser
+            SetMainPanel(sb);
+
+            // Invoke a refresh to make sure everything is fresh from the start
+            UpdateUi();
         }
 
         public void UpdateUi()
@@ -71,7 +82,7 @@ namespace SpaceAge
             }
 
             userFuelMeter1.UpdateUi();
-            TheMainSectorBrowserWhole.Refresh();
+            ub.Refresh();
             
             //sectorBrowser1.UpdateUi();
             
@@ -96,9 +107,7 @@ namespace SpaceAge
                     TempKeyPress.UserKeyPress(key);
                 }
             }
-
             UpdateUi();
-
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -172,6 +181,16 @@ namespace SpaceAge
         public void PeriodicRefreshMenus()
         {
             RefreshElementsInEvent();
+        }
+
+        private void ui_bUniverseBrowser_Click(object sender, EventArgs e)
+        {
+            SetMainPanel(ub);
+        }
+
+        private void ui_bSectorBrowser_Click(object sender, EventArgs e)
+        {
+            SetMainPanel(sb);
         }
     }
 }

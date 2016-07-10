@@ -84,12 +84,12 @@ namespace SpaceAge
             return "Planet : " + " Systems : " + "";
         }
 
-        public bool ShipMoveOut(MerchantSpaceShip mss)
+        public bool ShipMoveOut(SpaceShip mss)
         {
             return PresentSpaceShips.Remove(mss);
         }
 
-        public bool ShipMoveIn(MerchantSpaceShip mss)
+        public bool ShipMoveIn(SpaceShip mss)
         {
             PresentSpaceShips.Add(mss);
             mss.CurrentShipSector = this;
@@ -132,7 +132,7 @@ namespace SpaceAge
                 if (DrawX < 0 || DrawY < 0)
                     continue;
 
-                GraphicsToUse.DrawRectangle(staticGraphics.whitePen, new Rectangle(DrawX, DrawY, 1, 1));
+                GraphicsToUse.DrawRectangle(staticGraphics.backgroundStarPen, new Rectangle(DrawX, DrawY, 1, 1));
             }
 
             foreach (ISectorMember ism in PresentSectorMembers)
@@ -237,7 +237,7 @@ namespace SpaceAge
                     if (Draw.X < 0 || Draw.Y < 0)
                         continue;
 
-                    GraphicsToUse.DrawRectangle(staticGraphics.whitePen, new Rectangle(Draw.X, Draw.Y, 1, 1));
+                    GraphicsToUse.DrawRectangle(staticGraphics.backgroundStarPen, new Rectangle(Draw.X, Draw.Y, 1, 1));
                 }
             }
 
@@ -463,6 +463,12 @@ namespace SpaceAge
                 }
             }
             return false;
+        }
+
+        public PointD RandomClearPointInSector()
+        {
+            NumberGenerator n = NumberGenerator.getInstance();
+            return new PointD(n.GetRandNumberInRange(0, MAX_DISTANCE_FROM_AXIS), n.GetRandNumberInRange(0, MAX_DISTANCE_FROM_AXIS));
         }
 
         //public Point GetSectorOffset(Sector AdjacentSector)

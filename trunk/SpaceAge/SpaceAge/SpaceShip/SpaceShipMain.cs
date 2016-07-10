@@ -51,8 +51,16 @@ namespace SpaceAge
                 {
                     mss.UpdateMovingShipsPosition();
                 }
+                foreach (PatrolSpaceShip pss in PatrolSpaceShip.AllPatrols)
+                {
+                    pss.UpdateMovingShipsPosition();
+                }
                 Thread.Sleep(10);
             }
+        }
+
+        public virtual void Live()
+        {
         }
 
         public virtual Bitmap GetSpaceShipImage()
@@ -86,8 +94,8 @@ namespace SpaceAge
         //
         // Commonly Associated with SpaceShip
         //
-        public enum SpaceShipClass { Generic, Merchant };
-        public static string[] SpaceShipClassString = { "Generic", "Merchant" };
+        public enum SpaceShipClass { Generic, Merchant, Cargo, Patrol };
+        public static string[] SpaceShipClassString = { "Generic", "Merchant", "Cargo", "Patrol" };
 
         public static string[] SpaceShipSizeString = { "XS", "S", "M", "L", "XL", "N/A" };
         public enum SpaceShipSize { ExtraSmall, Small, Medium, Large, ExraLarge, NoSize };

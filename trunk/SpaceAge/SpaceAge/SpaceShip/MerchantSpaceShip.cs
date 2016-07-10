@@ -19,8 +19,16 @@ namespace SpaceAge
         public static int GlobalMerchantId = 0;
         public int MerchantId = -1;
         public static List<MerchantSpaceShip> AllMerchants = new List<MerchantSpaceShip>(1000);
+        public int ImageAssignmentIndex = 0;
 
-        static Bitmap SpaceShipImage2 = new Bitmap(Resources.SpaceShip2);
+        static Bitmap[] MerchantShipImages = {
+                                                new Bitmap(Resources.S_Ship001),
+                                                new Bitmap(Resources.S_Ship002),
+                                                new Bitmap(Resources.S_Ship003),
+                                                new Bitmap(Resources.S_Ship004),
+                                                new Bitmap(Resources.S_Ship005)
+                                            };
+
 
         ResourceVector currVect; // Temporary variable used in price acquisition
 
@@ -35,11 +43,12 @@ namespace SpaceAge
             SectorFineGridLocation.X = NumberGenerator.getInstance().GetRandDoubleInRange(400, Sector.MAX_DISTANCE_FROM_AXIS - 400);
             SectorFineGridLocation.Y = NumberGenerator.getInstance().GetRandDoubleInRange(400, Sector.MAX_DISTANCE_FROM_AXIS - 400);
             SpaceShipName = "Merch: " + MerchantId;
+            ImageAssignmentIndex = NumberGenerator.getInstance().GetRandNumberInRange(0, MerchantShipImages.Length - 1);
 
             AllMerchants.Add(this);
         }
 
-        public void Live()
+        public override void Live()
         {
             //if (MerchantId == 120)
             //    Console.WriteLine("Tracking ship 120");
@@ -230,14 +239,14 @@ namespace SpaceAge
 
         public override Bitmap GetSpaceShipImage()
         {
-            Bitmap RotatedImage = GraphicsLib.RotateBitmap(SpaceShipImage2, DirectionVector.GetAngle());
+            Bitmap RotatedImage = GraphicsLib.RotateBitmap(MerchantShipImages[ImageAssignmentIndex], DirectionVector.GetAngle());
             return RotatedImage;
         }
 
         // Better for atomic operations
         public override Bitmap GetSpaceShipImage(int Angle)
         {
-            Bitmap RotatedImage = GraphicsLib.RotateBitmap(SpaceShipImage2, Angle);
+            Bitmap RotatedImage = GraphicsLib.RotateBitmap(MerchantShipImages[ImageAssignmentIndex], Angle);
             return RotatedImage;
         }
 

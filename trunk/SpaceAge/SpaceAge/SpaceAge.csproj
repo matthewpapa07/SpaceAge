@@ -127,7 +127,6 @@
     <Compile Include="CelestialBody\IHarvestableBody.cs" />
     <Compile Include="CelestialBody\IInteractableBody.cs" />
     <Compile Include="HumanInterfaceObj.cs" />
-    <Compile Include="MerchantSpaceShip.cs" />
     <Compile Include="CelestialBody\Moon.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PointD.cs" />
@@ -175,6 +174,8 @@
     <Compile Include="ShipComponents\ShipScanner.cs" />
     <Compile Include="ShipComponents\ShipShield.cs" />
     <Compile Include="ShipComponents\ShipWeapon.cs" />
+    <Compile Include="SpaceShip\MerchantSpaceShip.cs" />
+    <Compile Include="SpaceShip\PatrolSpaceShip.cs" />
     <Compile Include="SpaceShip\SpaceShipStats.cs" />
     <Compile Include="Graphics\StaticGraphics.cs" />
     <Compile Include="Controls\UniverseMap.cs">
@@ -293,6 +294,23 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\1920x1200_space-awesome-stars-blinks-high-quality-image-picture-HD-Wallpaper.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Graphics\M_Ship001.gif" />
+    <Content Include="Graphics\M_Ship002.gif" />
+    <Content Include="Graphics\M_Ship003.gif" />
+    <Content Include="Graphics\S_Ship001.gif" />
+    <Content Include="Graphics\S_Ship002.gif" />
+    <Content Include="Graphics\S_Ship003.gif" />
+    <Content Include="Graphics\S_Ship004.gif" />
+    <Content Include="Graphics\S_Ship005.gif" />
+    <None Include="Graphics\XS_Cargo001.gif" />
+    <Content Include="Graphics\XS_Ship001.gif" />
+    <Content Include="Graphics\XS_Ship002.gif" />
+    <Content Include="Graphics\XS_Ship003.gif" />
+    <Content Include="Graphics\XS_Ship004.gif" />
+    <Content Include="Graphics\XS_Ship005.gif" />
+    <Content Include="Graphics\XS_Ship006.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -169,26 +169,6 @@
             this.bSetWaypoint.UseVisualStyleBackColor = true;
             this.bSetWaypoint.Click += new System.EventHandler(this.bSetWaypoint_Click);
             // 
-            // bSectorView
-            // 
-            this.bSectorView.Location = new System.Drawing.Point(3, 255);
-            this.bSectorView.Name = "bSectorView";
-            this.bSectorView.Size = new System.Drawing.Size(144, 70);
-            this.bSectorView.TabIndex = 2;
-            this.bSectorView.Text = "Sector View";
-            this.bSectorView.UseVisualStyleBackColor = true;
-            this.bSectorView.Click += new System.EventHandler(this.bSectorView_Click);
-            // 
-            // ui_buttonVisitSector
-            // 
-            this.ui_buttonVisitSector.Location = new System.Drawing.Point(153, 294);
-            this.ui_buttonVisitSector.Name = "ui_buttonVisitSector";
-            this.ui_buttonVisitSector.Size = new System.Drawing.Size(146, 30);
-            this.ui_buttonVisitSector.TabIndex = 1;
-            this.ui_buttonVisitSector.Text = "Sector Details";
-            this.ui_buttonVisitSector.UseVisualStyleBackColor = true;
-            this.ui_buttonVisitSector.Click += new System.EventHandler(this.ui_buttonVisitSector_Click);
-            // 
             // sectorViewerPanel
             // 
             this.sectorViewerPanel.BackColor = System.Drawing.Color.Black;
