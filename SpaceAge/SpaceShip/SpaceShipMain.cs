@@ -11,8 +11,9 @@ namespace SpaceAge
     partial class SpaceShip
     {
         public string SpaceShipName = "TODO:Name";
-        SpaceShipConstant.SpaceShipClass SpaceShipClass = SpaceShipConstant.SpaceShipClass.Generic;
-        SpaceShipConstant.SpaceShipSize SpaceShipSize = SpaceShipConstant.SpaceShipSize.Medium;
+        public SpaceShipConstant.SpaceShipClass SpaceShipClass = SpaceShipConstant.SpaceShipClass.Generic;
+        public SpaceShipConstant.SpaceShipSize SpaceShipSize = SpaceShipConstant.SpaceShipSize.Medium;
+        public bool IsTargeted = false;
 
         static Bitmap SpaceShipImage;
         private int SpaceShipId = 0;
@@ -98,7 +99,8 @@ namespace SpaceAge
         public static string[] SpaceShipClassString = { "Generic", "Merchant", "Cargo", "Patrol" };
 
         public static string[] SpaceShipSizeString = { "XS", "S", "M", "L", "XL", "N/A" };
-        public enum SpaceShipSize { ExtraSmall, Small, Medium, Large, ExraLarge, NoSize };
+        public enum SpaceShipSize { ExtraSmall = 0, Small, Medium, Large, ExraLarge, NoSize };
+        public static int[] SpaceShipSizeMultiplier = {35, 70, 120, 160 , 200, 1};
         //public static int[] ItemSizeStatMultiplier = { 1, 3, 10, 25, 50, 1 };
         //public static int[] ItemSizeStatDivider = { 5, 4, 3, 2, 1, 1 };
     }

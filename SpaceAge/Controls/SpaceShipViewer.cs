@@ -11,6 +11,7 @@ namespace SpaceAge.Controls
 {
     public partial class SpaceShipViewer : UserControl
     {
+        SpaceShip DescribedShip;
         // TODO: Readout of a SpaceShip, including all details
         public SpaceShipViewer()
         {
