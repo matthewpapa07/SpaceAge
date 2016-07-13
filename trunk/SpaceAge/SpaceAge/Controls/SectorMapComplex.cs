@@ -121,12 +121,21 @@ namespace SpaceAge.Controls
                         Actual.Y, 
                         RectToUse.Height
                         ));
+                    int SpaceShipClassSize = SpaceShipConstant.SpaceShipSizeMultiplier[(int)ss.SpaceShipSize];
                     GraphicsToUse.DrawImage(
                         SsImage,
-                        ShipControlCoordinates.X /* - SsImage.Height / 2 */,
-                        ShipControlCoordinates.Y /* - SsImage.Height / 2 */,
-                        35 / ImageViewMultiplier, 35 / ImageViewMultiplier
+                        ShipControlCoordinates.X - (SpaceShipClassSize / 2) / ImageViewMultiplier,
+                        ShipControlCoordinates.Y - (SpaceShipClassSize / 2) / ImageViewMultiplier,
+                        SpaceShipClassSize / ImageViewMultiplier, SpaceShipClassSize / ImageViewMultiplier
                         );
+                    // Draw a reticle around the ship if it is targeted
+                    if (ss.IsTargeted)
+                        GraphicsToUse.DrawEllipse(
+                            staticGraphics.greenPen,
+                            ShipControlCoordinates.X - (SpaceShipClassSize / 2) / ImageViewMultiplier,
+                            ShipControlCoordinates.Y - (SpaceShipClassSize / 2) / ImageViewMultiplier,
+                            SpaceShipClassSize / ImageViewMultiplier, SpaceShipClassSize / ImageViewMultiplier
+                            );
                 }
             }
 

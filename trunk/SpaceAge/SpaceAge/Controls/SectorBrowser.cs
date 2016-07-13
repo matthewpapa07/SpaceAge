@@ -17,6 +17,7 @@ namespace SpaceAge.Controls
         public Thread LvRefreshTh = null;
         List<SpaceShip> CurrentDisplayedShips = new List<SpaceShip>();
         List<StarSystem> CurrentDispalyedStarSys = new List<StarSystem>();
+        SpaceShip CurrentTarget;
 
         public SectorBrowser()
         {
@@ -235,14 +236,47 @@ namespace SpaceAge.Controls
             
         }
 
-        private void bAutopilot_Click(object sender, EventArgs e)
-        {
-            UserState.PlayerShip.ExecuteWaypoints();
-        }
-
         private void trackBar1_ValueChanged(object sender, EventArgs e)
         {
             sectorNavigationPane1.LocalSectorMapComplex.ImageViewMultiplier = trackBar1.Value;
+        }
+
+        //
+        // Select new taget
+        //
+        private void listview_sectorships_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ListViewItem lvi;
+
+            if (listview_sectorships.SelectedIndices.Count >= 1)
+            {
+                //
+                // Keep it simple and max 1 target for now
+                //
+                lvi = listview_sectorships.Items[listview_sectorships.SelectedIndices[0]];
+
+                foreach (SpaceShip ss in CurrentDisplayedShips)
+                {
+                    if (lvi.Equals(ss.SpaceShipListViewItem))
+                    {
+                        if (CurrentTarget != null)
+                            CurrentTarget.IsTargeted = false;
+                        CurrentTarget = ss;
+                        CurrentTarget.IsTargeted = true;
+                    }
+                }
+            }
+        }
+
+        // Simple follow code for now. Need to add code to constantly update at some point
+        private void bFollow_Click(object sender, EventArgs e)
+        {
+            if (CurrentTarget != null)
+            {
+                // Only folow ships in the current sector for now
+                if(CurrentTarget.CurrentShipSector.Equals(UserState.getCurrentSector()))
+                    UserState.PlayerShip.SetLocalDestinationPoint(CurrentTarget.SectorFineGridLocation);
+            }
         }
 
     }

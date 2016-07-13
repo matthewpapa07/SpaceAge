@@ -73,6 +73,10 @@ namespace SpaceAge.Controls
             UniverseMap1.Refresh();
         }
 
+        private void bAutopilot_Click(object sender, EventArgs e)
+        {
+            UserState.PlayerShip.ExecuteWaypoints();
+        }
 
 
     }

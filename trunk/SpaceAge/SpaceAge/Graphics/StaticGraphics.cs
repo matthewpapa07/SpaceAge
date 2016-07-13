@@ -42,7 +42,7 @@ namespace SpaceAge
         public TextureBrush SectorBorderBrush = new TextureBrush(new Bitmap(SpaceAge.Properties.Resources._678124main_hubble_sparkles_1600_1600_1200));
 		public TextureBrush spaceBrush;
         public Pen blackPen = new Pen(Color.Black, 2);
-        public Pen greenPen = new Pen(Color.LightYellow, 2);
+        public Pen greenPen = new Pen(Color.Green, 2);
         public Pen whitePen = new Pen(Color.White, 2);
         public Pen redPen = new Pen(Color.Red, 2);
         public Pen bluePen = new Pen(Color.Blue, 2);
