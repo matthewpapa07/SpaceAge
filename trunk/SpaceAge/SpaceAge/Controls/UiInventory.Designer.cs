@@ -33,19 +33,21 @@
             // 
             // ui_InventoryListview
             // 
-            this.ui_InventoryListview.Location = new System.Drawing.Point(4, 0);
+            this.ui_InventoryListview.Location = new System.Drawing.Point(7, 0);
+            this.ui_InventoryListview.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.ui_InventoryListview.Name = "ui_InventoryListview";
-            this.ui_InventoryListview.Size = new System.Drawing.Size(332, 234);
+            this.ui_InventoryListview.Size = new System.Drawing.Size(605, 429);
             this.ui_InventoryListview.TabIndex = 0;
             this.ui_InventoryListview.UseCompatibleStateImageBehavior = false;
             // 
             // UiInventory
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.ui_InventoryListview);
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "UiInventory";
-            this.Size = new System.Drawing.Size(336, 234);
+            this.Size = new System.Drawing.Size(629, 451);
             this.ResumeLayout(false);
 
         }

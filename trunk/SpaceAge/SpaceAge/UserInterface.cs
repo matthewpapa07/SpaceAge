@@ -20,6 +20,8 @@ namespace SpaceAge
         UniverseMapBrowser ub = new UniverseMapBrowser();
         SectorInfo si = new SectorInfo();
         SectorBrowser sb = new SectorBrowser();
+        SpaceshipStatus sss = new SpaceshipStatus();
+
 
         // Track user browsing so we can have a back button and context info
         private Control currentControl;

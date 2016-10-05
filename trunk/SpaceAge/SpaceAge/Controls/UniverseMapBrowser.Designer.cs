@@ -72,6 +72,7 @@
             this.bAutopilot.TabIndex = 26;
             this.bAutopilot.Text = "Autopilot to Waypoint";
             this.bAutopilot.UseVisualStyleBackColor = true;
+            this.bAutopilot.Click += new System.EventHandler(this.bAutopilot_Click);
             // 
             // bSetHome
             // 
