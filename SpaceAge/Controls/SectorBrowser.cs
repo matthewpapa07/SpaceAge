@@ -279,5 +279,11 @@ namespace SpaceAge.Controls
             }
         }
 
+        private void bDock_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
     }
 }

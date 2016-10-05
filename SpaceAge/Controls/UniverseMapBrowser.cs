@@ -78,6 +78,5 @@ namespace SpaceAge.Controls
             UserState.PlayerShip.ExecuteWaypoints();
         }
 
-
     }
 }
